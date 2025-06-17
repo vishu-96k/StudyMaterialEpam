@@ -1,0 +1,287 @@
+-----------MultiThreadding Part 3---
+
+1)How to Pass Data to Thread Function in Type-Safe Manner and get back data also
+-When uh use the ParameterizedThreadStart() delegate which takes only one parameter and that also as a type of object, so when uh need a int value and by mistake the user inters the string value, then it gives uh runtime error, so it is not type safe
+-so uh can use arrow function which will call another fun in which uh will send the parameter
+-Uh can also make the constructor of that class take the input as int and then withput taking the parameter uh can bind the Thread and the function
+EG:
+using System;
+using System.Threading;
+namespace Threading
+{
+    class demo
+    {
+        public string test(int n)
+        {
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine("The Test is : " + i);
+            }
+            return "Success";
+        }
+    }
+    class program
+    {
+        static void Main()
+        {
+            string s = "defalut";
+            demo d1 = new demo();
+            ThreadStart obj1 = new ThreadStart(() => //this is arrow function, becoz of which the fun will become type safe and even uh can return values from the Threads as it ends
+            {
+                Console.WriteLine("this is the Arrow function");
+                s += d1.test(10);
+            });
+            Thread T1 = new Thread(obj1);
+
+            T1.Start();
+            T1.Join();
+            Console.WriteLine(s);
+            
+            Console.WriteLine(s);
+        }
+    }
+}
+
+-So even if uh used the ThreadStart delegate then also the function cant return any thing, so uh can use a arrow function which will call the other fun and store the data returned in some variable 
+
+
+
+--------------AUTO RESET EVENT AND MANUAL RESET EVENT ----------------------
+
+Signaling Methodology : both AutoResetEvent and ManualResetEvent help us to implement thread synchronization using signaling methodology. 
+-unlike uh use lock, semaphore and mutex to achive Thread Syncrhronization, similarly we can use autoreset and manualrest event for Thread Synchronication.
+
+🔄 Signaling Methodology in C#:
+Used for thread synchronization between multiple threads.
+One thread signals another thread to wait or resume execution.
+Achieved using synchronization primitives: AutoResetEvent and ManualResetEvent.
+
+-WORING:
+2 threads are working, Then one Thread T1 will send the singnal to other thread T2 telling him to go in the Wait mode, and when the T1 finishes his work again it will send signal to the T2 thread for waking up, By this way it will achive Thread Syncrhonization, and this is called "Signalling Methodology"
+
+-AUTORESETEVENT CLASS:
+-AutoResetEvent : it is a class in C# and it is used for sending Signals between 2 threads.
+-This is a sealed class and hence cannot be inherited. And it is inherited from the EventWaitHandle class.
+
+SYNTAX :
+namespace Syste.Threading
+{
+   public sealed class AutoResetEvent : EventWaitHadling
+   {
+	public AutoResetEvent(bool initialState);
+   }
+}
+
+-AutoResetEvent(bool initialState) : this is the Constructor which takes bool as a parameter, and if the variable is true then it means, the initial state is set to signaled, and if it is false then it means the Initial state is not signaled.
+-The "EventWaitHandlde" class has 2 methods set(), and Reset();
+-Set():this method is used to set the state of the event to signaled.
+-Reset(): this method is used to set the state of the event to non signaled, causing Threads to block.
+-WaitOne(): The WaitOne method blocks the current thread and waits for the signal by another thread. That means the WaitOne method puts the current thread into a Sleep state of the thread
+
+WORKING OF AUTORESETEVENT :
+-it maintains a Boolean variable in the memory and if the variable is false then it blocksthe thread and if the variable is true it unblocks the trhead, so when we create the instacnce of this class we need to pass the varible(bool) 
+
+SYNTAX :
+AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+autoResetEvent.WaitOne();//This will wat the current working thread, allow thread to go on the sleep mode
+
+EG:
+class program
+{
+  static AutoResetEvent obj = new AutoResetEvent(false);
+
+  static void SomeMethod(){
+     Console.WriteLine("Sometihing is happning..");
+     obj.WaitOne()//It will make the thread in halt mode, The thread will block/wait here until the main thread calls Set().
+  }
+  static void Main()
+   Console.WriteLine("Finishing........");
+  {
+     Thread T1 = new Thread(SomeMethhod);
+     T1.Name = "NewThread";
+     NewThread.Start();
+
+     obj.Set();//this will unblock the waiting Thread by sending the signal to the Thread
+  }
+}
+
+static AutoResetEvent autoResetEvent = new AutoResetEvent(false) : False meanse that The initial state is non-signaled,  any thread that calls WaitOne() method on it, will block that thread until a signal is received through set()
+
+ autoResetEvent.Set():It sends a signal to the waiting thread (SomeMethod).It sets the AutoResetEvent to signaled state, allowing one waiting thread to proceed.
+
+
+---------Inter Thread Communication-----------
+
+ITC : Inter Thread Communication it is a Mechanism of communication between 2 or more Threads that work on the Same shared Resource
+-To Smothly communicate between Multiple threads, There is a class in C# which is Monitor Class
+-Monitor Class : This class provides some static methods like Wait(), Pulse(), PulseAll() which we can use to perfrom interthread Communication
+-Inter Thread Communication comes into Picture When There are Shared resources between the threads, and they need to apply lock on the object which they are Sharing.
+
+METHODS OF MONITOR CALSS: 
+
+-public static bool Wait(Object obj) : This method releses the Lock on an Object and blocks the Current Thread until it requires the Lock, in simple words this method makes the thread that has called the Wait() method wait for the other thread to complete its work on the same object.
+Wait(Object obj)
+Makes the current thread wait and release the lock on the given object.
+The thread will wait until it gets the lock again.
+Throws exceptions if:
+obj is null.
+Thread doesn't own the lock.
+Thread is interrupted.
+
+-Monitor.Wait(obj)
+Causes the current thread to wait and release the lock on obj until it is signaled.
+🧠 What is Monitor.Wait()?
+🔹 Purpose:
+Makes the current thread pause and release the lock on an object so that other thread can go in the Critical section, until it is signaled (notified) by another thread.
+-This Thread will stay paused until:
+Another thread calls Monitor.Pulse(lockObj) or Monitor.PulseAll(lockObj).
+EG: 2 Threads T1 and T2, If T1 class Monitor.Wait(),it will wait and relese the Obj resourse for another Thread
+The T2 Thread will use the Obj and when it finishes the execution it calls The Monitor.Pulse(lockObj) method, which will send the singnal to T1 Thread to start The Execution on The Shared Object
+
+public static void Pulse(object obj): this  method wakes up the Other Thread which has been on waiting mode becoz of The Wait() function call
+
+-Threads communicate using Monitor.Wait() and Monitor.Pulse()
+-both the methods must be called in the Lock{} block and uh need to send the Shared resource in the Lock() as the parameter
+
+
+EG:
+using System;                  // Importing the System namespace for basic functionalities like Console
+using System.Threading;       // Importing Threading namespace to work with threads and Monitor
+
+class Program
+{
+    private static readonly object lockObj = new object(); // Shared lock object for synchronization between threads
+    private static int number = 1;                         // Shared number to print, starting from 1
+    private static int limit = 10;                         // Limit up to which numbers are printed
+
+// Method executed by the odd number printing thread
+    static void PrintOdd()
+    {
+        while (number <= limit) // Continue as long as number is less than or equal to the limit
+        {
+            lock (lockObj) // Enter critical section (acquire lock on lockObj)
+            {
+                // Wait while the number is even (not the responsibility of this thread)
+                while (number % 2 == 0)
+                {
+                    Monitor.Wait(lockObj); // Releases lockObj and waits until notified (Pulse)
+                }
+
+                // Double-check the limit after waking up to avoid over-printing
+                if (number <= limit)
+                {
+                    Console.WriteLine("Odd Thread: " + number); // Print the odd number
+                    number++;                                   // Increment the number
+                    Monitor.Pulse(lockObj);                     // Signal the waiting even thread to resume
+                }
+            }
+        }
+    }
+
+    // Method executed by the even number printing thread
+    static void PrintEven()
+    {
+        while (number <= limit) // Continue as long as number is less than or equal to the limit
+        {
+            lock (lockObj) // Enter critical section (acquire lock on lockObj)
+            {
+                // Wait while the number is odd (not the responsibility of this thread)
+                while (number % 2 != 0)
+                {
+                    Monitor.Wait(lockObj); // Releases lock and waits until notified (Pulse)
+                }
+
+                // Double-check the limit after waking up to avoid over-printing
+                if (number <= limit)
+                {
+                    Console.WriteLine("Even Thread: " + number); // Print the even number
+                    number++;                                    // Increment the number
+                    Monitor.Pulse(lockObj);                      // Signal the waiting odd thread to resume
+                }
+            }
+        }
+    }
+
+    static void Main(string[] args)
+    {
+        // Creating a thread for printing odd numbers
+        Thread oddThread = new Thread(PrintOdd);
+        
+        // Creating a thread for printing even numbers
+        Thread evenThread = new Thread(PrintEven);
+
+        // Starting both threads
+        oddThread.Start();
+        evenThread.Start();
+
+        // Waiting for both threads to complete their execution
+        oddThread.Join();
+        evenThread.Join();
+
+        // Message printed after both threads finish
+        Console.WriteLine("Finished printing odd and even numbers.");
+    }
+   
+}
+
+
+EG2:
+using System;
+using System.Threading;
+namespace MultiThreading
+{
+    class solution
+    {
+        public static Object obj = new Object();
+        public static int i = 0;
+
+        public static void even()
+        {
+            lock (obj)
+            {
+                for (; i < 10;)
+                {
+                    if (i % 2 != 0)
+                    {
+                        Monitor.Wait(obj);
+                    }
+                    else
+                    {
+                        Console.WriteLine("even Thread" + i);
+                        i++;
+                        Monitor.Pulse(obj);
+                    }
+                }
+            }
+        }
+        public static void odd()
+        {
+            lock (obj)
+            {
+                for (; i < 10;)
+                {
+                    if (i % 2 == 0)
+                    {
+                        Monitor.Wait(obj);// this will block the Current thread and relse the lock of the "obj" object so tht other thread can access it
+                    }
+                    else
+                    {
+                        Console.WriteLine("Odd Thread" + i);
+                        i++;
+                        Monitor.Pulse(obj);//This will tell the other Blocked Thread to wake up and start the execution
+                    }
+                }
+            }
+        }
+        public static void Main()
+        {
+            Thread T1 = new Thread(even);
+            Thread T2 = new Thread(odd);
+            T1.Start();
+            T2.Start();
+            T1.Join();
+            T2.Join();
+        }
+    }
+}

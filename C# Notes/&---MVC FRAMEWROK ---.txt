@@ -1,0 +1,87 @@
+-------MVC ------------
+
+MODELS :
+-Database schema are defined by code, thts called models
+
+-RightClick on Models --> Add--> Class--> userModel.cs
+
+-add properties as colum names using get set and also add attributes(which act as a client side validation)
+
+-attributes act as a constriants
+
+- uh have to give the foreign keys also in the models, becoz that's the different Table 
+
+-One model is one TABLE
+
+-Add a Model file ac class.cs only as ApplicationDBContext.cs
+
+-ApplicationDBContext.cs : In this file there are database connection is there 
+	[public Dbset<User> Users] // •	This makes the table in the database. DbSet<> is a class that takes the entity (Table) as a type and creates the table (  Users  table : if uh pass the user in the<user>) in the database, basically pass the Models which uh have made.
+	- it is most imp file, becoz the database creation, connections things are in this file only, like it will take the database name form the connection string and the Id also.
+	-It is the most important file, because database creation and connection handling are in this file.
+  	-It takes the database name from the connection string and handles the ID as well.
+
+
+-OnModelCrreating() : This fun Does the cascading. it is used to configure entity relations like FK and PK constraints
+
+Install nuget ---> Install Entity framework
+
+Web.config : in this put the connection string, copy the SQL name and paste it in the Connection string, Db name also 
+
+
+
+-------------MIGRATIOON----------------
+
+If uh do any change in your schema then uh need to make a new migration. 
+
+up() : when uh do update-migration then Up() method is exceuted
+if uh want to do revert (update-database) then the cmd is update-database -targetMigration: migrationName 
+
+Down() :when uh do revet that time down method is excuted, everything is removed like forign key, table.
+
+
+ 
+when the whole databse connection is done, then perform migration
+tools --> nuget package manager--> console :
+	-Enable-Migrations : it will generate the configuration.cs file in migrations folder. it will just enable the migrations
+
+	-Add-Migration-Name : it will create the migration file for your DB with that name. it will generate a new migration file with name. In this file 
+	-Update-migration : last migration will be exceuted 
+
+
+Configuration.cs : in this the seed method is always excuted when any migration is excuted using update-database  cmd
+seed() : add the table creastion tables in this method
+
+
+-------Controller------
+-Now add the controller -->select Model class--> generate views and all 3 -->Add
+-Automatically views, layout page will be created
+-controller : The link will be from the views name which will be based on the Controller only 
+-COntroller.cs : this will include all the actions, it includes Get, post, delete req routes. it also includes bind class
+-bind : it binds the usermodel fields with  the obj to store in the database .
+-view bag :Data from the controller comes and goes to the Viewbag.
+
+STEPS :
+	1)CREATE ALL MODELS
+	2)CREATE ApplicationDBContext File
+	3)Add your Connection string into the Web.config file
+	<connectionStrings>
+	<add name="DefaultConnection" connectionString="Server=EPINHYDW141B; Database=MVCRegistrationDB;Integrated 	Security=True;TrustServerCertificate=True" providerName="System.Data.SqlClient" />
+	</connectionStrings>
+ 	
+	4)Build Solution using ctrn + shift +B
+	5)Open the nuget consonle and:
+			-Enable-Migrations
+			-Add-Migration-Name
+			-Update-Database
+	6)Create Controller and it will generate views.
+		
+
+
+CHATGPT PROMPT
+I want to develop a simple CRUD application using asp.net mvc web forms in.net framework using code first approach, lets implement it step by step; give models and controllers too and the applicationdbcontext too; for user store UserID, FirstName, LastName, Email, Phone, Address, gender model, country model and state model, ensure the foreign key relationships, use proper attributes for the properties.
+
+INSTALL :
+	Install-Package EntityFramework
+
+

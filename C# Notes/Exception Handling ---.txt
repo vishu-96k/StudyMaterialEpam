@@ -1,0 +1,282 @@
+----EXCEPTION HANDALING-----
+
+ERRORS : 1) Complile time errors
+	2) Run time erroes
+
+Compile time errors : error occurcers due to the syntactical mistake is called compile time error. These errors are not dangureous becoz compiler will find them and we can fix them
+These error occur at the time of compilation 
+
+Run time error: these errors which occurs at the time of excecution, while running the origram In between only they occure.
+These are error which occur due to the lots of reason like : Wroung implementation of logic, Wroungs inputs supplied missing required resources and many more.
+Wroung implementation of logic, eg : if uh write a for loop for 6 times and uh have array of size 5 then uh will get the indexOutOfBound exception.
+
+Compiler can only check the syntax but it cant check the logic, so run time errors are denguoruse 
+eg : if uh ask to integer value but user enters a flout value.
+eg : if uh want to open to file and suddenly that file get deleted unknowling so the program is not able to access the file so uh will get run time error.
+
+whenever the run time error occure the program terminates abnormally at the same line where the error got occur ,whiout executing the next lines of code 
+eg : if uh have 1000 lines of code and at line no 90 uh got run time error then the remaining lines of code will not execute and the program will stop. imagine transferring of a amount of Gpay. so at the line of 90 the program will terminate and behave abnormally. 
+these Exceptions are responsible for the abnormall termination
+
+EXCEPTIONS :
+exception is a class, and whenever the run time error occurs , these exceptions are responsible for abnormally termination of the program. There are lot of exception class, EG indexOutOfboundExcetion it is a class which comes in pictiure when uh try to reach a index of array out of bond
+Some eg of Excception classes are :
+	1) DivideByZero
+	2) FormatExceotion
+	3) Overflow Exception
+
+Whenever run time error occure these classs will come and terminate the program abnormally. So these excetpions will display the msg for why the eroor occurred, becoz of thsese error msg uh have many classes for exception.
+These all are predefined classes
+
+EXCEPTION CLASS --> in this cass we have written all the logic for abnormal termination is written , and also this class contains a read only property to display an error msg and these methods are virtual which means the child class can override these propertuies(methods) from the Exception class and this property name is "message"
+The msg property displayes the msg of exception
+
+So, exptions are not run time errors,
+Excetption is a class which is responsible for the abnormal termination of a program, whenever a run time errors occurs inside the program. There are many classes which inhirit the exception calss and its special property as msg which displays the msg of expcetion occurance , uh can also override these property of msg in child class becoz its vritual readonly property
+
+under exception 2 classes are defined (Child classes) 
+1) Application Exception : these are non fatel errors, means these actions are allowed by the syetm to performed but we don't performed these. eg : in our application we don't want a divided by odd number, then in thses case we are going to make the exception and throw . in these case CLR is not responsible for the abnormal termination of the program. these are exptions caused by programmer
+
+2) System exception : these are the fatel eroors, means these types of action should never be performed, so the system will not allow these action to be performed these actions.  eg : we can never divide a number by 0, so when  try to do this automatically an excpetion occurs and this is a system exception, and this happenes automatically and CLR takes care of these errors and shows exceptions. CLR will takes care of these system exceptions.
+So this include all the clasess like 
+indexOutOfbound
+FormatExcpetion : for invalid fromat conversion
+ArthemitedExcpetion
+DivideBy0Exception
+OverflowExcpetion
+
+
+But the parent class is always EXCPEPTION
+CLR is going to be the excecution engine, so it will monitor our program, so the CLR indentifies the mistake, so it will pick the class as divide by 0, so if divide by 0 is done, the CLR will pick the class "divideby0exception" and creates a instance of that class and throws that obj (instance ) and this obj is going to come in picture and performed abnormal termination of the program. Once abnormal termination is performed uh will get the msg of that class and program will not execute the reaming code of lines of the code
+
+So, CLR is responsible for creating the instance of the exception class and throughing the instance, and this instance will come into the picture and destroys the program abnormally (termination happens) in case of system Exceptions
+
+How the abnormal termination is occurring : CLR is creating the insctance of the exception class and throughing the instance, and the instcane throuwn will cause the abnormal termination in the program .
+The object thrown by the CLR is going to do the Distructing (disctroctor), the object is also doing the same thing, that is distructing 
+
+
+
+
+---------EXCEPTIOON HANDALING PART 2---------------
+
+so we cannot leave these exception as it is becoz if the abnormal termination is happnig then application will shoutdwon whenever the client will run it , so to control this we have exception handling 
+
+EXCEPTION HANDLINFG : it is a way of stoping the abnormal termination of a program whenveever a exception(run time error) occurs 	inside a program,
+so to stop the abnormal terminaition whenever run time errors occure, we have the exception handling. 
+
+advantages of handling the exception: 
+1) abnormal terminations stops so that statements that are not related with errors can be executed. menas the reamingin statement which do not excuted becoz of the abnormal termination, those statements will be exceuted .
+
+2) we can display user friendly errors msges so that we can describe aboute the error. the msges are not end user friendly so we can display the user freiedly msges
+
+3)we can perfrom corrective action to resolve the problems that may comes into the picture due to the error eg: roll back transcation(Gpay) if the second statement does not occur and the money is dedected but the receiver does not receive it then we can roll back the action and give money back to the senders account
+
+so we have try catch block
+
+try
+{
+	// statements which will cause error are written here
+	// the statement which doesnt require execution after the runtime eror is occurred are written here.
+	// put the code which produces error or Exception
+	// as soon as exception occurs the statemet below it wont be executed
+}  
+
+catch(TypeOfException Obj) // uh can even just take the class as EXCEPTION if uh dont know the type becoz EXCEPTION is parent class for all, so uh can store the obj as the refrence of its parent class, and since all methods are vritual and uh can override them, so whenever uh call the methods the child class methods will get call from the parent class refrence varialble  
+{
+	//statements which should execute only when there is a run time error are written here
+}
+
+
+the CLR wil make and throw the obj of the exception class in the try block  when error is occured, and the instacne which is comming (throwun by CLR) to performed the abnormal termination, but what happen here is before the instcane would terminate the program abnormally , our catch block is going to catch that instacne (object). Once the instance is catught, now the abnormal termination stops there and that instace is stored under the variable of that class which the catch block takes in as the parameter. 
+Since the error which occurs is divide by zero (take eg), so the class of that object will be also divdeBy0Exception, but since every derived exception class is child of the EXCEPTION CLASS, so even uh can store the object in the excpetion (parent)  class also if uh dont know the type of excpetion it is in the catch block as parameter  
+
+catch(exception obj) // so the "obj" is a refrence of that Throun instance from the CLR. So "obj" is a refrence to the class divideBy0Exception class.
+
+uh can also display the error msg from the object as "obj.Message" . so the Message property shows the mssg and even uh can oeverride this property
+
+Once Catch block is catching the object/Insantanse thrown by the CLR, the abnormal termination stops their
+
+uh can have multiple catch block for a single try block 
+
+eg1: Catch(FormatException obj3) // this will only catch the objects of FormatException class, means the error which occure dur to format error
+
+eg2: Catch(DivideByZeroException obj2) // this will only catch the objects of DIvideByZeroeEXCETPION class, which means the error which occure by divding 0 only
+
+eg3 :Catch(EXCEPTION obj1) // this EXCEPTION will catch all the errors becoiz all the classes are derived from the EXCEPTION class
+
+so always its better to use "Catch(EXCEPTION obj4)" at the end, so always use the EXCEPTION clas at the end in catch, so that it will catch all the errors which are not catch by the upper catch blocks. 
+But if uh make this cltch block in the begging then all the exceptions will go in this catch block only and the remaing catch block will not catch the specific errors, so alywas keep this EXCEPTIOP calsss catch block at the end.
+
+
+only the first matching catch block will handle the thrown exception. The execution will not enter multiple catch blocks for the same exception.
+
+When an exception is thrown:
+
+The system looks for the first catch block that matches the exception type.
+Once a match is found, that block executes.
+After executing the catch block, execution continues after the try-catch structure (unless rethrown).
+
+If there is no error in the try block then directly the next statement after the all the catch blokc will get excute. No Catch block will get execute if there is no error in the try block.
+
+Catch block will execute only if there is exception thrown in try.
+
+If error is catch then, the exception is thrown in the matching catch block.Then the once the Exception is catch then the abnormal termination is stops there only , and the catch block will get excecute, even the EXCEPTION wala catch block will also not get excuete becoz only one catch block will get excecute which matches the exception. 
+
+if any sataement in try block causes an error, from tht line of code the control jums to catch block, searching for a matching catch block. 
+if there is a matching catch block which can handel the exception, then abnormal termination stops there . 
+the catch block code is excueted and from there the control jumps to the first statement which is present after all the catch blocks
+
+
+--------FINALLY-PART3 ---
+FINALLY : statement is finally will always excuetel, no matter the exception occurs or not finally block will always get excuete.
+Finally block is mandatory excueted in any situation
+
+Try : If exception does not occure then full try block gets excuted.
+
+Catch : If execeotion of occurs then only catch will get execute
+
+eg : FILE I/O opretion
+try
+{
+// code to open a file
+// code to WRite into the file
+} 
+
+catch(EXception ex)
+{
+// if error occres then what should we do with that file 
+}
+
+Finally
+{
+// Code to close the file 
+}
+
+
+why we have Finally block :
+
+return : when we use return in the Main() , no matter in which block we use return ,the return statements takes out of the method, so we will come out of the Main() method. so none of the code will execute which is there after the return keyword. even none of the block will get excute after the return keyword, But there is only the Finally block which will get execute even if the statements which are written in the end of the Main() method will not get execute. Out of try catch and finallyv, will also not get excute , only the finaly block will get execute.
+
+Uh cannot escape from the finally block.
+Even the return statemmet sees wether if there is any finaly block present and executes it. Finally will excute at any cost
+
+
+if uh use the return keyword anywhere in the Main() fun then from there only the program will get out of main and excutions gets over, but if there is finally block even aftere the return statement it will get execute. 
+
+if uh use just try and finally only (without Catch block) , then the exceptions are not caught, and becoz of which abnormal termination occurs becoz exceptions instacnes are thron by CLR and they are not caught, but still the finally block will get execeute even if there is abnormal termination.
+
+even the abnormal termination is occurring then also the finally block will get excute.
+
+if uh don't use the catch block, then exceptions are not handled
+
+
+
+-----PART 4- APPLICATION EXCPETIONS--------
+System Excetiops : all the exceptions which are raised by the CLR are called System exceptions, Means here the conditions are predefined and based on predefined conditions the exception will raised in the program 
+so already when they defined the CLR, the rules are written for these exceptions 
+eg : invalid DataType conversions etc
+all these exceptions instances are thrown by the CLR
+In this the CLR is making the inctance of the EXCEPTION and throws it
+
+APPLICATION EXCEPTION : here the CLR is not going to throw the Exceptions, here the applications developer(programmer) is going to make the instane of the exception class and through it.
+programmer based on his logic will create the Exceptions instance and throw it 
+eg : we don't want to divide number by odd number, so we are creating the instance of a exception class and through it.
+
+uh can even create ur won EXCEPTION CLASS by inhirting the ApplicationEXCEPTION class
+
+So, when uh want to thwoun the Application exceptions uh need to create the APLLICATIONEXCEPTION Class instance.
+
+EXCEPTION CLASS :
+	-SYSTEM EXCEPTION CLASS : the CLR will create the instcane if the SYSTEM EXCEPTION class and throw it for abnormal termination, when there is run time error.
+	-APPLICATION EXCEPTION CLASS : It is a calss which is defined by the MICROSOFT so that programmer can create the instance and throw it.
+
+sytax : 
+ApplicationException obj = new; ApplicationException("pass ur error msg as parameter") 
+throw obj // where obj is the instacne name which is thrown 
+		
+		or
+
+throw new ApplicationException("error msg"); // here the insctance is created and thrown whithout creating the name of the instacne
+
+
+// uh can pass the error msg as parameter the in applcuationException calss while calling the constructor of that class
+if uh don't pass the error msg, then the parent class is EXCEPTION has a message property, which has some error msg that will be shown.
+
+But if uh want to display a better error msg to the user, uh can pass a better error msg in the constructor while making the object(instacne), since the messge property is readonly and virtual, it can be overloaded throw the child class constructor.
+
+Now uh need to throw the instance of the ApplicationEXepytion calss using thrown keyword.
+
+Uh can make your own exception class
+
+defioning our won Excaption calss: define a class which inhirits from any predefined exception class but its alwyas suggested to inhirt from applicationException calsss
+
+syntax :
+	public class DivdeByOdd : ApplicationException
+	{
+	// there is a propety called Message, whihc uh can ovverride, its only readOnly property
+	public overirde string message 
+	{
+		get
+		{
+			return "your error msg"; 
+		}
+	}
+	}
+
+
+now uh can throw a instance of the DivideByOdd calss, and catch will catch the instance
+
+throw new divideByodd(); // this will be thorwn and the msg wil get printed.
+
+so here programmer is making the instance of its won exception class and throwing it.
+
+
+
+
+--------SYSTEM EXCEPTIONS--- EG-------------------------------
+
+
+
+Exception				Definition							Example
+NullReferenceException			Thrown when trying to access a member of a null object.	 	string str = null; Console.WriteLine(str.Length); // Throws 														NullReferenceException
+
+ArgumentException			Thrown when an invalid argument is passed to a method.		void PrintName(string name) { if (string.IsNullOrWhiteSpace(name)) 													throw new ArgumentException("Name cannot be empty."); } 														PrintName(""); // Throws ArgumentException
+
+ArgumentNullException	Thrown when a method receives a null argument when it shouldn't.	csharp void ProcessData(string data) { if (data == null) throw new ArgumentNullException(nameof(data)); } ProcessData(null); // Throws ArgumentNullException
+ArgumentOutOfRangeException	Thrown when an argument is outside the allowed range.	```csharp void SetAge(int age) { if (age < 0
+IndexOutOfRangeException	Thrown when accessing an invalid index in an array or list.	csharp int[] numbers = {1,2,3}; Console.WriteLine(numbers[3]); // Throws IndexOutOfRangeException
+DivideByZeroException	Thrown when dividing an integer or decimal by zero.	csharp int a = 10, b = 0; int result = a / b; // Throws DivideByZeroException
+FormatException	Thrown when a string has an invalid format for conversion.	csharp string input = "abc"; int number = int.Parse(input); // Throws FormatException
+InvalidOperationException	Thrown when an operation is not valid for the current state.	csharp var queue = new Queue<int>(); int item = queue.Dequeue(); // Throws InvalidOperationException
+IOException	Thrown when an I/O operation fails (e.g., file not found).	csharp using System.IO; File.ReadAllText("nonexistent.txt"); // Throws IOException
+StackOverflowException	Thrown when there is infinite recursion or deep method calls.	csharp void RecursiveFunction() { RecursiveFunction(); } RecursiveFunction(); // Throws StackOverflowException
+OutOfMemoryException	Thrown when the system runs out of memory due to excessive allocation.	csharp byte[] largeArray = new byte[int.MaxValue]; // Throws OutOfMemoryException
+NotImplementedException	Thrown when a method is declared but not yet implemented.	csharp void SomeMethod() { throw new NotImplementedException(); } SomeMethod(); // Throws NotImplementedException
+
+
+--------
+EG:
+📌 Example: Nullable Types
+int? num1 = null;
+int? num2 = 0;
+var result = num1 / num2;  // result will be null, will not throw DevideByZero
+
+✅ Explanation:
+In C#, nullable types (int?, double?, etc.) can hold a null value.
+When you perform arithmetic operations involving null, the result is always null unless explicitly handled.
+If you try to perform null / 0 with nullable types, no exception is thrown, and the result is simply null.
+
+ Why does null / 0 with nullable types result in null?
+Nullable Types Handling:
+Nullable types (int?, double?, etc.) are essentially wrappers around the original value type (int, double, etc.) that allow them to hold a null value.
+When you perform an operation involving a null nullable type, the operation short-circuits and returns null as the result, rather than throwing an exception.
+Operator Overloading for Nullable Types:
+The C# compiler treats operations involving nullable types differently using operator overloading and null-propagation rules.
+
+
+❌ But, with non-nullable types:
+int num1 = 0;
+int num2 = 0;
+var result = num1 / num2;  // This will throw a DivideByZeroException.
+
+------------

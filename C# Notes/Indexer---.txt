@@ -1,0 +1,94 @@
+INDEXERS
+
+INDEXERS : is a member of a class, and if uh define an indexer in your calss, your class will behave like a virtual array.
+-so indexer is a member which gives acess to values of a class just like array and your calss starts behaving like a Virtual Array.
+-Means uh can acess the properties (variables data) using the indexes like array.
+
+SYNTAX TO DEFINE INDEXERS :
+
+	Modifiers <type> This[int index]
+	{
+		get;
+		set;
+	}
+ 
+-So in <type> usevally  we Write object so that we can return any value through the indexer
+-"this" tells us that we are defining the indexer on the currect class. 
+-We will provide acees to the variables of the calss through Indexes.
+
+EG:
+
+class Employee
+{
+  int eno;
+  double sal;
+  string name, job;
+  public Employee(int eno, int sal, string name, string job)
+  {
+	this.eno = eno;
+	this.name = name;
+	this.sal = sal;
+	this.job = job;
+  }
+
+//this is indexer, Indexer is not any type
+  public object this[int index]//defining indexer for get access
+  {
+      get{//implementation of get acces using index
+	if(index == 0)
+		return eno;
+	else if(index == 1)
+		return name;
+	else if(index == 2)
+		return sal;
+	else if(index == 3)
+		return job;
+	//so tht we can return all types of values we have set the return type of the indexer as object. 	
+      }
+
+      set{
+	if(index == 0)
+	  eno = (int)value; //"value" is one implicit variable, tht provides acces to the user enter value of that variable, and data type of value will be same as that of the property(in our case its indexer), so we are converting the "value" to int
+	else if(index == 1)
+	  name = (string)value;
+	else if(index == 2)
+          sal = (int)value;
+	else if(index == 3)
+    	  job = (string)value;
+
+      }//we have implemented set acess also using indeices, so now uh can even set the variables using array like indices with the object
+  }
+}
+
+class program
+{
+   static void Main(1001, "Vishwajeet", 800000, "SDE")
+   {
+	Employee obj =  new Employee(1001, "Vishwajeet", 800000, "SDE");
+	CWL("employee no :" + obj[0]);
+	CWL("employee name" + obj[1]);
+	CWL("employee sal " + obj[2]);
+	CWL("employee job " + obj[3]);
+//So uh can acess the member of calss using the indexer acess(indices like array)
+	obj[2] = 1000000; //uh can assign valut to salary feild by accessing the 2 nd index.
+
+   }
+}
+
+-uh can also overload this indexer by sending different types of parameter in [] , like
+EG :
+public object this[int index]
+{
+//code to compare with the index and return it
+}
+
+public object this[string s]
+{
+//now compare with the s and return the values according to that s
+//uh can access the feileds like eg: 
+//obj["name"] like this becoz our index is type of string
+}
+
+
+-indexer is noth but a kind of function only and uh can even overload it.
+	

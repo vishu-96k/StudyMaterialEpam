@@ -1,0 +1,96 @@
+ITIL 2---
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : ITIL THEORY📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] ITIL HISTORY
+
+📌AXELOS company
+-AXELOS is a company that manages and develops best practice frameworks like ITIL, PRINCE2, and others.
+-Current ongoing version of ITIL is v4. But we will study v3 version.
+
+📌What is ITIL :
+-ITIL (Information Technology Infrastructure Library) is a set of best practices to help organizations manage IT services better.
+-Curreently the version of ITIL framweok is v4
+
+-Why ITIL Was Created
+Problem in the 1980s: Many UK government IT projects were failing—over budget, poor quality, or completely abandoned.
+Need: A standardized way to manage IT services to improve efficiency, quality, and reduce failures.
+Purpose: Provide best practices for IT service management (ITSM)—from planning to delivery and support.
+
+-Who Started ITIL?
+Started by: The UK Government
+Organization: CCTA (Central Computer and Telecommunications Agency) — now part of the UK Cabinet Office
+Initial Goal: Help government departments improve the quality of IT services.
+
+📌ITIL :
+-What is TIL ?
+-ITIL is noth but a set of process which are optimized, seqtial, and available to make sure that uh can accomodate the esisting service needs  
+-SYSTEMATIC :ITIl is a systematic approcach for providing high quality of IT service delivary
+-DOCUMENTED : ITIL is basically docuenting the best practice for IT service management
+-ITIL is basiclly best practice of delivaring IT services to the end user by inclimenting the best practices for documentation as part of Service management.
+ITIL provides the common languge with well denied terms, and this was developed in 1980s, to be more specific in 1987 by the govt of UK.
+-Earliry ITIL was a LIBRARY with 30 books in UK.
+-Information technology infrastructure management library, is a set of best practices for managing IT services.
+
+📌HISTROY :
+-ITIL is a pre hitroric condition in UK.
+-there was one university which was having a huge library, and It was becoming very difficult to manage the services of that libray.
+-In that library there were many blocks, library was divide by rows to columns, and having many blocks in one row, there were many partitions also. For the libray and team it was becoming very difficult to make sure that there is sequential approach or pattern to be given for keeping the books, and keep a track of what is available and what is not .
+-So they derived this Practice called ITIL there for managing the libray in the Uk.
+-the library university was a LAW based university in UK, And very soon they converted it into govt controlled LAW based university.
+-all this happen in 1980s.
+-So in the end they wanted a systematic approach in order to meet the need of the end user, is fulfilled, and the services are maintained.
+-So it was made so that none of the single person is turned to be short of what he or she wants.
+-so the library was maintained, in form of sections, rows and columns , and copies were keept in the departments, and for eg, if it was a navy sections, then in that sections all the books related to the navy were keept, like this they maintained the library.
+
+-ITIL is derived form this, which is now used for providing the best IT servies, as a bussness offring to any client who needs to establish his bussneiss.
+-The end goal of ITIL is to meet the requrienments of the end user. 
+  
+-in 1980s, 40 publications were there in ITIL.
+-v2 (2000 to 2002): in v2 version there were 8 books in this, and it came in 2002
+
+v3 (2007) : 
+-with consisting only of 5 books, and these 5 books were the 5 stages
+-In this version ITIL was much simplified .	
+-This version has many releases, like how do uh have peoduct relases like 2.2 , 2.3 relase like this. 
+-This version was meeting the ISO standards.
+
+
+📌DEFINATIONS :
+SERVICE : 
+-Service is noth but delivering value to the customer.
+-So service is delivering the values to the customer by facilating the outcomes customers wants to achive end goal/ or product without the ownership of the specific costs and ricks.
+- for eg : "BackUp Service" it means that you dont have to care about how much tapes, disks or robots cost and you dont have to worry if one of the staff is off sick or levaes.
+-Service is a term, which the service provider will offer to the bussiness owners. Bussniess owners will come into establishment with the servie provider where the service provides, once the bussniess is actually given to the bussneiss provider , they will deliver value to the customers by facilitating  all the outcomes for their customers who wants to achive the goals without any ownership of costs and risks.
+-so customer will just have the deal with the provides, and oroviders will have to make sure that they deliver the best service to them without any risks.
+ 
+SERVICE LEVEL :
+-Service level is actually measured and reported achievement against one or more service level targets 
+Its actually measuring a value of services uh deliver.
+EG : Red = 1 hour responce 24/7
+     Amber = 4 hour response 8/5(that is 8 hours, from mon to friday)
+     Green = Next business day
+
+KEY PERFORMANCE INDICATORS(KPIs) :
+-KPIs are the quantifiable measurements that reflect the critical success factors of an organisation
+
+SERVICE LEVEL ARGREEMENT :
+-Its a sign agreement between the service provider and the customer.
+ 
+CONFIGURATIONAL MANAGEMENT SYSTEM :

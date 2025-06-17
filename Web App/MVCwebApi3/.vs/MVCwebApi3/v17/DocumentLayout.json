@@ -1,0 +1,127 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|c:\\users\\vishwajeetjaysingh_g\\desktop\\web app\\mvcwebapi3\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Views\\Users\\Login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|solutionrelative:Views\\Users\\Login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Views\\Users\\Create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|solutionrelative:Views\\Users\\Create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\App_Start\\RouteConfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|solutionrelative:App_Start\\RouteConfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Views\\Users\\Index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|solutionrelative:Views\\Users\\Index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Models\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D475A093-06B4-4D85-A363-0C2A12AC13CC}|MVCwebApi3.csproj|solutionrelative:Models\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Controllers\\UsersController.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAQwLwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T05:45:07.209Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Views\\Users\\Login.cshtml",
+              "RelativeDocumentMoniker": "Views\\Users\\Login.cshtml",
+              "ToolTip": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Views\\Users\\Login.cshtml",
+              "RelativeToolTip": "Views\\Users\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-10T05:56:37.228Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Views\\Users\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\Users\\Create.cshtml",
+              "ToolTip": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Views\\Users\\Create.cshtml",
+              "RelativeToolTip": "Views\\Users\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-10T05:56:10.122Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RouteConfig.cs",
+              "DocumentMoniker": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\App_Start\\RouteConfig.cs",
+              "RelativeDocumentMoniker": "App_Start\\RouteConfig.cs",
+              "ToolTip": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\App_Start\\RouteConfig.cs",
+              "RelativeToolTip": "App_Start\\RouteConfig.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABIAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T05:48:42.099Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Views\\Users\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Users\\Index.cshtml",
+              "ToolTip": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Views\\Users\\Index.cshtml",
+              "RelativeToolTip": "Views\\Users\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAiwAgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-10T05:47:23.733Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\Users\\vishwajeetjaysingh_g\\Desktop\\Web App\\MVCwebApi3\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T05:40:45.91Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

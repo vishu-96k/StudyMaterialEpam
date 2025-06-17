@@ -1,0 +1,406 @@
+MULTITHREADING PART 3
+
+-----------ThreadPool---
+
+ThreadPool : it is a class in under the system.threading Namespace.
+-baslically uh will have n number of Threads in a group, which is refer as pool
+-The number of threads (N) is managed by the .NET runtime and can increase or decrease based on the workload.
+-ThreadPool is basically uh will have a team of threads(Group of threads) by defalut, and without creating new threads manually and then deleting them (foing Thread management manully), Uh can use the THreads from the pool
+-The ThreadPool is essentially a team of threads (a group of threads) that is already created and managed by .NET runtime
+-So when uh want to run a funtion on a Thread, uh will give that fun to the ThreadPool and any Thread which is avaible from tht ThreadPool, will execute the task.
+-The pool has two types of threads:
+1)Worker Threads :(for CPU-bound tasks like calculations, data processing, etc.)
+2)I/O Threads : (for I/O-bound tasks like file reading, network calls, etc.)
+
+📌 How ThreadPool Works
+The ThreadPool maintains a pool of worker threads and I/O threads.
+When a task is submitted, the ThreadPool assigns it to an available thread.
+If all threads are busy, the task is queued until a thread becomes available.
+It adjusts the number of threads dynamically depending on workload and system resources.
+
+🔍Key Characteristics of ThreadPool
+Automatic Thread Management: The runtime dynamically adjusts the number of threads based on workload and availability.
+Thread Reuse: Instead of creating a new thread every time, it reuses idle threads from the pool.
+Efficient Resource Utilization: It minimizes the overhead associated with thread creation and destruction.
+Asynchronous Execution: Ideal for short-lived operations like I/O-bound tasks, background tasks, timers, etc.
+No Direct Control: Threads are managed by the CLR, so you can’t set priorities or control their lifecycle directly.
+
+Common Methods in ThreadPool Class
+Method	Description
+ThreadPool.QueueUserWorkItem()		Queues a method for execution on a thread pool thread.
+ThreadPool.GetAvailableThreads()	Gets the number of available worker and I/O threads.
+ThreadPool.GetMaxThreads()		Retrieves the maximum number of threads in the pool.
+ThreadPool.GetMinThreads()		Retrieves the minimum number of threads in the pool.
+ThreadPool.SetMaxThreads()		Sets the maximum number of threads in the pool.
+ThreadPool.SetMinThreads()		Sets the minimum number of threads in the pool.
+
+📌 When to Use ThreadPool
+When tasks are short-lived and do not require complex thread management.
+For asynchronous I/O operations, background tasks, timers, etc.
+When you need a fire-and-forget approach to execute a method.
+
+
+❌ Limitations
+Not suitable for long-running tasks, as it can block the pool from processing other tasks.
+Lack of control over thread priorities and scheduling.
+Limited to system-defined maximum threads.
+
+SYNTAX For ThreadPool function Assigning:
+	ThreadPool.QueueUserWorkItem(function, ParameterOfFunction);//this method will Allocate the function to the threads from the Pool, any thread from the pool will run this method.
+-The parameter of the Function can be directly pass with the function in this case, And remember the Fucntion should be having the same singnature as of the WaitCallBack Delegate, So uh can pass only one parameter that to of the Object type.
+
+-Uh need not have to create obj of Thread class, and then Start the Thread, or even uh dont get control to set priorities, not even the join method, when uh use the ThreadPool
+-Uh have to Diorectly call the QueueUserWorkItem(delegate) method, which is a static method of threadPoll class, and assign the Function to the ThreadPoll, which uh want to call using The thread.
+-Uh dont get any control when uh use Threadpool, everything is managed by the CLR, like starting teh thread, Asborting it, deleteing it, freeing the thread after execution.
+
+DEFINATION QueueUserWorkItem() FUNCTION SYNTAX:
+	public static bool QueueUserWorkItem(WaitCallback callBack); //For no parameters in the WaitCallBAck
+	public static bool QueueUserWorkItem(WaitCallback callBack, object state); //For the parameters which is of the Object type and as this waitClassBack is delegate, its taking the delegate parameter
+
+-WaitCallBack : is a delegate which the fun takes in as parameter, And here uh have to bind the Function with this delegate and send the delegates obj as the parameter. But uh can also seed the function  directly, becoz the binding is done by CLR implicitly.
+-The second parameter is the funcation parameter of the delegate parameter which the fun takes in.
+-the name of the delegate is "WaitCallBack".
+-Explicitly uh can also bind the function to teh obj of the WaitCallBack delegate
+ 	WaitCallback workItem1 = new WaitCallback(Test);
+        
+-Where Test() is the function.
+
+
+WAITCALLBACK DELEGATE SYNTAX :
+	public delegate void WaitCallback(object state);
+
+
+------------------------------FOREGROUND AND BACKGROIUND THREAD-------------------
+
+🔍 Foreground Thread
+Definition: A thread that keeps the application running even if all other threads have completed their execution.
+-So even if the main thread is finishing its execution, Until the foreground thread finishes the execution, the application will be running.
+-So until this foregrounf Thread is finishing its execution, The application will be running.
+-By deafalt all the threads are Foregrount threads, util uh mark the "IsBackground" property as true.
+-So all the threads execute even after the main thread finishes the execution, becoz all are foreground thread.
+
+🔍 Background Thread
+application will not wait for the background thread to finish its execution, Like in case of foreground thread it waits for the work to finish
+Definition: A thread that does not prevent the application from terminating. If all foreground threads finish, the application ends even if background threads are still running.
+-So if all the FOreground threads finishes the execution, the application gets terminated, No matter wether the background threads are still working or finished their working
+-So, backgrounf threads are the threads, which does not stop the application from termination, even if they are working
+-So it mighit happen that the Background thread works doesn't get complete always
+
+
+ Why the Background Thread Didn't Complete:
+The Main thread ends immediately after starting both threads.
+Since the BackgroundThread is a background thread, the application shuts down without waiting for it to complete.
+The ForegroundThread completes because it's a foreground thread, so the application waits for it to finish.
+
+EG:
+ static void Main()
+    {
+        // Foreground Thread
+        Thread foregroundThread = new Thread(ForegroundTask);
+        foregroundThread.IsBackground = false; // Explicitly setting as foreground (default is false)
+        foregroundThread.Start();
+
+        // Background Thread
+        Thread backgroundThread = new Thread(BackgroundTask);
+        backgroundThread.IsBackground = true; // Setting as background thread
+        backgroundThread.Start();
+
+        Console.WriteLine("Main thread ends.");
+    }
+
+    static void ForegroundTask()
+    {
+        for (int i = 1; i <= 5; i++)
+        {
+            Console.WriteLine($"Foreground Thread: Working {i}/5...");
+            Thread.Sleep(1000); // Simulate work
+        }
+        Console.WriteLine("Foreground Thread completed.");
+    }
+
+    static void BackgroundTask()
+    {
+        for (int i = 1; i <= 10; i++)
+        {
+            Console.WriteLine($"Background Thread: Working {i}/10...");
+            Thread.Sleep(1000); // Simulate work
+        }
+        Console.WriteLine("Background Thread completed.");
+    }
+
+
+-uh will see that until the foreground thread finishes teh application will be running
+-But the application will not wait for the background thread to finish its execution
+
+------------------------------TASK AND THREAD--DIFFRENCE--------
+🔍 Thread
+Definition: The basic unit of execution managed by the operating system. Each thread has its own stack, memory, and execution context.
+Creation: Created using the Thread class (System.Threading.Thread).
+Purpose: Primarily used for low-level control over threading (e.g., custom thread management, background processing).
+Blocking: Threads are typically blocking unless explicitly made non-blocking.
+Lifetime Management: The developer is responsible for starting, managing, and terminating threads.
+Cost: More resource-intensive due to direct interaction with OS-level threads.
+Use Case: Long-running, CPU-bound operations requiring low-level control.
+
+
+🔍 Task
+Definition: A higher-level abstraction over threads, part of the Task Parallel Library (TPL) (System.Threading.Tasks).
+Creation: Created using the Task class.
+Purpose: Designed for asynchronous programming and parallel operations with easier management of tasks.
+Blocking/Non-Blocking: Supports both blocking and non-blocking operations (await keyword for non-blocking).
+Lifetime Management: Automatically managed by the Task Scheduler, which uses a pool of threads (ThreadPool).
+Cost: More efficient in resource management due to thread pooling and automatic scheduling.
+Use Case: Asynchronous I/O operations, data processing, parallel loops, etc.
+
+
+🔑 Key Differences
+Aspect			Thread							Task
+Abstraction Level	Low-level (Direct OS interaction).			High-level (Managed by TPL).
+Creation		new Thread(() => { ... }).				Task.Run(() => { ... }).
+Management		Manual control (start, join, etc.).			Managed by TaskScheduler.
+Resource Usage		More resource-intensive.				Efficient with ThreadPool.
+Blocking/Non-blocking	Typically blocking.					Can be non-blocking (async/await).
+Exception Handling	Must be handled explicitly.				Supports try-catch with async/await.
+Use Case		Low-level threading, long-running CPU-bound tasks.	Asynchronous I/O, parallel processing, responsive UI.
+Thread Pool Usage	No (unless manually used).				Yes (automatic).
+
+
+-----------------------------PARALLEL PROGRAMMING AND CONCURENT EXECUTION-----
+
+✅ Parallel Programming:
+What It Means:
+parallel programming means running diff tasks on Diff cores of the CPU, Means True parallelism 
+Tasks are executed simultaneously on different cores of the CPU
+-It's all about true parallelism — actually performing multiple operations at the same time.
+Paralel Execution :  it is multi threading, Basically ur using multiple threads to run your FUcntions independently of CPU resources.
+-Definition: It involves executing multiple tasks simultaneously across multiple threads or processors to increase performance.
+-Use Case: Suitable for CPU-bound operations where tasks are independent and can be run at the same time (e.g., data processing, mathematical computations).
+-Example Tools: Parallel.For, Parallel.ForEach, Task Parallel Library (TPL).
+EG:
+ static void Main()
+    {
+        Parallel.For(0, 10, i =>
+        {
+            Console.WriteLine($"Processing item {i} on thread {Task.CurrentId}");
+        });
+
+        Console.WriteLine("All items processed.");
+    }
+
+-So when uh run diff fun using diff thread, ur doing parallel execution
+
+✅ Asynchronous Programming (Concurrent Execution):
+What It Means:
+Definition: Executing tasks concurrently by non-blocking, cooperative multitasking. The CPU switches between tasks as needed.
+Asynchronous means Context Switching, means we are Switching the CPU resources between multiple Tasks, when any one task is going for I/O opretions, so that the CPU is not ideal
+Tasks are executed concurrently by switching between tasks without blocking the main thread.
+It does not mean true parallelism. Instead, it's about being efficient with resources by performing other work while waiting for I/O-bound tasks to complete.
+
+Aspect				Parallel Programming					Asynchronous Programming
+Execution Mechanism		Uses multiple threads on different CPU cores .		Uses a single thread or thread pool with 							(True Parallelism)					task switching (Context Switching).
+
+Performance Improvement		Best for CPU-bound operations.				Best for I/O-bound operations.
+
+Example Tools			Parallel.For, Parallel.ForEach, Task.Run() .		async/await, Task, Task.WhenAll().
+				with Task Parallel Library (TPL)
+
+Blocking			Tasks are truly simultaneous.				Tasks are non-blocking, but not necessarily simultaneous.
+
+Execution Type			True simultaneous execution (Multithreading).		Cooperative multitasking (Task switching).
+
+Use Case			CPU-bound tasks.					I/O-bound tasks.
+
+API Used			Parallel.For, Parallel.ForEach, Task.Run().		async/await, Task, Task.WhenAll().
+
+Performance Benefit		Better when tasks are independent and can be divided.	Better when tasks involve waiting (e.g., I/O operations).
+
+Thread Management		Requires threads for each task.				May use a single thread with task switching
+
+
+🚦 When to Use Which?
+Use Parallel Programming when:
+You need to speed up CPU-bound operations.
+Tasks are independent and can be executed in parallel.
+
+Use Concurrent Execution (Async) when:
+You are dealing with I/O-bound operations (e.g., network calls, database queries).
+You want to avoid blocking the main thread while waiting for long-running tasks.
+
+🚦 When to Use Which?
+Use Threads When:					Use Tasks When:
+You need low-level control over threading.		You need to perform asynchronous I/O operations.
+Tasks are long-running and CPU-bound.			You want to use async/await for non-blocking operations.
+You need to manage background threads manually.		You prefer automatic scheduling and thread pooling.
+You need to work with Thread priorities, Affinity, etc..	You need better exception handling and scalability.
+
+
+Aspect			Thread									Task
+Definition		Represents a low-level unit of execution that runs independently.	Represents a higher-level abstraction for performing													 asynchronous or parallel operations.
+
+Namespace		System.Threading							System.Threading.Tasks
+
+Creation		Explicitly created using new Thread() and started with Start().		Created using Task, Task.Run(), Task.Factory.StartNew().
+
+Usage			Suitable for CPU-bound operations requiring manual thread management.	Suitable for both CPU-bound and I/O-bound operations with 												automatic management.
+
+Execution Context	Runs on a dedicated thread.						Runs on a thread pool thread by default.
+
+Performance		Lower performance due to manual thread management and context 		Higher performance and efficiency with automatic 				switching.								management by the Task Scheduler.
+
+Synchronization		Requires manual synchronization using locks, mutexes, etc.		Built-in support for asynchronous operations and easy 													continuation handling.
+
+Cancellation		Harder to cancel and monitor.						Supports cancellation with CancellationToken.
+
+Exception Handling	Requires manual handling.						Supports exception handling via try-catch within 													async/await.
+
+Parallel Programming	Direct use of multiple threads for parallelism.				Uses TPL (Task Parallel Library) for efficient parallelism.
+
+Return Value		Does not return a result (requires use of shared variables).		Can return a value using Task<TResult>.
+
+
+--------------------------------CPU CORES, TOTOL THREADS, WAITING------
+
+1)CountDownEvent class:
+-CountdownEvent is a class in C# that belongs to the System.Threading namespace. It is a synchronization primitive used for managing multi-threaded operations.
+-this class basically keeps Main thread in waitng for the ThreadPool threads, till the finish taks, becoz uh dont have control over Them
+-If uh use this, the main Thread will wait (when uh cant use Thread.join() function that time uh can use it), Until all the background and foreground tasks are completed.
+-Think of it like a countdown timer that starts with a given number and counts down to zero. When it reaches zero, any waiting threads are released.
+-🔹 How Does CountdownEvent Work?
+You initialize CountdownEvent with a count (number of tasks to wait for).
+When a task completes, it signals (Signal()) to decrease the count.
+The main thread waits (Wait()) until the count reaches zero.
+Once the count is zero, execution continues.
+-Threadpool is a way to work with the threads, without creation, deletion, Join, managning them.
+-Its used with the ThreadPool, When uh dont create thread and uh dont have control over the thread, and uh even cant use the T1.join() method.
+
+SYNTAX :
+    static int totalTasks = 5; // Number of tasks, Or the number of Thread uh wanna Assign Task from the ThreadPool
+    static CountdownEvent countdown = new CountdownEvent(totalTasks); // Initialize countdown
+
+EG:
+using System;
+using System.Threading;
+
+class Program
+{
+    static int totalTasks = 5; // Number of tasks
+    static CountdownEvent countdown = new CountdownEvent(totalTasks); // Initialize countdown
+
+    static void TaskToRun(object obj)
+    {
+        int taskId = (int)obj;
+        Console.WriteLine($"Task {taskId} started on Thread {Thread.CurrentThread.ManagedThreadId}");
+        Thread.Sleep(2000); // Simulating work
+        Console.WriteLine($"Task {taskId} completed.");
+
+        countdown.Signal(); // Decrement the count
+    }
+
+    static void Main()
+    {
+        Console.WriteLine("Starting tasks...");
+        for (int i = 0; i < totalTasks; i++)
+        {
+            ThreadPool.QueueUserWorkItem(TaskToRun, i);
+        }
+
+        countdown.Wait(); // Wait for all tasks to finish, and Main Thread will be waitng 
+        Console.WriteLine("All tasks completed.");
+    }
+}
+
+🔹 Expected Output
+Starting tasks...
+Task 0 started on Thread 3
+Task 1 started on Thread 4
+Task 2 started on Thread 5
+Task 3 started on Thread 6
+Task 4 started on Thread 7
+Task 0 completed.
+Task 1 completed.
+Task 2 completed.
+Task 3 completed.
+Task 4 completed.
+All tasks completed.
+
+ ThreadPool.QueueUserWorkItem(TaskToRun, i);
+Definition:
+ThreadPool.QueueUserWorkItem() is used to assign a task to the ThreadPool.
+
+How It Works in This Code:
+ThreadPool.QueueUserWorkItem(TaskToRun, i);
+Adds the TaskToRun method to the ThreadPool queue.
+Passes i (task ID) as an argument to the task method.
+The ThreadPool picks an available thread and executes the method.
+If all CPU cores are busy, the ThreadPool waits until a thread is free.
+
+🔹 Commonly Used Methods of CountdownEvent
+
+Method				Description
+new CountdownEvent(int count)	Creates a CountdownEvent with an initial count.
+Signal()			Decrements the count by 1.
+Signal(int count)		Decrements the count by a specified count.
+Wait()				Blocks the current thread until the count reaches zero.
+Reset(int count)		Resets the counter to a new value.
+CurrentCount			Returns the current count of the event.
+
+
+---------------------------------RELATION CPU CORES/THREADS------------
+
+1️⃣ What is a CPU Core?
+A CPU core is a physical processing unit that executes instructions.
+Modern CPUs have multiple cores (dual-core, quad-core, etc.), allowing them to run multiple tasks in parallel.
+More cores = better multitasking and improved performance.
+Example:
+Single-core CPU → Can handle one task at a time.
+Quad-core CPU → Can handle four tasks simultaneously.
+
+2️⃣ What is a Thread?
+A thread is the smallest unit of execution within a process.
+A CPU core can run one or more threads at a time.
+Multithreading allows multiple threads to run concurrently.
+Types of Threads
+Hardware Threads (Logical Cores)
+If a CPU supports Hyper-Threading (Intel) or SMT (AMD), each core can run two threads simultaneously.
+Example:
+A 4-core CPU with Hyper-Threading has 8 logical processors (threads).
+
+Software Threads
+Created by programs for parallel execution.
+Managed by the operating system and thread scheduler.
+
+3️⃣ Relation Between CPU Cores and Threads
+Without Hyper-Threading → 1 Core = 1 Thread
+With Hyper-Threading → 1 Core = 2 Threads
+ThreadPool uses available threads to optimize workload across cores.
+
+4️⃣ How to Get CPU Core and Thread Count in C#?
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("CPU Cores: " + Environment.ProcessorCount); //This Environmet.ProcessorCount gives uh the Maximum CPU core of ur Machin
+
+        ThreadPool.GetMaxThreads(out int workerThreads, out int ioThreads); //This gives uh the Total number of Io and Worker Threadas available in the Trheadpool
+        Console.WriteLine($"Max Worker Threads: {workerThreads}");
+        Console.WriteLine($"Max IO Threads: {ioThreads}");
+	Console.WriteLine(Thread.CurrentThread.ManagedThreadId); //Thread.CurrentThread.ManagedThreadId is used to identify the thread that is executing the current task.Every thread in .NET has a unique numeric ID. This helps in tracking which thread is executing a particular task.
+    }
+}
+
+🧠 How Many Threads to Create for Optimal Performance?
+Since your system has 8 CPU cores, the number of threads you should create depends on the type of task you are running:
+CPU-Bound Tasks (Heavy Computation) → Use Threads ≈ CPU Cores
+Example: Mathematical calculations, encryption, compression, machine learning.
+🔹 Ideal Thread Count: ≈ 8 (equal to core count)
+Reason: More threads than cores will cause unnecessary context switching and slow down performance.
+
+I/O-Bound Tasks (Waiting for Input/Output) → Use More Threads
+Example: File operations, database queries, network calls.
+🔹 Ideal Thread Count: Much higher (e.g., 2x to 10x cores)
+Reason: While one thread waits for I/O, other threads can execute.
+
+-IN-SHORT : if ur CPU is Having 8 Core
+For CPU-heavy tasks → Set Threads = Cores (8).
+For Mixed tasks → Set Threads = Cores × 2 (16).
+For I/O-heavy tasks → Set Threads = Cores × 4 or more (32+).

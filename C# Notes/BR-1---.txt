@@ -1,0 +1,40 @@
+BR-1---
+BANGAR RAJU VIDEO 1
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH :INTRO DOT NET📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1]Dot NET INTRO 
+
+📌What is Dot Net
+-Dot net is a software, or a product of microsoft devloeped for making application.
+-So uh used it for devlopging any kinf of application, like desktop() ,  Web() , Console () , mobile () etc, all this uh can make by using Dot et framwork
+
+-TYPES OF APPLICATION :
+WEB : ASP, JS, Java
+MObile :
+Desktop : CPP 
+
+PROBEM WITH OLDER PROGRAMMUING LANGUAGE :
+-Languages like c/CPp, java, is that we canot use the same language for devloping all the types of application, we need to use diff lanuage for diff type of application.
+EG : For devoping desktop application, we need to use CPP, but these cpp lanuage is not fisible for devloping web application
+     For devloping web applciation we reqiuired to take support of JS, or PHP, ASP etc.
+     For devloping mobile applicaiton uh need to use some other language like 
+
+So the solution for this problem was Dot Net, becoz as a programmer uh need to learn diffrrent languages for devoping diff types of application.
+-So microsoft came up with DotNet, in which uh can built all types of applications, becoz dotNet supports more then 50 languages. 

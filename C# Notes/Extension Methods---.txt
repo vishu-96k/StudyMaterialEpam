@@ -1,0 +1,13 @@
+--EXTENSIONS METHOD--
+-This is a new feature that has been added in C# 3.0
+-Inheritance is one meachanism using which we can extend the functionalities of the class.
+-But when the class is sealed class, then we cannot apply inheritance on sealed class.
+-We cannot apply inheritance on structure 	
+-if we want to extend the functionality of a structure not a classs then also we cannot do inheritance. If the original tyope is not a class, its a structure.
+-so if it is a sealed class or a structure then we cannot extend the functionality of that class or structure.
+-If we extend the functionality of a class using inheritance then also we can call the extendent methods only by using the object of the child class not by the object of the parent class.
+-So we have extensions MEthods
+
+EXTENSION METHODS : 
+-this is a new feature in C# 3.0
+-Its a mechanism of adding new methods 

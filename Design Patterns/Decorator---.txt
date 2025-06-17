@@ -1,0 +1,582 @@
+✅DECORATOR DESIGN PATTERN :
+The Decorator Design Pattern is a structural design pattern that allows behavior to be added to an individual object, dynamically, without affecting the behavior of other objects from the same class.
+-In simple words, we will create a "Has A realtion" between the classes insted of creating the inheritance.
+-mtlab ham log exixting object ko decorate karenge  by overrideing the exixtsing functions .
+
+
+EXPLANATION ----:
+📌 1. Structural Design Pattern
+🔷 Design patterns are categorized into three main types:
+Creational (e.g., Factory, Singleton)
+Structural (e.g., Decorator, Adapter, Composite) :menns "HAS A relation" ship(class will have another classs object)
+Behavioral (e.g., Observer, Strategy, Command)
+🔷 Structural design patterns deal with object composition — they help form large structures from smaller ones.
+🔷 These patterns focus on how classes and objects are composed to form larger structures.
+ In Decorator:
+It structures the code in a flexible and extensible way so we can wrap one object within another to add functionality.
+📦 Think of it like nesting boxes — each box can add something new to what's inside it.
+
+
+📌 2. "Behavior to be added to an individual object"
+🔷 Normally, if you want to add new functionality to a class, you:
+Add methods or properties (modifying the class)
+Inherit the class and extend it
+🔷 Problem: This affects all instances of that class and increases coupling.
+🔷 Decorator solves this by allowing you to wrap one specific object with new functionality without changing the class or affecting other objects.
+Real-Life Example:
+Imagine a coffee shop:
+You have a Coffee class.
+You can decorate it with Milk, Sugar, or WhippedCream.
+Each decoration is applied to an individual coffee object — not all Coffee objects.
+
+
+📌 3. "Dynamically"
+🔷 This means at runtime, not at compile time.
+🔷 You can decide during execution what functionalities to add.
+EG:
+Coffee myCoffee = new MilkDecorator(new SugarDecorator(new SimpleCoffee()));
+//You are decorating your coffee with sugar and milk at runtime.
+
+
+
+📌 4. "Without affecting other objects from the same class"
+🔷 This is the beauty of the pattern.
+🔷 You decorate only the object you want. Other objects stay untouched.
+EG:
+Coffee c1 = new SugarDecorator(new SimpleCoffee());   // Sweet Coffee
+Coffee c2 = new MilkDecorator(new SimpleCoffee());    // Milky Coffee
+Coffee c3 = new SimpleCoffee();                       // Plain Coffee
+
+c1, c2, and c3 are all instances of the same base type (Coffee)
+Only c1 is sweet, only c2 has milk
+c3 is plain — it wasn’t affected at all!
+
+
+
+✅ Summary in Simple Points
+
+Concept			Explanation
+Structural Pattern	Focuses on how objects are composed to form larger structures
+Individual Object	Only the specific object gets new behavior, not the entire class
+Dynamically		Behavior is added at runtime, not compile time
+No Side Effects		Other instances of the same class remain unaffected
+Flexible & Scalable	You can add unlimited combinations of behaviors by composing decorators
+
+
+
+📌 Real-Life Analogy: Coffee Shop
+Imagine you're at a coffee shop:
+You order a basic coffee ☕.
+Then, you want to add milk, sugar, or chocolate to it.
+Instead of creating a separate class for every combination (e.g., CoffeeWithMilkAndSugarAndChocolate), the coffee shop adds decorations (milk, sugar, chocolate) to your basic coffee object at runtime.
+🔷 The coffee is the base component.
+🔷 Milk, sugar, and chocolate are decorators that add behavior or modify the output.
+
+
+
+📌 Why Use the Decorator Pattern?
+🔷 To add responsibilities to objects dynamically at runtime.
+🔷 To follow the Open/Closed Principle (open for extension, closed for modification).
+🔷 To avoid a large number of subclasses for every combination of behavior.
+🔷 To combine behaviors flexibly and cleanly without modifying existing code.
+
+
+📌 When to Use the Decorator Pattern?
+🔷 When you want to add or remove responsibilities from an object dynamically.
+🔷 When you want to use composition over inheritance to extend behavior.
+🔷 When subclassing would lead to an explosion of subclasses.
+
+
+📌 Benefits of Decorator Pattern
+🔷 Follows Open/Closed Principle.
+🔷 Promotes flexible code via composition, not inheritance.
+🔷 Avoids deep inheritance hierarchies.
+🔷 Enhances runtime behavior without modifying original code.
+
+
+📌 Drawbacks
+🔷 Can result in many small classes, making code harder to read.
+🔷 Debugging can be tricky due to layers of decorators.
+
+
+📌 Best Practices
+🔷 Use when subclassing leads to a combinatorial explosion.
+🔷 Ensure that decorators are transparent to the client (they maintain interface).
+🔷 Avoid overuse; if static behavior suffices, prefer simpler inheritance.
+
+
+📌 Use Cases in Real Applications
+🔷 GUI toolkits (adding scrollbars, borders to widgets)
+🔷 Logging libraries (add logging, security, compression)
+🔷 Middleware pipelines (in ASP.NET Core, request processing)
+🔷 Stream decorators (in .NET, e.g., BufferedStream, CryptoStream)
+
+
+       +------------------+
+       |    Component     |
+       +------------------+
+               ▲
+               |
+       +------------------+
+       |ConcreteComponent |
+       +------------------+
+               |
+               v
+       +------------------+
+       |    Decorator     |<------------------+
+       +------------------+                   |
+               ▲                              |
+               |                              |
+   +--------------------------+               |
+   |ConcreteDecoratorA        |               |
+   +--------------------------+               |
+               ▲                              |
+               |                              |
+   +--------------------------+               |
+   |ConcreteDecoratorB        |---------------+
+   +--------------------------+
+
+📌 How to read it:
+🔷 Component: Interface or abstract class
+🔷 ConcreteComponent: The base object
+🔷 Decorator: Abstract wrapper that holds a Component reference
+🔷 ConcreteDecoratorA/B: Add new behavior
+
+
+✅ Conclusion
+The Decorator Design Pattern is a powerful and flexible way to add behavior to individual objects without affecting the rest of the system. It emphasizes composition over inheritance and allows behavior to be added at runtime in a clean, modular fashion.
+
+----------------------------------------------------------------------
+📌 Decorator Pattern Structure
+The Decorator Pattern is used when you want to add responsibilities to objects dynamically at runtime, without changing their code.
+🔷 1. Component
+Defines an interface for objects that can have responsibilities added to them dynamically.
+This is the base abstraction.
+All concrete components and decorators will implement this.
+The client will use this type to interact with both basic and decorated objects
+EG:
+public interface ICoffee
+{
+    string GetDescription();
+    double GetCost();
+}
+
+
+🔷 2. ConcreteComponent
+The base class whose behavior can be decorated.
+This is the core object that we want to enhance.
+It implements the Component interface.
+It contains the basic behavior which can be extended by decorators.
+EG:
+public class SimpleCoffee : ICoffee
+{
+    public string GetDescription() => "Simple Coffee";
+    public double GetCost() => 5.0;
+}
+
+🔷 3. Decorator
+An abstract class that also implements the Component interface and contains a reference to a component.
+It holds a reference to a Component object.
+It delegates the behavior to the object it wraps.
+It allows decorators to be chained together.
+EG:
+public abstract class CoffeeDecorator : ICoffee
+{
+    protected ICoffee _coffee;
+
+    public CoffeeDecorator(ICoffee coffee)
+    {
+        _coffee = coffee;
+    }
+
+    public virtual string GetDescription() => _coffee.GetDescription();
+    public virtual double GetCost() => _coffee.GetCost();
+}
+
+
+🔷 4. ConcreteDecorators
+Classes that extend the Decorator and add additional responsibilities/behavior.
+These are the actual decorators.
+They override methods to add new behavior before/after calling the base implementation.
+You can stack multiple decorators dynamically at runtime.
+EG:
+public class MilkDecorator : CoffeeDecorator
+{
+    public MilkDecorator(ICoffee coffee) : base(coffee) { }
+
+    public override string GetDescription() => _coffee.GetDescription() + ", Milk";
+    public override double GetCost() => _coffee.GetCost() + 1.0;
+}
+
+public class SugarDecorator : CoffeeDecorator { /* adds Sugar */ }
+public class ChocolateDecorator : CoffeeDecorator { /* adds Chocolate */ }
+
+
+✅ How It All Connects
+Imagine this chain of calls:
+ICoffee coffee = new SimpleCoffee();                      // ConcreteComponent
+coffee = new MilkDecorator(coffee);                       // Decorator 1
+coffee = new SugarDecorator(coffee);                      // Decorator 2
+coffee = new ChocolateDecorator(coffee);                  // Decorator 3
+
+Console.WriteLine(coffee.GetDescription());               // Output: Simple Coffee, Milk, Sugar, Chocolate
+Console.WriteLine(coffee.GetCost());                      // Output: 5.0 + 1.0 + 0.5 + 1.5 = 8.0
+
+
+🔁 Summary Table
+Role			Description				Example in Code
+Component		Defines the interface			ICoffee
+ConcreteComponent	Base object to be decorated		SimpleCoffee
+Decorator		Abstract class that wraps a component	CoffeeDecorator
+ConcreteDecorator	Adds new behavior dynamically		MilkDecorator, SugarDecorator
+
+
+------------------------------------------------------------------------------------------------
+✅ Code Scenario Summary: 
+Decorator Pattern in a Coffee Shop
+This code demonstrates the Decorator Design Pattern using a Coffee Shop scenario in C#. The idea is to allow customers to dynamically customize their coffee by adding ingredients (like milk, sugar, chocolate) without modifying the base coffee class. We achieve this by using a base interface (ICoffee), a concrete class (SimpleCoffee), and multiple decorator classes (e.g., MilkDecorator, SugarDecorator, ChocolateDecorator) that wrap the original coffee object and add new behavior (description and cost). Each decorator class enhances the coffee with additional ingredients and cost, stacking functionality at runtime.
+
+
+EG:  using a Coffee Shop scenario:
+using System;
+
+namespace DecoratorPatternCoffeeShop
+{
+    // ✅ COMPONENT INTERFACE
+    // This is the base abstraction. It defines the operations that can be altered by decorators.
+    public interface ICoffee
+    {
+        string GetDescription(); // To get the description of the coffee
+        double GetCost();        // To get the cost of the coffee
+    }
+
+    // ✅ CONCRETE COMPONENT
+    // This is the core class that we want to decorate. It implements the base interface.
+    public class SimpleCoffee : ICoffee
+    {
+        public string GetDescription()
+        {
+            return "Simple Coffee"; // Basic coffee description
+        }
+
+        public double GetCost()
+        {
+            return 5.0; // Base cost of the simple coffee
+        }
+    }
+
+    // ✅ DECORATOR BASE CLASS, UH CAN ALSO MAKE A DECORATOR INTERFACE WHICH WILL DECORATE THE EXISTING COFFE OBJECTS
+    // This class implements the same interface and wraps an instance of ICoffee.
+    // It delegates the calls to the wrapped object.
+    public abstract class CoffeeDecorator : ICoffee
+    {
+        protected ICoffee _coffee; // Reference to the wrapped object, here we have initiated the "HAS A" relation ship.
+
+        // Constructor to accept the coffee to be decorated
+        public CoffeeDecorator(ICoffee coffee)
+        {
+            _coffee = coffee;
+        }
+
+        // These methods simply forward the call to the wrapped object
+        public virtual string GetDescription()
+        {
+            return _coffee.GetDescription();
+        }
+
+        public virtual double GetCost()
+        {
+            return _coffee.GetCost();
+        }
+    }
+
+    // ✅ CONCRETE DECORATOR - Adds Milk
+    // This class extends the base decorator and adds extra functionality (milk)
+    public class MilkDecorator : CoffeeDecorator
+    {
+        public MilkDecorator(ICoffee coffee) : base(coffee) { }
+
+        public override string GetDescription()
+        {
+            // Adds "Milk" to the original description
+            return _coffee.GetDescription() + ", Milk";
+        }
+
+        public override double GetCost()
+        {
+            // Adds the cost of milk to the original cost
+            return _coffee.GetCost() + 1.0;
+        }
+    }
+
+    // ✅ CONCRETE DECORATOR - Adds Sugar
+    public class SugarDecorator : CoffeeDecorator
+    {
+        public SugarDecorator(ICoffee coffee) : base(coffee) { }
+
+        public override string GetDescription()
+        {
+            return _coffee.GetDescription() + ", Sugar";
+        }
+
+        public override double GetCost()
+        {
+            return _coffee.GetCost() + 0.5;
+        }
+    }
+
+    // ✅ CONCRETE DECORATOR - Adds Chocolate
+    public class ChocolateDecorator : CoffeeDecorator
+    {
+        public ChocolateDecorator(ICoffee coffee) : base(coffee) { }
+
+        public override string GetDescription()
+        {
+            return _coffee.GetDescription() + ", Chocolate";
+        }
+
+        public override double GetCost()
+        {
+            return _coffee.GetCost() + 1.5;
+        }
+    }
+
+    // ✅ CLIENT CODE - Demonstrating usage
+    class Program
+    {
+        static void Main()
+        {
+            // STEP 1: Start with a simple coffee (base object)
+            ICoffee coffee = new SimpleCoffee(); //iCoffee is the parent of all the classes, so uh can store any object within the refrence of this
+
+            // STEP 2: Add Milk by wrapping the base coffee with MilkDecorator
+            coffee = new MilkDecorator(coffee);
+
+            // STEP 3: Add Sugar by wrapping the already milk-decorated coffee with SugarDecorator
+            coffee = new SugarDecorator(coffee);
+
+            // STEP 4: Add Chocolate by wrapping the previous result with ChocolateDecorator
+            coffee = new ChocolateDecorator(coffee);
+
+            // FINAL RESULT: Coffee has Milk, Sugar, and Chocolate
+            Console.WriteLine("Description: " + coffee.GetDescription());  // Output: Simple Coffee, Milk, Sugar, Chocolate
+            Console.WriteLine("Total Cost: $" + coffee.GetCost());        // Output: 5.0 + 1.0 + 0.5 + 1.5 = 8.0
+        }
+    }
+}
+
+//Let's break down exactly what happens when you chain the decorators and call GetDescription().
+//When we add the decorators MilkDecorators, Then we add the SugarDecorater and at the end we are adding the ChocolateDecoraotr, So and in the end we are calling the get Description function , then of which class the function is being call, and how come each of the GetDescriptions functions msg is beeing seen at the end?
+----------ASN-------------------- 
+
+🔍 The Code Again (For Reference)
+ICoffee coffee = new SimpleCoffee();
+coffee = new MilkDecorator(coffee);
+coffee = new SugarDecorator(coffee);
+coffee = new ChocolateDecorator(coffee);
+Console.WriteLine(coffee.GetDescription());
+
+✅ Initial Setup
+ICoffee coffee = new SimpleCoffee();
+//coffee now refers to a SimpleCoffee object.
+//When coffee.GetDescription() is called now → it returns "Simple Coffee".
+
+✅ Adding Milk
+coffee = new MilkDecorator(coffee);
+MilkDecorator takes an ICoffee (which is the SimpleCoffee) and wraps it.
+Now coffee points to a MilkDecorator, which internally holds a reference to SimpleCoffee.
+Calling coffee.GetDescription() now:
+MilkDecorator → calls _coffee.GetDescription() → which is SimpleCoffee.GetDescription() = "Simple Coffee"
+Then appends ", Milk"
+Final: "Simple Coffee, Milk"
+
+
+✅ Adding Sugar
+coffee = new SugarDecorator(coffee);
+SugarDecorator now wraps the previous MilkDecorator.
+coffee is now a SugarDecorator that holds a reference to MilkDecorator.
+Calling coffee.GetDescription() now:
+SugarDecorator → calls _coffee.GetDescription() → which is MilkDecorator.GetDescription():
+Which again calls → SimpleCoffee.GetDescription() → "Simple Coffee"
+Appends → ", Milk"
+Then SugarDecorator appends → ", Sugar"
+Final: "Simple Coffee, Milk, Sugar"
+
+✅ Adding Chocolate
+//Similarly we add the cholocate and ChocolateDecorator now wraps the SugarDecorator.
+Calling coffee.GetDescription() now:
+"Simple Coffee, Milk, Sugar, Chocolate"
+
+Becoz the method will call the 
+	-coffee.GetDescription()  calls-> ChocolateDecorator.GetDescription() becoz we have wrap the chocolateDecorator Object then it calls ->
+	-Chocolate.GetDescription() calls-> Suger.GetDescription() becoz we have wrap the SuegrDecorator Object then it calls ->	
+	-Suger.GetDescription() calls-> Milk.GetDescription() becoz we have wrap the MilkDecorator Object then it calls ->
+	-Milk.GetDescription() calls-> Base.GetDescription() becoz we have wrap the Simple coffee Object then it calls ->
+	-Base.GetDescrition() .
+ and becioz of all thes function calls, we see the updated string.
+
+
+📌 Internally:
+ChocolateDecorator(
+  SugarDecorator(
+    MilkDecorator(
+      SimpleCoffee
+    )
+  )
+)
+
+------------------------END OF ANS--------------------------------------
+
+✅ Explanation Summary
+📌 Where is the Decorator Pattern used?
+ICoffee is the Component Interface
+SimpleCoffee is the Concrete Component
+CoffeeDecorator is the Abstract Decorator
+MilkDecorator, SugarDecorator, and ChocolateDecorator are Concrete Decorators
+
+📌 How is it applied?
+Decorators wrap an existing object that implements ICoffee
+They extend the behavior by adding their own logic in GetDescription() and GetCost()
+Multiple decorators can be stacked dynamically at runtime
+
+✅ Real-Life Analogy:
+You're ordering coffee:
+You start with a base (SimpleCoffee)
+Then you say, “Add milk” → MilkDecorator
+Then, “Add sugar” → SugarDecorator
+Finally, “Add chocolate” → ChocolateDecorator
+Each addition wraps the previous one and adds extra behavior!
+
+
+
+✅ UML-Style Diagram of the Decorator Pattern
+          +----------------+
+          |   ICoffee      |  <---- Component (Interface)
+          +----------------+
+          | +GetCost()     |
+          | +GetDescription() |
+                ▲
+                |
+     +--------------------+
+     |   SimpleCoffee     |  <---- ConcreteComponent
+     +--------------------+
+     | +GetCost()         |
+     | +GetDescription()  |
+                ▲
+                |
+     +--------------------+              +-------------------------+
+     |  CoffeeDecorator   |  <-----+-----|   ConcreteDecorators    |
+     +--------------------+       |      | (Milk, Sugar, Chocolate)|
+     | - _coffee: ICoffee |       |      +-------------------------+
+     | +GetCost()         |       |
+     | +GetDescription()  |       |
+                ▲                |
+                +----------------+
+
+📌 Key Observations:
+All decorators inherit from CoffeeDecorator, which wraps the original ICoffee object.
+Decorators can call the base methods and add their own logic (e.g., add milk, sugar).
+You can nest decorators, giving dynamic behavior extension.
+
+
+-----------------------------OWN CODE-------------------------------------
+using System;
+namespace Decorator
+{
+    public interface ICoffee
+    {
+        string GetDescription();
+        double GetPrice();
+    }
+
+    public class SimpleCoffee : ICoffee
+    {//Defalut constructor will work here
+        public string GetDescription()
+        {
+            return "Simple Coffee ";
+        }
+        public double GetPrice()
+        {
+            return 10;
+        }
+    }
+
+    public abstract class Decorator : ICoffee
+    {
+        protected ICoffee _coffee;
+        public Decorator(ICoffee c)
+        {
+            _coffee = c;
+        }
+
+        public virtual string GetDescription()
+        {
+            return _coffee.GetDescription();
+        }
+
+        public virtual double GetPrice()
+        {
+            return _coffee.GetPrice();
+        }
+    }
+
+    //DECORATORS CONCRETE CLASS WHICH WILL ADD FLAVORS TO THE COFFEEE
+    public class ChocolateDecorator : Decorator
+    {
+        public ChocolateDecorator(ICoffee c) : base(c)
+        {
+            //Empyty constructor for sending the obj to base class
+        }
+        public override string GetDescription()
+        {
+            return _coffee.GetDescription() + ", with added CHOCOLATE";
+        }
+
+        public override double GetPrice()
+        {
+            return _coffee.GetPrice() + 10;
+
+        }
+    }
+
+    public class MangoDecorator : Decorator
+    {
+        public MangoDecorator(ICoffee c) : base(c)
+        {
+            //Empyty constructor for sending the obj to base class
+        }
+
+        public override string GetDescription()
+        {
+            return _coffee.GetDescription() + ", with added MANGO";
+        }
+
+        public override double GetPrice()
+        {
+            return _coffee.GetPrice() + 500;
+
+        }
+    }
+    //Client program
+
+    public class Program
+    {
+        static void Main()
+        {
+            ICoffee Coffee = new SimpleCoffee();
+            Console.WriteLine(Coffee.GetDescription());
+            //Adding the Decorators
+            Console.WriteLine("-----------After adding the Chocolate Decorator------");
+    
+            Coffee = new ChocolateDecorator(Coffee);
+            Console.WriteLine(Coffee.GetDescription());
+
+
+            Console.WriteLine("-----------After adding the Mongo Decorator------");
+    
+            Coffee = new MangoDecorator(Coffee);
+            Console.WriteLine(Coffee.GetDescription() +" \nFINAL PRICE : "  +Coffee.GetPrice());
+
+        }
+    }
+}

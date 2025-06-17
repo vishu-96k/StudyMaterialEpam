@@ -1,0 +1,458 @@
+MULTI THEREDDING
+---MULTITASKING---
+OS : to excute multiple Tasks at a time (opening note pad, Chorme, VS code, etc application )OS will make use of the PROCESS.
+-PROCESS : It is a component under the OS Which is responsible for running a program. Eery program to be excute on your system, there will be a process. we can watch it under the TASK MANAGER.
+-Each process is running one application. Like opening a google chrome is a process .
+-Process : Runiing a code (program) is a process.
+-BACKGROUND PROCESS : these are running in the background when uh open the task manager uh can see these processes.
+-BackGround Process : it is noth but  WIndows services means OS Behind the seens will be running a lot of applications for us like database engine , webservers all of these things will be running for you in the from of the windows services.
+-So services which are running in the background by the Windoes we call them as background process 
+
+HERACRYCHY :
+-OS : We have OS and under this OS we have Process
+-PROCESS : Under the process an application runs.
+-To run the code present inside the application Process will use Concept know as THREAD.
+-THREAD : Thread means lightweight process. But in simple words Thread is a unit Which executes the code(present in the appication) under an application.
+-So every application has some logic(code written for that application) in it and to execute that logic this thread comes into picture.
+-Every Application has by default one thread to execute the logic  and that is called as a main thread.
+-So every application is by default a single threaded application  model
+
+Opreting system :
+	-Process
+		-Threads
+
+-Every application by deafalut contains one thread to execute the program and that is know as Main thread, SO every program is by default a Single threaded model.
+
+EG:
+	Write a simple hello world program
+
+-So to excute this logic(Above hello world code), We will have a process and under that process there will be a thread and that thread will run this logic.
+-So Internally there will be a thread to run any code(program) and we call it as a MAIN thread.
+-Every program (Code ) by default has one thread to run the code and that thread is the Main Thread for that program.
+
+
+THREAD CLASS: 
+-In C# there is a Thread Class present in the system.Threading namespace
+-Using this Thread class uh can implement threads in the program(Code).
+
+SYNTAX :
+	Thread Obj = Thread.CurrentThread // uh can use the current running Thread, Which is running your code, and this is the main Thread
+	Thread Obj2 = new Thread(fun); // This is the new Thread uh have created and passed a function as a parameter.
+
+
+EG:
+using System.Threading;
+class ThreadDemo
+{
+  static void Main()
+  {
+	Thread tobj = Thread.CurrentThread;//Thread is a class and in this class there is a STATIC property called as CurrentThread 
+//When we call this property, Then this property returns the refrence of the Current Executing Thread.
+//And every program has by default one thread to run the Code and that Thread Refrence we are going to get. So T refers to the Executing Thread.  
+	tobj.Name = "Main  Thread"; //we have set a name to the current excuting Thread.
+	Console.WriteLine("Current Excuting Thread is :" + Thread.CurrentThread.Name);// Prints the Current Executing thread Name, which is running this code		
+  }
+}  
+
+-by defalt The thread which is running the above program doesn't have any name, we are giving it a name and printing it.
+-So there is always a Single Thread which runs the whole program, It calls each function one after the other through the MAIN fun.
+-Every Program is by deafault Single Threaded Application and excutes all the code (All methods) one after the other in a synchronous way, And the Drawback is , In a single threaded application the single thread will only run all the logic inside the program.
+-Suppose uh have 3...4 methods in your program then Main (Main Thread) will execute all these particular methods one after the other in a synchronous way.
+-The actions are completed one after the other in a single threded application.
+-But in This process if any method (eg method2 in which database connection is their and some databse data is fetchinf from databse) and this method is taking extra time becoz its trying to connect to DB and perfrom some actions and come back, But DB is busy and not responding, So Method2 is waiting for the DB to Respond and after some time the communication happen and DB responeded.
+-EG DB has responded after 15 seconds, so uh have wasted 15 sec and your Thread is idealy waiting their for 15 Sec, and until this method2 is executed the Method3 is not going to get execute becoz its synchronous Excecution one after the other.
+
+EG :
+	if(i==50)
+	Thread.Sleep(5000)//This line will make the current executing Thread to sleep for 5 sec.  
+//sleep is a static method of Thread class, which makes the Current executing thread sleep and the time is in mS(milliseconds).
+
+-PROBLEM : Since our application is single threaded, Until the first Method gets executes, The other methods wont get excute becoz execution is synchronous.
+-To over come the problem of single Threaded Application we have MULTI THREADING.
+
+-MTULTI THREADING : In this, A process can Contain Multiple thread, Means under one process we have multiple threads, Where each Thread is performinhg Diffrent Actions.
+-EG: Our program has 3 Method, Then we can make one Thread run One fun. So the execution of all Three Functions will take place Synmultanously at the same time. 
+-In Multiple Threaded programs, the OS will share the CPU time with all the Threads.
+-Os is going to allocate some time period for each Thread to execute Symultanously, There are diff alogorithms for this like FIFO, SJB(Shortest job Frist, Time-Slicing Round-Robin Scheduling Preemptive Scheduling, Priority-Based Scheduling).
+-Os will share the CPU time between each Thread to Execute and based on the Time sharing all the Threads are going to excute for you equally. 
+-if there are multiple threads going to execute ,multiple methods, All methods will be given Equal Importance.
+-So if any Method(db coonetion) is waiting for Db connection and its run by independent thred then the other methods will still execute becoz the are running on the Diff thread.
+-Advantage of Multithreadiing : It works on Time Sharing, and maximum utilization of CPU resources.  
+
+
+
+----MULTITHREADING PART 2----
+MULTITHREADED :
+	PROCESS:
+	   MULTIPLE THREADS
+
+-Multi Threading : we can call Each method By a separate Thread. So OS is going to allocate some time period for each Thread, so all the methods are going to execute with same priority.  
+-All three Threads(for 3 Methods) are not going to execute parally, Os will share its time and resources amoung the Thread and if any one Thread is doing DB coonection then in that time Other thread is executed so that CPU is utilized and not remain Ideal. this works on Time sharing Algorithms or CPU sharing or CPU shaduling or Time shaduling
+
+T1 => 2 2 2 2 2 2 2 2 Test1();
+T2 => 2 2 2       2 2 Test2() //DB connection calling fun
+T3 => 2 2 2 2 2 2 2 2 Test3();
+
+-You can make n no of Threads for n no of Methods
+-you can make 3 Threads For 3 Methods, and pas each Method in the Constructor of the Thread as Parameter.
+
+SYNTAX :
+	Thread Tobj = new Thread(MethodName);//Creating a new thread for a Method and starting The Thread for that method
+	Tobj.Start()//This will start the Thread
+	Thread.Sleep(2000)//This will make Thread to Sleep for 2 sec.
+	 
+
+EG :
+//Uh have Three Methods as Test1(), Test2(), Thread3();
+
+static void Test2()
+{
+ for(int i=0;i<100;i++)
+ {
+  Console.WriteLine("Thread2 is going to sleep");
+  if(i==50)
+  {
+    Thread.Sleep(5000) //Thread running this method will sleep for 5 sec, And Sleep is a Static Method of the Thread class so uh can directly call it using the Class name and uh cannot call this Sleep method using Instance.
+//After 5 sec This Thread (T2) will get up and Perform the task 
+  }//since this Test2() is called by Thread2, So Thread2 (T2) will go to sleep, T1 and T3 thread will have no Impact of This Sleep Method 
+ }
+}
+
+static void Main()
+{
+ Thread T1 = new Thread(Test1);//T1 Thread will run the Test1() fucntion
+ Thread T2 = new Thread(Test2);
+ Thread T3 = new Thread(Test3);
+ T1.Start() // if uh dont Write this T1 thread will  not start
+T2.Start() //Thread 2 also starts, So now any function Test1 or Test 2 can start the execution and It will stop in between and Other Thread will start, This happens by Time sharing.
+ T3.Start()
+CWL("Main Thread is Exeting");//The all 3 Threads are called By Main Thread
+//Main() method is executed by Main Thread, Main thread will only Create the other Threads. Basically Execution is alywas start by the Main Thread.
+//The job of Main Thread is to start the Main fun , make the 3 Threads and start their execution, and after that method threads task is over, the other 3 Threads Task is going to Execute, so Main Thread will finish even before the Execution of other 3 Threads is Finished. So uh will get to see the msg  "Main Thread is Exited" even befor the other 3 thread finishes their Work. 
+} 
+-You Need to pass the Function in the Thread as parameter.
+-Now there are 4 threads in the above program which is running the program, One is the Main thread and uh have created 3 Other new Threads.
+-The main thread will only Create all the 3 new Threads.
+-Main thread will start automatically and start running the Main() function, but if uh dont write T1.Start() , The Test1() Method will not work becoz T1 thread has not been started execution.
+
+-------PART 3--CONSTRUCTORS OF THREAD CLASS--------
+
+There are 4 Constructions Present under the Thread class. 
+-TYPES OF CONSTRUCTORS IN THREAD :
+
+
+1)ThreadStart start :ThreadStart is a DELEGATE (start is paramter) and delegate is a type safe Function Pointer Using which we can Call a function, And signature of the delegate should excatly match with the signature of the method we are going to call, becasue of this(same signature) delegate is a type safe function pointer.
+
+SYNTAX OF ThreadStart Delegate:
+	public delegate void ThreadStart();
+ 
+EG: 
+ static void Test1();
+ {
+  for(int i=0;i<50;i++)
+  {
+    CWL("Test" + i);
+  }
+ }
+ 
+ statis void Main(string[] args)
+ {
+  ThreadStart obj = new ThreadStart(Test);//Binding the test method with the delegate.
+  Thread T = new Thread(obj); // uh have passed the delegate of the type ThreadStart type, which is a predefined delegate, and this Constructor of Thread class takes in the Delegate only.
+//delegate is bound with the Thread
+
+or
+
+  Thread T = new Thread(Test1);//Pass directly the function both(delegate passing and function passing) are same only 
+  T.Start();//Starting the thread
+ }
+-The delaget signature and the function Test1() signature is same, 0 parameters + return type is void.
+-But even if uh Directly pass the Function name in the Thread constructor(while creating Thread using New keyword), Then also our programs works the same way as we are passing the delegate obj.
+-There is no difference between Creating the delegate obj, binding that delegate with the function then passing That delegate object and directly passing the function in the constructor of the Thread class.
+-But when uh pass the Method directly in the Thread class constructor using new keyword, Internaly the delegate instance is implicitly created by the CLR.
+-The CLR will take the responsibility of Creating the delegate and pass it as a parameter to the Thread.
+-here uh have Explicitly done it, But even if uh dont do it Automatilcaly implicitly The CLR will do this process.
+-so when uh pass the method name directly, Internally it will create the Instance of the delegate(ThreadStart), Binds that instance with the function and sends it as the parameter to the Thread class. Uh can also Explicitly create the delegate, bind it to the fun and send it as parameter.
+
+ThreadStart obj = new ThreadStart(Test);
+Thread t = new thread(obj);//Explicit
+
+	or
+
+Thread T = new ThreadStart(Test1);//Implictly happening
+
+or
+ThreadStart obj = new ThreadStart(Test);//Types of binding a delegate and a function
+ThreadStart Obj = Test;//Directly binding
+ThreadStart Obj = Delegae() {Test()}//Anoymous fun
+ThreadStart obj = () => Test();//Lambda Expression
+
+Both the sentences are similar only
+
+2)ParameterizedThreadStar start : If Our Function has any parameters then it used This ParameterizedThreadStart delegate.
+
+SYNTAX :
+	public delegate void ParametrizedThreadStart(Object obj);
+
+-this is also a delegate which takes Object as a parameter.
+ 
+EG :
+static void Test2(Object n)
+{
+  for(int i=0;i<n;i++)
+  CWL("Test" + i);
+}
+
+static void Main()
+{
+  ParameterizedThreadStart obj = new PTS(Test);
+  Thread T = new Thread(obj);
+  T.Start(10)//Pass the function parametrs in the start method, Start is a Overloaded Method, which Takes object as the parameter.
+//So uh can only pass Object as the parameter in the functions which you are passing to the Thread
+
+	or
+Thread T = new Thread(Test);
+T.Start(10);
+}
+
+------JOIN METHOD IN MULTITHREADING ----------
+
+-JOIN method : there is a Method called Join() in the thread class.
+-Main Thread : The main Thread did not wait until all the Thread gets complete their work(Main thread will just create the Thread and stsrt them and it will get out by executing its work), Main Thread will Execute and finish its execution in The middlde and other thread may be working even after The main Thread has Finished the execution of the program
+-Main Thread should not be allowed to Execute from the middle of the program. so main Thread should not go out of the prigram until all the other Threads finished their work. 
+-So we dont Want the main Thread to go out of this program and we want main Thread to wait until all the Threads are completing their wroks, Then uh can do this by calling JOIN.
+-Uh required to call the join method of each thread  (T1.Start() , T1,Join(), t2.Join()), Main Thread will call this Join method of Each Thread, even the start method is called by the Main Thread.
+-we are calling Join so that the main Thread cannot exit the program until the other Child Threads Finished Their works.
+-So using [T1.join()],when uh call jon What happens is , The calling Thread(Calling thread means Main Thread which is calling the child Thread Join methods) cannot exit the program until all the Othr threds are exiting the program.
+-means uh call JOIN on T1 thread, so main thread cannot exit until the T1 Thread gets exit.
+
+SYNTAX :
+	T1.Join();
+	t2.Join();
+	T3.Join();
+
+So using this all the Child Thread will gets finished their execution and Then the main Thread will execute.
+-Uh can pass the timeout in the join, as join is a overloaded method
+EG 
+ T1.Join(3000) //now Main Thread will wait for 3 sec for T1 to exit from the program. Meanwhile if T1 exits then okey, but if it does not exit, the main Thread will exit
+-if uh dont give a timeperiod, then Main Thread will wait until the T1 Thread is exited, But uh give time then Main thread will just for that time and if T1 thread exit in that time then okey, and if T1 thread does not exit in that time period then Main Thread will not wait for T1 thread, Main Thread will Exit after that time period no mater T1 is still working or finished its execution.
+
+
+---PART 5 ---THREAD LOCKING----
+
+Context Switching : WHenever u are trying to use Mutiple Threads in your code what will happen OS will shareing the Time Between each and every Thread and The control Will be transefered Bwteen the Threads this is called Context Switching.
+-Context Switching is not in our control, Thats completly in OS control.
+-Context switching means when the os switeched from one Thread to another Thread so that it can utilize CPU time as maximum.
+-When multiple Threads are accessing The same resources. 
+-EG: A thread is accessing a resource and before it completes suppose the context switching happen, then at the same time the second thread will also try to acess the same resource and Race condition can occur becoz 2 threads are accessing the same resource at  the same time, so one may modify the data and other may use it and again modify it, and the previous Thread can Read wrong data.
+-So no 2 Thread Should access same resource(same method or any data) at the same time, becoz race condition will occur.
+-So Imagine if 1 Thread is modifying a d=record in Db and goes to sleep or context switxing happens and now another Thread 2 is also fetching data at the same time form the database ,so Race condition will occur.
+-So to resolve the problem we are provided with locking mechanism.
+-Uh can lock the code that is present inside the method, then only one Thread can perform that code and can access that code, no other Thread will be allowed to access that code of block until the first Thread finishes the execution of that block.
+-so using lock, only one Thread can access the block at a time.
+-Even though all the Threads who wants to access that method will start execution, but becoz of the lock only one thread is allow to go inside the block which is lock, and the remaining Threads will be waiting out side the lock block, until the inside Theread Finishes the Job and comes out.
+-As the Thread inside will come out of the lock, then imidiatly the THread 2 which is waiting outside the lock will go inside the Block and do its job.
+-so lock allows entry of only one Thread inside the block, Means access to the resource is given to only one Thread at a point multiple Threads cannot access the same resource problems comes into picture.
+-so lock will allow only one Thread to access it at a time.
+
+EG:
+ class program
+ {
+  public void Test1()
+  {
+    CWL("C sharpe is")
+    Thread.Sleep(5000);//Thread will go to sleep for 5 sec
+    CWL("Not purly object oriented becoz it has same built in Premitive data type and value types.");
+  }
+  public static void Main()
+  {
+    program obj = new program();
+   
+    Thread T1 = New Thread(obj.Test);
+    Thread T2 = new Thread(obj.Test);
+    Thread T3 = new Thread(obj.Test);
+  }
+ }//Since the above code is not in Lock block so, unexpected behaviour will happen.
+
+-uh can put the method code in the Lock like this:
+
+class Program
+{
+  public void Test1()
+  {
+    Lock(This)//This will lock the current Executing Thread in this block.
+    {
+	CWL("C sharpe is")
+	Thread.Sleep(5000);//Thread will go to sleep for 5 sec
+	CWL("Not purly object oriented becoz it has same built in Premitive data type and value types.");
+    }//Usyally Critical section data is inside the Lock Block
+  }
+  public static void Main()
+  {
+    Program obj = new Program();
+   
+    Thread T1 = New Thread(obj.Test);
+    Thread T2 = new Thread(obj.Test);
+    Thread T3 = new Thread(obj.Test);
+  }
+}//This will print the output as : 
+	C sharpe is Not purly object oriented becoz it has same built in Premitive data type and value types.
+	C sharpe is Not purly object oriented becoz it has same built in Premitive data type and value types.
+	C sharpe is Not purly object oriented becoz it has same built in Premitive data type and value types.
+like this as we want
+-So lock block will allow only 1 Thread to access the lock block.
+
+
+---PART 6--THREAD PRIORITIES---
+
+-uh can set The priorities of the Thread in multi Threading appilcaiton.
+-if uh have 2 threads and one Thread is doing the databse operation, and if one Thread has more work to do then uh can assign priorities to the thread, so that the CPU will give more resources to that Thread which is having highest priority(CPU gives more time to that thread).
+-By defalt every Thread is having and running in normal Priority and utilizing the CPU resources equally.
+
+-PRORITIES ORDER :
+	Lowest = 0;
+	Below Normal = 1;
+	normal = 2;
+	above normal = 3;
+	Highest = 4;
+
+-uh can change the Proiority of the Threads, so that according to that priority the Threads will execute.
+-Thread Priority is Enum of name ThreadPriority having Priorities order from 0 to 4
+-ThreadPriority is an Enum and under this 5 priority levels are there. This is also eg of Enum usecase, so that user can only select the data given in that Enum. 
+
+EG :
+using System.Threading;
+namespace Threading
+{
+   class ThreadPriority
+   {
+     static long Count1, Count2;
+     public static void incCount1()
+     {
+	while(true)
+	  Count++;
+     }
+
+     public static void incrCount2()
+     {
+	while(true)
+	  Count++;
+     }
+   }
+
+   static void Main()
+   {
+     Thread T1 = new Thread1(incrCount1);
+     Thread T2 = new Thread2(incrCount2);
+
+     T1.Priority = ThreadPriority.Lowest;/T1 is having the lowest priority, so the Count1 value will be lowest becoz CPU given to the T1 thread is less, and the function IncrCunt1() will be executing less then the incrCount2() function.	
+     T2.Priority = ThreadPriority.Highest;//So T2 Thread will be Given more CPU resources.
+
+     T1.start();
+     T2.start();	
+
+     Thread.Sleep(5000);//Main thread is sleep for 5 sec and after that the Thread T1 and T2 will get terminate.
+
+     T1.Abort(); //This abort method will stop(terminates) the Thread and stops the function or work which that Thread is doing
+     T2.Abort();//terminates the Thread T2
+   }
+}
+
+SYNTAX for setting priority :
+	ThreadObj.Priority = ThreadPriority.Highest;
+	
+-this will set the prioty of the obj Thread as Highest
+
+
+---PART 7---PERFORMANCE---
+
+-Multithreaded Program will perform faster and in more efficient manner then campare with single Threaded Model.
+-Single Threded application are slower then Multi Threaded application.
+
+-U can calculate the time required to complete one function or any line of code, Using the Stopwatch class under the System.Diagostics namespace.
+
+EG :
+	Stopwatch s1 = new Stopwatch();
+	s1.Start();
+	//function call or lines of code uh want to calculate the time
+
+	s1.Stop();
+	CWL(s1.Elapsedmillisecounds);//This will get uh the total time measured by the instance of time Stopwatch in milliseconds so convert it in Sec by dividing it by 1000.
+ 
+EG: 
+static void main()
+{
+  Thread T1 = new Thread(incrCount1);//IncrCount1() method will increamenet the counter1 by 1 in a for loop
+  Thread T2 = new Thread(incrCount2);
+
+  Stopwatch s1 = new Stopwatch();
+  
+  s1.Start();//will start recording the time
+  T1.Start();
+  T2.start();
+  s1.stop()//will stop recording the time
+
+  T1.Join();
+  T2.Join();//becoz of Join the Main Thread will not exit the program, it will exit the progam after the completion of this T1 and T2 threads.
+
+  CWL(s1.ElapsedMilliseconds);//This ElapsedMilliseconds is a property of that stopwatch class which has measure the time.
+}
+
+-At the end uh can see that Same work when uh do using single threaded model it will required a lot of time, but if uh use multiple threads then each Thread will run Independly performing the Work and becoz of which they will run concurrently and As a whole the application will require less time
+-So we can say that Multithreaded application will take less time to execute and it is also fast and better in performance becoz the CPU is not idel in Multithreading.
+-Genrally when we devlop the GUI application, then to make the UI Thread to be free without just going to waste the time in the background(Main Thread will just handle the UI part), The background tasks will be done by the Multiple threads and the UI will be The Main Thread which will be always interacting with the end user 
+-Backgrounf Threads will be performing all the action behind the seens.
+
+
+ Single vs Multi-threading
+Aspect				Single-threading			Multi-threading
+Execution			One task at a time.			Multiple tasks run concurrently.
+Performance			Limited performance.			Improved performance.
+Responsiveness			Poor if heavy operations run.		Better responsiveness in UIs.
+Complexity			Simple implementation.			More complex to implement.
+Resource Usage			Lower memory and CPU usage.		Higher memory and CPU usage.
+
+
+--------------------------THREADING VS ACYNC AWIAT-------------------------
+
+
+Aspect				Multi-Threading						Asynchronous Programming (Task-based)
+
+Primary Purpose			Parallelism (Running multiple tasks at 			Concurrency (Handling many tasks without blocking the thread).					once on different threads).		
+			
+Best For			CPU-bound tasks (heavy computations).			I/O-bound tasks (network calls, file I/O, database calls).
+
+Performance Impact		High if too many threads are created.			More efficient with I/O-bound tasks.
+
+Complexity			Requires manual thread management.			Easier with async/await.
+
+Blocking/Non-blocking		Can block if not managed properly.			Non-blocking if written correctly.
+
+Resource Usage			More threads consume more resources.			Uses threads more efficiently.
+
+Error Handling			More complex.						Simplified with try-catch around await.
+
+
+✅ Concurrent Programming (Asynchronous Programming)
+Single Thread (most of the time, especially in C# async/await model).
+Tasks are NOT running at the same time, but instead sharing the same thread cooperatively.
+Context switching is cooperative (happens when await is called, NOT forced by OS).
+Use case: I/O-bound tasks (e.g., file I/O, network requests) where waiting is common, so the CPU can be freed to do other work.
+
+
+✅ Parallel Programming (Multithreading)
+Multiple Threads running truly in parallel if enough CPU cores are available.
+Each thread runs independently on different cores or shared cores if more threads than cores exist.
+Time-sharing of CPU cores happens when there are more threads than cores (using preemptive context switching).
+Use case: CPU-bound tasks (e.g., heavy calculations, image processing) where true parallelism is needed for speed.
+Example: Processing a large array by dividing it across multiple threads.
+
+🔥 The Fundamental Difference:
+Concurrent Programming (Asynchronous):
+Single thread working on multiple tasks by quickly switching between them when one is waiting (non-blocking).
+Uses task scheduling and event loops.
+
+Parallel Programming (Multithreading):
+Multiple threads working on multiple tasks at the same time (if enough cores are available).
+Uses OS-managed threads and preemptive context switching.
+	

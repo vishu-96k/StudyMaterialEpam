@@ -1,0 +1,742 @@
+MVC15---
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH :STATE MANAGEMENT📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] STATE MANAGEMENT INTRO
+
+📌STATE MANAGEMENT:
+-State management means managing th perivious state of your application and sending the reuired data to the next request if required.
+-In ASP.NET MVC, State Management refers to the techniques used to preserve data (state) across HTTP requests.
+-In simple words, It just means that preserving the perivious state, Like the perious data passing to the next request.
+
+🔍 Why is State Management Important?
+HTTP is stateless → Each request is independent and doesn't remember previous requests.
+MVC apps often require data persistence between requests — e.g., remembering a logged-in user, shopping cart items, or form data.
+
+📌Stateless:
+HTTP is Stateless (by default)
+Stateless means each HTTP request is independent.
+The server does not remember anything about the previous request from the same client.
+Every request must contain all the necessary information (like login info, session ID, etc.) to be processed.
+
+Example (Stateless):
+You visit an online store, add an item to your cart, then visit another page. Without state management (like cookies or sessions), the server would not remember what you added to the cart, because each request is processed as if it's from a new visitor.
+
+📌Stateful 
+-HTTP is not Statefu(Not HTTP itself, but via additional mechanisms)
+While HTTP is stateless by nature, web developers add stateful behavior using:
+Cookies
+Sessions
+Tokens (e.g., JWT)
+Database records
+These allow the server to “remember” a user across multiple HTTP requests
+
+Example (Stateful with Session):
+You log into a website. A session is created, and a session ID is stored in a cookie. When you navigate through pages, your session ID is sent with every request, so the server knows who you are and keeps you logged in.
+
+
+📌Categories of State Management
+There are two main types:
+
+1. Client-Side State Management
+Data is stored on the client (browser).
+Examples: ViewData, ViewBag, TempData, Hidden Fields, Query Strings, Cookies
+
+2. Server-Side State Management
+Data is stored on the server.
+Examples: Session, Database, Cache
+
+
+✅[#2] CLIENT-SIDE STATE MANAGEMENT
+
+📌CLIENT-SIDE STATE MANAGEMENT
+Client-side state management stores data in the browser (i.e., on the user’s device).
+Data persists between requests and even page reloads — without involving the server's memory.
+🔧 Techniques in ASP.NET MVC:
+ViewData
+ViewBag
+TempData
+Hidden Fields
+Query Strings
+Cookies
+
+1) ViewData and ViewBag
+Dictionary object used to pass data from Controller → View.
+Valid only during current request.
+Exists only during the current request (i.e., one page load). SO data will be lost on page reload.
+
+2)TempData
+Stores data until it's read or one more request.
+Useful for redirect scenarios (e.g., after form submit).
+Purpose:
+Store data between two consecutive requests (e.g., redirect).
+Internally uses Session, but automatically clears after it's read once.
+
+3) Hidden Fields
+Store data in HTML form fields (not visible to user).
+Good for preserving values across form posts.
+ Purpose:
+Store values in the form itself, which are sent back on form submission.
+Not visible, but viewable in browser dev tools.
+
+🔹 Example:
+@using (Html.BeginForm("SubmitForm", "Home", FormMethod.Post))
+{
+    @Html.Hidden("UserId", 101)
+    <input type="submit" value="Submit" />
+}
+Conroller.cs file
+[HttpPost]
+public ActionResult SubmitForm(int UserId)
+{
+    return Content("User ID is: " + UserId);
+}
+
+
+4. 🌐 Query Strings:
+Pass data through URL.
+Good for short, non-sensitive data.
+🔸 Purpose:
+Pass data via URL.
+Good for non-sensitive data, like filters or page numbers.
+
+
+📌COOKIES STORING DATA:
+5. 🍪 Cookies
+-A cookie is a small piece of data that your web application stores on the user's browser.
+It helps the website remember something about the user even after the user closes the browser (if not expired).
+-Store small key-value data in the browser. Persistent (can have expiry).
+-🧠 Why Cookies?
+Because HTTP is stateless, meaning every request is independent.
+Cookies help websites remember the user between requests or visits.
+
+ Common Uses of Cookies
+ "Remember Me" feature on login
+🌙 Saving user preferences (e.g., theme = dark mode)
+🛒 Saving shopping cart info (in some cases)
+🎯 Tracking users for analytics
+
+ How Cookies Work (Basic Flow)
+Server sends a cookie to the browser.
+Browser stores the cookie.
+Browser sends the cookie back to the server with every future request to that domain.
+
+🔸 Purpose:
+Store small pieces of data (like tokens, preferences) on the user's browser.
+Persist across sessions if you set an expiration.
+🔹 Setting Cookie:
+EG:
+HttpCookie cookie = new HttpCookie("username", "john123");
+cookie.Expires = DateTime.Now.AddMinutes(30);
+Response.Cookies.Add(cookie);
+🔹 Reading Cookie:
+string name = Request.Cookies["username"]?.Value;
+
+📦ASP.NET MVC Example: Using Cookies
+🔹 1. Setting a Cookie (in Controller)
+👇 Code
+// This method is inside a Controller class (e.g., HomeController) in an ASP.NET MVC application
+// It returns an ActionResult and is used to set a cookie in the browser
+
+public ActionResult SetCookie()
+{
+    // Create a new HttpCookie object with:
+    // - Name: "username"
+    // - Value: "john123"
+    // HttpCookie is part of the System.Web namespace
+    // -------------------------------------------------------------------------
+    HttpCookie cookie = new HttpCookie("username", "john123");
+
+    // -------------------------------------------------------------------------
+    // Set the expiration time of the cookie
+    // - cookie.Expires is a DateTime property that determines when the cookie becomes invalid
+    // - DateTime.Now.AddMinutes(30) sets the cookie to expire 30 minutes from now
+    // If you don’t set this, it becomes a session cookie (expires when browser is closed)
+    // -------------------------------------------------------------------------
+    cookie.Expires = DateTime.Now.AddMinutes(30);
+
+    // -------------------------------------------------------------------------
+    // Add the cookie to the response so that it is sent to the client browser
+    // - Response is a property of the ControllerBase class (base class of Controller)
+    // - Response.Cookies is a collection of cookies being sent to the client
+    // - Response.Cookies.Add() is used to append the new cookie to the HTTP response
+    // -------------------------------------------------------------------------
+    Response.Cookies.Add(cookie);
+
+    // -------------------------------------------------------------------------
+    // Return a plain text response to the user/browser
+    // - Content() is a method of Controller class used to return raw string output
+    // - It returns a ContentResult object, which sends back a simple HTTP response
+    // -------------------------------------------------------------------------
+    return Content("Cookie has been set!");
+}
+
+🔹 2. Reading a Cookie (in Controller)
+👇 Code
+// This action method is part of an ASP.NET MVC controller (inherits from System.Web.Mvc.Controller)
+public ActionResult GetCookie()
+{
+    // ------------------------------------------------------------------------------------
+    // Access the HTTP request's cookies collection using the Request object.
+    // Request is a property of the Controller base class (System.Web.Mvc.Controller),
+    // and it provides access to HTTP request information like headers, cookies, query strings, etc.
+    //
+    // Request.Cookies returns an HttpCookieCollection (System.Web.HttpCookieCollection),
+    // which contains all cookies sent by the client browser.
+    //
+    // We attempt to retrieve a cookie named "username" from this collection.
+    // The ?.Value ensures we don’t get a NullReferenceException if the cookie is not found.
+    // ------------------------------------------------------------------------------------
+    string name = Request.Cookies["username"]?.Value;
+
+    // ------------------------------------------------------------------------------------
+    // Check if the cookie was found (i.e., not null).
+    // If the cookie exists, we display a personalized welcome message using Content().
+    // Content(string) creates a ContentResult that returns plain text to the browser.
+    // ------------------------------------------------------------------------------------
+    if (name != null)
+        return Content("Welcome back, " + name);  // Example output: "Welcome back, Alice"
+
+    // ------------------------------------------------------------------------------------
+    // If the cookie was not found (i.e., null), we return a different plain text message.
+    // This could happen if the user never visited the site before or cookies were cleared.
+    // ------------------------------------------------------------------------------------
+    else
+        return Content("No cookie found!");
+}
+
+⚠️ Limitations of Cookies
+Size limit (~4 KB)
+Stored in plain text unless encrypted
+Can be disabled by the user
+Sent with every request (can increase bandwidth usage)
+
+
+📌 Example : Mini ASP.NET MVC App – Client State
+Let’s make a simple app that:
+Takes user name via form
+Stores it in a cookie
+Greets the user on the next visit
+ 
+step 1. 
+📁 Controller – HomeController.cs
+👇 Code
+// Import the required ASP.NET MVC namespace
+using System;
+using System.Web;
+using System.Web.Mvc; // This is where Controller, ActionResult, HttpPost, etc., come from
+
+// Define the controller class which inherits from the base 'Controller' class
+public class HomeController : Controller
+{
+    // ------------------------------
+    // Action Method: Index (GET)
+    // This method is called when the user navigates to /Home/Index (or just / if it's the default route)
+    // ------------------------------
+    public ActionResult Index()
+    {
+        // ----------------------------------------------
+        // Request.Cookies is a property of the base Controller class
+        // It accesses cookies sent from the client browser
+        // The indexer ["username"] fetches the cookie named "username"
+        // ?.Value is null-safe access to get the cookie's value
+        // ----------------------------------------------
+        string user = Request.Cookies["username"]?.Value;
+
+        // ----------------------------------------------
+        // ViewBag is a dynamic object provided by ASP.NET MVC (part of Controller)
+        // It allows passing temporary data from the controller to the view
+        // Here, we are sending the 'user' value (from cookie) to the view
+        // ----------------------------------------------
+        ViewBag.User = user;
+
+        // ----------------------------------------------
+        // Return the default view associated with this action (Index.cshtml)
+        // The View() method comes from the Controller class
+        // ----------------------------------------------
+        return View();
+    }
+
+    // ------------------------------
+    // Action Method: SetName (POST)
+    // This method is invoked when a form submits data to /Home/SetName via HTTP POST
+    // ------------------------------
+    [HttpPost] // This attribute ensures the method is only invoked via POST requests
+    public ActionResult SetName(string userName)
+    {
+        // ----------------------------------------------
+        // Create a new HttpCookie (System.Web.HttpCookie)
+        // Parameters: name = "username", value = userName (from form)
+        // This creates a cookie that will be sent to the client
+        // ----------------------------------------------
+        HttpCookie cookie = new HttpCookie("username", userName);
+
+        // ----------------------------------------------
+        // Set the expiration time for the cookie to 5 minutes from now
+        // This makes it a temporary (non-persistent) cookie
+        // ----------------------------------------------
+        cookie.Expires = DateTime.Now.AddMinutes(5);
+
+        // ----------------------------------------------
+        // Add the cookie to the response, so it's sent back to the client's browser
+        // Response.Cookies is part of the base Controller class (actually from HttpResponse)
+        // ----------------------------------------------
+        Response.Cookies.Add(cookie);
+
+        // ----------------------------------------------
+        // Redirect the user to the Index action after setting the cookie
+        // This is a Post-Redirect-Get pattern to avoid resubmission
+        // RedirectToAction is part of the Controller class
+        // ----------------------------------------------
+        return RedirectToAction("Index");
+    }
+}
+
+step 2.
+📁 View – Index.cshtml
+@{
+    // --------------------------------------------
+    // This is Razor syntax for declaring code blocks in the view.
+    // Here, we are setting the ViewBag.Title, which is passed to the layout page.
+    // ViewBag is a dynamic property (from System.Dynamic) provided by ASP.NET Core MVC.
+    // It's used to pass temporary data from the controller to the view.
+    // --------------------------------------------
+    ViewBag.Title = "Home Page";
+}
+
+@if (ViewBag.User != null) // Check if the ViewBag contains a value for "User"
+{
+    // --------------------------------------------
+    // If ViewBag.User is NOT null, that means the user has submitted their name.
+    // So we display a welcome message using Razor expression syntax: @ViewBag.User
+    // @ is used to render C# expressions inside HTML in Razor views.
+    // --------------------------------------------
+    <h2>Welcome back, @ViewBag.User!</h2>
+}
+else
+{
+    // --------------------------------------------
+    // If ViewBag.User is null, that means no user name was submitted yet.
+    // So we prompt the user to enter their name.
+    // Then we render a form using Html.BeginForm to submit the name.
+    // --------------------------------------------
+    
+    <h2>Enter your name:</h2>
+
+    @* 
+    Html.BeginForm helper method:
+    - Belongs to the HtmlHelper class in System.Web.Mvc.Html.
+    - Used to generate an HTML <form> tag.
+    - Parameters:
+        1. "SetName" is the action method to call on form submission.
+        2. "Home" is the controller where the action method resides.
+        3. FormMethod.Post indicates the HTTP method (POST).
+    - The using block ensures the form is properly closed (disposes the form tag).
+    *@
+    @using (Html.BeginForm("SetName", "Home", FormMethod.Post))
+    {
+        // HTML input field for entering the user's name
+        <input type="text" name="userName" />
+
+        // Submit button for the form
+        <input type="submit" value="Submit" />
+    }
+}
+
+
+🔍 How it works together:
+Page Load:
+When the user first visits the page, ViewBag.User is null.
+The else block runs: it displays a form asking for the name.
+
+Form Submission:
+The form submits a POST request to SetName action in HomeController.
+The userName input value is sent in the POST body.
+
+Server Side (not shown in your code):
+HomeController.SetName receives the value, stores it in ViewBag.User or TempData/Session, and returns the view again.
+
+Page Reload:
+Now ViewBag.User has a value.
+The if block runs: it shows Welcome back, [UserName]!.
+
+First visit: user enters name, e.g., "Alice".
+Server stores it in a cookie (username=Alice).
+On next visit, cookie is read → greeting is shown: "Welcome back, Alice!"
+
+
+✅[#3] SERVER-SIDE STATE MANAGEMENT
+📌Server-side state management
+-Server-side state management means the state of a user or application data is stored on the server, not the client (like browser).
+
+-This is important because HTTP is stateless, so to maintain user sessions, preferences, or any temporary data between requests, you need to store this information somewhere. Server-side storage is secure (not exposed to the client) and centralized.
+
+📌Techniques of Server-Side State Management
+Session State
+Application State
+TempData
+Cache
+
+📌 Session State
+🔍 What is it?
+Stores data per user session. A session is unique to each user and lasts until timeout or browser is closed (default is 20 minutes idle time).
+
+-A Session is a server-side state management technique used to store user-specific data for the duration of a user's visit (or session) on a web application.
+
+It allows data to persist across multiple requests from the same user, enabling features like:
+Logged-in user info
+Shopping cart
+User preferences
+Temporary form data
+
+⚙️ How Session Works (Behind the Scenes)
+🧑‍💻 User sends a request to the server (e.g., login).
+🖥️ Server generates a unique Session ID for the user and stores data in memory (like a dictionary).
+🍪 The Session ID is sent to the user's browser via a cookie (ASP.NET_SessionId).
+🔁 For every future request, the browser sends this cookie, allowing the server to retrieve the user's data using that ID.
+❌ When the session times out (e.g., after 20 minutes of inactivity by default), the server deletes the session data.
+
+Where Session Data Is Stored?
+In-Memory (default) on the server
+Optionally: SQL Server, State Server, or Custom Providers
+
+🛠️ Configure Session Timeout (Web.config)
+-Uh can set the session time out so that for that period of time the session data will be preserve.
+<system.web>
+  <sessionState timeout="30" /> <!-- 30 minutes -->
+</system.web>
+
+📄Example: Using Session in ASP.NET MVC
+🗂 Project Structure (ASP.NET MVC)
+/Controllers
+    HomeController.cs
+/Views
+    /Home
+        Index.cshtml       (Login form)
+        Dashboard.cshtml   (Shows logged-in username)
+/Web.config
+
+
+🗂1. HomeController.cs
+👇 Code
+// Import the System.Web.Mvc namespace which contains the core classes for ASP.NET MVC
+// This includes Controller, ActionResult, View, RedirectToAction, etc.
+using System.Web.Mvc;
+
+// Define the namespace for organizing related controllers
+namespace SessionDemo.Controllers
+{
+    // HomeController inherits from the built-in Controller class
+    // Controller is the base class for all MVC controllers in System.Web.Mvc
+    public class HomeController : Controller
+    {
+        // ============================
+        // GET: Index (Login Page)
+        // URL: /Home/Index or just /
+        // ============================
+        // This action handles GET requests to display the login form
+        // It returns a View named "Index.cshtml"
+        public ActionResult Index()
+        {
+            return View(); // Looks for Views/Home/Index.cshtml
+        }
+
+        // ============================
+        // POST: Login
+        // URL: /Home/Login (form submits here)
+        // ============================
+        // This action is decorated with [HttpPost], meaning it will only handle POST requests
+        // It expects a form field named "username" to be submitted
+        [HttpPost]
+        public ActionResult Login(string username)
+        {
+            // Save the submitted username into the Session object
+            // Session is a key-value store available to the current user session
+            // Session is available via the base Controller class
+            Session["Username"] = username;
+
+            // After storing the username, redirect to the Dashboard page
+            // This performs a 302 HTTP redirect to /Home/Dashboard
+            return RedirectToAction("Dashboard");
+        }
+
+        // ============================
+        // GET: Dashboard
+        // URL: /Home/Dashboard
+        // ============================
+        // This action checks if the user is logged in by validating the session
+        // If session is empty, redirect them back to the login (Index) page
+        public ActionResult Dashboard()
+        {
+            // Retrieve the value from session
+            var user = Session["Username"];
+
+            // If session is null (user not logged in), redirect to login page
+            if (user == null)
+            {
+                return RedirectToAction("Index"); // Redirect to /Home/Index
+            }
+
+            // Pass the session value to the view using ViewBag
+            // ViewBag is a dynamic object used to send data from controller to view
+            ViewBag.Username = user.ToString();
+
+            // Return the Dashboard.cshtml view
+            return View(); // Looks for Views/Home/Dashboard.cshtml
+        }
+
+        // ============================
+        // GET: Logout
+        // URL: /Home/Logout
+        // ============================
+        // This action clears the session and logs the user out
+        public ActionResult Logout()
+        {
+            // Clear all items in the session (logout user)
+            Session.Clear();
+
+            // Redirect back to login page (Index)
+            return RedirectToAction("Index");
+        }
+    }
+}
+
+
+🗂 2. Index.cshtml (Login Page)
+👇 Code
+@{
+    // ---------------------------------------------------------
+    // This is a Razor code block, executed server-side
+    // ViewBag is a dynamic property from the ControllerBase class
+    // It is used to pass temporary data (like page title) from the controller to the view
+    // Setting the Title property which may be used in a layout (_Layout.cshtml) to show page title
+    // ---------------------------------------------------------
+    ViewBag.Title = "Login";
+}
+
+<!-- 
+    ---------------------------------------------------------
+    HTML content begins here.
+    <h2>Login</h2> is just a heading displayed on the browser.
+    ---------------------------------------------------------
+-->
+<h2>Login</h2>
+
+<!-- 
+    ---------------------------------------------------------
+    <form> tag defines an HTML form for user input.
+    action="/Home/Login" :
+        - Specifies the endpoint where form data will be sent after submission.
+        - Points to the Login action method in the HomeController.
+    method="post":
+        - Specifies that form data will be sent via HTTP POST request.
+    ---------------------------------------------------------
+-->
+<form action="/Home/Login" method="post">
+    
+    <!-- 
+        Label for the input field to instruct user.
+        <label> is used for better accessibility and UX.
+    -->
+    <label>Enter Your Name:</label>
+    
+    <!-- 
+        Input field for username.
+        type="text": simple single-line text input.
+        name="username": the name by which the server-side code will identify the value.
+        required: HTML5 attribute, ensures the field is not left empty.
+    -->
+    <input type="text" name="username" required />
+    
+    <!-- 
+        Submit button to send form data to the server.
+        When clicked, it posts the form data to the /Home/Login route.
+    -->
+    <button type="submit">Login</button>
+
+</form>
+
+
+
+🗂 3. Dashboard.cshtml (Logged-in Page)
+👇 Code
+@{
+    // This is the Razor code block at the top of the view.
+    // ViewBag is a dynamic property defined in the ControllerBase class.
+    // It allows passing data from a controller to a view without using a model.
+    // Here, we are setting the HTML <title> tag for the browser tab.
+    // This will be used in the layout file (_Layout.cshtml) as @ViewBag.Title
+    ViewBag.Title = "Dashboard";
+}
+
+<!-- This is an HTML <h2> heading that displays a welcome message -->
+<!-- Razor syntax (@...) is used to inject C# variables directly into HTML -->
+
+<h2>
+    Welcome, 
+    @ViewBag.Username!
+    <!-- 
+        @ViewBag.Username is dynamic data passed from the controller.
+        It's rendered as part of the HTML page.
+        For example, if the controller sets ViewBag.Username = "John";
+        This will render: Welcome, John!
+    -->
+</h2>
+
+<!-- This is a simple HTML anchor tag (<a>) that links to the Logout action of the HomeController -->
+<a href="/Home/Logout">Logout</a>
+
+<!-- 
+    Explanation:
+    - When the user clicks "Logout", the browser sends a GET request to /Home/Logout
+    - This should match the Logout() action method in HomeController
+    - Example action method in controller:
+        public IActionResult Logout()
+        {
+            // Clear session or cookies here
+            return RedirectToAction("Login");
+        }
+-->
+
+🔍 How It Works
+| Step                      | What Happens                                         |
+| ------------------------- | ---------------------------------------------------- |
+| 1️⃣ User opens login page | `Index()` view is shown                              |
+| 2️⃣ User submits name     | `Login()` action saves name in `Session["Username"]` |
+| 3️⃣ Redirect to Dashboard | `Dashboard()` checks if `Session["Username"]` exists |
+| 4️⃣ View shows name       | Data retrieved from session and displayed            |
+| 5️⃣ Logout                | `Session.Clear()` removes all session data           |
+
+
+📌Application State
+Application State is a server-side global storage used to store data that is shared across all users of the application.
+Think of it as a global variable for your entire web app.
+⚠️ It is not meant for user-specific data like Session. Instead, it’s for data common to all users, like configuration values or global counters.
+
+🧰 Where Is It Stored?
+Stored in the server's memory, available via: HttpContext.Application
+It's available across:
+All users
+All sessions
+All pages
+
+📦 Features
+| Feature       | Description                                           |
+| ------------- | ----------------------------------------------------- |
+| Lifetime      | Exists from app start to app stop                     |
+| Scope         | Global — shared by all users and sessions             |
+| Storage type  | Server memory                                         |
+| Thread safety | ❗Not thread-safe by default — you must handle locking |
+| Use case      | Global counters, app-level flags, global config       |
+
+
+🗂Example Scenario: Visitor Counter for All Users
+Let’s say you want to count how many total users have visited the site since it started.
+🗂 Step 1: Initialize in Global.asax.cs
+👇 Code
+// This method is part of the Global.asax file in a traditional ASP.NET Web Forms application.
+// It is automatically called by the ASP.NET runtime **once**, when the application first starts.
+
+// The method must be named `Application_Start` and is defined in the `Global` class,
+// which inherits from `HttpApplication` (defined in System.Web namespace).
+
+void Application_Start()
+{
+    // ------------------------------------------------------------------------
+    // Application["VisitorCount"] is part of the Application State in ASP.NET.
+    // Application State is a global state object shared across **all users and sessions**.
+    // Think of it as an in-memory key-value dictionary stored on the server.
+
+    // "VisitorCount" is the key used to store and retrieve this value.
+    // We are initializing it with the integer value 0 — this means no visitors yet.
+
+    // This line sets the initial visitor count to 0 when the application starts.
+    // Later, you can increment this count in other parts of your app to track visits.
+    // ------------------------------------------------------------------------
+    Application["VisitorCount"] = 0;
+}
+
+
+🗂Step 2: Increment in Controller (e.g., HomeController.cs)
+👇 Code
+// Import necessary namespaces
+using System.Web.Mvc;
+
+public class HomeController : Controller // Controller class from System.Web.Mvc
+{
+    // Action method for the default route (e.g., /Home/Index)
+    // Returns a View and updates the visitor count
+    public ActionResult Index()
+    {
+        // -----------------------------------------------
+        // Locking the Application object to ensure thread safety
+        // Prevents race conditions when multiple users hit the site simultaneously
+        // -----------------------------------------------
+        Application.Lock(); // Application is a property of Controller (HttpApplicationState), from System.Web
+
+        // -----------------------------------------------
+        // Retrieve the current visitor count from the Application state
+        // The Application object stores global data shared across all sessions/users
+        // Typecast the value to int since Application returns object
+        // -----------------------------------------------
+        int count = (int)Application["VisitorCount"];
+
+        // -----------------------------------------------
+        // Increment the visitor count by 1
+        // This simulates a new visit to the site
+        // -----------------------------------------------
+        count++;
+
+        // -----------------------------------------------
+        // Update the global Application state with the new count
+        // This new value will be shared with all users
+        // -----------------------------------------------
+        Application["VisitorCount"] = count;
+
+        // -----------------------------------------------
+        // Unlock the Application object to allow other threads to access it
+        // Always unlock what you lock to avoid deadlocks
+        // -----------------------------------------------
+        Application.UnLock();
+
+        // -----------------------------------------------
+        // Pass the current visitor count to the View using ViewBag
+        // ViewBag is a dynamic object used to pass data from controller to view
+        // -----------------------------------------------
+        ViewBag.Visitors = count;
+
+        // -----------------------------------------------
+        // Return the default View for this action (Index.cshtml by convention)
+        // The View can access ViewBag.Visitors to display the count
+        // -----------------------------------------------
+        return View();
+    }
+}
+
+
+
+🗂Show in View (e.g., Index.cshtml)
+👇 Code
+<h2>Welcome!</h2>
+<p>Total visitors: @ViewBag.Visitors</p>
+
+
+// ❌ WRONG! Don’t store user info in Application state
+Application["CurrentUser"] = "john123";
+This would overwrite the value every time a new user logs in.

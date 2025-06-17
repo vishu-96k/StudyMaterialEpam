@@ -1,0 +1,244 @@
+-----Structures-------
+class: is a user defined DT
+structures :structure came into exixtence before classes becox of procedure programming lang like C. 
+struct is also a user defined DT
+
+struct in c language can only contain fields in it, but struct in C# can contains most of the things what a class can contain like data feilds, contstuctors, properties, indexes, Methods, operator methods etcs can be included in C# structures
+
+
+syntax of struct and class is same but in place of class keyword use struct
+
+we dont have a struct template, so uh can choose and add a code file for defining strct, uh can even define the struct in calss file.
+
+calss or struct are genrallyv used for representing entities.
+
+Note : all predefined data types under the librarieds of our languages which comes under refrence type category eg string, objects are predefined class, where as all the predefined data types which comes under the value type category eg int, float , double, Enum , all are predefied structs
+
+----diff between a class and struct =>
+
+class :
+it is a refrence type, so memory is allocated at heap.
+memory allocation for instances  of a class is performed on managed heap
+we use class for large volumes of data members.
+all refrence types are classes
+in case of class new keyword is manadatory for creatuing instance
+feilds of a class can be initialize at the time of declaration
+
+
+strut :
+struct is a value type, so memory is allocated in the stack memory.
+memory allocation for instance of struct is performed on the stack.
+struct are nothing but light weight classes
+we use struct for smaller volumes of data members
+all  value types are struct types
+incase of struct new keyword is  optional for creating instance of struct
+uh cannot initialize and assign value at the same time to the fields of variable in the strcture, uh must initialize the variables and assign value to variable using the contructore or using the instance directly.
+if uh dont use new keyword for making the instance, then uh must initazlie the data members first and then only call the methods or else uh will get thje error becoz uh are not calling the constructor to initialize the values , so uh need to initialize the feilds using the instance if uh haven't use new keyword for making the instance.
+if the struct contains any feilds then we need to initialize those feilds explicityly by calling the default constructor using new keyword or else if we are not using new for creating the instance then we need to assign the values to the feilds(data fields) refreing thorugh the instance and assign values to them.
+
+
+strct emp 
+{
+	int i =10; // uh cant do this
+	int i;
+	public void Displayu()
+	{
+		CWL ("method in a strct " + i);
+	}
+}
+emp obj ;
+obj.i = 10;
+
+
+we can define any constriutor inside a class parameter of parameter less, and if no constructor is defined in there is implicit construictor, but in case of strct, paramterless or default constructor is always implicit and cant be re defiend explicitly again, we can only define parametrized constructor only explicitly.
+
+struct cannot contain paramterless explicit constructor , uh can only make paramterized constructor explicitly
+
+there is always a implicit paramterless conctritor in ur struct. and uh cant make one more paramerterless contructor explicitly
+
+if 0 constructore are defined in the calss then there will be a 1 constructor in class after compilation, and if uh define n constructior in the class then after complicaletion theire will be n constructor only. where as in case of struct if we define 0 constructor then after completion there will be 1 contsurctor (which is implicit(defalut) parameterless constructor), and if we define n constructor then there will be n + 1 constructore, one is alywas the defaluet constructor without parameter
+-so in case of struct, Even if uh define the paramerterized constructoers, The default Pramaterless constructor will always be there implicitly, and uh cannot have any Parametrless constructor explicitly created.
+class can be inhireted but the strcut doesn't support inherited
+strct doesnt support OOps concept
+
+The default access modifier of struct members in C# is:
+Private for fields and properties declared inside a struct.
+private for constructors, methods, enums, and delegates declared inside a struct.
+-So make everytghing by defalut public.
+Doesnt Support Inhiritance, So uh cannot use Protected access modifier.
+No, you cannot use the protected access modifier in a struct.
+-Struct can implement the 3 pillers of OOPS, Abstrction(Using interfaces), Encapsulation(private and public acess), and polyermphism(by overiding the interface implemented method). But inhiritane is not allowed
+No, structs cannot have destructors in C#, becoz they are value type and are stored on Stack.
+class can implement interface, same as well struct also can implements interface only.
+
+the difference between struct and class in C# lies mainly in how they are stored in memory, their inheritance capabilities, and their usage scenarios.
+
+✅ Difference Table
+Aspect				class					struct
+Type			Reference Type				Value Type
+Memory Storage		Heap					Stack (or inline if part of another object)
+Inheritance		Supports inheritance			Does NOT support inheritance (can implement interfaces)
+Default Access Modifier	internal (if declared in namespace)	private (if declared in namespace)
+Performance		Slower access, better for large data	Faster access, better for small, simple data
+Constructor		Can have parameterless constructors	Cannot have parameterless constructors (since C# 10, allowed with struct if explicitly 									defined)
+Nullability		Can be null				Cannot be null (unless declared as Nullable<T> or ?)
+Boxing/Unboxing		No boxing/unboxing overhead		Boxing/Unboxing happens when cast to object
+Use Case		Complex objects with behavior		Lightweight, small data structures with short lifetimes
+
+
+EG :
+using System;
+
+public struct MyStruct
+{
+    //int x = 10; not allowed
+    public int x;
+    public int number;               // Private by default
+    public string Name;        // Explicitly made public
+
+    
+    public MyStruct(int num,int x, string name)
+    {
+        number = num;
+        this.x = x;
+        Name = name;
+    }
+
+    void DisplayNumber()       // Private by default
+    {
+        Console.WriteLine($"Number: {number}");
+    }
+
+    public void Display()       // Explicitly made public
+    {
+        //DisplayNumber();  // Can access private members within the struct
+        Console.WriteLine($"Name: {Name}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        MyStruct ms = new MyStruct(100, 200, "Alice");
+        ms.Display();  // This works because Display() is public
+
+        MyStruct obj;
+        obj.Name = "Test";
+        obj.number = 101;
+        obj.x = 20003;
+        obj.Display();
+
+        // ms.DisplayNumber();  // This won't work because DisplayNumber() is private
+    }
+}
+
+
+In C#, structs can have the following modifiers:
+✅ Allowed Modifiers for Structs
+
+Modifier	Description
+public		Makes the struct accessible from other classes and namespaces.
+internal	Makes the struct accessible only within its containing assembly. (Default)
+readonly	Indicates the struct is immutable. All fields must be readonly or const. (C# 7.2+)
+partial		Allows the definition of the struct to be split across multiple files.
+unsafe		Allows the use of pointers and unsafe code blocks within the struct.
+
+❌ Not Allowed Modifiers for Structs
+abstract – Structs cannot be inherited, so they can't be abstract.
+
+sealed – Structs are implicitly sealed; you cannot derive from a struct.
+
+static – Prior to C# 10, you cannot use static with structs. In C# 10+, static structs are allowed but have specific rules.
+
+virtual / override – Methods in structs cannot be virtual or overridden.
+
+
+-----INTERFACE IMPLEMENTING STRUCT EG :---
+EG
+using System;
+
+// Define an interface
+public interface IDisplayable
+{
+    void Display();  // Interface method (implicitly public & abstract)
+}
+
+// Define a struct that implements the interface
+public struct Employee : IDisplayable
+{
+    public int Id;
+    public string Name;
+
+    public Employee(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
+    // Implementing the interface method
+    public void Display()
+    {
+        Console.WriteLine($"Employee ID: {Id}, Name: {Name}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Using the struct with 'new' keyword
+        Employee emp1 = new Employee(101, "Alice");
+        emp1.Display();  // Output: Employee ID: 101, Name: Alice
+
+        // Using the struct without 'new' keyword
+        Employee emp2;
+        emp2.Id = 102;
+        emp2.Name = "Bob";
+        emp2.Display();  // Output: Employee ID: 102, Name: Bob
+
+        // Using the struct via interface reference
+        IDisplayable displayable = emp1;  
+        displayable.Display();  // Output: Employee ID: 101, Name: Alice
+    }
+}
+
+
+In C#, structs are value types and have some limitations compared to classes. However, they still support several OOP concepts:
+
+✅ OOP Concepts Supported by Structs
+OOP Concept	Supported by Structs?	Explanation
+Abstraction	✅ Yes			Can implement interfaces to hide implementation details and expose only essential functionalities.
+Encapsulation	✅ Yes			Can have public, private, or internal members to restrict access and protect data.
+Polymorphism	✅			Partially Supports interface-based polymorphism, but not inheritance-based polymorphism (no virtual/override).
+Inheritance	❌ No			Structs cannot inherit from other structs or classes. They only support interface inheritance.
+
+
+
+✅ Difference Between struct and class in C#
+Aspect			struct								class
+Type			Value Type							Reference Type
+Memory Allocation	Stored on the stack (if local) or inline (if field).		Stored on the heap.
+Inheritance		❌ Cannot inherit from classes or structs.			✅ Supports inheritance.
+Interfaces		✅ Can implement interfaces.					✅ Can implement interfaces.
+Access Modifiers	public, private, internal, readonly (No protected).		All modifiers including protected.
+Default Constructor	❌ Cannot have a parameterless constructor (before C# 10.0).	✅ Can have any constructor.
+Destructors		❌ Not allowed.							✅ Allowed for cleanup.
+Polymorphism		✅ Only via interfaces.						✅ Via interfaces & inheritance.
+Use Case		Small, lightweight objects.					Large, complex objects.
+Boxing & Unboxing	Can be boxed to object or interface types.			No boxing needed.
+Performance		Generally faster (stack allocation).				Generally slower (heap allocation).
+Default Accessibility	Fields are private.						Fields are private.
+
+
+✅ Why Structs Can Implement Interfaces but Not Inherit Classes
+Inheritance in OOP usually means deriving a class from another class, where the child class inherits fields, properties, methods, etc., from a base class.
+Structs do not support inheritance from classes or other structs.
+However, interfaces are not considered part of the inheritance hierarchy. They only provide a contract that must be implemented by the struct.
+Implementing an interface is about providing functionality, not inheriting behavior or state.
+
+📌 Analogy
+Think of a struct as an independent worker (value type) that follows a contract (interface) but does not inherit properties or behaviors from anyone (no inheritance)
+-Means interface only provides methods for Implemenations, not for consumptions , so it is allowed in Strcut
+Structs can implement interfaces because they are only promising to provide the implementations for those methods and properties.
+No inheritance hierarchy is involved, and no memory allocation for inherited fields is required.

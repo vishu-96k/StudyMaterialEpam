@@ -1,0 +1,379 @@
+--COLLECTIONS PART 1---
+
+Collections are Dynamic array, means uh can change the size of the array dunamicalyy
+
+ARRAY PROBLES :
+-increasing the size, not possible to increase the size of array
+-Inserting Values into the middle of the array
+-Deleting or removing values from the middle of array
+
+JAGGED ARRAY : Array whose rows and colums are not equal are called jagged arrays
+
+Collections Advantages :
+Auto resisiging 
+
+
+
+1) NON GENERIC COLLECTIONS : 
+these are the collections which are defined under the system.Collections namespace 
+Stack, Queue, LinkedList, ArrayList, HashTable
+these all are non genric collections
+
+Non-generic collections in C# are part of the System.Collections namespace and do not use generics (<T>). 
+These collections store objects as object types, meaning they require explicit type casting and are less type-safe compared to generic collections.
+
+Examples of Non-Generic Collections:
+ArrayList – A dynamic array that can store elements of different types.
+Hashtable – A collection of key-value pairs where keys are hashed for quick lookups.
+SortedList – A collection of key-value pairs sorted by the key.
+Stack – A Last-In-First-Out (LIFO) collection.
+Queue – A First-In-First-Out (FIFO) collection.
+
+you can store any data type in these colections becoz while initializing uh dont need to mention the datatype of the items which uh are going to stroe in the collecitons.
+SYNTAX :
+eg ArrayList list = new ArrayList();
+        list.Add(10);
+        list.Add("Hello");
+        list.Add(3.14);
+
+
+Diff between ARRAY and ARRAY LIST
+-array is having Fixed lenthg and arraylist has variable length 
+-we cant inset items in the middle, in arraylist we can
+-not possible to delete items from middle, We can delete the items from the middle 
+
+uh can use the array list same as array
+
+SYNTAX : 
+	ArrayList l new ArrayList();
+
+ArrayList is a class which implements the IList interface using array whose size is dynamically increased as required 
+
+Property of ArrayList :
+l.capacity : it will double the capacity as uh add the elemnets in the list and as the list is filling and getting full then at that time it will increase the capacity (0-4-8-16-31) etc
+
+uh can also set the initial size or capacity of the ArrayList, uh need to pass the capacity in the constructor 
+
+-syntax: 
+
+	ArrayList obj = new ArrayList();
+
+		or
+
+	ArrayList obj = new ArrayList(10) // 10 is the capacity of the obj arraylist
+
+uh can directly make the obj of Arraylist, as uh create the obj of a normal class and use it 
+PROPERTIES :
+-l.insert(index, value) : it will insert the value at the specify indexed
+
+-l.Remove(200) : it will remove the 200 item from the list 
+
+-l.RemoveAt(index) : removes elemet from the specified index	
+
+----------------------------HASHTABLE --------------------------
+
+hashtable is also like array list which is capable of resizing but uh can store the data as key value pair . uh can also set user defiend key value pairs
+
+syntax :
+Hashtable ht = new Hashtable();
+
+	or
+
+Hashtable ht = new Hashtable(size); // uh can also mention the number of elemennsts uh want to store in the Hash Table 
+
+PROPERTIES OF HASHTABLE 
+-ht.Add(key, value) : uh can directly add the type of key and value uh wanna insert and it will store that as a type of object
+eg : ht.Add(vishu, 101);
+	ht.Add(909, gaikwad);
+
+The values and keys are not stored in the sorted order or the order in which uh insert. uh wil not get the values In the sequential order if uh print them
+
+it will store the key value pair based on a hashcode, hashcode are very faster becoz they are implemented using red black trees
+
+-ht.key : uh will get the key
+-ht.Vlaue : uh will get the value
+
+
+DISADVANTAGES of COLLECTIONS :
+
+they are not type safe, uh can insert any datatype value becoz these are going to insert the values as object type.
+
+
+-------------GENRIC COLLECTIONS---------
+
+Genric Collections : are type safe it is also a collection and auto resizing, but uh need to pass the DataType which uh want to store in that collections
+
+Generic collections in C# are found in the System.Collections.Generic namespace. They provide type safety, better performance, and eliminate the need for type casting.
+
+Type safety comes into the picture when uh use the GERIC COLLECTIONS 
+
+List<T> // where T is the data Type
+
+SYNTAX :
+
+List<int> obj = new List<int>();
+
+uh can also use custom datatypes like classes or structure or Enum in plcae of T
+
+These are the class which are defined under the SYSTEM.COLLECTIONS.GENERIC namespace, so in this namescpae all the collections are type safe 
+
+EG : List<T> ----ArrayList
+     Dictinoary<T> --- Hashtable
+
+
+Generic Collection (System.Collections.Generic)		Equivalent Non-Generic Collection (System.Collections)		Description
+List<T>							ArrayList							A dynamic array that can grow as 															needed.
+
+Dictionary<TKey, TValue>				Hashtable							A key-value collection with fast 															lookups.
+
+SortedList<TKey, TValue>				SortedList (Non-Generic)					A key-value collection sorted by k															ey.
+
+HashSet<T>						🚫 (No direct equivalent)					A collection that prevents duplicate 															elements.
+
+Stack<T>						Stack (Non-Generic)						A Last-In-First-Out (LIFO) 																collection.
+
+
+Queue<T>						Queue (Non-Generic)						A First-In-First-Out (FIFO) 																collection.
+
+LinkedList<T>						🚫 (No direct equivalent)					A doubly linked list for efficient 															insertions.
+
+
+Common Generic Collections
+List<T> – A dynamic array of type T.
+Dictionary<TKey, TValue> – A key-value pair collection.
+SortedList<TKey, TValue> – A key-value collection sorted by key.
+HashSet<T> – A collection that prevents duplicate elements.
+Stack<T> – A Last-In-First-Out (LIFO) collection.
+Queue<T> – A First-In-First-Out (FIFO) collection.
+LinkedList<T> – A doubly linked list.
+
+
+------------------------PART 4 Bangar Raju--------
+
+== : when uhb campare two obj value type with these (==) then it will compare the Address of those two objescts(like string, class etc)
+
+eg 1 :
+string str1 =  "Vishu";
+string str2 = "Gaikwad";
+string str3 = "Vishu";
+
+	// Using Equals method
+        Console.WriteLine(str1.Equals(str2)); // False
+        Console.WriteLine(str1.Equals(str3)); // True
+
+        // Using == operator
+        Console.WriteLine(str1 == str2); // False
+        Console.WriteLine(str1 == str3); // True
+
+
+
+eg 2:   string str1 = "Vishu"; // Interned string
+        string str2 = new string("Vishu"); // New object in heap
+        string str3 = "Vishu"; // Interned string (same reference as str1)
+        string str4 = new string("Vishu"); // Another new object in heap
+
+        // Using Equals method (checks value)
+        Console.WriteLine(str1.Equals(str2)); // True
+        Console.WriteLine(str1.Equals(str3)); // True
+        Console.WriteLine(str2.Equals(str4)); // True
+
+        // Using == operator (checks reference for objects, value for interned strings)
+        Console.WriteLine(str1 == str2); // True (compares values)
+        Console.WriteLine(str1 == str3); // True (same reference)
+        Console.WriteLine(str2 == str4); // True (compares values, not references)
+
+        // Checking reference equality explicitly
+        Console.WriteLine(Object.ReferenceEquals(str1, str3)); // True (same interned reference)
+        Console.WriteLine(Object.ReferenceEquals(str1, str2)); // False (str2 is a different object)
+        Console.WriteLine(Object.ReferenceEquals(str2, str4)); // False (different heap objects)
+
+
+
+
+
+.Equals(send_obj) : uh need to use Equals() method for comparing the values of the two obj types for comparing there values
+
+
+---------GENRICS---CREATING---METHOD<T> and CLASS<T>---------
+
+you can also pass the parameter types at the time of function calling, Like the STL in CPP uh can also make the same thing 
+
+SYNTAX :
+ 
+  modifier returnType MethodName<T> (T a, T b)
+  {
+	// write code and where ever uh need T data type use T
+  }
+
+  MethodName<DataType>(value1, valu2); // now while calling the function un need to passs the T as the DataType
+
+
+This is called genrics, uh can pass the data type into the funtions as parameter using<> and even uh can create these fun in the class and when uh are calling these functions using the object name that type uh need to pass the datatype in <>.
+
+Similarly uh can also pass these as the class pareameters also 
+
+SYNTAX :
+	class className<T>
+	{
+		// use T as data type wherever needed
+		//use T in methods for DataType
+	}
+ 	className<DataType> obj = new ClassName<DataType>();//now whenever uh create the obj of these class uh need to pass the datatype in the<T>.
+
+
+-------------------PART 5---------------------
+
+In genrics we dont have Hashtable(), we have Dictrionary<T> in place of Hashtable().
+Dictionary stored all the values in the sequence
+You can store any <T> type of values in the Genric Collections, even uh can store user Defined Types, Objects also can be there 
+
+-----------------BANGAR RAJU---------------PART 6----------------------
+
+IComparable AND IComparer interfaces 
+In genrics List<T> , the values will get store in the order uh add them 
+
+property : l1.Sort() : this method will sort the list, but if the Data type is complex (like class) then it will throw a exception as invalidOpretionException failed to compare two eleemnets in the array 
+
+EG : List<Student> s = new List<Student>(){s1, s2, s3, s4}
+     s.Sort() // throw error becoz student is a class and uh cant sort directly like uh do in case of int 
+
+when we use complex types in place <T> of t then we will get error, sort method will not work, to resolve this problem uh need to tell based on which property of student class the comparision should be done.
+
+We should explicitly write the logic for sort fun to compare the properties of class, for this uh need to implement(inhirt) the interface called IComparable<> and in this interface uh need to pass the Student class as <T>.
+
+Uh need to implement the CompareTo() interface method
+
+Implement the IComparable<T> interface in the Student class and pass the Student as <T> in the interface and then override the CompareTo() method. In this method write the logic for comparing the S.id , so that the sort can be performed on that basis of ID of student 
+
+EG : 
+using System;
+namespace Student
+{
+	public class Student : IComparable<Student>
+	{
+		Public int Id {get;set;}
+		public string Name {get; set;}
+		
+		public int CompareTo(Student obj)
+		{
+			if(this.id > obj.id)
+			{
+				return 1;
+			
+			else if(this.id <obj.id)
+			{
+				return -1;
+			}
+
+			else {return 0;}
+		}
+	}
+
+	public class Program 
+	{
+		static void Main()
+		{
+Student s1 = new student {id=10, Name="vishu"};
+
+Student s2 = new student {id=40, Name ="sakshi"};
+
+Student s3 = new student {id=1, Name ="Suraj"};
+
+Student s4 = new student {id=100, Name ="vishwajeet"};
+
+Student s5 = new student {id=0, Name ="gaikwad"};
+			
+
+		List<Student> student = new List<Student>() {s1,s2,s3,s4,s5};
+		foreach(var s in student)
+		{
+			cw("s.id") // withput sorted order, as uh insert the element it will be printed in that order
+		}
+		
+		student.Sort() // if the CompareTo() was not overridetn then it would have given error
+	
+		foreach(var s in student)
+		{
+			cw("s.id")// it will be printed in sorted order, if uh want to sort in desending order then just call the reverse order, or even uh can change the logic in CompareTo() method
+
+		}
+		}
+	}
+
+}
+
+In this CompareTo() method uh need to implement the logic in this method and this method is in the IComparable<T> interface which uh need to inhirt in the student class
+
+But in case uh dont have the student class defiend by you, and uhb need to perform the sorting based on the student marks property of student, then uh cannot inhirit the IComparable<T>interface .
+In such case uh need to write a new class as any name (eg CompareStudent ) and this class should inhirt(implement) IComparer interface<T> and pass the type as Student class.
+In this IComparer interface there is one method called Compare() which uh need to implement.
+Compare() : This method takes 2 parametrs as of type <T>, in out case that will be the student class and now uh need to implement the logic for the comparisions for sorting on the basis of the Marks of the Student 
+
+Eg :    
+
+using System;
+namespace Student
+{
+	public class Student : IComparable<Student>
+	{
+		//assum we dont have this class as user defiend, its inbuilt student class 
+	}
+
+// make a new class and implement the Icomparer interface in it
+	Public class CompareStudent : IComparer<Student>
+	{
+		public int Compare(Student s1, Student s2) //Interface method which uh need to Implement
+		{
+			if(s1.Marks > s2.Marks)
+			return 1;
+			
+			else if(s1.Marks < s2.Marks)
+			return -1;
+
+			else
+			return 0;
+		}
+	}
+
+	public class Program 
+	{
+	static void Main()
+	{
+		Student s1 = new student {id=10, Name="vishu"};
+
+		Student s2 = new student {id=40, Name ="sakshi"};
+
+		Student s3 = new student {id=1, Name ="Suraj"};
+
+		Student s4 = new student {id=100, Name ="vishwajeet"};
+
+		Student s5 = new student {id=0, Name ="gaikwad"};
+			
+
+		List<Student> student = new List<Student>() {s1,s2,s3,s4,s5};
+		foreach(var s in student)
+		{
+			cw("s.id") // withput sorted order, as uh insert the element it will be printed in that order
+		}
+		
+		student.Sort() // if the CompareTo() was not overridetn then it would have given error
+	
+		foreach(var s in student)
+		{
+			cw("s.id")// it will be printed in sorted order, if uh want to sort in desending order then just call the reverse order, or even uh 					can change the logic in CompareTo() method
+
+		}
+
+
+				// sorting based on the Marks of the student(marks should be a property of the student class for this first)
+
+		CompareStudent obj2 = new CompareStudent();
+		Student.Sort(obj2) // now sort is a overloaded method, and uh can pass the obj2 as parameters in it, and the students will be sorted based 					 on the Marks 
+		foreach(var s in student)
+		{
+			cw("s.id")// this wil print the students based on the marks sorted
+ 		}
+	}
+
+}
+

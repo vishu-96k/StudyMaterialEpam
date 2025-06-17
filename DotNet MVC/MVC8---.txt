@@ -1,0 +1,510 @@
+MVC8---
+------------------------------------
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+-✅[#1] : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords defination
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : 07 DEPENDENCY INJECTION 📌✅✅✅✅✅✅✅✅✅📌 
+
+✅[#1] DI INTRO
+
+📌Student.cs Model
+🗂Models/Student.cs 
+👇 Code:
+namespace FirstCoreMVCWebApplication.Models
+{
+    // Student class represents the data model with basic properties
+    public class Student
+    {
+        public int StudentId { get; set; }   // Unique ID for student
+        public string? Name { get; set; }    // Student's name
+        public string? Branch { get; set; }  // Branch/Department
+        public string? Section { get; set; } // Section (like A, B, etc.)
+        public string? Gender { get; set; }  // Gender
+    }
+}
+
+
+Creating Service Interface: This interface will declare the methods or operations we can perform on the student data.
+🗂Models/IStudentRepository.cs
+👇 Code:
+using System.Collections.Generic;
+
+namespace FirstCoreMVCWebApplication.Models
+{
+    // Interface declaring student-related operations
+    public interface IStudentRepository
+    {
+        // Method to get student by ID
+        Student GetStudentById(int StudentId);
+
+        // Method to get list of all students
+        List<Student> GetAllStudent();
+    }
+}
+
+Creating Service Implementation:create a class file named StudentRepository.cs within the same Models folder. This class implements the IStudentRepository interface
+🗂Models/StudentRepository.cs 
+👇 Code:
+using System.Collections.Generic;
+using System.Linq;
+
+namespace FirstCoreMVCWebApplication.Models
+{
+    // Implements IStudentRepository to provide actual data
+    public class StudentRepository : IStudentRepository
+    {
+        // Hardcoded data source mimicking a database or API
+        public List<Student> DataSource()
+        {
+            return new List<Student>()
+            {
+                new Student() { StudentId = 101, Name = "James", Branch = "CSE", Section = "A", Gender = "Male" },
+                new Student() { StudentId = 102, Name = "Smith", Branch = "ETC", Section = "B", Gender = "Male" },
+                new Student() { StudentId = 103, Name = "David", Branch = "CSE", Section = "A", Gender = "Male" },
+                new Student() { StudentId = 104, Name = "Sara", Branch = "CSE", Section = "A", Gender = "Female" },
+                new Student() { StudentId = 105, Name = "Pam", Branch = "ETC", Section = "B", Gender = "Female" }
+            };
+        }
+
+        // Returns a single student object based on StudentId
+        public Student GetStudentById(int StudentId)
+        {
+            return DataSource().FirstOrDefault(e => e.StudentId == StudentId) ?? new Student();
+        }
+
+        // Returns all students from the data source
+        public List<Student> GetAllStudent()
+        {
+            return DataSource();
+        }
+    }
+}
+🗂Program.cs:
+In the Program class, we need to do two things. First, we need to configure the required MVC service to the IoC Container, and then we need to add the MVC Middleware to the request processing pipeline.
+👇 Code:
+namespace FirstCoreMVCWebApplication
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Create a WebApplicationBuilder instance
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Register MVC services to the container
+            builder.Services.AddMvc();
+
+            // Build the application
+            var app = builder.Build();
+
+            // Enable routing middleware
+            app.UseRouting();
+
+            // Define the default route pattern: HomeController, Index method
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+            );
+
+            // Run the application
+            app.Run();
+        }
+    }
+}
+
+🗂Controller/HomeController.cs (Without Dependency Injection)
+you can see that within the Index and GetStudentDetails action methods, we are creating an instance of the StudentRepository class and calling the respective method.
+👇 Code:
+using FirstCoreMVCWebApplication.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+
+namespace FirstCoreMVCWebApplication.Controllers
+{
+    public class HomeController : Controller
+    {
+        // Action method for the root URL
+        public JsonResult Index()
+        {
+            // Create an instance of StudentRepository directly (Not recommended for real apps)
+            StudentRepository repository = new StudentRepository();
+
+            // Get all student details
+            List<Student> allStudentDetails = repository.GetAllStudent();
+
+            // Return as JSON response
+            return Json(allStudentDetails);
+        }
+
+        // Action method to get details of a single student by Id
+        public JsonResult GetStudentDetails(int Id)
+        {
+            // Create an instance of StudentRepository directly
+            StudentRepository repository = new StudentRepository();
+
+            // Get student details based on Id
+            Student studentDetails = repository.GetStudentById(Id);
+
+            // Return as JSON response
+            return Json(studentDetails);
+        }
+    }
+}
+📦NOTE : Now this controller we have made is without using the DI pattern, Becoz we are directly making the "StudentRepository" class objects into the controller calss, which is not a good way. So uh need to egester the servies that is "StudentsRepository" with the DI IoC container, so that IoC container can automatically use DI and inject the instance of the "StudentRepository" class.
+
+📦OUTPUT 
+when the user visits he URL : https//port//Index
+	All students dat is outputted
+
+when the user visits he URL : https//port//GetStudentDetails
+	Specific student data is seen
+
+📦Summary:
+Model (Student.cs): Defines the structure of student data.
+Interface (IStudentRepository.cs): Declares methods for data access.
+Service (StudentRepository.cs): Implements the interface and provides hardcoded data.
+Program.cs: Configures MVC services and sets up routing.
+Controller (HomeController.cs): Calls the repository directly (without using Dependency Injection) to return student data as JSON.
+
+📌 DI:
+-DPENDENCY INJECTION : DI helps us to achive loosly coupling(Between 2 classes), and its a Design pattern, Instead of creating dependencies (objects or services) directly within a class, dependencies are injected into the class from outside, typically through constructor parameters or Funciton(methods).
+-If there was not built in support for DI, then uh need to create objects of models class and there Logic class, into the controller class, But as we have the DI pattern, So uh can inject the dependency using the constructor into the controller.
+-try avoiding to create the objects of dependet classes into controller(tightly couplying), Rather then send them using the "Constructor(Interface)", Try sending these objects using the interface pointer, so that in future if there is change in there concreat class, then also the object will be pointed by the interface.
+
+📌WHAT IS DI IN ASP.NET :
+Definition:
+Dependency Injection is a design pattern used to achieve Inversion of Control (IoC, which is also a design principal) between classes and their dependencies.
+Instead of a class creating its own dependencies, those dependencies are "injected" from outside—typically via the constructor. This leads to loosely coupled systems.
+-Example: Imagine a Car class that needs an Engine. Instead of the Car creating the Engine internally, we inject an Engine object into the Car. This way, we can swap engines (e.g., PetrolEngine, ElectricEngine) without modifying the Car class.
+-The ASP.NET Core Framework provides built in support and injects dependency objects into a class through a constructor or method using the built-in IoC (Inversion of Control) container. The built-in IoC (Inversion of Control) container is represented by IServiceProvider implementation, which supports default constructor injection. The types (i.e., classes) managed by built-in IoC containers are called services.
+
+-📦Services(in context of IoC container) :In ASP.NET Core, services are classes (or components) that are registered with the built-in IoC container so that the framework(IoC) can automatically create and inject them wherever they are needed.
+- In Simple Words: A service is just a class that provides some functionality (like logging, sending emails, accessing data, etc.), and is managed by the IoC container.
+📦 Examples of Services:
+| Service Type          | Purpose                                  |
+| --------------------- | ---------------------------------------- |
+| `ILogger<T>`          | Logging                                  |
+| `IConfiguration`      | Accessing configuration settings         |
+| `DbContext`           | Entity Framework data access             |
+| `IMailService`        | Sending emails (custom service)          |
+| `ICustomerRepository` | Accessing customer data (custom service) |
+
+
+📌Inversion of Control (IoC) CONTAINER :
+-Firstly, IoC is a design principle where the control of creating objects is taken away from the class itself and is given to an external component (the container).
+-Asp .Net framework includes a default IoC container, which is used to manage the creation, lifetime, and disposal of dependencies(called services, which are noth but classes only).
+-📦 What Is It (IOC container)?
+A centralized system that automatically:
+Creates objects
+Injects dependencies
+It is used internally by ASP.NET Core for everything — from middleware to controllers, services, filters, etc.
+
+🧠 Real-Life Analogy
+IServiceCollection = Menu in a restaurant — defines what meals (services) are available and how they are prepared.
+IServiceProvider = Chef — uses the menu to create and serve the meal (service instance) when requested.
+
+-Inversion of Control (IoC) : is a design principle where the control of object creation and dependency management is inverted —means instead of classes creating their dependencies, they receive them from an external source(the IoC container).
+
+🧠Key Concept:
+ASP.NET Core automatically injects dependencies into controllers, middlewares, and other framework components using constructor injection, but also supports method injection via [FromServices].
+
+-In ASP.NET Core:
+The built-in IoC container is a lightweight dependency injection (DI) container that comes with ASP.NET Core by default.
+It is responsible for:
+Managing object lifetimes (singleton, scoped, transient)
+Resolving dependencies (injecting services into classes)
+Registering services and interfaces in the Startup.cs (or Program.cs in minimal hosting model)
+Think of the IoC container as a factory + memory manager that builds and tracks your application services for you.
+
+📌What is IServiceProvider?
+-IServiceProvider (IoC Container Interface ) : IServiceProvider is the interface used to resolve/get instances of services that were registered using IServiceCollection. In shot the class which inhirts the IServiceProvider Interface is acting as the IoC container.
+-IServiceProvider is the interface that represents the built-in IoC container.
+-Key responsibilities:
+It's the gateway to resolve services from the container.
+-It provides the GetService() method to retrieve registered services at runtime.
+
+📌What Is IServiceCollection?
+-IServiceCollection (Registration Interface) : IServiceCollection is the interface used to register services (classes and their dependencies) into the ASP.NET Core IoC container, So that the IoC contianer can use these classes(services) and inject the dependencies whenever there is need. This process is called "REGISTRING A SERVICE".
+-IServiceCollection is the interface used to register services (classes and their dependencies) into the ASP.NET Core IoC container.
+- Think of it as:
+A registry or menu where you declare what services are available, how they should be constructed, and what their lifetimes are.
+
+👇 Code:
+// 1. Create and configure service collection (registry)
+var services = new ServiceCollection(); // implements IServiceCollection
+services.AddSingleton<IMyService, MyService>();
+// 2. Build service provider (container)
+IServiceProvider provider = services.BuildServiceProvider();
+// 3. Resolve dependencies
+IMyService myService = provider.GetService<IMyService>();
+
+
+--------✅[#2]Types of Services in ASP.NET Core ----
+
+✅[#2]Services in ASP.NET Core
+
+📌TYPES OF SERVICES :
+-Services(in context of IoC container) :In ASP.NET Core, services are classes (or components) that are registered with the built-in IoC container, So that the IoC container can use these classes for DI(injecting in other classes) whenever it is needed.
+- Types of Services in ASP.NET Core
+Framework Services:Services that are a part of the ASP.NET Core Framework, such as IApplicationBuilder, IHostingEnvironment, ILoggerFactory, etc.
+Application Services: The services (custom types or classes) you create as a programmer for your application. Your custom services like: IStudentRepository . These custom services must be registered in the DI container for ASP.NET Core to resolve them.
+-To let the IoC container automatically inject our application services, we must first register them with the IoC container.
+
+📌How do you Register a Service 
+Registraing a services means, puting the classes(call it as service), So that the IoC can use it for DI whenever needed.
+-We need to register a service with the ASP.NET Core Dependency Injection Container within the Main method of the Program class
+-ASP.NET Core provides 3 methods for registering a service with the ASP.NET Core Dependency Injection container. The method we use to register a service will determine its lifetime.
+-The three methods are :
+	Singleton
+	Scoped
+	Transient
+
+-🔑 Why Register?
+The container needs to know how to create instances of a class—what interfaces they implement and how long they should live.
+
+🔁 Service Lifetimes:
+| Lifetime      | Description                                                                       |
+| ------------- | --------------------------------------------------------------------------------- |
+| **Singleton** | One instance for the **entire application lifetime**. Shared across all requests. |
+| **Scoped**    | One instance **per HTTP request**. Shared within that request.                    |
+| **Transient** | A **new instance every time** it is requested.                                    |
+
+
+📌Singleton :
+Services registered as Singleton are instantiated once per application and shared throughout its lifetime. It is Ideal for configuration services, logging, or other services where a single instance is sufficient and expensive to create.  All requests for the service within the application receive the same instance. 
+-This can be achieved by adding the service as a singleton through the AddSingleton method of the IServiceCollection.
+
+📌Transient:
+Services registered as Transient are created each time they are requested. This method is suitable for lightweight, stateless services with short-lived and transient behavior.
+This can be achieved by adding the service through the AddTransient method of the IServiceCollection.
+
+📌Scoped:
+Services registered as Scoped are created once per request (in a web application, this typically means per HTTP request). It is used for services that should be reused within a single request, maintaining state across different components of the request, but should not be shared across different requests.  This can be achieved by adding the service through the AddScoped method of the IServiceCollection.
+
+
+📌Controller/HomeController.cs (With Dependency Injection)
+-Registering the StudentRepository with ASP.NET Core Dependency Injection 
+We need to register the service to the built-in dependency injection container with the program class
+-The following code shows how to register a service(StudentRepository) with different lifetimes:
+
+🗂Program.cs
+👇 Code:
+static void Main(steing[] args)
+{	
+	var builder = WebApplicaion.CreateBuilder(args);
+	
+	//Configuring the IoC Container, and adding the "StudentRepository" service within it.
+	builder.Services.AddSingleton<IStudentRepository, StudentRepository>(); //This means:Whenever IStudentRepository is requested, use StudentRepository. Only one StudentRepository instance is created for the application lifetime.
+	//Once we register the service(StudentRepository in our case), the IoC container automatically performs constructor injection if a service type is included as a parameter in a constructo	
+	    var app = builder.Build();
+            app.UseRouting();
+            app.MapControllerRoute(
+                name: "default", 
+                pattern: "{controller=Home}/{action=Index}/{id?}" 
+            );
+            app.Run();
+}
+
+🗂Controllers/HomeController.cs
+👇 Code: 
+using FirstCoreMVCWebApplication.Models; // Importing the namespace containing Student and IStudentRepository
+using Microsoft.AspNetCore.Mvc; // Provides classes for building MVC controllers and returning responses
+using System.Collections.Generic; // For using List<T>
+
+namespace FirstCoreMVCWebApplication.Controllers
+{
+    // HomeController inherits from Controller base class
+    public class HomeController : Controller
+    {
+        // Declare a private read-only field to hold the injected repository instance
+        // The interface allows for flexibility and easier testing/mocking
+        private readonly IStudentRepository? _repository = null;
+
+        // Constructor injection: ASP.NET Core will automatically pass the implementation of IStudentRepository here
+        public HomeController(IStudentRepository repository) //Injecting using the Constrctor
+        {
+	    //See we have not made the class instane in this function, Insted we have injected it using the DI IoC container.
+            // Assign the injected repository to the private field
+            _repository = repository;
+        }
+
+        // Action method for root URL (e.g., /Home/Index)
+        public JsonResult Index()//We have not use the new Instance of the "StudentRepository " in this function.
+        {
+            // Call the repository to get all students
+            // This now uses the injected dependency instead of manually creating a new object
+            List<Student>? allStudentDetails = _repository?.GetAllStudent();
+
+            // Return the list of students as JSON to the client
+            return Json(allStudentDetails);
+        }
+
+        // Action method to return details of a specific student
+        // Expects an "Id" parameter from query string or route
+        public JsonResult GetStudentDetails(int Id)
+        {
+            // Call the repository to get the student by Id
+            Student? studentDetails = _repository?.GetStudentById(Id);
+
+            // Return the student details as JSON to the client
+            return Json(studentDetails);
+        }
+    }
+}
+
+EXPLANATION :
+-In the above example, the IoC container will automatically inject an instance of the StudentRepository into the constructor of HomeController
+-The IoC container will create and dispose of an instance of the IStudentRepository based on the registered lifetime
+-We created the _ repository variable as read-only, ensuring that once we inject the dependency object, that value can never be changed
+
+What's Happening (in comments above):
+Dependency Injection (DI) is being used via the controller's constructor.
+Instead of creating a new StudentRepository object manually inside each action method, ASP.NET Core injects it automatically at runtime.
+This makes the code cleaner, more testable, and follows the SOLID principles, especially the Dependency Inversion Principle.
+The controller returns JSON responses using the Json() method from Controller, which is useful for APIs or JavaScript-based frontends.
+
+
+📌Action Method Injection in ASP.NET Core Application
+Sometimes, we only need a dependency object in a single action method. In that case, we need to use the [FromServices] attribute.
+-For injecting the dependency using the function, Like not the constructor Injection, uh need to use the Attriute [FromServices]
+-[FromServices] attribute :This attribute is useful when we need to inject services directly into action methods
+
+EG:
+🗂Controllers/HomeController.cs
+👇 Code: 
+using FirstCoreMVCWebApplication.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+
+namespace FirstCoreMVCWebApplication.Controllers
+{
+    public class HomeController : Controller
+    {
+        public JsonResult Index([FromServices] IStudentRepository repository) //So to make it inject using the method, uh need to use the attribute.
+        {
+            List<Student> allStudentDetails = repository.GetAllStudent();
+            return Json(allStudentDetails);
+        }
+    }
+}
+We are using the [FromServices] attribute within the Index action method. So, at runtime, the IoC Container will inject the dependency object into the IStudentRepository repository reference variable.
+
+
+📌📌NOTE📌📌 : 
+So uh can see that if uh register the services"StudentRepositry" With the DI IoC then, uh dont need to make the Object of the "StudentRepositoy " in the controller , Automaticall uh can use the DI pattern, Becoz uh have register the service in the Program.cs file.
+
+📌Get Services Manually in ASP.NET Core
+-We can also manually access the services configured with built-in IoC containers using the RequestServices property of HttpContext. 
+The GetService method in ASP.NET Core Dependency Injection (DI) is used to retrieve a service from the DI container. It is provided by the IServiceProvider interface and allows for dynamic service resolution at runtime.
+ 
+🗂Controllers/HomeController.cs
+👇 Code: 
+// Importing the models namespace where Student and IStudentRepository are defined
+using FirstCoreMVCWebApplication.Models;
+
+// Importing the required ASP.NET Core MVC namespace
+using Microsoft.AspNetCore.Mvc;
+
+// Importing generic collections like List<T>
+using System.Collections.Generic;
+
+namespace FirstCoreMVCWebApplication.Controllers
+{
+    // HomeController is a standard MVC controller that inherits from the base Controller class
+    public class HomeController : Controller
+    {
+        // Action method for the root URL: /Home/Index
+        public JsonResult Index()
+        {
+            // Access the service provider (IoC container) from the current HTTP request's context
+            // This allows you to manually resolve registered services
+            var services = this.HttpContext.RequestServices;
+            // Request an instance of IStudentRepository from the service provider
+            // The service must be registered in Program.cs using AddSingleton/AddScoped/AddTransient
+            IStudentRepository? _repository = (IStudentRepository?)services.GetService(typeof(IStudentRepository)); /Without using the Constructor injection, uh have manually used the instance of the "StudentRepository" Service, But for this also uh need to register the service with the DI IoC container.
+            // Call the GetAllStudent method from the repository to retrieve all students
+            List<Student>? allStudentDetails = _repository?.GetAllStudent();
+
+            // Return the list of students as a JSON response
+            return Json(allStudentDetails);
+        }
+
+        // Action method for: /Home/GetStudentDetails?Id=1
+        public JsonResult GetStudentDetails(int Id)
+        {
+            // Again, manually access the service provider from the current request context
+            var services = this.HttpContext.RequestServices;
+
+            // Request an instance of IStudentRepository from the IoC container
+            IStudentRepository? _repository = (IStudentRepository?)services.GetService(typeof(IStudentRepository));
+
+            // Call GetStudentById with the provided Id to retrieve student details
+            Student? studentDetails = _repository?.GetStudentById(Id);
+
+            // Return the student object as a JSON response
+            return Json(studentDetails);
+        }
+    }
+}
+
+
+
+
+-------✅[#3] Without Dependency Injection vs With Dependency Injection---
+
+✅[#3] Without Dependency Injection vs With Dependency Injection
+
+📌1. Without Dependency Injection (Manual Instantiation)
+🔍 Code Behavior:
+In each action method (Index, GetStudentDetails), you manually create a new instance of StudentRepository using:
+
+🗂Controllers/HomeController.cs
+👇 Code: 
+StudentRepository repository = new StudentRepository();
+
+⚠️ Issues:
+Tight Coupling: The controller is directly dependent on a specific implementation (StudentRepository), not an abstraction (IStudentRepository). This violates the Dependency Inversion Principle of SOLID.
+-No Flexibility: If you want to change the implementation (e.g., use a different data source like a database), you must change every location that uses the concrete class.
+-Hard to Unit Test:You cannot easily mock or substitute the repository for testing, because you're using new StudentRepository() inside the methods.
+-No Lifetime Management:Every time a method is called, a new instance of StudentRepository is created, which can be inefficient.
+You don’t benefit from ASP.NET Core’s built-in IoC container for managing object lifetimes.
+
+📌2. With Dependency Injection (Constructor Injection via IoC)
+🔍 Code Behavior:
+An instance of IStudentRepository is injected into the controller’s constructor by the IoC container (configured in Program.cs).
+
+🗂Controllers/HomeController.cs
+👇 Code: 
+public HomeController(IStudentRepository repository) //uh dont need to make the object of the "StudentRepository" class , Which is noth but a service.
+{
+    _repository = repository;
+}
+
+✅ Benefits:
+Loose Coupling:
+The controller depends on an abstraction (interface), not a specific implementation.
+You can swap StudentRepository with any other class that implements IStudentRepository.
+Testability:
+You can easily mock IStudentRepository when writing unit tests for the controller.
+Centralized Configuration:
+
+🗂Program.cs
+👇 Code: 
+The service is registered once in Program.cs:
+👇 Code: 
+builder.Services.AddSingleton<IStudentRepository, StudentRepository>();
+
+
+

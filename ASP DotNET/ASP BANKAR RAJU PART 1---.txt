@@ -1,0 +1,185 @@
+--------------ASP .NET PART 1-----------------
+
+001) INTRODUCTION PART:
+-ASP .NET : is a application freamwrok by MICROSOFT for devopling web application, For producing Dynamic Web Pages.
+
+TYPES OF APPLICATIONS:
+1)DESKTOP : Note pad, MS word, Vs code, We install them on our computer, Without installing uh cannot use them.
+2)MOBILE: THese are applications designed for mobile, Uh also need to install them on mobile device then only uh can use them.
+3)WEB APPLICATION : these are not installed on any computer or mobile, These applications are installed on a CENTRALIZED server and then we are going to consueme these applicatons by various client devices and various location with the help of INTERNET.	
+-So we have a WEB SERVER, and we install our web application on this server and then uh can access this application from anywhere, through any device provided uh have internet facility.
+-So web applications are Installed on CENTRALIZED SERVERS called WEB SERVERS.
+-Uh just require internet and Browuser software to be installed on your device to access these web applications. Unlilke Mobile and desktop applications, Web applications are Installed on CENTRALIZED SERVER, and with help of internet and web browuser uh can access these web applications.
+EG : google.com, Facebok.com
+
+002) DEVOPLING WEB APPLICATION :
+
+for developing web applications, There are lot of technologyes in market.
+-Earlier we were using ASP(ACtive Server Pages)  technology developed by Microsoft. But today we use ASP .NET by Microsoft only
+-Along with thse we have many techonlogyes for developing web applications like - PHP, JSP $ SERVELTS.
+-we require support of some language also for developing the web applicaitons along with these technologies.
+-ASP : ASP uses VB script as a language for developing web applications.
+-ASP .NET : It uses any .net laguages, But mostly used laguages are C# and Vb .net for developing web applications using ASP .NET
+-PHP :it uses PHP scripts for developing web apps
+-JSP $ SERVELETS : uses java as language for developing web apps.
+
+WHAT WE REQUIRED FOR DEVLOPING WEB APPS: 
+	-HTML 
+	-CSS
+	-JS or Jquery : for performing client side scripting
+	-ANY TECHNOLOGY (like ASP.NET) : for performing server side SCRIPTING.
+	-WEB SERVER : uh also require a web server for developing web apps, so that we can install the app on web server and it can be accessed from any device any location, with help of internet. So these web server are hoildling your web applications, So we will use IIS for hosting our application. Uh Can use any web server like 
+	IIS : Internet Information services, its a web server by Microsoft.
+	APACHE TOM CAB : by apche
+	JWS : by google
+
+-So these are the things uh required for developing web applications.
+
+
+	
+	IIS WEB SERVER: On this web server, We will Install our web application.
+ _______________________________________
+|					|
+|  WEB APPLICATION			|
+|	|				|
+|	|				|
+|	|				|
+|	|				|
+|	|----->WEB PAGES		|
+|	these web application is going  |
+|	to contain web pages		|
+|					|
+|					|
+|					|
+|					|
+|_______________________________________|
+
+-ASP .NET : it came along with .net only in 2002. Its version was ASP .net 1.0.
+-ASP .NET last version is 4.8 and then we start calling it ASP .NET CORE after .NET core came into picture.
+
+
+-----------------------PART 2 WEB SERVER-----------------------
+-We need to host our aps .net web applications.
+IIS SERVER : Microsoft provides a web server for hosting the web apps we make.
+-IIS : internet information Services, we need to install this IIS server on our system explicitly, By default it is installed along with the OS sometimes, But make sure that its available on the computer.
+-You can check wether IIS is available on your system or not by following STEPS:
+	step 1) go to web browser
+	setp 2) type "http://localhost/"
+
+-This will show IIS window, If it doesn't show the window, Then its not install in your system. 
+
+-INSTALLING IIS IN COMPUTER :
+STEPS:
+Open Control panel ->programs and features-> turn windows features on/Off ->chek the IIS chek box(select all the options) -> ok
+-This will install the IIS on your computer and uh can check it by going to the browser and checking http://localhost.
+
+
+-INET MANAGER:
+inet MGR: its the "Internet Information Service manager", uh can find it in the serach box of teh windowns, This is the IIS manager, and once you open this uh can see the connections Tab and it will show uh "NIT(nit\Administrator)" (its the localhost).
+-"NIT(naresh IT)" is your localhost basically,  nit is noth butthe machine name, and genrally name of this server(localhost) will alywas be the name of your computer.
+-So in your computer, In place of "NIT" uh can see your computer name, and this is noth but the localhost server.
+-in browser without using the "http//localhost/", uh can also mention your computer name alog with the http like "http//compName", and uh will see the IIS server running and window will be open (web page will be seen).
+-localhost, its noth but a local computer only.
+-diff between "http//localhost" and "http//yourCompName" is that:
+-when uh try with http//localhost , it will launch your site from the local system, supposed you are in network environment(connectd to internet) and other system are connected to your computer, and if other computer if the do http//localhost  then they will get connected with their own local IIS , not with your IIS
+-When uh try with http//yourMachinname : then  if uh are in the connected environment(internet or connected to same wifi), then if the other computers do http//yourMachinname, then they will access your IIS, they will see your IIS servers web pages.
+-"MachineName\Admistrator" : in this the admistrator is the name of the user through which uh have login to your computer, like administrator login.
+-The page which is seen when uh do "http//localhost", this "default web site" page is present in your system.  you can also change the website , by storing your won web oages, and see them on the "http//localhost".
+-This "defalut-web-site" (web pages which are shoen on launch of the IIS sever )is presnt physically in your hardisk usually in c drive, and even uh can change the location of these web pages, and launch them.
+-in C drive in the wwwroot folder, the web pages are preset, which uh see on the "http//localhost".
+-So if uh create the webpages and put them in this folder then those pages will be seen.  
+-so when uh open any website as http//localhost, uh are accessing that site using IIS server only, and if uh double click and open the single page, then from the local machins local strorage if the page is opened uh are accessing it from your computer local machine.
+
+
+ACCESSING YOUR WON HTML FILES USING IIS:
+-you can maek your own html pages and put them into the file (cdrive/Inetpath/wwwroot ) folder and see that web page on IIS server(http//:localhost).
+-So becoz of the IIS server anyone can access your web pages over the internet, only uh need to install your web application on the IIS server.
+-even uh can store the webpages on diff location(other then "c//drive//inetpath//wwwroot") and see them on the IIS server(http//localhost).
+
+-STEPS :
+	1)put your files(webpages) on the location uh want.
+	2)you need to create a virtual directory mapping it with the folder location, in the InetManager, in control panel
+	3)goto  controlpanel-> inetmanager -> connections tab ->default-web-site -> rightclick->add virtual directory ->alis name(TestApp)-> physical path(select the physical path of the web pages) -> ok
+	4)uh can see a new virtual directory under the defalut-web-site.
+	5)uh can access it with the IIS server as "http://localhost/TestApp" uh can see the webpages.
+
+-----------PART 3---DEVLOP WEB APP -------------
+
+WEB APPLICATION PROJECT TEMPLATES :
+-uh can make web applications in .net using 2 types, one is the "WEB SITE PROJECT" and other is the "WEB APPLICATIONS PROJECT", so uh can choose any of this for building web sites.
+1) asp.net web application template(web forms/web application)
+2) Website project template(website)
+-Uh can use any of these tempalete and devlop a web application.
+
+1)USING WEBSITE EMPTY:
+goto file  menu -> new -> Website-> asp .net empty website or uh can choose asp.net web forms -> web location :  File System
+
+-web location (file system) : its asking uh where exactly your web application should be running/has to be stored, uh have file system, HTTP, and FTP as options.
+-uh need IIS server for running our application, but without this IIS server installing on the computer also uh can run the application. uh can run the application on the local machine without IIS server. This is possible by using the IIS express version 
+-IIS EXPRESS : it is a web server that comes along with the vs code automatically it gets install with vs code. So without installing IIS web server (usally it gets install with the OS only), uh can take the help of the IIS express server(installed with vs code) and run your asp .net application on local system. 
+-Web location (file Sytem) :So when uh choose "file system" as "Web location" while running the application, apps runs on the IIS express(that is local server of the vs code).
+
+EG:
+link : http//localhost:56085/samplePage.aspx
+
+-The IIS express will provide uh a port for your site and under this ur page is open
+-this site which is running on the local port cannot be accessed by any other computer, becoz the site is running on the local port, so no computer can connect with it which is remote computer.
+
+-Web location (HTTP) : if uh choose HTTP, then your website is not going to run under the IIS express(server of vs code), it runs directly under the local IIS web server. 
+
+EG :
+http://localhost/Secondsite/Sample.aspx
+
+-in this case there is no port, Its using directly the localhost form the inetmgs(internet manager ) and using the virtual directory.
+-this site can be accessed by any other computer which is connected with the computer within the network.  
+-So remote computers can also connect with this site becoz the site is running on the IIS web server(not IIS express).
+
+-WEB FORM : web pages(html pages) in Asp .Net are called as web forms. and the extension of these webfroms/webpages (a single web page) is .aspx
+-this .aspx page will contain html only and even uh can write asp .net code in this web page (.aspx)
+
+
+2) USING ASP .NET WEB(web application) APPLICATION(empty/webforms/MVC/web API/ singlepage/Azure API APP)
+
+STEPS :
+new Project -> web -> ASP.net Web application -> name -> Location for saving -> Template:(empty/same as  web forms) -> Add folders : click WEB FORMS -> ok.
+-The application by default will run under the IIS EXPRESS server uh can check the url it will have a port number.
+-uh can make it run under directly IIS server(local IIS) by going into the : 
+STEPS :
+solution exproler -> properties -> select web on left -> choose local IIS(uh can see a new url without port number) -> create virtual Directory(virtual directory will be created in InetManager )-> ok
+-now uh can see the url , it wont have any port number, so its running on the IIS server not on the IIS express.
+
+------PART 4 DIFF BETWEEN WEBSITE AND WEB APPLICATION--------
+
+WEB SITE PROJECT :
+-in a web site project uh will not have a project file under the solution, directly the files will be present inside the solution.
+-Project structure of both web app and web site is different.
+-uh can add any iteams, C# and VB .net also
+-In a website everywebpage and every user control will generating uh a one separate assembly file.
+-So separate separate assemblies will be generated for each web page.
+-Deployement, uh will install the sorce code on the web serever, so problem is on the web server the compilation will be done on the web server.  
+
+
+WEB APPLICATION PROJECT :
+-in this uh will have a project file 
+-uh can exclude files from the project folder, without deleteing the file, and if uh exclude it, it wont be shown in the project .
+-uh can only add C# related template files when uh do add new item
+-compilation of web application, will generate a single assembly containing of all the  classs. Means all the .cs files content will be compiled in a single aseembly.
+-in this uh dont install the soucr code on the server , uh just need to install the assembly generated after compalition on the web server
+ 
+-------------PART 5----CODING TECHNIQUES---------
+
+CODING TECHNIQUES:
+-There are 2 diff codin techniqes to devlop the web apps in ASP .net in web site, and in web application uh just have code behind method.
+
+1) Inline coding : the designing(html) and the busninss logic(script) will be in the same page. it will have the extension as "home.aspx" this is designing file(includes html)
+
+2) Code behind : in this the designing code and the business logic code both will be in diff file and the extension of this file will be "home.aspx.cs" this file will contain pure C# code. 	
+
+WEB FORM or WEBPAGE : when uh are developing webpage 
+	-Designer Code : uh will be having some designer code which is used for designing the UI. Uh can design using the existing controls like btns etc and all this code is called the DESINER CODE.
+	-Business Logic :there should be some logic for authentication like for log in logic, This is called Business Logic
+	-both this Desingner code and the business code will be present in a single file. and this file will be getting save as the extension of .aspx code, so in this file uh will be having both Desinger code and the Busniness logic code both. 
+EG : Uh have added a HOME web page.
+-it will have the exetension as .aspx
+
+-Even uh can use the drag and drop system for creating the web aaps using the web forms.

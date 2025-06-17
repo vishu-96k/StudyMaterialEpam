@@ -1,0 +1,50 @@
+FILE-IO
+
+Quick Use Cases:
+
+
+✅ File (Static Class)
+File.WriteAllText("test.txt", "Hello, C#!"); // Creates or overwrites a file with text
+string content = File.ReadAllText("test.txt"); // Reads all text from the file
+File.Delete("test.txt"); // Deletes the file
+
+
+✅ FileInfo (Instance Class)
+FileInfo fileInfo = new FileInfo("test.txt");
+fileInfo.CopyTo("copy.txt"); // Copies the file
+Console.WriteLine(fileInfo.Length); // Gets the file size
+fileInfo.Delete(); // Deletes the file
+
+
+✅ StreamReader and StreamWriter
+using (StreamWriter writer = new StreamWriter("log.txt"))
+{
+    writer.WriteLine("This is a log message.");
+}
+
+using (StreamReader reader = new StreamReader("log.txt"))
+{
+    string line = reader.ReadLine();
+    Console.WriteLine(line);
+}
+
+
+✅ FileStream (Byte-Level File Handling)
+using (FileStream fs = new FileStream("data.bin", FileMode.Create))
+{
+    byte[] data = new byte[] { 1, 2, 3, 4, 5 };
+    fs.Write(data, 0, data.Length);
+}
+
+
+✅ Path (Working with File Paths)
+string fullPath = Path.Combine("C:\\Files", "example.txt");
+string fileName = Path.GetFileName(fullPath);
+string extension = Path.GetExtension(fullPath);
+
+
+🔑 Key Takeaway
+Use File and Directory for simple, quick operations.
+Use FileInfo and DirectoryInfo for more control over files and directories.
+Use StreamReader/StreamWriter for text files and FileStream for binary files.
+Use Path for path manipulations.

@@ -1,0 +1,251 @@
+--COLLECTIONS PART 2---
+--------------------------------PART 7 ----------------
+
+Lets Take eg of student class which has many properties like name, ID, makrs and uh want to sort the list of students on the bases of Their name of some other filed then uh can do the following things:
+
+ 
+Using these IComparer and IComparable uh can perfrom sorting based on the Complex types of the list<> like the classes which uh pass as <T>.
+
+1 option : Use IComparer if uh dont have access to the Student class, then define another class and inhirit this interface and implement the Compare() method. This method will take 2 parameters of Student types and compare the properties based on which sorting should be done.
+Make the obj of the new class and pass it in the Student's class obj.Sort() function (eg student.Sort(obj2)) where obj2 is the object of the class uh created.
+
+
+2 option : use Icomparable if uh have the student class and inhirt this interface in this student class, and implement the CompareTo() method
+
+3 option : There is one more mechanicm using which uh can do the comparision and do the sorting. In this uh Inhirt the Icomparer interface and implement the logic. But when uh call the student.Sort(obj2) [where obj2 is the object of the class uh created.] then in that sort uh can send more paramters like start index, how many elemnts uh wanna sort and the Obj of the new class
+EG : student.Sort(1,4,obj2) // it means leave the first elemnt, sort the next 4 lements, and the obj of the newly created class is passed as the parameters 
+
+4 option : Using delegates, in the sort() method it is overloaded method and one of the overload takes the Delegates in this student.Sort(obj2) method.
+There is one Comparision delegate in which uh need to pass a method() [this method should have the logic to compare two strings of the students name property by taking 2 students as the parameters] which matches the excat signature of the Dlegate. 
+Uh can create the obj of the delegate and pass it as a parameter in the sort fun .
+
+Delegate : A method cannot be passed as a parameter to other methods, so we have delegates and we pass the delegates objects(instance) as a parameter to the methods.
+First we pass the method to delegate and then pass the delegate instance to other method 
+
+
+
+-----------PART 8 ----IEnumrable Interface---CUSTOM COLLECTIONS---------
+
+IEnumrable is the parent of all the collections 
+Colections classes are defined like this  :
+	IEnumrable
+	   -ICollection
+		-IList : All the class which like (ArrayList, List), means which are storing values based on index inhirits from IList
+		-IDictionary : The classes which are having Key value combination (Hashtable, Dictionary ) are inhiriting from IDoctionoary
+
+List : List class implements IList, ICollection, IEumrable
+HashTable : thse classes are diffend under IDictionary, ICollection, IEnumerable. 	
+
+IEnumrable interface is actually a thing based on which the foreach Loop works.
+foreach loop works becoz every collection inhirits from INumrable Interface, This INumrable interface internally contains a method called GetENumrator().
+This GetIENumrator() method is implemented by all the collection classes, and this GetENumrator() method is used by foreach loop for iterating in the list (even if the List<Student> contains comlex class, for each loop will itrate).
+ 
+
+Go to the definition of the List<T> .
+
+First NonGenrics came and after that Genrics<T> comes
+If you cont have the "public Enumerator GetEnumerator() " method then your for each loop will not work 
+
+uh can apply foreach loop on All colletions and it will work becoz all coolections re inhriting the IEnumerable interface. 
+
+But if uh create your won coustom Colections then uh need to implement the GetEnumrator() method from the IEnumrator Interface, to make the foreach loop run .
+uh can also return emps.GetEnumerator(); uh can do this also to make the ForEach loop work
+ // becoz the Getenumrator() method returns the a IEnumerator, so just return the Method of the List<>Collections class which aslo has the GetEnumrator() method Which is already implemmented.
+
+		or 
+
+Uh can make ur won implementation for the Foreach loop to work in the custom Collection class, by Implementing(Inhiriting) IEnumrable class
+
+
+EG using the Exsisting implimentation:
+using System;
+using System.Collections.Generic;
+
+namespace Student
+{
+    class Employee
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Job { get; set; }
+        public int Salary { get; set; }
+
+    }
+
+    public class Organization<T> : IEnumrator  // thsi class is going to act as a custom collection for us, and uh cant run foreach loop on the obj of this collection class for that uh need to implement the GetEnumrator() method implemented and for that uh need to inhirt the interface IEnumrator
+    {
+        public void Add(T emp)
+        {
+            List<T> emps = new List<T>();
+            {
+                emps.Add(emp);
+            }
+        }
+	 public IEnumerator GetEnumerator() // uh need to put the logic inside this method for the ForEach loop
+ 	{
+       		return emps.GetEnumerator(); //uh can do this also to make the ForEach loop work
+     // becoz the Getenumrator() method returns the a IEnumerator, so just return the Method of the List<>Collections class which aslo has the GetEnumrator() method Which is already implemmented.
+
+     
+ 	}
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            //List<Employee> obj = new List<Employee>();
+
+            Organization<Employee> obj = new Organization<Employee>();
+            obj.Add(new Employee { Id = 101, Name = "VIshwajet", Job = "SED", Salary = 25000 });
+            obj.Add(new Employee { Id = 104, Name = "shrusthi", Job = "SED", Salary = 25000 });
+            obj.Add(new Employee { Id = 103, Name = "Suraj", Job = "SED", Salary = 25000 });
+            obj.Add(new Employee { Id = 102, Name = "Kale", Job = "SED", Salary = 25000 });
+
+            foreach(var i in obj) // this foreach loop will not work for the obj of Organization becoz uh haven't implemented the GetEnumrator() method of the IEnumerator interface on which basis the foreach loop runs
+            {
+                Console.WriteLine(i.Id+ "  " + i.Name + " " +i.Salary);
+                    
+            }
+
+        }
+    }
+}
+
+
+How to implement our won custom logic In the GetEnumrator() method :
+There are 3 methods in the IEnumarator which we need to implement which are =>
+	1)MoveNext()
+	2)Reset()
+	3)Current()
+
+
+MOVENEXT() : Working
+=> Before First : it is A pointer to access the values
+EMP1
+EMP2
+EMP3
+EMP4
+EMP5
+After last : it is also a Pointer to access the values
+
+By default the pointer is pointing to the Before First, So to pick the first record from the list, we will call the moveNext() method , which will point the pointer to the next obj.
+When the Pointer comes to the AfterLast, then it returns False, which means there is not data present after this pointer 
+
+-RESET() :
+We dont give implementation for this reset method bvecoz resetting is not possible in Collections 
+
+-CURRET :
+Curret is use to access the Curret pointing record
+
+-if uh give implementation for the 2 Methods (Curretnt() and MoveNext()), our for each loop will work 
+ 
+
+
+EG : Using the Own implementation for the Foreach loop to Work
+
+using System;
+using System.Collections.Generic;
+using System.Collections;
+
+namespace Student
+{
+    public class Employee
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Job { get; set; }
+        public int Salary { get; set; }
+
+    }
+
+    public class Organization : IEnumerable // this class is going to act as a collection for us, Custom Collection CREATED
+    {
+        List<Employee> emps = new List<Employee>();
+        public void Add(Employee emp)
+        { 
+             emps.Add(emp);
+        }
+
+        public int count
+        {
+            get { return emps.Count; }
+        }
+
+        public Employee this[int index]
+        {
+            get { return emps[index]; }
+        }
+        public IEnumerator GetEnumerator() // uh need to put the logic inside this method for the ForEach loop
+        {
+            //throw new NotImplementedException();
+            //return emps.GetEnumerator(); uh can do this also to make the ForEach loop work
+            // becoz the Getenumrator() method returns the a IEnumerator, so just return the Method of the List<>Collections class which aslo has the GetEnumrator() method Which is already implemmented.
+
+            //Own implementation
+            return new OrganizationEnumrator(this);
+        }
+    }
+
+
+    public class OrganizationEnumrator : IEnumerator
+    {
+        Organization OrgCol;
+        int Currentind;
+        Employee CurrentEmp;
+
+        public OrganizationEnumrator(Organization org)
+        {
+            OrgCol = org;
+            Currentind = -1;
+        }
+        public object Current
+        {
+            get
+            {
+                return CurrentEmp;
+            }
+        }
+
+        public bool MoveNext()
+        {
+            Currentind++;
+            if(Currentind >= OrgCol.count)
+                return false;
+
+            else
+            {
+                CurrentEmp = OrgCol[Currentind];
+            }
+            return true;
+        }
+
+        public void Reset()
+        {
+            //throw new NotImplementedException();
+        }
+    }
+    class Program
+    {
+        static void Main()
+        {
+            //List<Employee> obj = new List<Employee>();
+
+            Organization obj = new Organization();
+            obj.Add(new Employee { Id = 101, Name = "VIshwajet", Job = "SED", Salary = 25000 });
+            obj.Add(new Employee { Id = 104, Name = "shrusthi", Job = "SED", Salary = 25000 });
+            obj.Add(new Employee { Id = 103, Name = "Suraj", Job = "SED", Salary = 25000 });
+            obj.Add(new Employee { Id = 102, Name = "Kale", Job = "SED", Salary = 25000 });
+
+            foreach(dynamic i in obj)
+            {
+                Console.WriteLine(i.Id + "  " + i.Name + " " + i.Salary);
+                //Console.WriteLine(i);
+                    
+            }
+
+        }
+    }
+} 
+
+

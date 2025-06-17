@@ -1,0 +1,665 @@
+---------Task Parallel Library------
+
+-------PART 1---INTRO--PARALLALISM----
+✅ What is TPL in C#?
+TPL stands for Task Parallel Library.
+It’s not a class, but a set of classes and methods provided by .NET to make parallel and asynchronous programming easier.
+It lives in the System.Threading.Tasks namespace.
+
+⚠️ When not to use parallelism in ASP.NET / ASP.NET Core:
+ASP.NET handles each HTTP request in a separate thread already.
+If one request uses multiple threads, it reduces threads available for other users.
+🔴 Problem: Overusing threads can slow down the web server.
+📌 Example:
+A web app receives 100 HTTP requests. If each request unnecessarily uses 4 threads (instead of 1), the server may not handle them all efficiently.
+
+⚙️ When parallelism is useful:
+Best used for CPU-bound operations (intensive calculations, data processing).
+❌ Not useful for I/O-bound operations (like calling APIs or reading files).
+📌 Examples of CPU-bound tasks:
+Doing heavy math calculations (e.g., matrix multiplication).
+Applying filters to a large set of images (e.g., Instagram applying effects).
+
+⚠️ Parallelism isn't always faster:
+Has an overhead (cost) to manage threads.
+If the task is too small, parallelism can actually be slower than doing it sequentially.
+📌 Example:
+Summing 10 numbers: no need for parallelism.
+Processing 10 million records: good use case for parallelism.
+
+📈 Parallelism shines with big workloads:
+Platforms like Facebook handle huge volumes (250,000+ photos uploaded per minute).
+Instead of faster CPUs, we now use multi-core processors to process more in parallel.
+
+✅ Best practices:
+Don't use many threads per request in web apps.
+Use background services for long-running or heavy tasks (like image processing or PDF generation).
+
+🖥️ Parallelism depends on hardware:
+Your computer must support parallelism (multi-core CPU).
+Check via Task Manager > Performance > CPU.
+Cores = physical units.
+Logical processors = virtual units (with Hyper-Threading).
+📌 Example:
+A CPU with 4 cores & 8 logical processors means it can handle 8 tasks at once.
+
+🧠 What is a CPU Core?
+A core is a physical processing unit inside your CPU.
+Each core can independently execute tasks.
+More cores = more tasks can be done simultaneously.
+🏠 Real-life analogy (Cores):
+Imagine a restaurant kitchen with 4 chefs (cores).
+Each chef can cook a dish at the same time. So, 4 dishes can be prepared at once.
+
+⚙️ What is a Logical Processor?
+A logical processor is a virtual core enabled by Hyper-Threading (Intel) or SMT (Simultaneous Multithreading) (AMD).
+It allows one physical core to handle two threads (tasks) by quickly switching between them.
+This improves efficiency, especially when one task is waiting (e.g., for data).
+🏠 Real-life analogy (Logical Processors):
+Each chef (core) hires an assistant (logical processor).
+Now, the chef can start cooking one dish while the assistant prepares ingredients for the next.
+Result: More efficient use of time, but not exactly double the speed.
+✅ If a CPU has 4 cores and 8 logical processors, then:
+Each core can handle 2 threads simultaneously (because of Hyper-Threading).
+So, your CPU can efficiently handle up to 8 threads in parallel.
+
+🔢 How many threads should you create?
+🔹 Ideal case: Create up to 8 threads → one per logical processor.
+🔹 This will fully utilize the CPU without overwhelming it.
+
+🔄 What happens if you create more than 8 threads?
+Extra threads will be queued or time-shared on the same logical processors.
+This causes context switching, which introduces overhead and may reduce performance.
+
+🧠 Real-life analogy:
+Think of 4 chefs (cores) each with 1 assistant (Hyper-Threading). They can work on 8 dishes at once.
+Adding more than 8 dishes at a time means some have to wait — slowing the kitchen down.
+
+⚠️ But… it also depends on your task:
+If the tasks are CPU-bound: Keep threads ≈ number of logical processors (e.g., 8).
+If the tasks are I/O-bound (e.g., waiting for network/database): You can afford more threads, since many will be idle at times.
+
+-PARALLALISM : uh can achive Parallalism using the following Tools
+		1) Task parallel Library(TPL) : Thread handling is done by TPL
+		2) Parallel LINQ(PLINQ)
+		3) Creating Multiple Threads and handling Them manually
+
+
+-PLINQ : On the other hand, PLINQ or Parallel LINQ is an implementation of LINQ that allows us to work in parallel.
+
+-TPL : TPL (Task Parallel Library) abstracts the low-level detail of thread handling, allowing us to run programs that run parallel without having to work with these threads manually.
+-TPL was introduced in .net framwwrok 4.
+
+
+--------PART 2 ---Types of Parallelism-----------
+
+-Types of Parallelism:
+✅ 1. Data Parallelism:
+-usually happens on Array, Collections of data, and in this same method is called parally on the each iteam of the collections
+we have a collection of values and we want to use the same operation on each of the elements in the collection
+EG :find the inverse of each matrix in a collection
+Means we will apply same method of inverse() on each elemenet of the collection and this method will execute on each element by processing the element Parallay, that element is the matrix (COllection of matrixex)
+The same operation is performed in parallel on different elements of a collection.
+
+Key Methods:
+Parallel.For
+Parallel.ForEach
+
+Real-life Analogy:
+Like many chefs chopping different vegetables at the same time using the same method.
+
+Use Case Examples:
+Processing all images in a folder (e.g., resizing).
+Filtering numbers from a list based on a condition.
+Calculating the square of each number in a list.
+
+EG 1:
+Parallel.For(0, 10, i =>
+{
+    Console.WriteLine($"Processing index {i} on Thread {Thread.CurrentThread.ManagedThreadId}");
+});
+
+EG 2:
+List<int> numbers = Enumerable.Range(1, 10).ToList();
+Parallel.ForEach(numbers, number =>
+{
+    Console.WriteLine($"Square of {number} is {number * number}");
+});
+ 
+✅ 2. Task Parallelism:
+-Diffrent methods are called on diffrent tasks, which are not dependent on each other.
+-Task Parallelism occurs when we have a set of independent tasks that we want to perform in parallel. 
+-You need to execute different functions or operations at the same time (e.g., sending email + logging to file).
+-Real-life Analogy:
+One person is cooking, another is setting the table, and a third is cleaning – all tasks happen at the same time but are different in nature.
+
+Use Case Examples:
+Sending email and SMS simultaneously.
+Generating reports while also backing up data.
+Uploading files while processing logs.
+
+keyMethods: EG:
+Parallel.Invoke(
+    () => Console.WriteLine("Sending Email..."),
+    () => Console.WriteLine("Sending SMS..."),
+    () => Console.WriteLine("Logging Activity...")
+);
+
+
+Feature		Data Parallelism				Task Parallelism
+Operation Type	Same operation on multiple data pieces		Different operations/tasks
+Ideal For	Collections and arrays				Independent methods/tasks
+Main Methods	Parallel.For, Parallel.ForEach			Parallel.Invoke
+Analogy		Many people doing the same job			Many people doing different jobs
+
+
+--------------PART 3----TASK CLASS-----------------
+
+-Task matlab kaam hain bhai(matlb koi bhi funcition jo kuch kaam krke de in simple words)
+-A Task is like a promise to do some work in the background, and it will give you the result later.
+-Task takes the headache away from manual threading
+-TASK CLASS :The Task class represents an asynchronous operation—a unit of work that may run in the background, potentially on a different thread, and returns a result in the future.
+-Using Task class helps us in managing the Threads automatically, Uh dont need to create threads and assign the functions to them and then do T1.Start().
+-TASK class will automatically make new Threads, and control their life cycle.
+-its part of System.Threading.Tasks namespace
+-TASK CLASS : uh can create the obj of the task class, and assign a (bind) function to the task obj, and automatically task will run the fun on a new Thread automatically.
+
+
+🎯 Real-Life Analogy:
+Imagine you go to a coffee shop ☕:
+You place your order (task starts ☕).
+The barista says, “Please wait, I’ll call your name when it’s ready.”
+Meanwhile, you scroll your phone 📱, answer texts 📨, or read a book 📖.
+When the coffee is ready, the barista calls you (task completed ✅), and you get your drink.
+➡ That coffee order is like a Task!
+
+🧠 Why use Task?
+its used for returning something from the asyncrhonous function, if uh dont use Task as return type, then uh cant use the await keyword on the return value, So uh will get Null value as a return valur from the function.
+-So your program doesn’t freeze or wait when doing slow things like:
+Fetching data from the internet 🌐
+Reading large files 📂
+Talking to a database 💾
+It lets you run something in the background while continuing with other work.
+
+💡 What does a Task do?
+Runs something in the background
+Returns a result when done (if needed)
+Can be awaited (you can say: "I'll wait here until you're done")
+
+
+✅ The Task class handles threads for you — automatically.
+🔍 Without Task:
+You’d need to manually do:
+EG:
+	Thread t = new Thread(() => DoWork());
+	t.Start();
+And then manage:
+When to start/stop
+What happens if it fails
+How to wait for it to finish
+Thread pooling and reuse
+
+✅ With Task:
+You simply write:
+EG :
+	Task.Run(() => DoWork());
+
+And the .NET runtime takes care of:
+Creating or reusing a thread from the Thread Pool
+Scheduling the work efficiently
+Managing life cycle, exceptions, cancellations
+Optionally returning a result
+🧠 In Simple Words:
+Task = "Hey .NET, please run this work in the background. I don't care which thread — just do it when you can."
+.NET says: "Got it. I'll pick a thread, run it, and let you know when it’s done!" 
+
+Benefits of letting Task manage threads:
+Feature		Benefit
+Thread Pooling	Saves system resources by reusing threads
+Scalability	Automatically handles many tasks efficiently
+Simpler Code	Less code to write and fewer bugs
+Exception Handling	Easier to catch and manage errors
+Continuations	Easy to chain .ContinueWith() or await
+
+----------TASK CLASS-------METHODS-------
+ Task Life Cycle States
+1. Created
+2. WaitingToRun
+3. Running
+4. WaitingForActivation / WaitingForChildrenToComplete
+5. RanToCompletion
+6. Canceled
+7. Faulted
+✅ Summary Table
+
+State	Description
+Created	Task declared but not started
+WaitingToRun	Scheduled, waiting for execution
+Running	Currently executing
+RanToCompletion	Finished successfully
+Canceled	Cancelled via CancellationToken
+Faulted	Crashed due to unhandled exception
+
+
+
+SYNTAX OF TASK:
+	Task obj = new Task(Action)//This Action is a delegate, which is of void return type and is parameter Less.
+
+-CONSTRUCTOR : the consrutor of the Task class takes the Action Delegate as the paramater. So uh can manually also Create the obj of the Action delegate and assign bind to the function and then send the obj of the Action in the constructor and then start the delegate.
+-uh can also directly send the function of the same Signatuire as of the Action delegate in the Task() Constructor, and automatically internally task will create the Object of the Action delagete and bind the function with the delegate invoke it.
+
+SYNAX OF ACTION DELEGATE:
+	public delegate void Action(); //delagate is a type, so uh can use it like a Data Type like we use the classes and their objects
+
+EG : USE CASE
+Task obj = new Task(() => {	 //this is the lambda function, becoz lambda function is of the same signature as of the Action delegate
+     // Your background code here
+    //This code will be running on a new Thread, from the Thread pool, it will be managed automatically by the TASK class internaly
+});
+obj.Start(); //This will start the task, Its same as we do T1.Start() so that the Thread is started the execution.
+
+-Uh can also pass any function which matches the Signature of the Action Delegate in the Constructor and when uh do taskObj.Start() , That function will start the executing.
+-We will pass the Lambda function of 0 parameters in the Task constructor, which will match the Action delagate internally, and in this lambda function we will call the functions which we want to execute on a diff Thread.
+- When you call .Start() or use Task.Run(), the Task runs that code on a separate thread from the ThreadPool, allowing asynchronous or parallel execution.
+
+-Does a Task run on a new thread?
+👇 Technically... not always.
+Task does not create a new thread directly.
+Instead, it uses the Thread Pool — a pool of reusable threads maintained by .NET.
+So the task runs on a background thread, but not a brand-new thread each time.
+
+
+METHODS OF THE TASK CLASS:
+✅ 1. Creating a Task
+Using Task class directly :
+-taskObj.Start() : This method starts the execution of the Task on a new thread, So whaterver uh have written in the lambda function that will start executing on a new Thread, Becoz This method will invoke the lambda function.
+
+Using Task.Factory:
+-TaskFactory is a class in the System.Threading.Tasks namespace that provides methods to create and start tasks.
+
+EG : use case:
+Task task = Task.Factory.StartNew(() =>
+{
+    Console.WriteLine("Running task from TaskFactory!");
+});
+//Task.Factory → gives you a TaskFactory instance (means it gives uh a Task Object from the factory of Tasks)
+//.StartNew() → creates and starts the task immediately
+//The task runs in a separate thread (from the ThreadPool)
+
+-Task task = Task.Factory.StartNew(ActionDelegate) :It creates a new Task using Task.Factory.StartNew(...),It immediately starts that task on a separate thread (from the thread pool)
+-Task.Factory() :  There is NO Task.Factory() function. Instead, it's a property, not a method.Task.Factory is a static property of the Task class that returns a default instance of the TaskFactory class.
+
+SYNTAX  OF Task.Factory property: //It is present in the TaskFactory class
+	public static TaskFactory Factory { get; }
+
+
+🆚 Difference Between Task Class and TaskFactory Class
+
+Feature	Task Class	TaskFactory Class
+📦 What is it?	A class that represents a unit of work (a task to run asynchronously)	A helper/factory class that creates Task instances
+🧠 Purpose	Represents the actual task you want to run (like a thread of execution)	Helps you create and configure tasks more flexibly
+🛠️ Usage	You can create a task using new Task(...) or Task.Run(...)	You use Task.Factory.StartNew(...) or other methods to create tasks
+✅ Task execution?	Yes — Task executes the work	❌ It just creates tasks (the tasks do the actual work)
+📋 Common methods	Run, Delay, Wait, ContinueWith, etc.	StartNew, ContinueWhenAll, ContinueWhenAny, etc.
+🔧 Configuration?	Simple task creation	More control (schedulers, cancellation, options)
+
+Yes, the relationship between Task and TaskFactory is somewhat similar to the relationship between Thread and ThreadPool
+-The taskFactory manages the Task, means it returns the Object of The Task class. The way ThreadPool gives uh Free Threads from the pool, Similarly TaskFactory gives uh Task objects form a factory of Tasks
+
+Using Task.Run (recommended for simplicity):
+
+EG:
+	Task task = Task.Run(() => Console.WriteLine("Running with Task.Run")); //without using task.Start(), this Task.Run() fun will create a new task and start it and even return it. Shortcut to create and start the execution of the tasks
+//So this Task.Run() will retrun a new Task object and immdiately run the lambda function uh pass in it. No need of Task.Start() function
+
+//Task task:
+//Task represents an asynchronous operation or unit of work.
+//The result of the Task.Run() call is a Task object, which represents the operation that was started.
+//The Task object does not return any result (void), but you can track the task's status or wait for it to complete.
+
+-Task.Run() :it is a method which Creates a new Task object. And schedules the task for execution immediately (asynchronously).
+-Task.Run(): is a shorthand method for creating and starting a task asynchronously, It schedules the provided delegate (in this case, a lambda function) to be executed asynchronously on a ThreadPool thread.
+-When you use Task.Run(), the task is scheduled on a ThreadPool thread. The ThreadPool is a collection of worker threads that can be reused to execute multiple tasks.
+
+
+✅ 2. Waiting for Task to Complete
+Eg :
+Task task = Task.Run(() => Console.WriteLine("Waiting..."));
+task.Wait();  // Main thread waits until task finishes, Blocks the thread until the task finishes
+
+EG :Task.Delay(2000).Wait();
+- .Wait()
+.Wait() is a blocking call.
+It makes the current thread wait until the task (in this case, the delay) is finished.
+So, in this context, it's a synchronous wait on an asynchronous delay.
+Task.Delay() : is more modern and integrates better with async/await.
+Thread.Sleep() : blocks the thread immediately, while Task.Delay() is non-blocking when awaited, though .Wait() negates that here. 
+
+-The way we have T1.Join() function which makes the Main thread wait until the Thread T1 finishes their work, Similaryly The task.Wait() function makes the main Thread wait until the task is beeing finished by the thread from the Threadpool
+
+✅ 3. Returning a Result from Task
+Eg:
+Task<int>  task = Task.Run(() => return 5 + 10);
+int result = task.Result;  // Blocks until result is available
+Console.WriteLine(result); // Output: 15
+
+-task.Result is a blocking operation that waits for the completion of the task before getting the result.
+-The Task<int> represents an asynchronous operation that will eventually return an int (the result of 5 + 10).
+-The Task<int> represents an asynchronous operation that will eventually return an int (the result of 5 + 10).
+
+When you access task.Result, it checks if the task has completed.
+If the task has already completed, it returns the result immediately.
+If the task hasn’t completed yet, it blocks the calling thread (in this case, the main thread) until the task is finished.
+Once the task completes, it retrieves the result (15) and stores it in the result variable.
+
+----------------Task Continuations---------------------
+
+✅ 1. ContinueWith() – Basic Continuation
+
+-Means when ur functoin gets over, then uh can use ContinueWith  on the same Task obj and tell him to do another function immidiatly after the completeion of the first function
+-ContinueWith() is a instance method of the Task classs , whihc allows uh to specify a continuation(another task that runs after the first (Og) tasks gets finished),The continuation task(function) can access the result or status of the original task.
+- the continuation task (created using ContinueWith) will still run, even if the first task fails, unless you explicitly check the task's status and handle it.
+-The ContinueWith() method in C# is part of the Task Parallel Library (TPL) and is used with Task objects to specify what should happen after a task completes. It's a way of chaining tasks together.
+-ContinueWith() allows you to attach a continuation task that will execute after the original task completes.
+-It is used in asynchronous and concurrent programming to create task pipelines or sequences.
+
+ Why Use ContinueWith()?
+To perform a follow-up action after a task finishes.
+Useful in scenarios like:
+Logging the result of a task.
+Starting another task only after one finishes.
+Handling success or error separately.
+
+Enables chaining multiple tasks without blocking the main thread.
+-taskObject.ContinueWtith() : this fun takes in a Action delaget as a parameter, So uh also directly send a function with Void retyrn type and 0 parameters, or uh even can bind the Object of the Action delagete with it and send the fun, Even uh can use lambda function and call the other funtions in the lambda function.
+
+SYNTAX OF CONTINUEWITH :
+	public Task ContinueWith(Action<Task> continuationAction);
+
+SYNTAX :
+Task originalTask = Task.Run(() => {
+    // some work
+});
+Task continuationTask = originalTask.ContinueWith((antecedentTask) => { //antecedentTask gives access to the original task's result, status, etc.
+    // work to do after originalTask finishes
+});
+
+EG  1:
+Task<int> task1 = Task.Run(() => 
+{
+    Console.WriteLine("Task 1 running");
+    return 42;
+});
+task1.ContinueWith( (t) => //in place of  't' uh can use any variable, basically the lambda function will take in previous task as a parameter and uh can see the status of the previous task, Even the return value of the previos task can be obtained using the "t" variable.
+{
+  Console.WriteLine("Previous Task status : " + t.Status);
+  Console.WriteLine("execption of previos Task : "+ t.Excetption );
+  COnsole.WriteLine("Result of Previous task " + t.Result);
+    Console.WriteLine("Task 1 finished, now Task 2 runs.");
+});
+
+
+-Key Points:
+Continuation only starts when the first task finishes.
+You can access the status or result of the original task inside the continuation.
+Supports various TaskContinuationOptions like:
+	OnlyOnRanToCompletion
+	OnlyOnFaulted
+	NotOnCanceled
+
+TaskContinuationOptions  : uh can use many taskContinuoation options which will run the continue function only if this property is satisfied and returns true.
+
+1)OnlyOnRanToCompletion: The continuation runs only if the original task completes successfully (i.e., no exception and not canceled).  It belongs to the TaskContinuationOptions enum. Namespace: System.Threading.Tasks
+-"Only run the continuation if the previous task completed successfully (without error or cancellation)."
+
+SYNTAX :
+	task.ContinueWith((t) => 
+	{
+     		 	/* continuation code */ 
+	}, TaskContinuationOptions.OnlyOnRanToCompletion );
+
+EG :
+Task<int> task = Task.Run(() =>
+{
+    return 10 + 5;
+});
+
+task.ContinueWith((t) =>
+{
+    Console.WriteLine($"Success! Result: {t.Result}");
+}, TaskContinuationOptions.OnlyOnRanToCompletion); // this function will run only if the Above Task returs successful or gets completes
+
+2)OnlyOnFaulted :The continuation function runs only if the task throws an exception (i.e., the task fails). it is also a type of enum property
+SYNTAX :
+	task.ContinueWith(
+	    (t) => { /* handle exception */ },
+	    TaskContinuationOptions.OnlyOnFaulted
+	);
+ 
+EG :
+Task task = Task.Run(() =>
+{
+    throw new InvalidOperationException("Something went wrong!");
+});
+
+task.ContinueWith((t) => // this Function will run only if the TASK 'task' Fails
+{
+    Console.WriteLine($"Error: {t.Exception.InnerException.Message}");
+}, TaskContinuationOptions.OnlyOnFaulted);
+
+3)NotOnCanceled:
+-The continuation runs only if the task was NOT canceled, This means it will run if the task succeeded or faulted, but not if it was canceled.
+
+SYNTAX :
+task.ContinueWith(
+    (t) => { /* continuation logic */ },
+    TaskContinuationOptions.NotOnCanceled
+);
+
+EG :
+var cts = new CancellationTokenSource();
+
+Task task = Task.Run(() =>
+{
+    cts.Token.ThrowIfCancellationRequested();  // Simulates cancellation
+}, cts.Token);
+
+task.ContinueWith((t) =>
+{
+    Console.WriteLine("This will NOT run if task is canceled.");
+}, TaskContinuationOptions.NotOnCanceled);
+
+// Cancel the task
+cts.Cancel();
+
+Console.ReadLine();
+
+
+-Task Chaining : Task chaining refers to the process of linking multiple tasks together, where one task executes after the previous task finishes. It helps in building a sequence of asynchronous operations that can be executed one after the other.
+
+Why Use Task Chaining?
+It allows multiple asynchronous operations to be performed sequentially.
+Each task runs after the completion of the previous one, ensuring the correct order of execution.
+It helps in handling dependencies between tasks without blocking the main thread.
+
+Task chaining can be done using the following techniques:
+Using ContinueWith() – Continue a task with a continuation that runs after the current task completes.
+Using async/await – The more modern and preferred way of chaining tasks.
+
+1. Task Chaining with ContinueWith() : This approach allows you to link multiple tasks using continuations. Each continuation runs after the previous task finishes.-
+-in simple words task Chaining means, When one Task is completed, immidiatly uh start the next task, and the next task uses the result of the previuous task, basically the next task depends on the previos task to complete it, So this is called chaining becoz uh are running the task one after the other.
+
+EG :
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    static void Main()
+    {
+        // Task 1: Add numbers
+        Task task1 = Task.Run(() =>
+        {
+            Console.WriteLine("Task 1 started: 5 + 3");
+            return 5 + 3; // Returns the result of addition (5 + 3)
+        });
+
+        // Task 2: Multiply the result of Task 1, So task2 is chain with the task1
+//Chaining occurs here: task1.ContinueWith(...) creates a new task that depends on the result of task1.
+
+        task1.ContinueWith((t) =>
+        {
+            int result1 = t.Result; // Get the result from Task 1 (5 + 3)
+            Console.WriteLine($"Task 2 started: Multiply {result1} * 2");
+            return result1 * 2; // Multiplies the result of Task 1 by 2 (8 * 2)
+        })
+        // Task 3: Subtract 5 from the result of Task 2, task Chaining is happning again
+        .ContinueWith((t) =>
+        {
+            int result2 = t.Result; // Get the result from Task 2 (8 * 2 = 16)
+            Console.WriteLine($"Task 3 started: Subtract {result2} - 5");
+            return result2 - 5; // Subtracts 5 from the result of Task 2 (16 - 5)
+        })
+        // Final Task: Output the final result
+        .ContinueWith((t) =>
+        {
+            int finalResult = t.Result; // Get the final result from Task 3 (16 - 5 = 11)
+            Console.WriteLine($"Final result: {finalResult}"); // Prints the final result: 11
+        });
+
+        // Wait for tasks to complete before exiting the program
+        Console.ReadLine(); // Wait for input to prevent the application from closing prematurely
+    }
+}
+
+//Summary of Task Chaining in the Code: Task 1 → Task 2 → Task 3 → Final Output.
+//Each task in the chain accesses the result of the previous task and does additional work on it.
+
+2. Task Chaining with async/await : The modern and more readable approach is to use async/await for chaining tasks. It allows for better control, cleaner code, and easier handling of exceptions.
+ EG:
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    static async Task Main()
+    {
+        // Task 1: Add numbers
+        // We use 'await' here, which makes this an asynchronous task.
+        int result1 = await Task.Run(() =>
+        {
+            Console.WriteLine("Task 1 started: 5 + 3");
+            return 5 + 3; // Adds 5 and 3 and returns the result (8)
+        });
+
+        // Task 2: Multiply the result of Task 1
+        // Since 'await' is used, the next line (Task 2) will wait for Task 1 to complete before starting.
+        int result2 = await Task.Run(() =>
+        {
+            Console.WriteLine($"Task 2 started: Multiply {result1} * 2");
+            return result1 * 2; // Multiplies the result of Task 1 (8 * 2 = 16)
+        });
+
+        // Task 3: Subtract the result of Task 2
+        // Again, 'await' ensures that Task 3 won't run until Task 2 is completed.
+        int result3 = await Task.Run(() =>
+        {
+            Console.WriteLine($"Task 3 started: Subtract {result2} - 5");
+            return result2 - 5; // Subtracts 5 from the result of Task 2 (16 - 5 = 11)
+        });
+
+        // Final result
+        // After Task 3 completes, the final result is displayed.
+        Console.WriteLine($"Final result: {result3}"); // Prints the final result (11)
+    }
+}
+
+-A new task is started, adding 5 + 3, and returns the result (8).
+await pauses the Main method until Task.Run completes and returns the result, which is then stored in result1
+-After Task 1 completes and returns the result (8), Task 2 starts, which multiplies result1 by 2 (i.e., 8 * 2 = 16).
+Again, await ensures the program waits for Task 2 to finish before continuing.
+-Sequential Execution: Even though each task runs asynchronously, they execute in sequence due to the await keyword.
+-Inter-Task Communication: The result from one task (e.g., result1 from Task 1) is passed as input to the next task (e.g., result1 is used in Task 2).
+-Non-blocking: The use of async and await makes sure the main thread isn't blocked while the tasks are being executed.
+  
+
+-Here we are directly using await keywrod to wait for the result of the previous task and access it in the next task, So here also the chainning is happning between the tasks.
+-Using Task, Each task uh have created will be Excuting on diff Threads concurently from the ThreadPool, but since uh have called the await keyword, so the main Thread will wait Threre only until the task is finshed and the result is achived.
+- but if uh have not use await keyword, Then main thread will just create the task, and tht task will run automatically on a diff Thread, and the Main thread will not wait for  the result of the task1 to get, and it will create the second task and run that task also parally. But in this we cannot get the rsult of previous task into the next task. and task chianing is not performend
+
+✅ Task.WhenAll() and Task.WhenAny() :
+
+Task.WhenAll(): Waits for all tasks to complete
+Task.WhenAny(): Waits for any one task to complete (whichever finishes first)
+
+📌 1. Task.WhenAll()
+-You wait until all packages arrive before opening them.
+Waits for all tasks to complete, Its a static Method, Uh use it on the Main Thread to wait until all the task running gets completed
+Returns a single Task that completes when every task in the collection is done
+If any task fails, the returned task will also be faulted with all exceptions aggregated.
+
+Why Use It?
+To perform multiple independent operations in parallel, but wait for all of them to finish.
+Useful when you have batch operations like downloading files, API calls, or computations.
+
+
+EG :
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    static async Task Main()
+    {
+        Task t1 = Task.Delay(2000); // Simulates task 1
+        Task t2 = Task.Delay(3000); // Simulates task 2
+        Task t3 = Task.Delay(1000); // Simulates task 3
+
+        Console.WriteLine("Waiting for all tasks to complete...");
+
+        await Task.WhenAll(t1, t2, t3); // main Thread waits until the task 1, 2 and 3 are finished
+
+        Console.WriteLine("All tasks completed.");
+    }
+}
+
+Bonus: Using WhenAll() with return values
+
+EG:
+var task1 = Task.Run(() => 10);
+var task2 = Task.Run(() => 20);
+var task3 = Task.Run(() => 30);
+int[] results = await Task.WhenAll(task1, task2, task3);
+Console.WriteLine($"Sum: {results.Sum()}"); // Output: Sum: 60
+
+
+
+📌 2. Task.WhenAny()
+-You open the first package that arrives and ignore the rest (or handle them later).
+Waits for any one task to complete (whichever is faster).
+Returns a Task<Task> — the outer task completes when the first task finishes; the inner task is the one that finished.
+
+To act as soon as the fastest response is available.
+Useful in:
+Race conditions (e.g., try multiple endpoints, use the fastest)
+Timeout logic or fallback strategies
+
+EG:
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    static async Task Main()
+    {
+        Task t1 = Task.Delay(3000);
+        Task t2 = Task.Delay(1000);
+        Task t3 = Task.Delay(2000);
+
+        Console.WriteLine("Waiting for the first task to complete...");
+
+        Task firstFinished = await Task.WhenAny(t1, t2, t3); // main Thread will wait until any of the task from the t1, t2 and T3 gets finished.
+
+        Console.WriteLine("One task completed!");
+    }
+}

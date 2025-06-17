@@ -1,0 +1,184 @@
+---Properties----
+
+property : is a member of class using which we can expose values associated with a class to the outside environment.
+
+declare variables as private and use getter and setter.
+Why to use getter and setter if we can make the variable as public . Beocz oubli variable will allow both read and wirte access directly to the variable but using getter and setter uh can give any one of the access to the variable 
+
+so uh can declare the properties with shortcuts
+
+Syntax TO DEFINE PROPERTIES:
+modifier DataType variablke 
+{
+ get;
+ set;
+}
+
+these get and set are accessors, which gives uh access. get access gives uh get acces and set access gives uh access to set the value of that property
+
+eg : 
+public int Radius
+{
+get{return Radius;};
+set{Radius = value;};
+}
+
+uh can also define private properties :
+private int _radius; // variable names start with _
+public int Radius 
+{
+	get{return _radius;}
+	set{_radius = value};
+}
+
+
+advantage of properties: restricted access to the variables like only get or set access or even both 
+uh can also use if else and give the proper input as per ur logic using getter and setter (get and set)
+
+uh can directly call the get and set access of the property directly
+
+obj.Radius = 12 // set accessor automatically ur calling the set accesoor 
+int ans = obj.Radius // get acceessor automatically  ur calling it
+
+
+------PART 2 -----
+
+EG:
+Class Customer
+{
+  int _custId; //This not property , this is variable and variable of calss should be declare with "_" underscore
+  public int CustId //This is property which only allows Get acess
+  {
+     get{return _custId ;}//property is noth but the getter and setter function only using which uh can access the private variable of a class	
+  }
+
+  string _custName; //this is name variable which is private
+
+  public string CustName
+  {
+     get{return _custName;}
+     set
+     {
+	 if(_status==true) //if status variable is true then only allow the Read access other wise dont allow.
+         _custName = value;
+     }//This isgiving both Read and Write access both
+     //Read access is restricted by giving a if else condition, which is only possible when uh Create properties Or else uh need to create separate getter and setter function.
+     //Even if uh decalare the variable as public, then uh allow both R/W opration on that variable , and uh cant put any condition on that
+     //value is keyword which assigns the value of that CustName property to the Private variable _custName  
+  }
+}
+
+-Best eg of readonly property is the Length property of Array, Uh can only read the peoperty uh cant set the property.
+-Properties are always of public type which allows get and set.
+-Uh can write the logic inside the get and set {} block like if else for assingning the values and getting the values as per your logic, but if uh declare the variables Public and directly give R/W access then uh cant control the varilable value using the logic(uh ant write logic and as per that logic assign the value to the variable).
+-In main program or outside the class uh can access the private variable using the Properties name
+Read Write access, Public variable can also give Both R/W access and using the properties also uh can R/W access then why to define a property? 
+=>we define R/W properties without defining public variables becoz uh can give the get and set access by applying different conditions on the private varibales also.
+
+
+
+---AUTO IMPLEMENTED PROPERTIES---
+
+using System;
+using System.Threading;
+
+namespace DelegatesDemo
+{
+    public class Customer
+    {
+        int _custId;
+        string _firstName;
+
+        public int Salary //AutoImplemented Property, Which auto creates the data feild to store the data and uh can access it using the property name only
+        {
+            get;
+            set;     
+        }
+
+        public Customer(int Cid, string Name, int sal)
+        {
+            _custId = Cid;
+            _firstName = Name;
+            Salary = sal;
+        }
+
+        public void Display()
+        {
+            Console.WriteLine("the info is :");
+            Console.WriteLine("Customer Id :" + _custId);
+            Console.WriteLine("Name is " + _firstName);
+            Console.WriteLine("salary is " + Salary);
+        }
+    }
+    class program
+    {
+        static void Main()
+        {
+            Customer obj1 = new Customer(101, "Vishwajeet", 990);
+            obj1.Display();
+        }
+
+    }
+} 
+
+-now in this program even though we have not created the variable _Salary then how can we store the salary using the property Salary?
+=>Peroperties are not data feileds, so Properties cannot store the data value.
+-the property itself does not store data. It’s just a mechanism to control access to a hidden, private field (backing field) where the data is actually stored.
+-So whats happning in case of the salary property is that, compiler automatically generates a hidden, private backing field in the background to store the value.
+
+SYNTAX :
+	public int Salary { get; set; }
+
+Is roughly equivalent to:
+private int _salary;  // Compiler-generated backing field, Automatically compiler generates it so that uh can store the data, But uh cannot access this _salary feild becoz it is Auto generated intrnally
+
+public int Salary
+{
+    get { return _salary; }
+    set { _salary = value; }
+}
+
+-So even if uh just Write "public int Salary { get; set; }" uh can use this Salary Property any Where to display and set the salary data field, even this is just a property it impliments private data field internally to store the salary without uh decalring it.
+-Where is Data Actually Stored?
+When you use auto-implemented properties (get; set;), the compiler automatically creates a private, hidden field to store the data.
+-you cannot directly use or access that auto-implemented private field in your program. The compiler generates it and makes sure it's hidden from you. You can only interact with it through the property's get and set accessors.
+-The compiler marks the field as private and gives it a random, compiler-generated name that you don’t know, So uh cannot access that feild in the program becoz uh dont know the Excat name of that AutoGenrated Feild But there is a Concept of reflection using which uh can acess the auto Implemented Hidden fields.
+-We accessed and modified the hidden field directly using Reflection.
+-But if uh want to apply condition on the Acessing the data feild (condition is get and set), Then uh need to create the private data feild also and then uh need to create the property also and in that uh need to define the get and set including if else condtions so that uh can control the set and get acess of that private data feild.
+
+---PART 4---
+Uh can declare a Enum Type also and use it as a private feild and then access or set the Enum Type private feild using the get and set properties
+
+EG :
+namesopace EnumUsing
+{
+  public Enum Cities
+  {
+	benguluru,
+	Mumbai,
+	Pune,
+	Sangli
+  }
+
+  class Customer
+  {
+    string _FirstName;
+    public string FirstName {get; set;}
+
+    Cities _city;
+    public Cities City {get; set;}//uh can write the conditions in this for setting the city, City will be only selected from the list uh have provided as Enum
+  }
+
+  class Program
+  {
+    static void Main()
+    {
+	Customer obj = new Customer();
+	obj.FirestName = "Vishwajeet";
+	obj.City = Cities.Mumbai; //uh have set the _city type Enum variable using the Property City, and uh can only set the options avaiblae in the list in the varibles of type Enum.
+    }
+  }
+}
+
+-ENUM : it is a type like class, struct, delegate.
+	uh have to create varibles of Type ENUM so that those variable can only havethe values from the ENUM uh have defined

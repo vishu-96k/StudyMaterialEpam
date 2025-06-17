@@ -1,0 +1,244 @@
+--LINQ---
+
+----PART 0-----
+
+LINK :
+-The LINQ queries are defined under the namespace system.LINQ.
+-LINQ is a Query language designed by Microsoft as a part of .netFramework included in 3.5V, Using which we can write queries on a wide variety of data set. 	
+-Language intrigated Query 
+-Using LINQ uh can Write the queries (Like SQL) on any Array, Collections, TABLES, Database TABLES,.
+-Using LINQ uh can write Queries on wide varity of Data Sources like Arrays, Collecions, Database, Tables, XML data.
+ 
+SYNTAX :
+	Select<Collist> From <Tables> [as <alias>]
+	[<Clauses>]
+
+	WHERE :
+		CLAUES : Where, groupBy, Having, and OrderBy clause
+
+	similarly we have syntax in LINQ
+	
+	LINQ SYNTAX for query on array or colleciton :
+	From <alias> in <Collection or array> [<Clauses>] select <alias>
+
+-So whereever uh Required column name uh have to use alias name 
+
+EG :
+	int[] arr = {12, 4, 66, 77,8, 03, 44,}
+	//Query to get all records form the array is 
+	From i in arr select i;// this will featch data from the arr
+	//Where "i" is a alias, uh can use any name 
+	// uh can store the values in a array like this
+	var arr2 = From i in arr select i;
+	// now var is a array which included all the data of the arrary arr in the arr2 array.
+
+	//Query to select all the values Greater then 40
+	var arr3 = From i in arr where i> 40 select i;// this will store the values > 40 in Arr3 from arr
+
+	var arr4 = From i in arr where i>40 orderby i select i; // uh will get all the values i> 40 in the sorted order
+
+	var arr5 = From i in arr where i > 40 orderby i desending select i.// this wil fetch the values > 40 order in decending order 
+
+-we use LINQ for using shorter code like the last query is eqvivalent to the below code
+
+Code :
+	int count = 0;
+	for(int i=0;i <arr.Length ;i++)
+	{
+		if(arr[i] >40)
+		count++;
+	} 
+	
+	int index = 0
+	int[] arr5 = new int[count];
+	for(i=0;i<arr.Length ;i++)
+	{
+		if(arr[i]>40)
+		{
+			arr5[index] = arr[i];
+			index++;
+		}
+	}
+	arr5.Sort();
+	arr5.Reverse();
+
+-so the last query is equivalent to the above code, so coding and fetching data becomz complex, so we use LINQ to fetch the data from database, Collectiosn, arrays etc even in the code also we can use the LINQ for fetching the data like we have have done and fetched the array data greater then 40.
+
+
+---------PART 1--------------
+LINQ to SQL :
+
+-SQL : can be used on only Relational databases
+-LINQ :has been designed for writing queries on wide varity of databases.
+-LINQ to SQL 
+-LINQ to Objects: using this uh can Write queries on Arrays, collections etc.
+-LINQ to DATABASE : Using this uh can write queries on Aduo.net datatables, Relational databases tables (SQL). in this we have provided with an ooption to write queries on data tanles and relational data tables also. 
+  
+-LINQ to Xml: using this uh can write queriwes on XML files.
+
+LINQ to Database TYPES :
+	-Linq to ADO .net : Using this we can wtrite queries on data tables 
+	-linq to SQL : using this uh can write queries on only SQL sever(relationsal databases)
+	-Linq to Entities :uh can write queries on SQL server as well as other relational databases also like Oracle.
+
+-LINQ to SQL : its a query language that is introduced in .net 3.5 framework for working with only relational database server like (SQL server)
+-LINQ to SQL also always us to perfrom CURD opretions also, its not only about querying data .
+-NOTE :we can also called stored procedures by using Linq to sql .
+-Already there is sql using which we can interact with SQL server with the help of ADO .net then why we need Linq to sql?  	
+
+DIFFRENCE BETWEEN INTERACTING WITH SERVER USING SQL AND LINQ :
+
+sql interacting with SQL SERVER :-menas uh are using ADO .net.
+-If uh write a sql statement in the application code and try to interacting with the database, the problem here is run time syntax checking of SQL statements.
+if uh write sql statements in ur application and sent it to the database using ADO .net these statements are correctly defined or not are verified by the database engine not by the CLR, so a run time error may occur.
+-When we write the SQL statements in the applicaiotn we wirte them in "" double quotes, so it means that we wrtite them is string , and CLR will not check the content of string , CLR will ingnor the strings. 
+-So CLR will not verify the SQL statemnets Written in the application code, Wether they are correct or not even sytatically .
+-when uh run the code these SQl statements are Carried to the database by the ADO .net and once they are carried to the data base , the database engine verifies wether all the  (SQL)Statements are perfectly defined or not.
+-Drawback :if uh install ur application on 100 machines and run it,when uh run ur application every time every machine will send the satements to the databse verifies it and excutes them . So every machine will send the sql statements to the databse which will be verified their, this will be extra burden on the databse engine. We should not put Extra burden on SQL engine . This happens when uh use SQl and ADO .net and run time errors also occure.
+-these are not type safe. uh should know each and every column and datatype of each and every column then only uh can write sql statemenets for them to retrive data .
+-so sometimes uh may get type error if uh dont know data type of the column. 
+Debugging is not possible : sql statement will be executed on the database engine so debugging is not possible in this case
+-debugging of the sql statements is not possible  
+-Code is a combination of object oriented and relational. 
+- uh need ADO .net to interact with the database if uh want to use sql in your application, and uh need to write all the sql statements in the "" double quotes becoz C# complier dont know SQL
+-Menas uh need to Write the sql query as a string concatenation [ "" +] becoz if uh want to use a variale that should be out of the "" quotes, so it becomes veru difficult to write the query using string concatenation. Means all relational code inside the " " and all object code outside the " ".
+
+
+
+Linq interacting with SQL SERVER : means uh are using  linq sql
+-Advantage : Compile time syntax checking is done in LINQ becoz linq queries are not complied by database engine.
+-linq queries are compleltly defined in C# (.net) and we write Queries in C#.
+-so we have a query engine internally in our framework, and all the linq query statements which we write are comlplied by this query engine which is there in the .net framworek  so these queries are complied by the CLR(c# compiler itself ).
+-C# comlier verifies  the Linq queries, so at compile time only the verification is done.
+-even though uh install ur application on 100 machines it is not require to complie thse statements each and every time.
+-linq are type safe: as a developer uh dont have to remember the colums data type of the database becoz intelisense will display uh what is the data type of the column , the verification is on the client side in this case. 
+-Vs code will help uh to find the data type of the databse column becoz uh are using linq (not writing the queris in strings)
+-Intelisense support is available 
+-Support for debugging: debugging of linq statemnets is possible 
+-The code is pure Object oriendted code, no double quotoes for any query becoz these queries are C# queries only and C# Compiler will compile it not the database engine .
+-We dont have tables in linq, Every Table will become a class.
+-We dont have colums, every column will become the peoerty of the classs
+- rows will become Instance of the class
+-Stored Procedures will become methods.
+
+TABLES 			=> 		Class
+Columns 		=>		property of class
+Rowns and records 	=> 		Instacne of class
+Stored Procedures 	=>	 	Methods of class
+
+-linq means pure object oriented programming as compare to ADO .net
+-ADO.ent uses string to write SQl statements and linq uses Object oriendted programming for writeing queries.
+ 
+To work with linq to sql first we need to convert all the relational objects of database into object oriented types and this process is called ORM(object relational mapping)
+
+OR(Object relational Designer) steps:
+Step 1: Perform ORM by adding Or designer
+Step 2: Adding refrene fro an assembly i.e System>data.linq.
+Step 3: We need to Write the connection string into the config file.
+
+---------PART 2 ------
+
+-If uh want to work with linq to sql then convert all the relationsal types of database into Object oriented type, and this processs or converting the relational types(like tables)  to Object types(like classes) is called ORM 
+-ORM : Object relational mapping.
+-To do ORM we have a tool called OR designer, stands for Object relational designer, this will help us to converting all the relational types into Object types.
+
+
+EG in sql STEPS:
+
+	CREATE A DB : CompanyDB
+	TABLE : EMPLOYEE
+		Columns: Eno(pk)  --> Int
+			 EName	 ---> varchar(50)
+			Job	--->varchar(50)
+			Salary ---> Money
+			Dname  -->Varchar(50)
+	
+	//Inset some random data in the databse using SQL
+	//Create A winfroms project and add the Database using the Server exploler 
+	//View--> SERVER EXPLORER--> Configure this db in the sever Explroler
+	//after connecting the DB with the Visual studio , now we will manage the data using Linq for practice
+	//Uh can also manage the data using the ADO .net also by writing SQL statements, But we will be using the LINQ to manage the data in the connected database in Visual Studio.
+	
+
+-HOW TO MANAGE THE DATA IN THE TABLE USING LINQ TO SQL STEPS ===>:
+	1)-start with ORM (Object relational model mapping). Process of converting the relational types into Object type(Tables to Class).
+	2)-Add the OR designer in ur project :SolutionExploler -->add new item (LINQ to SQL class), uh will get a file with the extension as Dbml (database markup language).
+	3)-add the Refrence and connection string :--Open solution exploler -->Refrence (add the system.data.linq.dlll) -->app.config (add the connection string here)
+	
+STEPS: uh need to perform the Following things here : 
+Step 1: Perform ORM by adding OR designer
+Step 2: to work with linq uh need to add refrene for an assembly i.e System.data.linq.dll
+Step 3: and we also need to We need to Write the connection string into the config file. becoz db communication always required a connection string and this Connection string best place to place it is web.config files.
+
+
+-Designer.cs file : The code foe this file wil be autogenrated by Vs code, uh just have to drag and drop.
+
+-In ADO.net to connect with the database we use a class Connection. We create a instance of this class and pass the connection string in it. This connection string should be in the .config file and helps uh in connecting with the DB with he;p of the instance of the Connection class
+ 	
+-Connection string is needed to Create the connection between database server and your project and that should be present in the .config files.
+-Sometimes the connection string is also written in the config file By OR designer
+	
+	CONNECTION STRING COMPONENTS :
+		data source=EPINHYDW141B  // your machine name, paste your SQL Name
+		initial catalog=PracticeCompanyDB  // Database name
+
+-ORM will convert the Table into calss the (colums)entites into properties and the rows and recods will come in the run time as instance of the class(Table)
+
+DATACONTEXT class (DBcontext class):
+-DataContext class : This class inhirites from System.data.Linq.DataContext class.
+-Every class that inhirites from DataContext class is also a DataContext class.
+-This class works like a connection and helps uh in connecting to data base whenever uh create the instance of this class.
+-In ADO .net to connect with the database we use a class Connection class by creating the instance of this "Connection" class and passing the connection string in the Constructor of this class using new keyword while instanciating it. This class is healping uh to connect to the Database.
+Excatly The DataContext class in linq helps us in connecting with the database, but it also requires a connection string , this connection string should be present in the config file. The dataContext class instance will read the connetion string from the config file and helps in connecting with the database by creating the instance of the DataContext file.   
+
+
+
+----------PART 3 ---MAkING WINFROM APP----------
+PRACTICAL WIN FROMS
+
+-ORM: process of converting relational objetcs into object oriented types is called Object Relational Mapping. tool to perform the ORM is OR designer.
+-DataContext Class(DBcontext) : It works like a connection to connect with your database by creating a Instance of the DataContext class.
+-DataContext class : Whenever uh create instance of this class (or other class which inhirits this class) a connection will be established between the code and the database.
+-Table<T> : it is a genric predefined class wehre T represents a table in the database. So pass T as the Database table name.
+-Every record(row) of a table is the instance of the table(table is noth but class).
+-So if uh have Employee table then the data (rows) will be the instance of the class employees with the column name as their properties 
+
+----------PART 4--CURD operations---------
+PRACTICAL WINFROMS
+Steps :
+1)Create From2 and Take a grid view and put the data in that Grid view by creating the obj  of Dbcontext class and using the properties.
+SYNTAX :
+	ComapnyDBContext dc = new CompanyDbContext()
+	GridViewName.DataSource = dc.Employee //(Employee ) is the table in DB
+-set the grid view to ReadOnly from properties
+
+2)Create a new from4 which will take the data from the user from the from4
+Double click on the Insert bton from from 2 and in that event of the btn Open the From4
+Syntax : Form4 f = new Form4();
+	 F.ShowDialog();
+3) when uh click the save btn from the Form4, the data should get save in the database and that data should be visibile in the grid view in the from2
+-Cerate teh event of the insert btn and do the Insert operation
+
+INSERT OPERATION :
+	-Create the instane of the employee class
+	Employee obj = new Employee();
+	Assign the values to each peoperties of this object
+	obj.Eno = int.Parse(textbox1.text);
+	// like this take all the data from teh text box into the object of the employee
+	//dc.Employees this refers to the table and has all the crud operations functions
+	dc.Employees.insertOnSumbit(obj) //this will add the data in the pending state of the database, now call the commit
+	dc.SubmitChanges();//this will add the data in the database sql
+
+4)Similarly create the evnts for the clear, delete btn and do the same thing and update and delete the data from the data base
+ClearBtn : This will clear the data fields from teh from4
+CloseBtn : This will Close the form4
+
+5)Now when uh close the from4 again the control will come in the From2, so now reload the data in the From2 so that the updated data is visible in the  gridview
+
+6)Update: when uh slect the data filed from the grid view and choose the btn as update then the same form Form4 should be open and there uh will update the data using the from Fileds.
+
+7)DELETE : Click the delete btn from the Form2 and create the event and delete the selected record.
+
+-------PART 7--CALLING STORE PROCEDURE-----
+PROCEDURE : is noth but a normal Function, The was we create addition fun for 2 numbers, It is also called Procedure.
+

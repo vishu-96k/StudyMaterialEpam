@@ -1,0 +1,225 @@
+📌✅✅📌: FOR CH NAME
+✅[#1] : FOR HASHTAG POINTS
+📌: FOR POINTS
+🔄: for eg
+----- : FOR NEW HASHTAG (✅[#1])
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+----✅📌CH :01 ANGULAR INTRO📌✅----
+
+✅[#1] ANGULAR INTRO
+
+📌ANGULAR INTRO
+-angular is a js framework used for making single page applications, Used in web development.
+-Google has made Angular.
+-Angular is a TypeScript-based open-source web application framework developed and maintained by Google. 
+-Angular is commonly referred to as Angular 2+, distinguishing it from AngularJS (1.x), which was the earlier version based on JavaScript instead of TypeScript.
+
+📌SINGLE PAGE APPLICATION : 
+The web applications which will load at once, and it wont refresh. So single page application will load all the data at once, and will never refresh.
+-Becoz of single page application, Angular is fase, But angular is not faster the react.
+
+📌HISTORY:
+-Uh need NODE.js for developing angular application, Becoz its a js freamwrok.
+-Angular is basend on MVC archetrecture and uses TypeScript.
+-Angular Js, and Angular are 2 different things, Angular js is older version, we don't use Angular JS now, It has been derepressed.
+-Angular was first released in 2016 as Angular 2.0, a complete rewrite of the original AngularJS framework (released in 2010). AngularJS, now known as Angular 1.x, was initially released in 2010 as an open-source project. 
+-ANGULAR = In 2016 
+-ANGULAR JS = in 2010
+-After 2016 we start calling it as only ANGULAR. 
+
+📌WHY TO USE ANGULAR/ADVANTAGES :
+-Fast development, apps load fast.
+-Angular provides lots of features, Like validation library, Routing, Component baes structure
+-Large community and open source.
+-Angular is a Framework and React is a library. 
+-React does not have validations library, rounting and many inbuilt features are not there in react, but many in built libraries are present in angular, as angular is Freamwork.
+-Framework : menas it will contain lot of libraires, Built in tools for developing.
+
+📌INSTALLATION OF ANGULAR :
+-INSTALL node : becoz angular is JS freamwork
+-uh will have NPM, As uh intsall node.
+-using npm uh will install angular/ angularCli
+-STEPS : terminal -> npm i -g @angular/cli  ---> this will install the angular CLI globally.
+-if uh not use -g, Then the angular will only get install in the folder, and uh need install it for every project.
+
+COMMAND : ng -version //uh can see the angular verisn
+
+"ng" as a CLI Tool (Angular CLI):ng is the command-line interface (CLI) for Angular. It is a tool that helps developers generate, build, test, and deploy Angular applications quickly and efficiently.
+🔄EG:
+ng new my-app(application_Name) :# Creates a new Angular project with name "my-app"
+ng serve            :   # Runs the application locally
+ng generate component home  : # Generates a new component named 'home'
+ng build            :   # Builds the application for production
+
+-ANGULAR CLI : using this uh can create the angular app, using the CLI(command line interface), This CLI will allow uh to write the angular code for creating the angular apps using the cli
+
+
+--------------------------------------------------------------------------
+✅[#2] PROJECT AND FILE STRUTURE
+
+📌STRUTURE:
+📁 my-angular-app/
+my-angular-app/
+│
+|___.angular 		//This is a hidden folder created by Angular CLI (newer versions). It stores internal Angular CLI cache to speed up operations like builds and serve.
+|
+|___.vscode		//This folder is created if you're using Visual Studio Code.
+|
+├── node_modules/             ← All project dependencies (auto-generated)
+|
+|___ public   		//This is not part of the default Angular project. It may have been added manually or by a package.
+|
+├── src/                      ← Application source code
+│   ├── app/                  ← Root application module & components
+│   │   ├── app.component.css        ← Component-specific styles
+│   │   ├── app.component.html       ← Component template
+│   │   ├── app.component.ts         ← Component class (logic)
+│   │   └── app.module.ts            ← Root module of the app
+│   │
+│   ├── assets/              ← Static assets (images, etc.)
+│   ├── environments/        ← Environment config files (dev, prod)
+│   │   ├── environment.ts         ← Default (dev) environment
+│   │   └── environment.prod.ts    ← Production environment
+│   │
+│   ├── index.html           ← Main HTML file loaded in browser
+│   ├── main.ts              ← Main TypeScript file (entry point)
+│   ├── polyfills.ts         ← Polyfills for browser compatibility
+│   ├── styles.css           ← Global stylesheet
+│   └── test.ts              ← Test configuration file
+│
+├── .editorconfig            ← Coding style configuration
+├── .gitignore               ← Files to ignore in Git
+├── angular.json             ← Angular workspace & build config
+├── package.json             ← NPM dependencies and scripts
+├── tsconfig.app.json        ← TypeScript config for the app
+├── tsconfig.json            ← Base TypeScript configuration
+├── tsconfig.spec.json       ← TypeScript config for tests
+└── README.md                ← Project readme (autogenerated)
+
+
+📌IMPORTANT FILES:
+1) package.json 
+-jab ham project banana start krte hian tab, yahi file sabse pahale create hoti hain, and project ke related sari information is file main hoti hain.
+-Each and every detail of your project is available in this file, and this is the most important file in your entire project.
+-jaise ki hamare project ka naam, project/application ka version, matlb shru main verion 1, phir hamane kuch new features add kiye project main tho uska version 2.0 rakh diya.
+-it also includes "scripts", scripts commands hoti hain jo start, run, build, ke liye use hoti hian run krne ke liye.
+-Yaha pr "devDependencies" and "Dependencies" hoti hian 
+-if uh delete this file "package.json" then your project will not work.
+
+2) tsconfig.json
+-angular(after 16 verison) uses type script, not javaScript.
+-you can do configuration about the TypeScript in this file, like when the code will get generated after the typescript, vo konse file main generate hoga, konsa version ts(typeScript) ka hame target krna hian, "strict: true"(matlb error drikhayega agar galti se string data type main number dala), uh can do all these configuration about the TypeScript, like how its goning to be work in your project in this file.
+-Build bhi banti hian application ki, so agar us build file ki ts ki configuration hame krni hian tho vo iss file main ayegi.
+-iski jo output directory hain vo hain "./dist", so dist wala jo folder hian usame hamare application ki build banti hian.
+
+3)tsconfig.app.json 
+-typescript ki configuration ham ya tho iss file main kr le yaa tho tsconfig.json main kr le, jadya difference ni ayega.
+-Becoz just the difference is of the "app".
+-matlb, ye jo hamara pura project hain, isame jo "app" wala folder haina "src" ke andar, uski agar typescript(ts) ki configuration alag rakhni hain, bahar wale files se, "aap" folder ke liye special configuration krni hian tho iss "tsconfig.app.json" ke andar rakh do. Aur agar iske bahar wale files ki configuration alag krni hian tho use "tsconfig.json" main rakh do.
+-"tsconfig.app.json" file hain vo, "tsconfig.json"ko extend krti hain.
+-so , Agar hame app folder ki configuration alag krni hain bahr wale folder se tho uski "tsconfig.app.json" file main krende, aur agar uske bahar wale files ki krni hain alag, tho normal wale main krenge.
+-But agar hame alag alag ni krni tho , ham ek he file main configuration kr sakte hain "tsconfig.json" main.
+-in this file un can see that, this file will include all the files under the "src" folder like
+EG: "include" : ["src/**/*.d.ts"]
+-out put directory dono files ki same he hogi "tsconfig.json" and "tsconfig.app.json" ki
+
+4)tsconfig.spec.json
+-ye jo file hain vo test cases likhane main kaam ayegi.
+-Testing wale code ke liye jo typescript configuration krte hain, agar vo bhi hame alag krne hain tho vo iss file main krenge.
+-Matlb jo configurations testing ke code ke liye krne hain ts ke vo iss file main krenge.
+
+5)angular.json
+-iss file main, hamare project ki configuration hoti hian, like ki konsi file sabse pahale load hogi, html ki konsi file pahale load hogi, output jo hian(build) vo konse wale folder main jake save hogi, ye sare jo configuratios hote hian vo iss folder main hote hain.
+-jaise ki sabse pahale jo html ki file load hogi vo hain "src/index.html", then ts ki "src/main.ts" hogi. Then output (build) ka jo path rahega vo kay rahega "dist/Project_Name" folder rahega uske andar rahega.
+-assets hain vo kaha rakhe hain, uss folder ka path hoga.
+-ts ki jo configuration ki hian , vo file konsi hain uska naam hoga "tsconfig.app.json", even uh can change the name of the ts configuration file.
+-styles wali jo files hain vo konse hian.
+-Jo hamari production build hogi uska maximum and minimum size kay hoga , vo iss file ke andar mention hoga.
+
+6) package-lock.json	 
+-this file is automatically created, when uh run npm install command, or install any packagae.
+-This packages will get install in the node modules folder, but there info like what is the version of the library, etc is in this package-loack.json file .
+-So jo libraries ham install krenge unke exact version iss file ke andar hote hain, but vo packages jo hian vo node-modules krke folder hain usame actaual main install hote hain .
+
+7)package.json
+-isame jo ham libraeires install krte hain unke thodi si information hoti hian, like eg angular 19.2.8 install kiya, tho iss file main sirf angular with version 19 isntalll hain ase hoga, but the exact version of this angular will be in the "package-loack.json" file 
+-matlab minimum jo version hain(19) vo iss file main rahega not excat.
+
+📌NOTE : dont upload your node-modules folder in git, becoz it will have all the libraries installed and it will be very laorge file, insted uh need to alywas upload these "package-lock.json" file in git, so whener any one does "git i" in the folder where these file is present then, automatically all the libraries with there accurate versions will get installed in this .
+
+8) .gitingnor
+-this files includes the name of the files which uh dongt want to upload on git, like node-modules
+
+9).editorconfig 
+-this files tells the configurations of the editor, like code formatting ky hogi, konsa font hoga, indentaion size kay hoga etc.
+
+10).angular
+-this folder is used for cache, not used much.
+
+11) node-modules
+-all the install libararies, which uh have installed will be in this folder, even if uh lost this folder, do "npm i" automatically this folder will be created.
+
+12) src folder
+-in this folder, ham sara ka sara jo application ka code rahega vo isi folder main rakhenge.
+-jitana bhi ham kaam krenge  vo iss folder ke anadar krenge, jitane bhi components banana hian vo sare iske andar banayenge.
+-iske anadar app component folder bhi hoga
+-pure application main jo sabse pahali file load hogi vo hain iske andar ki "index.html"
+-index.html : iske andar ki jo "index.html" file hian vo hamari root file hoti hain 
+-main.ts : iss folder ke andar jo ye ts file hian, ye sabse main ts file hian, ye hamari pahali typescript ki sabse pahali file hoti hian . Means this is the entry point of the typescript (matlb ye ts ka entry point hain, sabs pahale ye wali ts file runn hogi). "main.ts" file decides ki sasbe pahale component load konsa hoga, iss file main ham app wale component ko load kr rakha hian, so isiliye hamara app wala component pahale load hota hain, agar hamane app ki jagah koi aur component load kiya iss main.ts file main tho vo wala component pahale load hoga and hame dikhega.
+-now , hamane "main.ts" file main tho bata diya ki hame app wala component load krna hain sabse pahale, but iss application(project ) ko kaise pata ki pahale "main.ts" file ko load krna hain pahale, Tho ye information "angular.json" file main hoti hain  browser ke andar, ki main.ts file load krni hian pahale, and yahi(main.ts) se phir app compoent load hota hain.
+
+EG : "browser" : "src/main.ts"
+
+-styles.css : this is the entry point for the styles, sasbe pahale ye wae styles load honge and apply bhi honge.
+
+13) public folder :
+-in this folder, all the public things are there, like images, icons, svgs etcs
+
+
+📌NOTE : sabse pahala entry point html ka hota hain = src/index.html file
+	sabse pahale ts ka entry point hota hain = src/main.ts  file
+	sabse pahale css ka entry point hota hain = src/styles.css file.
+
+
+📌WHAT IS DIFF BETWEEN DevDependencies, and Depnedencies?
+-In Angular (and JavaScript projects in general), dependencies and devDependencies are two different types of packages listed in your package.json file
+-They serve different purposes during the development and execution of your app.
+
+🔧 Definitions:
+1. dependencies
+These are packages your application needs to run in production environment. Without them, the app won’t work properly when it’s deployed.
+
+EG :
+📁 Stored under:
+"dependencies": {
+  "@angular/core": "^16.0.0",
+  "rxjs": "^7.0.0",
+  "zone.js": "^0.13.0"
+}
+
+
+2. devDependencies
+These are packages needed only during development phase, such as tools for testing, compiling, linting, and building the app — but not needed in production.
+📁 Stored under:
+"devDependencies": {
+  "@angular/cli": "^16.0.0",
+  "typescript": "^4.9.0",
+  "karma": "^6.4.0"
+}
+
+
+🎭 Real-Life Analogy: Movie Production
+Let’s compare this to making a movie 🎬:
+Dependencies = The actors, sets, costumes — everything that is on screen when the movie is released. The audience (users) need this to enjoy the final film.
+devDependencies = The camera crew, director, editing software — tools and people needed to create the movie, but not part of the movie itself.
+
+
+🧠 TL;DR Summary:
+Feature	dependencies	devDependencies
+Needed in prod?	✅ Yes	❌ No
+Used during dev?	✅ Yes	✅ Yes
+Examples (Angular)	@angular/core, rxjs	@angular/cli, typescript, karma
+Real-world analogy	Actors, script, costumes	Cameras, director, editing software

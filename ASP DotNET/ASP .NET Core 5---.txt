@@ -1,0 +1,490 @@
+ASP .NET Core 5---
+------------------------------------
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+-✅[#1] : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+
+📌✅✅✅✅✅✅✅✅✅📌CH :MIDDLEWERES📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] MIDDLEWERES INTRO
+
+📌MIDDLEWERES IN JS
+-agar hamare pass ase koi kaam hain jo request(Http) ke ane ke badh and http response jane se pahale karvana hain, tho ase kaam ham middleweres se krte hain.
+-middlewere means, request and response cycle ke beech main
+-Middleweres are intermediary, between request and response cycle.
+-middleweres are functions that come into play after the server receives the request(http) and before the response(result to that request) is sent to the client.
+-Matlb request ke ane ke badh and response ko jane se pahale, middlewers hamare server(backend) ke andar kuch kaam krne ke liye use hota hain.
+
+EG 1:
+jab koi bhi request aye(http), tho hamare pass jo public folder hain jisame (static files)css js files ho, uss http request main ham ye static files pass kr rahe hain using somefunction, taki vo(http request) ye css vagere use kr sake.
+-So jaise he koi bhi request aye ye static function hamari public folder ko access krne ki uske pass permission hogi , taki vo static files ko serve kr sake, par ye static files kab serve ho payegi jab request aa chuki hain but response abhi tk ni gaya 
+
+EG 2:
+agar http req aye, and uss req main data hain, and uss req ke data ko hame understabale language mai convert krna hian tho, middle were ayega and use decode krega , but ye sab response jane se pahale krega.
+
+-so middlewere ek function hain jo req and response cycle ke beech main kuch kaam krke de de.
+
+
+📌MIDDLEWERES IN ASP .NET CORE:
+DEFINATION : 
+-Middleware in ASP.NET Core is a software component that is executed in the HTTP request/response pipeline. It processes incoming HTTP requests, can perform actions before and after passing the request to the next component, and can also modify the outgoing HTTP responses.
+ Key Points:
+It acts between the incoming request and the outgoing response.
+You configure middleware in the Startup.cs file using app.Use... methods.
+Multiple middleware components are chained to form a request processing pipeline.
+
+-In ASP.NET Core, middleware is a software component that is assembled into an application  HTTP request/response pipeline to handle requests and responses. Middleware components process HTTP requests as they pass through the pipeline and can:
+Receives the incoming HTTP request.
+Can process the request.
+Handle the request directly.
+Modify the request or response.
+Call the next middleware in the pipeline.
+Can handle the response as it travels back to the client.
+
+-middleware components are used in the Request Processing Pipeline
+-The Request Processing Pipeline determines how HTTP Requests and Responses will be processed in the ASP.NET Core Application. So, middleware components are used to implement various functionalities like authentication, authorization, error handling, routing, and logging.
+-Middleware components are executed in the order they are added to the pipeline, and each middleware component in the ASP.NET Core Application performs the following tasks.
+Chooses whether to pass the HTTP Request to the next Middleware component registered in the request processing pipeline.
+Can perform certain tasks before and after the next component is invoked in the pipeline.
+
+📦Real-life Analogy:
+Think of middleware as a series of checkpoints or gates that every HTTP request must pass through before reaching its final destination (the endpoint/controller). Each gate can inspect, modify, or even stop the request.
+
+Examples Validation
+🧾 EG 1 – Static Files Middleware
+"Jab koi bhi request aaye (HTTP), toh hamare paas jo public folder hai jisme (static files) CSS, JS files hain, unhe serve karne ke liye middleware ka use hota hai..."
+-✔ Correct – In ASP.NET Core, you use app.UseStaticFiles() middleware to serve static files from a folder like wwwroot.
+🗂: Program.cs
+👇 Code:
+ app.UseStaticFiles(); //this is a middlewere which is used to confugre the static files, written inside the Main program.
+ app.UseRouting();
+ app.UseAuthorization();
+
+
+📌What does app.UseStaticFiles() do?
+It is a middleware component. It allows your application to serve static files such as:
+HTML
+CSS
+JavaScript
+Images (PNG, JPEG, SVG, etc.)
+Fonts
+These files are usually located in the wwwroot folder.
+-UseStaticFiles() is a middleware. In ASP.NET Core, middleware components are pieces of software that are assembled into the HTTP request pipeline to handle requests and responses.
+
+📌How Middleware Works – The Pipeline
+Think of middleware like a chain of responsibility, or a series of pipes the request flows through:
+
+HTTP Request (www/https/)
+     ↓
+[Middleware 1] → Do something → Call next()
+     ↓
+[Middleware 2] → Do something → Call next()
+     ↓
+[Middleware 3] → Do something → End
+     ↓
+Generate Response
+     ↑
+[Middleware 3] → Handle response
+     ↑
+[Middleware 2] → Handle response
+     ↑
+[Middleware 1] → Handle response
+     ↑
+HTTP Response in send
+
+📌Example of Built-in Middlewares
+app.UseStaticFiles();         // Serves static files
+app.UseRouting();             // Matches URLs to endpoints (controllers, etc.)
+app.UseAuthentication();      // Checks if the user is authenticated
+app.UseAuthorization();       // Checks if the user is authorized
+app.UseEndpoints(...);        // Routes the request to a controller/action
+
+-To configure Middleware Components, we can use the Map/MapGet, Run, and Use extension methods in ASP.NET Core applications.
+EG :
+1) app.MapGet("/greet", () => "Hello from the /greet endpoint!");
+
+2)
+app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("Getting Response from First Middleware");
+            });
+
+3)
+app.Use(async (context, next) =>
+            {
+                await context.Response.WriteAsync("Getting Response from First Middleware");
+                await next();
+            });
+
+
+-MapGet METHOD : it is specifically designed to handle HTTP GET requests. It’s used to define endpoints that respond only to GET requests.
+-Map Method: Map is a general method for handling all types of HTTP requests (such as GET, POST, PUT, DELETE, etc.). It’s more flexible than MapGet.
+
+
+
+📌📌NOTE📌📌 
+-Whaterver function uh write using the "app.FunctionName",(app.) its a middlewerre, and genrally wriiten in the Program.cs file for Configuration.
+-If you don't call UseStaticFiles(), your static files will not be served even if they are in the wwwroot folder.
+-Uh can also create ur won middle were components
+-These middlewere components are executed in the same order as they are added to the Request Processing Pipeline for incoming requests and in reverse order for outgoing responses.
+
+✅[#2] How Do We Configure Middleware Components
+
+📌Configure Middleware Components
+-We need to configure the Middleware Components within the Main() method of the Program class, which is present inside the Program.cs class file using the WebApplication instance
+
+📌How Does the Middleware Component Works 
+ Middleware Component can access both the incoming HTTP Request and outgoing HTTP Response. So, a Middleware Component in ASP.NET Core Web Application can :
+Handle the incoming HTTP request by generating an HTTP response.
+Process the incoming HTTP request, modify it, and then pass it to the Next Middleware Component configured in the Request Processing Pipeline.
+Process the outgoing HTTP response, modify it, and then pass it on to either the previous middleware component or the ASP.NET Core Web Server.
+
+📌Configure Middleware Components TYPES: 
+-To configure Middleware Components, we can use the Map/MapGet, Run, and Use extension methods in ASP.NET Core applications.
+	map
+	use
+	run
+
+📌1)Configuring Middleware with Run :
+-The Run method is used to add a terminal middleware to the request pipeline.
+
+📄 File: Program.cs
+This code should be placed inside the Program.cs file — it's typically the last middleware registered in the pipeline.
+📁 Location: Root of your ASP.NET Core project
+🗂: Program.cs
+👇 Code:
+// File: Program.cs
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+// 👇 Terminal middleware using app.Run
+app.Run(async (context) =>
+{
+    // This line sends the response back to the client
+    await context.Response.WriteAsync("Getting Response from First Middleware");
+});
+
+// 👇 Start the web application
+app.Run();
+
+- Explanation
+| Line                                     | Description                                                                                                          |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `app.Run(...)`                           | This registers a **terminal middleware** in the pipeline. Once this runs, no other middleware is executed afterward. |
+| `async (context)`                        | This is a delegate that handles the HTTP request. `context` is an instance of `HttpContext`.                         |
+| `await context.Response.WriteAsync(...)` | This sends a response directly to the browser (client).                                                              |
+| `app.Run();`                             | Starts the application. It's the final step that launches the web server and begins listening for HTTP requests.     |
+
+
+-Key points:
+This middleware does not call the next middleware.
+It's the end of the pipeline—once executed, the request stops there.
+Signature: Run(RequestDelegate handler)
+
+You can also pass a named method:
+📄 File: Program.cs
+📁 Location: Root of your ASP.NET Core project
+📝 This named method (FirstMiddleware) can be placed anywhere in the Program.cs file — typically outside the Main method but inside the class.
+👇 Code:
+// 🗂 Program.cs
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+// 👇 Registering a named method as terminal middleware
+app.Run(FirstMiddleware);
+
+// 👇 Starts the web application
+app.Run();
+
+
+// 👇 This is the named middleware method
+/// <summary>
+/// Terminal middleware method that handles all incoming HTTP requests.
+/// Sends a plain text response to the client.
+/// </summary>
+/// <param name="context">Provides access to HTTP request and response data.</param>
+/// <returns>A Task representing the asynchronous operation.</returns>
+private static async Task FirstMiddleware(HttpContext context)
+{
+    // Write a response back to the client
+    await context.Response.WriteAsync("Getting Response from First Middleware");
+}
+
+- Explanation:
+| Code                                                             | Description                                                                                                                         |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `app.Run(FirstMiddleware);`                                      | This registers the `FirstMiddleware` method as the **terminal middleware**.                                                         |
+| `private static async Task FirstMiddleware(HttpContext context)` | A method that handles the HTTP request and sends a response. It must match the middleware delegate signature: `HttpContext → Task`. |
+| `await context.Response.WriteAsync(...)`                         | Sends plain text content back to the client (the browser or API consumer).                                                          |
+
+
+🔸 Adding Multiple Middlewares with Run
+If you try this:
+app.Run(...FirstMiddleware);
+app.Run(...SecondMiddleware);
+-Only the first Run executes. Why? Because Run is terminal and stops the pipeline.
+
+📌2)Configuring Middleware with Use:
+The Use method allows a middleware to:
+Do some processing.
+Call the next middleware via await next().
+
+📄 File: Program.cs
+📁 Location: Root of your ASP.NET Core project
+📝 Add this code in the Main part of Program.cs, after building the app (var app = builder.Build();).
+👇 Code:
+// 🗂 Program.cs
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+// 👇 First middleware registered using 'Use'
+// This middleware DOES call the next middleware using await next()
+app.Use(async (context, next) =>
+{
+    // Write response before calling next middleware
+    await context.Response.WriteAsync("First Middleware\n");
+
+    // Call the next middleware in the pipeline
+    await next(); // 🔁 Moves to the next middleware (Run in this case)
+});
+
+// 👇 Second middleware registered using 'Run'
+// This is the TERMINAL middleware (doesn't call next)
+app.Run(async (context) =>
+{
+    // Sends response to the client
+    await context.Response.WriteAsync("Second Middleware\n");
+});
+
+// Starts the web application
+app.Run();
+
+
+Now both run: first middleware → second middleware.
+You can also use Use as a terminal middleware by not calling next().
+
+
+🗂: Program.cs :Terminal Middleware with Use
+You can terminate the pipeline using Use(...) by not calling next(), like this:
+👇 Code:
+// 🗂 Program.cs
+
+app.Use(async (context, next) =>
+{
+    // This middleware handles the request and terminates the pipeline
+    await context.Response.WriteAsync("Terminating Middleware\n");
+
+    // ❌ Not calling await next(), so no further middleware will run
+});
+
+-Summary of Use and Run:
+| Method   | Behavior                                                |
+| -------- | ------------------------------------------------------- |
+| `Use`    | Can run logic **before and after** calling `next()`     |
+| `Run`    | Is a **terminal middleware**, and doesn't call `next()` |
+| `next()` | Moves to the **next middleware** in the pipeline        |
+
+
+📌3) Map and MapGet Extension Methods:
+Map is used to branch the middleware pipeline based on the request path.
+
+🗂: Program.cs
+👇 Code:
+app.Map("/admin", adminApp => {
+    adminApp.Run(async context =>
+    {
+        await context.Response.WriteAsync("Admin Area");
+    });
+});
+MapGet is a convenience method used in Minimal APIs to directly respond to GET requests for a specific route.
+
+🧠 Middleware Execution Order Matters
+ASP.NET Core processes middleware in the order they are added. So:
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseEndpoints(...);
+These must be placed correctly:
+UseRouting comes before auth middlewares.
+UseEndpoints comes after.
+
+
+📌Common Built-in Middleware Components
+| Middleware                  | Purpose                                   |
+| --------------------------- | ----------------------------------------- |
+| `UseRouting`                | Matches incoming requests to endpoints.   |
+| `UseAuthentication`         | Validates user credentials.               |
+| `UseAuthorization`          | Verifies user permissions.                |
+| `UseHttpsRedirection`       | Redirects HTTP to HTTPS.                  |
+| `UseDeveloperExceptionPage` | Shows detailed error info in development. |
+| `UseExceptionHandler`       | Handles errors in production.             |
+| `UseStaticFiles`            | Serves static files like HTML, CSS, JS.   |
+
+📌Summary of Use, Run, and Map
+| Method | Purpose             | Can Call Next?   | Terminates Pipeline?            |
+| ------ | ------------------- | ---------------- | ------------------------------- |
+| `Use`  | Chain middleware    | ✅ Yes            | ❌ No (unless you omit `next()`) |
+| `Run`  | Terminal middleware | ❌ No             | ✅ Yes                           |
+| `Map`  | Branching logic     | ✅ Yes (on match) | ❌ No                            |
+
+
+✅[#3]Create a Custom Middleware
+
+There are two ways to create custom middleware:
+📌 Method 1: Middleware Class with Invoke or InvokeAsync
+STEPS :
+1. Create a Middleware Class
+📄 File Name: CustomMiddleware.cs
+📁 Folder: Create a folder named Middlewares (recommended for organization)
+👇 Code:
+// File: Middlewares/CustomMiddleware.cs
+
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+
+namespace CustomMiddlewareDemo.Middlewares
+{
+    // Custom middleware class
+    public class CustomMiddleware
+    {
+        private readonly RequestDelegate _next;
+
+        // Constructor: RequestDelegate represents the next middleware in the pipeline
+        public CustomMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        // InvokeAsync is called automatically for each HTTP request
+        public async Task InvokeAsync(HttpContext context)
+        {
+            // Code before calling the next middleware (pre-processing)
+            await context.Response.WriteAsync("Before Custom Middleware\n");
+
+            // Call the next middleware in the pipeline
+            await _next(context);
+
+            // Code after calling the next middleware (post-processing)
+            await context.Response.WriteAsync("After Custom Middleware\n");
+        }
+    }
+}
+
+2. Create an Extension Method (optional but recommended)public static class 
+📄 File Name: CustomMiddlewareExtensions.cs
+📁 Same Folder: Middlewares
+👇 Code:
+// File: Middlewares/CustomMiddlewareExtensions.cs
+
+using Microsoft.AspNetCore.Builder;
+
+namespace CustomMiddlewareDemo.Middlewares
+{
+    // Extension method to register the middleware cleanly
+    public static class CustomMiddlewareExtensions
+    {
+        // Adds CustomMiddleware to the application's middleware pipeline
+        public static IApplicationBuilder UseCustomMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<CustomMiddleware>();
+        }
+    }
+}
+
+3. Register the Middleware in Program.cs
+📄 File Name: Program.cs
+📁 Root of your project
+👇 Code:
+// File: Program.cs
+
+using CustomMiddlewareDemo.Middlewares;
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+// Register the custom middleware in the pipeline
+app.UseCustomMiddleware();  // <-- Executes our middleware before reaching the main endpoint
+
+// This is the final endpoint (will be executed after middleware)
+app.Run(async context =>
+{
+    await context.Response.WriteAsync("Hello from Run Middleware\n");
+});
+
+// Start the web app
+app.Run();
+
+💡 What Happens When You Run This?
+Output in browser or Postman:
+Before Custom Middleware
+Hello from Run Middleware
+After Custom Middleware
+
+-This demonstrates that the middleware wraps around the request, allowing you to execute logic before and after the next delegate.
+
+
+
+📌 Method 2: Inline Middleware (Quick & Simple), Directly uh can add it in the program.cs file
+
+📄 File: Program.cs
+📁 Location: Root of your ASP.NET Core project (this is where the middleware pipeline is configured)
+You’ll add the following code inside the Program.cs file, typically before the final app.Run(...) call.
+👇 Code:
+// File: Program.cs
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+// 👇 Inline middleware using app.Use
+app.Use(async (context, next) =>
+{
+    // This code runs BEFORE the next middleware or endpoint
+    await context.Response.WriteAsync("Before Inline Middleware\n");
+
+    // Call the next middleware in the pipeline
+    await next();
+
+    // This code runs AFTER the next middleware or endpoint has finished
+    await context.Response.WriteAsync("After Inline Middleware\n");
+});
+
+// 👇 Final endpoint middleware using app.Run
+app.Run(async context =>
+{
+    await context.Response.WriteAsync("Hello from Run Middleware\n");
+});
+
+// Start the web application
+app.Run();
+
+Output When You Visit the Page:
+Before Inline Middleware
+Hello from Run Middleware
+After Inline Middleware
+
+✅ Explanation
+| Line                                             | Description                                                                                                    |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `app.Use(...)`                                   | Registers an **inline middleware** that takes a `HttpContext` and `next` delegate                              |
+| `await context.Response.WriteAsync("Before...")` | Runs **before** the next middleware/endpoint                                                                   |
+| `await next();`                                  | Passes control to the **next middleware** in the pipeline                                                      |
+| `await context.Response.WriteAsync("After...")`  | Runs **after** the next middleware/endpoint completes                                                          |
+| `app.Run(...)`                                   | This is the **final middleware** in the pipeline — it terminates the request pipeline (no `next()` after this) |
+
+
+

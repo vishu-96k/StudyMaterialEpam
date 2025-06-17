@@ -1,0 +1,24 @@
+
+STRING VS STRIGBUFFER 
+
+STRING :
+-String are Immutable.
+-Once uh decalare a string, Uh cannot modify the data in it.
+-Uh cannot change the Varibale of string, Uh will always get a new string when uh apply functions on that Exixting string, it wont get modified.
+-When we do concatenation, substring, this all returns a new string
+-Uh cannot do modification on string.
+
+EG:
+string str = "Hello";//memory will be given to str in heap
+string str2 = str + "World";//New memory location will be given in heap for this and this returns a new string
+
+-Strings are getting store in Heap memory becoz string is a refrence type and is defined inside the Class String
+-Value types are defined in Structure eg int in INTERGER struct
+-when uh don't want to do any modification on string, and use string for static values then go for string, which requires few modifications, Then use string
+
+
+STRING BUILDER CLASS :
+-StringBuilder is Mutable.
+-means uh can do modification to StringBuilder data, it wont return uh a new string.
+-In StringBuilder, Uh can do Modifications
+StringBuilder is also a class

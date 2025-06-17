@@ -1,0 +1,109 @@
+MVC14---
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : DI 📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] How DI Works in ASP.NET MVC
+
+📌How DI Works
+-ASP.NET MVC has built-in support for DI through its controller factory, but in practice, we usually use a DI Container.
+
+Popular DI Containers:
+Microsoft.Extensions.DependencyInjection (default in ASP.NET Core)
+Unity
+Autofac
+Ninject
+StructureMap
+
+📌DI in ASP.NET MVC (Classic, not Core)
+Step-by-Step Implementation using Unity DI Container
+
+-We'll build a simple example of a StudentController that depends on a IStudentService.
+
+Step 1: Create Interface and Implementation
+Services/IStudentService.cs
+👇 Code:
+public interface IStudentService
+{
+    List<string> GetAllStudents();
+}
+
+Services/StudentService.cs
+👇 Code:
+public class StudentService : IStudentService
+{
+    public List<string> GetAllStudents()
+    {
+        return new List<string> { "Alice", "Bob", "Charlie" };
+    }
+}
+
+
+ Step 2: Install Unity Container
+👇 Code:
+Install-Package Unity
+Install-Package Unity.Mvc
+
+Step 3: Configure Unity in Application_Start
+App_Start/UnityConfig.cs
+👇 Code:
+using Microsoft.Practices.Unity;
+using System.Web.Mvc;
+using Unity.Mvc5;
+
+public static class UnityConfig
+{
+    public static void RegisterComponents()
+    {
+        var container = new UnityContainer();
+
+        // Register types
+        container.RegisterType<IStudentService, StudentService>();
+
+        DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+    }
+}
+
+Call this in Global.asax.cs → Application_Start:UnityConfig.RegisterComponents();
+
+Step 4: Use DI in Controller
+Controllers/StudentController.cs
+👇 Code:
+public class StudentController : Controller
+{
+    private readonly IStudentService _studentService;
+
+    public StudentController(IStudentService studentService)
+    {
+        _studentService = studentService;
+    }
+
+    public ActionResult Index()
+    {
+        var students = _studentService.GetAllStudents();
+        return View(students);
+    }
+}
+//ASP.NET MVC will automatically resolve the IStudentService and inject StudentService.
+
+Types of DI:
+| Type                  | Description                                   | Example                                     |
+| --------------------- | --------------------------------------------- | ------------------------------------------- |
+| Constructor Injection | Dependencies are injected via constructor.    | `public MyClass(IMyService svc)`            |
+| Property Injection    | Dependencies are set via public properties.   | `public IMyService MyService { get; set; }` |
+| Method Injection      | Dependencies are passed to a method directly. | `DoSomething(IMyService service)`           |

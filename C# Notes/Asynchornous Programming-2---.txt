@@ -1,0 +1,51 @@
+---------PART 4---
+Example 1: Using async and await with string return type
+
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    // This method incorrectly returns a string and uses async/await
+    static async Task Main()
+    {
+        // Calling the async method and storing its result
+        string result = GetMessageAsync(); // This will not compile because GetMessageAsync is not returning Task<string>
+        
+        // This would print the result when it's completed
+        Console.WriteLine(result);
+    }
+
+    // Incorrect: async method returning a string
+    public static async string GetMessageAsync() // gives compiler error if uh return a string form the async function
+    {
+        await Task.Delay(1000); // Simulating some asynchronous work
+        return "Hello from async!";
+    }
+}
+
+
+
+Example 2: Correct Version Using Task<string>:
+
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    static async Task Main()
+    {
+        // Calling the async method and awaiting its result
+        string result = await GetMessageAsync();  // This works because GetMessageAsync returns Task<string>
+        
+        // This will print the result when it's completed
+        Console.WriteLine(result);
+    }
+
+    // Correct: async method returning Task<string>
+    public static async Task<string> GetMessageAsync()
+    {
+        await Task.Delay(1000); // Simulating some asynchronous work
+        return "Hello from async!";
+    }
+}

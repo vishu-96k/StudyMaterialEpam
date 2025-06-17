@@ -1,0 +1,104 @@
+--------------------ASP.NET Core Web Application SETUP-----------------------
+
+
+📁 Project Structure Explanation (with Real-Life Analogy)
+File/Folder		Description								Real-Life Analogy
+Connected Services/	Used to connect your app with external services like Azure, APIs, etc.	Like setting up external suppliers for your shop
+Dependencies/		Contains libraries/packages your project needs to run			Ingredients or tools your shop needs to operate
+Properties/		Stores project settings like how to launch your app			Instruction sheet for opening/closing the shop
+appsettings.json	Central configuration file for settings like DB, logging, etc.		Your shop’s handbook (hours, contacts, policies)
+Program.cs		The entry point — starts the app, builds host, routes, services		The main switch that opens your shop in the morning
+
+📁 Connected Services/
+What it is: Helps you connect to services like:
+Azure Storage, Azure SQL Database
+External Web APIs, authentication providers, etc.
+Currently empty in new projects unless you add services via Visual Studio.
+Real-Life Analogy:
+Think of your app like a shop. If you want to sell online, you'll connect to shipping services (FedEx) or payment gateways (PayPal). Connected Services is the section where you manage these external "partners."
+
+
+📁 Dependencies/
+What it includes:
+NuGet packages (like libraries/tools)
+Framework references (Microsoft.AspNetCore.App, etc.)
+Project references (if you have multiple projects)
+Example:
+<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
+Real-Life Analogy:
+Imagine you’re running a coffee shop. You depend on tools like espresso machines, milk frothers, etc. These dependencies are tools or supplies without which your shop (app) can’t function.
+
+
+📁 Properties/ ➤ launchSettings.json
+Purpose: Defines how the app should start in different environments (Development, Production, etc.)
+Includes settings like:
+Launch browser?
+Environment variables?
+Ports to run on?
+Sample:
+"profiles": {
+  "MyApp": {
+    "commandName": "Project",
+    "launchBrowser": true,
+    "environmentVariables": {
+      "ASPNETCORE_ENVIRONMENT": "Development"
+    },
+    "applicationUrl": "https://localhost:5001"
+  }
+}
+
+
+
+📄 appsettings.json
+Main config file for:
+Logging settings
+Connection strings : for connecting to database
+Custom settings (e.g., pagination, API keys)
+EG :
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=.;Database=ShopDB;Trusted_Connection=True;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning"
+    }
+  }
+}
+
+
+📄 Program.cs
+This is the entry point of the ASP.NET Core app.
+Contains:
+Main() method
+Calls CreateHostBuilder() → sets up web server
+Adds services to DI container
+Configures middleware (routing, authentication)
+EG :
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+var app = builder.Build();
+app.MapControllers();
+app.Run();
+
+🔁 How They All Work Together
+Let’s tie it together with the Coffee Shop Analogy:
+Program.cs → The manager starting the day (bootstraps and opens the shop)
+appsettings.json → The store’s handbook (defines rules, hours, resources)
+launchSettings.json → The checklist for morning setup based on whether it's a weekday (Dev) or weekend (Prod)
+Dependencies → The coffee machines, cups, ingredients (external tools/libraries)
+Connected Services → Partnerships with delivery services or payment gateways
+
+
+
+
+🧰 Explanation of Common Templates in ASP.NET Core
+Template				Use Case
+Empty					Minimal, customizable
+Web App (Razor Pages)			Page-focused apps with server-side rendering
+Web App (MVC)				Layered architecture: Model-View-Controller
+Web API					RESTful services
+Web API (Native)			Optimized for native platforms
+Blazor Server				C# UI apps running on server
+Blazor WebAssembly			C# SPA apps running in browser using WebAssembly

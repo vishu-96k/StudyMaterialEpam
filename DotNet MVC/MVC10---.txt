@@ -1,0 +1,213 @@
+MVC10---
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : ATTRIBUTE BASED ROUTING📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] ATTRIBUTE BASED ROUTING:
+
+📌Attribute based routing:
+- With Attribute Routing, you can now define routes directly on actions and controllers by decorating them with attributes like [Route], [HttpGet], [HttpPost], etc
+
+📌📌NOTE📌📌
+Note: The Convention-Based routing is still fully supported by ASP.NET Core MVC. In fact, we can use both these routing approaches in the same project. If both Routings are present, then .NET Core overrides conventional routes. This is because .NET Core gives preference to Attribute Routing.
+
+-NEED: 
+sometmes it becomes very difficult for the conventional roting to achive some URLs
+-For this we need Attribute Routing.
+
+📌Limitation of Convention-Based Routing
+🗂Program.cs
+👇 Code:
+app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller}/{action}/{id:int?}",
+                defaults: new { controller = "Home", action = "Index" }
+            );//This roue is defied a conventional routing standarads
+
+Now, suppose you want to design a more user-friendly and RESTful URL:
+https://localhost:44359/student/1/courses
+This URL clearly conveys:You're talking about a student , With ID 1, Accessing their courses
+❗ Problem:
+This URL doesn’t match the conventional route: {controller}/{action}/{id?}
+You'd have to twist the route to something like: "{controller}/{id}/courses"
+-But this would apply to all controllers, not just StudentController. You’d need lots of custom logic and constraints, which becomes messy, hard to maintain, and inflexible.
+
+📌How Do We Use Attribute Routing 
+Applying the Route attribute at the Controller level applies to all the controller’s action methods. We can also use the [HttpGet], [HttpPost], [HttpPut], [HttpDelete], and [HttpPatch] Attributes at the action method level to define the Route Pattern.
+
+🏗️ Example Breakdown: Using Attribute Routing in StudentController
+🗂Controllers/StudentController.cs
+👇 Code:
+// Import necessary namespaces
+
+// Provides MVC features like Controller base class, IActionResult, etc.
+using Microsoft.AspNetCore.Mvc;
+
+// Imports the Student model class from the Models folder
+using RoutingInASPDotNetCoreMVC.Models;
+
+namespace RoutingInASPDotNetCoreMVC.Controllers // Defines the Controllers namespace
+{
+    // StudentController is a controller that handles HTTP requests for "Student" data
+    // Inherits from Controller class (base class for all MVC controllers in ASP.NET Core)
+    public class StudentController : Controller
+    {
+        // -------------------------------------------------------------------------
+        // Static list of students acting as an in-memory "data source"
+        // In real-world applications, data would be fetched from a database
+        // -------------------------------------------------------------------------
+        static List<Student> students = new List<Student>()
+        {
+            new Student() { Id = 1, Name = "Pranaya" },
+            new Student() { Id = 2, Name = "Priyanka" },
+            new Student() { Id = 3, Name = "Anurag" },
+            new Student() { Id = 4, Name = "Sambit" }
+        };
+
+        // -------------------------------------------------------------------------
+        // Method: GetAllStudents
+        // Route: /Student/All
+        // Returns a list of all students
+
+        [Route("Student/All")] // Attribute routing: maps /Student/All to this method
+        public List<Student> GetAllStudents()
+        {
+            // Return the entire student list
+            return students;
+        }
+
+        // -------------------------------------------------------------------------
+        // Method: GetStudentByID
+        // Route: /Student/{studentID}/Details
+        // Fetches a student by ID from the list and returns it
+        // -------------------------------------------------------------------------
+
+        [Route("Student/{studentID}/Details")] // {studentID} is a route parameter
+        public Student GetStudentByID(int studentID) // ASP.NET Core binds the value from the URL to this method parameter
+        {
+            // FirstOrDefault returns the first matching student or null
+            Student? studentDetails = students.FirstOrDefault(s => s.Id == studentID);
+
+            // If student is not found, return a new empty Student object (to avoid null)
+            return studentDetails ?? new Student();
+        }
+
+                // Method: GetStudentCourses
+        // Route: /Student/{studentID}/Courses
+        // Returns a list of course names based on the student ID
+
+        [Route("Student/{studentID}/Courses")] // Route template with variable studentID
+        public List<string> GetStudentCourses(int studentID)
+        {
+            // Initialize course list
+            List<string> CourseList = new List<string>();
+
+            // Hardcoded course data for different students
+            if (studentID == 1)
+                CourseList = new List<string>() { "ASP.NET Core", "C#.NET", "SQL Server" };
+            else if (studentID == 2)
+                CourseList = new List<string>() { "ASP.NET Core MVC", "C#.NET", "ADO.NET Core" };
+            else if (studentID == 3)
+                CourseList = new List<string>() { "ASP.NET Core WEB API", "C#.NET", "Entity Framework Core" };
+            else
+                CourseList = new List<string>() { "Bootstrap", "jQuery", "AngularJs" };
+
+            // Return course list based on studentID
+            return CourseList;
+        }
+    }
+}
+
+🗂Program.cs
+👇 Code:
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Create the WebApplicationBuilder instance
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Register MVC services into the dependency injection container
+            // This adds controllers, views, model binding, data annotations, etc.
+            builder.Services.AddControllersWithViews();
+
+            // Build the application
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline
+            if (!app.Environment.IsDevelopment())
+            {
+                // If the app is NOT in development, use a custom error page
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts(); // Adds HTTP Strict Transport Security header
+            }
+
+            // Redirect HTTP to HTTPS
+            app.UseHttpsRedirection();
+
+            // Serve static files from wwwroot folder
+            app.UseStaticFiles();
+
+            // Enable routing capabilities
+            app.UseRouting();
+
+            // Enable authorization middleware (not needed here but standard)
+            app.UseAuthorization();
+
+            // Use attribute routing with controllers
+            // This tells ASP.NET Core to look for [Route] attributes in controllers
+            app.MapControllers(); //We are not using app.MapControllersRoute() middlewere becoz the routes are defined in the controllers using the concept of attribute routing.
+
+            // Run the app
+            app.Run();
+        }
+}
+Now, you can access the three action methods of the Student Controller using the following URLs, and it will work as expected.
+https://localhost:44359/Student/GetAllStudents
+https://localhost:44359/Student/GetStudentByID?studentID=1
+https://localhost:44359/Student/GetStudentCourses?studentID=1
+
+📌Can we Apply Multiple Route Attributes to a Single Action Method in ASP.NET Core MVC?
+-Yes, we can apply Multiple Route Attributes to a Single Action Method
+-Let us understand this with an example.
+🗂HomeController.cs
+👇 Code:
+using Microsoft.AspNetCore.Mvc;
+namespace RoutingInASPDotNetCoreMVC.Controllers
+{
+   [Route("Home")]//Uh can also mention the attribute on the above of the calsss, but if uh do so, Then in the aciton methods, Dont mention home, just metionthe routes like : "Details/id?"
+    public class HomeController : Controller
+    {
+        [Route("")]
+        [Route("Home")]
+        [Route("Home/Index")]
+        public string Index()
+        {
+            return "Index() Action Method of HomeController";
+        }
+    }
+}
+-If you notice, we have applied the Route attribute three times to the Index() action method of the Home Controller class. 
+-we can now access the Index() action method of the HomeController using the following three URLs.
+https://localhost:44359/
+https://localhost:44359/home
+https://localhost:44359/home/index
+
+-If you apply the same Route Attributes multiple times with an Action Method and if you apply the same Route Template to different action methods, then you will get AmbiguousMatchException
+
+

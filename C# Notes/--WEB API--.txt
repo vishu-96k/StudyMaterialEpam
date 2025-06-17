@@ -1,0 +1,27 @@
+--WEB API--
+
+BACKEND :
+WEB API .NET framwork
+1)Create Models
+2)Add Connection string in the web.confog file
+3)DATA FOLDER : ApplicationDbContext file for db connection in data folder
+4)Rebuild the Solution
+5)Create Migration and Update Database
+		Nugget Console : Add migration
+				Create migration
+				Update Db
+	
+6)Create Userscontroller for the users model. 
+7)WebApp.Config : Install-Package Microsoft.AspNet.WebApi.Cors install this package which enables the MVC fronent to send req to the backend
+
+
+FRONT END:
+MVC frontend PART
+	
+1)Create Model
+2)Create Controller for the models replace the PORT number of Web api URL PORT
+3)Create views : Html pages which are needed for the application
+The Create.cshtml iew should call the api using the javascrip. 
+4)RouteConfig.cs UPdate this file  : The RouteConfig.cs file is located in the App_Start folder of your MVC project. The typical path is:
+
+Run both the applications, uh will see the frontend on the MVC URL

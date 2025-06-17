@@ -1,0 +1,161 @@
+------------ASP .NET Core PART 2 ------
+✅UNDERSTANDING MAIN METHOD:
+
+-If you uncheck the “Do not use top-level statements” checkbox during project creation, you won’t see the class or Main method name
+-the Program.cs file contains the main method, which is the starting point of any .net appplciation
+-Before .net 6, 2 separate files where present, program.cs and StartUp.cs. Both were required to run the application
+-Program.cs file configured the host .
+-StartUp.cs file handled the services and middleware
+-But after .net 6, there is only one Program.cs file which include all this 
+
+
+🧠 What is Program.cs in ASP.NET Core?
+-this has the Main Method() starting point of the execuetio of any application.
+-Main method is responsible for 4 things:
+	Creating the Web Host and Configuring the Services
+	Building the Application
+	Setting Up Endpoints, Routing, and Middleware Components
+	Running the Application
+
+EG : PROGRAM.CS file :
+
+public class Prorgam
+{
+	public static void Main(String[] args)
+	{
+		//Creating the web HOst and services
+		var Builder = WebApplication.CreateBuilder(args);
+		
+		//Building the Application
+		var app = builder.Build();
+
+		//Setting up endpoints, pounting, Middlewere
+		app.MapGet("/", ()=> "Hello World");
+
+		//Running The application
+		app.Run();
+	}
+}
+
+
+✅ Step 1: var builder = WebApplication.CreateBuilder(args);
+
+-The builder, is noth but a variable, which is now the instance of the CreateBuilder class. And tehrefor "builder" is the Actual builder object of this class, uh can also use any other variable.
+-This creates the instance of the WebApplicaitionBuilder sealed class. The args parameter is noth but the command line parameters if any passed
+-The Instance (builder) is responsible for configuring services like logginf, MVC, Web API, DI etc.
+-its also responsible for :
+	Set up Web Server (IIS, or Kestrel)
+	Host the Application (InProcess or OutOfProcess)
+	Logging (debugging and console logging)
+	Configuration (How to access the Data from Configuration Files)
+	Dependency Injection Container (registering built-in and custom services)
+
+-main responsibility is to configuring the essential services.
+
+🔹 Real-Life Analogy:
+Like a chef preparing ingredients before cooking a meal. You lay everything out (knife, vegetables, spices) before you cook.
+
+EG:
+var builder = WebApplication.CreateBuilder(args);
+// Add services like MVC or Razor here
+builder.Services.AddControllers();
+builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews(); //This line adds MVC services so you can use Controllers and Views.
+
+
+
+✅ Step 2: var app = builder.Build();
+-app is noth but a variable, But the Build function will not return the Web application, So uh can also use any other variable in place of app.
+-this build() of the builder(Instance), will build the actual web Application instance
+-The result "app"  is representing the actual application itself.
+- From this point, the application is ready to set up routes, configure the middleware component, and start handling requests, but it isn’t running yet.
+
+🔹 What it does:
+Builds the actual web application using the builder configuration.
+After this point, you can define routes and middleware
+
+
+✅ Step 3: app.MapGet("/", () => "Hello World!");
+
+-This line defines a simple endpoint (or route) that handles HTTP GET requests
+-So using the Web Application intsncae "app", uh can set up muddlewere Component, endpoints(routes), Routings etc.
+
+🔹 What it does:
+Sets up a route (endpoint) for HTTP GET request at root /.
+When a user visits the site, it returns "Hello World!".
+
+If user goes to http://localhost:5000/, they see:
+HELLO WORLD!
+
+
+🔹 You can also return JSON:
+app.MapGet("/user", () => new { Name = "John", Age = 30 });
+📌app.MapGet() :
+🧱 Breaking it Down
+app → This is the WebApplication object, built using builder.Build(). It's your running app.
+
+MapGet() → This is an extension method used to define an HTTP GET endpoint.
+"/user" → This is the route pattern (the URL path). When someone visits http://localhost:5000/user, this route will be matched.
+
+() => new { Name = "John", Age = 30 } → This is a lambda expression that defines the logic for handling the request. It returns an anonymous object with properties Name and Age.
+
+So when someone visits /user, the server responds with:
+{
+"Name": "John",
+"Age": 30
+}
+
+
+🧠 What is app.MapGet() Exactly?
+app.MapGet(...) is a method that comes from ASP.NET Core Minimal APIs (introduced in .NET 6). It’s a shorthand for defining GET routes without needing controllers.
+
+🛠️ Parameters
+MapGet takes 2 required parameters:
+string pattern : which is the route 
+Delegate handler :This is the method that handles the request.
+
+EG :
+🔹 Example with async:
+
+app.MapGet("/hello", async () =>
+{
+await Task.Delay(100);
+return "Hello!";
+});
+
+🔹 Example with parameters from route:
+
+app.MapGet("/user/{id}", (int id) => $"User ID: {id}");
+
+This will return "User ID: 5" if you access /user/5
+
+
+✅ Step 4: app.Run();
+-This line starts the web server and begins listening for incoming requests.
+-The Run() method keeps the application running until manually stopped, and it is responsible for handling incoming HTTP requests.
+
+🔹 What it does:
+Starts the web server (Kestrel by default).
+The app begins listening for HTTP requests.
+The app continues running until it is manually stopped.
+
+
+----------------------------------------------------
+✅ What is MapGet in ASP.NET Core?
+-Endpoints are executable code that runs in response to a request. (endpoints are noth but the routes).
+
+EG:
+app.MapGet("/", () => "Hello World!");
+
+-Here app.MapGet("/") is a end point.
+-when an HTTP GET request is sent to the application root URL /, the request delegate executes, i.e., te statement () => “Hello World!” will execute.
+
+
+❗ Important Notes
+MapGet only handles GET requests. For POST, PUT, or DELETE, you need MapPost, MapPut, MapDelete, etc.
+If you want to handle multiple routes, define them explicitly:
+
+app.MapGet("/", () => "Home Page");
+app.MapGet("/about", () => "About Page");
+
+

@@ -1,0 +1,595 @@
+✅ Observer Design Pattern in C#
+
+📌 Definition
+🔷 The Observer Design Pattern is a behavioral pattern used to define a one-to-many dependency between objects so that when one object (called the Subject) changes its state, all its dependents (called Observers) are notified and updated automatically.
+🔷 It promotes loose coupling between the subject and observers.
+
+
+🔍 Key Concepts Explained:
+🔸 1. Behavioral Pattern
+This pattern is about communication between objects.
+Unlike structural patterns (which focus on object composition), behavioral patterns help objects interact efficiently and flexibly.
+
+🔸 2. One-to-Many Dependency
+This means one object (Subject) is being observed by many other objects (Observers).
+When the Subject changes, it automatically notifies all the Observers.
+Think of it like YouTube notifications:
+One channel (Subject) uploads a new video
+All subscribers (Observers) get notified
+That’s one-to-many: one subject, many listeners.
+
+
+🔸 3. Subject
+The object that holds the core state/data.
+It manages a list of observers.
+It provides:
+Methods to attach (subscribe) or detach (unsubscribe) observers.
+A method to notify all observers when the state changes
+
+
+🔸 3. Subject
+The object that holds the core state/data.
+It manages a list of observers.
+It provides:
+Methods to attach (subscribe) or detach (unsubscribe) observers.
+A method to notify all observers when the state changes
+
+EG : YouTube Channel and Subscribers Code
+
+using System;
+using System.Collections.Generic;
+#region Interfaces
+// 📌 IObserver Interface
+// 🔷 Defines a method "Update" that all observers must implement.
+// 🔷 This is how the subject communicates changes to all observers.
+public interface IObserver
+{
+    void Update(string message); // Observer gets updated with a message
+}
+
+// 📌 ISubject Interface
+// 🔷 Declares methods for adding, removing, and notifying observers.
+public interface ISubject
+{
+    void Attach(IObserver observer);   // Add a new observer
+    void Detach(IObserver observer);   // Remove an observer
+    void Notify(string message);       // Notify all observers
+}
+
+#endregion
+
+#region Subject Implementation
+
+// 📌 ConcreteSubject: YouTubeChannel
+// 🔷 Maintains a list of subscribers (observers).
+// 🔷 Notifies them when a new video is uploaded.
+public class YouTubeChannel : ISubject
+{
+    // List of subscribers (observers)
+    private List<IObserver> _observers = new List<IObserver>();
+
+    // Add a subscriber
+    public void Attach(IObserver observer)
+    {
+        _observers.Add(observer);
+        Console.WriteLine("Subscriber added.");
+    }
+
+    // Remove a subscriber
+    public void Detach(IObserver observer)
+    {
+        _observers.Remove(observer);
+        Console.WriteLine("Subscriber removed.");
+    }
+
+    // Notify all subscribers with the update message
+    public void Notify(string message)
+    {
+        foreach (var observer in _observers)
+        {
+            observer.Update(message); // Each observer handles the update in its own way
+        }
+    }
+
+    // Simulates uploading a new video and notifies all subscribers
+    public void UploadVideo(string title)
+    {
+        Console.WriteLine($"\n🎥 New video uploaded: {title}");
+        Notify($"📢 New Video Notification: {title}");
+    }
+}
+
+#endregion
+
+#region Observer Implementation
+
+// 📌 ConcreteObserver: Subscriber
+// 🔷 Implements the IObserver interface.
+// 🔷 Gets notified and performs action (e.g., prints the message).
+public class Subscriber : IObserver
+{
+    private string _name;
+
+    // Constructor to assign subscriber's name
+    public Subscriber(string name)
+    {
+        _name = name;
+    }
+
+    // Handles the update notification from the subject
+    public void Update(string message)
+    {
+        Console.WriteLine($"{_name} received notification: {message}");
+    }
+}
+
+#endregion
+
+#region Client Code
+
+// 📌 Main Program
+// 🔷 Demonstrates the usage of the Observer pattern.
+class Program
+{
+    static void Main()
+    {
+        // Create a YouTube Channel (Subject)
+        YouTubeChannel channel = new YouTubeChannel();
+
+        // Create subscribers (Observers)
+        IObserver s1 = new Subscriber("Alice");
+        IObserver s2 = new Subscriber("Bob");
+        IObserver s3 = new Subscriber("Charlie");
+
+        // Attach subscribers to the channel
+        channel.Attach(s1);
+        channel.Attach(s2);
+        channel.Attach(s3);
+
+        // Upload a video - all attached subscribers get notified
+        channel.UploadVideo("Observer Pattern Explained");
+
+        // Remove one subscriber
+        channel.Detach(s2);
+
+        // Upload another video - remaining subscribers get notified
+        channel.UploadVideo("Strategy Pattern Tutorial");
+
+        // Output shows the notifications sent only to current subscribers
+    }
+}
+
+#endregion
+
+✅ What is the Code About?
+🔷 This code demonstrates the Observer Design Pattern using a YouTube Channel and Subscribers analogy.
+🔷 It shows how multiple objects (subscribers) can automatically receive updates when another object (YouTube channel) changes its state (uploads a video).
+🔷 The implementation decouples the channel (subject) from its subscribers (observers), making it easy to add/remove subscribers dynamically.
+
+✅ What Have We Implemented?
+🔷 We created an Observer pattern where:
+A YouTubeChannel (Subject) notifies all Subscriber (Observers) when a new video is uploaded.
+Observers register (Attach) or unregister (Detach) from the subject.
+When the state changes (video uploaded), all current observers receive a notification (Update).
+
+✅ Steps to Implement the Observer Pattern (in Short Theory Points)
+
+📌 1. Define Observer Interface
+🔷 Create IObserver with a method Update(string message)
+🔷 All classes that want to receive notifications must implement this interface.
+
+📌 2. Define Subject Interface
+🔷 Create ISubject with methods Attach(), Detach(), and Notify()
+🔷 This allows the subject to manage its list of observers.
+
+📌 3. Create Concrete Subject (YouTubeChannel)
+🔷 Implements ISubject
+🔷 Maintains a list of observers
+🔷 Notifies them via Notify() when a video is uploaded
+
+📌 4. Create Concrete Observer (Subscriber)
+🔷 Implements IObserver
+🔷 Defines how the observer responds when it receives a notification from the subject
+
+📌 5. Use the Pattern in Main Method
+🔷 Create subject and observer objects
+🔷 Attach observers to the subject
+🔷 Call subject’s UploadVideo() to trigger Notify() and update observers
+🔷 Optionally remove an observer using Detach()
+
+
+
+
+✅ How the Observer Pattern is Implemented in the Code
+📌 Roles in the Pattern:
+🔷 IObserver – This defines the observer contract via Update() method.
+🔷 Subscriber – A concrete class that implements IObserver. It represents users who want to be notified.
+🔷 ISubject – Declares methods for attaching, detaching, and notifying observers.
+🔷 YouTubeChannel – Implements ISubject. It maintains a list of IObservers and notifies them when a video is uploaded.
+🔷 Program – The client code that connects everything together.
+
+✅ Working Explanation
+Observers (Subscriber objects) are registered to the Subject (YouTubeChannel) using Attach().
+When UploadVideo() is called on YouTubeChannel, it calls Notify(), which loops through all attached observers and calls their Update() method.
+Observers receive a message and react accordingly (e.g., print it).
+Observers can be removed at any time using Detach(), and they will no longer receive updates.
+
+
+
+🎯 Real-Life Analogy Explained
+Concept	Real-Life Equivalent
+Subject	News Agency or YouTube Channel
+Observer	Subscribers
+Attach()	Clicking the "Subscribe" button
+Detach()	Clicking "Unsubscribe"
+Notify()	Sending email/push notification to users
+Update()	Observer receives the latest news/video
+
+
+📌 Key Components
+🔷 ISubject – Interface that defines methods to attach, detach and notify observers.
+🔷 IObserver – Interface that defines the update method.
+🔷 ConcreteSubject – Maintains state and notifies observers when its state changes.
+🔷 ConcreteObserver – Implements the observer update method and gets notified of changes.
+
+
+🧠 Why Use Observer Pattern?
+To ensure loose coupling between Subject and Observers:
+The Subject doesn't need to know much about who is watching—it just calls notify().
+Makes it easy to add/remove observers dynamically at runtime.
+Useful when changes in one object should automatically reflect in others.
+✅ Benefits of Observer Pattern
+🔷 Promotes loose coupling between the subject and observers
+🔷 Supports dynamic addition/removal of observers at runtime
+🔷 Useful in event-driven systems
+
+
+✅ When to Use
+🔷 When changes to one object require automatic updates to dependent objects
+🔷 In scenarios like event handling, data-binding, UI frameworks, and real-time systems
+
+
+
+           +-----------+
+           |  Subject  |
+           +-----------+
+                 |
+                 v
+           +-----------+
+           |  Notify   |
+           +-----------+
+            /    |    \
+           v     v     v
+    +---------+ +---------+ +---------+
+    |Observer1| |Observer2| |Observer3|
+    +---------+ +---------+ +---------+
+
+----------------------------------------------------------------------------------
+
+EG 2 :
+using System;
+using System.Collections.Generic;
+
+#region Interfaces
+
+// 📌 IPublisher Interface
+// 🔷 Defines the methods "Subscribe", "Unsubscribe", and "Notify" that the publisher must implement.
+public interface IPublisher
+{
+    void Subscribe(ISubscriber subscriber);   // Register a new subscriber
+    void Unsubscribe(ISubscriber subscriber); // Unregister a subscriber
+    void Notify(string message);              // Notify all subscribers
+}
+
+// 📌 ISubscriber Interface
+// 🔷 Defines the "Update" method that all subscribers must implement.
+public interface ISubscriber
+{
+    void Update(string message); // Method to handle the update when notified by the publisher
+}
+
+#endregion
+
+#region Publisher Implementation
+
+// 📌 ConcretePublisher: YouTube
+// 🔷 Implements IPublisher. It maintains a list of subscribers and notifies them when new content is available.
+public class YouTube : IPublisher
+{
+    private List<ISubscriber> _subscribers = new List<ISubscriber>();  // List of subscribers
+
+    // 📌 Subscribe a new subscriber to the YouTube channel
+    public void Subscribe(ISubscriber subscriber)
+    {
+        _subscribers.Add(subscriber);
+        Console.WriteLine("New subscriber added.");
+    }
+
+    // 📌 Unsubscribe an existing subscriber
+    public void Unsubscribe(ISubscriber subscriber)
+    {
+        _subscribers.Remove(subscriber);
+        Console.WriteLine("Subscriber removed.");
+    }
+
+    // 📌 Notify all subscribed users about a new video upload
+    public void Notify(string message)
+    {
+        foreach (var subscriber in _subscribers)
+        {
+            subscriber.Update(message); // Notify each subscriber
+        }
+    }
+
+    // 📌 Simulate uploading a new video to the channel
+    public void UploadVideo(string title)
+    {
+        Console.WriteLine($"\n🎥 New video uploaded: {title}");
+        Notify($"📢 New Video Alert: {title}"); // Notify all subscribers about the new video
+    }
+}
+
+#endregion
+
+#region Subscriber Implementation
+
+// 📌 ConcreteSubscriber: Person
+// 🔷 Implements ISubscriber to react when notified by the publisher (YouTube).
+public class Person : ISubscriber
+{
+    private string _name;
+
+    // 📌 Constructor to assign the subscriber's name
+    public Person(string name)
+    {
+        _name = name;
+    }
+
+    // 📌 Update method to handle notifications
+    // 🔷 When notified by the publisher, this method is triggered to process the message.
+    public void Update(string message)
+    {
+        Console.WriteLine($"{_name} received notification: {message}");
+    }
+}
+
+#endregion
+
+#region Client Code
+
+// 📌 Main Program
+// 🔷 Demonstrates how the Publisher-Subscriber relationship works with YouTube as the publisher and Person as the subscribers.
+class Program
+{
+    static void Main()
+    {
+        // 📌 Step 1: Create a YouTube channel (Publisher)
+        YouTube channel = new YouTube();
+
+        // 📌 Step 2: Create Persons (Subscribers)
+        ISubscriber person1 = new Person("Alice");
+        ISubscriber person2 = new Person("Bob");
+        ISubscriber person3 = new Person("Charlie");
+
+        // 📌 Step 3: Subscribe Persons to the YouTube channel
+        channel.Subscribe(person1);  // Alice subscribes
+        channel.Subscribe(person2);  // Bob subscribes
+        channel.Subscribe(person3);  // Charlie subscribes
+
+        // 📌 Step 4: Upload a new video (This triggers notifications to all subscribers)
+        channel.UploadVideo("Observer Pattern Explained");
+
+        // 📌 Step 5: Unsubscribe a Person (Bob unsubscribes)
+        channel.Unsubscribe(person2);
+
+        // 📌 Step 6: Upload another video (Only Alice and Charlie will be notified)
+        channel.UploadVideo("Strategy Pattern Tutorial");
+
+        // Output will show which subscribers received the notifications
+    }
+}
+
+#endregion
+
+✅ Explanation of the Updated Code:
+IPublisher Interface:
+Defines methods for the publisher to manage subscribers:
+Subscribe() to add a subscriber.
+Unsubscribe() to remove a subscriber.
+Notify() to notify all subscribed users.
+
+ISubscriber Interface:
+Defines the Update() method that all subscribers must implement to receive updates from the publisher.
+
+ConcretePublisher: YouTube:
+Implements IPublisher and manages the list of subscribers. When a new video is uploaded, it notifies all subscribers.
+The UploadVideo() method triggers the Notify() method, sending notifications to the subscribers.
+
+ConcreteSubscriber: Person:
+Implements ISubscriber. Each Person subscribes to the YouTube channel and handles notifications through the Update() method.
+
+Client Code:
+In the Main() method, we create a YouTube channel (publisher) and Person objects (subscribers).
+The subscribers are added to the channel, and when a new video is uploaded, all subscribers receive a notification.
+One subscriber (Bob) is unsubscribed before uploading another video, and only the remaining subscribers receive the second notification.
+
+✅ Summary of Changes:
+IPublisher and ISubscriber interfaces now reflect the Publisher-Subscriber pattern.
+Concrete classes are renamed to YouTube (publisher) and Person (subscriber) to better align with the publisher-subscriber analogy.
+
+
+✅ Publisher-Subscriber Relation in the Code:
+Publisher (Subject):
+The YouTubeChannel class is the publisher. It publishes updates (like new video uploads) to all its subscribers (observers) whenever an event occurs (video is uploaded).
+
+Subscribers (Observers):
+The Subscriber class acts as the subscriber (or observer). It subscribes to the YouTubeChannel and gets notified whenever the channel (publisher) uploads a new video. Each subscriber reacts to the update by performing the Update() method.
+
+How the Publisher-Subscriber Relation Works:
+Publisher (Subject):
+
+The YouTubeChannel is the publisher in the publisher-subscriber relationship. It has a list of subscribers (observers).
+When the publisher (YouTubeChannel) changes its state (for example, when it uploads a video), it notifies all its registered subscribers about this change.
+
+Subscribers (Observers):
+The Subscriber class is the subscriber. Each subscriber registers (subscribes) to the publisher (YouTubeChannel) and receives notifications about changes from the publisher.
+
+The subscriber reacts to the notification by executing the Update() method.
+
+Example Analogy:
+Think of the YouTubeChannel as a publisher (like a news channel), and the Subscribers are people who subscribe to that news channel.
+
+Whenever the news channel (publisher) has a new broadcast (like uploading a new video), all the subscribers who are subscribed to the channel will receive the update.
+
+-------------------------------------CODE EG OWN---------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp6
+{
+    // ✅ PUBLISHER INTERFACE
+    // This interface defines the contract for the publisher (subject),
+    // allowing subscribers to subscribe, unsubscribe, and be notified.
+    public interface IPublisher
+    {
+        void Subscriber(ISubscriber obj);     // Method to add a subscriber
+        void UnSubscribe(ISubscriber obj);    // Method to remove a subscriber
+        void Notify(string msg);              // Method to notify all subscribers
+    }
+
+    // ✅ PUBLISHER CONCRETE CLASS
+    // 'YouTube' is the concrete implementation of the IPublisher interface.
+    // It maintains a list of subscribers and notifies them when a video is uploaded.
+    public class YouTube : IPublisher
+    {
+        // List to keep track of all subscribers
+        private List<ISubscriber> s = new List<ISubscriber>();
+
+        // Adds a new subscriber to the list
+        public void Subscriber(ISubscriber obj)
+        {
+            Console.WriteLine("✅ A new subscriber has been added.");
+            s.Add(obj);
+        }
+
+        // Removes an existing subscriber from the list
+        public void UnSubscribe(ISubscriber obj)
+        {
+            Console.WriteLine("❌ A subscriber has been removed.");
+            s.Remove(obj);
+        }
+
+        // Notifies all subscribers with a message
+        public void Notify(string msg)
+        {
+            foreach (var i in s)
+            {
+                i.SendNoti(msg);  // Calls the subscriber's notification handler
+            }
+        }
+
+        // Method to simulate video upload and notify all subscribers
+        public void UploadVideo(string title)
+        {
+            Console.WriteLine($"🎬 New video uploaded: {title}");
+            Notify($"📢 New Video Alert: {title}");  // Notify all subscribers
+        }
+    }
+
+    // ✅ SUBSCRIBER INTERFACE
+    // This interface defines the contract for subscribers
+    // All subscribers must implement this method to receive updates
+    public interface ISubscriber
+    {
+        void SendNoti(string message); // Method to handle incoming notifications
+    }
+
+    // ✅ CONCRETE SUBSCRIBER CLASS
+    // 'Person' class implements ISubscriber and defines how the subscriber reacts to notifications
+    public class Person : ISubscriber
+    {
+        public string Name { get; set; }
+
+        public Person(string name)
+        {
+            Name = name;
+        }
+
+        // Method that gets called when the publisher sends a notification
+        public void SendNoti(string msg)
+        {
+            Console.WriteLine($"📨 Notification to {Name}: {msg}");
+        }
+    }
+
+    // ✅ MAIN PROGRAM TO DEMONSTRATE THE OBSERVER PATTERN
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            // Create a publisher object (YouTube channel)
+            YouTube Ch1 = new YouTube();
+
+            // Create subscriber objects (People)
+            ISubscriber p1 = new Person("Bob");
+            ISubscriber p2 = new Person("Vishu");
+            ISubscriber p3 = new Person("Ishita");
+
+            // Subscribe all persons to the channel
+            Ch1.Subscriber(p1);
+            Ch1.Subscriber(p2);
+            Ch1.Subscriber(p3);
+
+            // Publisher uploads a video, all subscribers are notified
+            Ch1.UploadVideo("DDLJ UPLOADED");
+
+            // Remove one subscriber
+            Ch1.UnSubscribe(p1);
+
+            // Upload another video, only remaining subscribers are notified
+            Ch1.UploadVideo("SHOLAY UPLOADED");
+        }
+    }
+}
+
+
+✅ Explanation in Simple Points
+📌 What Is This Code About?
+🔷 This program simulates a YouTube channel (Publisher) and Users (Subscribers).
+🔷 Whenever a new video is uploaded, all subscribers are notified automatically.
+
+📌 How Observer Pattern is Implemented:
+🔷 1. Define Interfaces
+IPublisher: has methods to manage subscribers and send notifications.
+
+ISubscriber: has a method to receive a notification.
+
+🔷 2. Create Publisher Class (YouTube)
+Holds a list of subscribers.
+
+Implements methods to Subscribe, UnSubscribe, and Notify.
+
+🔷 3. Create Subscriber Class (Person)
+Implements ISubscriber.
+
+Has a SendNoti method to receive and display the notification.
+
+🔷 4. Connect in Main()
+Create a YouTube channel.
+
+Add multiple people as subscribers.
+
+Simulate video uploads, triggering notifications.
+
+Remove a subscriber and upload again to see that only remaining ones are notified.
+
+📌 Where is the Publisher-Subscriber Relationship?
+🔷 YouTube → Publisher (Subject)
+🔷 Person → Subscriber (Observer)
+🔷 Ch1.Subscriber(p1) → Bob subscribes to the channel (link created)
+🔷 UploadVideo(...) → YouTube notifies all linked subscribers
+

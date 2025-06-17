@@ -1,0 +1,751 @@
+----------SingleTone------
+
+🧠 Final Simple Visual
+
++----------------+
+|   Singleton    |
+|----------------|
+| + Instance     |
+| + GetInstance()|
+|----------------|
+| - Constructor()|
++----------------+
+        |
+        |
+        V
++-----------------+
+|    Shared By    |
+| Client A, B, C..|
++-----------------+
+
+
+
+1. 📖 What is the Singleton Pattern?
+Definition:
+The Singleton Design Pattern ensures that a class has only ONE instance and provides a global point of access to that instance.
+
+Purpose:
+Avoid creating multiple objects of the same class unnecessarily.
+Share common data (like configuration, logging, database connections) across different parts of the application.
+
+2. 🏢 Real-Life Analogy:
+Imagine a School Principal:
+There is only one principal in a school.
+All students, teachers, and staff access the same principal.
+If everyone could create their own "principal", it would create chaos.
+In the same way, Singleton makes sure only one instance exists.
+
+
+3. 📌 Key Characteristics of Singleton Pattern:
+
+Feature	Description
+Single Instance	Only one object is ever created.
+Global Access	Everyone accesses the same object.
+Lazy Initialization	The object is created when needed, not before.
+Thread Safety	In multi-threaded programs, ensure only one instance is created even if multiple threads access at once.
+
+
+
+4. 🛠️ Implementation Guidelines:
+Make the constructor private → to prevent external object creation.
+Create a static variable → to store the only instance.
+Provide a public static method → to return that instance.
+Optionally, make the class sealed → so no one can inherit and break Singleton
+
+
+🔥 Why Sealed Class?
+sealed prevents someone from inheriting the Singleton class.
+Without sealing, someone could create a subclass and create multiple instances → breaking Singleton
+-Becoz if someone inhirts the class, And creates the instance of the Child class, Then it will Create multiple objects becoz child class can ascess the properties of the Parent class
+-So make the SingleTone class As sealed
+
+
+8. 🛑 Problem: NOT Thread Safe
+If multiple threads try to access GetInstance() at the same time, it might accidentally create two objects.
+Solution: In real-world multi-threaded apps, you must make it thread-safe.
+(They said future articles will explain it.)
+
+
+✅ Full Summary Table
+
+Part	Description
+Private Constructor	Blocks object creation from outside
+Static Variable	Holds one single instance
+Public Static Method	Provides global access point
+Sealed Class	Prevents inheritance
+Lazy Initialization	Object created when needed
+Thread Safety	(Not yet implemented in this example)
+
+
+EG :
+using System;
+
+namespace SingletonDemo
+{
+    // The Singleton class is marked as 'sealed'
+    // Sealed prevents other classes from inheriting it and breaking Singleton behavior
+    public sealed class Singleton
+    {
+        // A private static variable to hold the single instance of the Singleton class
+        // 'static' so that it belongs to the class itself, not to any object
+        private static Singleton Instance = null;
+
+        // A private static counter to show how many times the constructor is called
+        // Just for demonstration purpose
+        private static int Counter = 0;
+
+        // Private Constructor
+        // 'private' keyword is used so that no one can create an object of Singleton class from outside
+        private Singleton()
+        {
+            Counter++; // Increment Counter when constructor is called
+            Console.WriteLine("Counter Value: " + Counter.ToString());
+        }
+
+        // Public Static Method to provide global access to the Singleton Instance
+        public static Singleton GetInstance()
+        {
+            // Check if Instance is null (i.e., object not yet created)
+            if (Instance == null)
+            {
+                Instance = new Singleton(); // Create the Singleton instance
+            }
+            // Return the created instance (or existing one)
+            return Instance;
+        }
+
+        // A normal public method to show that Singleton object can have regular behavior too
+        public void PrintDetails(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // First time calling GetInstance() - it will create the Singleton object
+            Singleton fromTeacher = Singleton.GetInstance();
+            fromTeacher.PrintDetails("Message from Teacher");
+
+            // Second time calling GetInstance() - it will NOT create a new object
+            // It will return the already created Singleton instance
+            Singleton fromStudent = Singleton.GetInstance();
+            fromStudent.PrintDetails("Message from Student");
+
+            // This proves both 'fromTeacher' and 'fromStudent' are using the SAME Singleton instance
+            Console.ReadLine(); // Keep console open
+        }
+    }
+}
+
+
+📖 Short Paragraph Explanation of the Above Code:
+In this program, we implemented the Singleton Design Pattern.
+We made the class sealed to prevent inheritance (so no child class can accidentally create multiple instances).
+The constructor is private, meaning no other class can create an object of this class directly using new.
+We created a static variable to hold the instance of the Singleton class.
+The GetInstance() method checks whether the instance is already created:
+
+If not, it creates it.
+
+Otherwise, it returns the already created object.
+
+Thus, whenever different parts of the program call GetInstance(), they all get the same Singleton object.
+The Counter proves that only one object is created even though we access it multiple times.
+
+
+🔥 Quick Why-Each-Keyword Table:
+
+Keyword	Purpose
+sealed	Prevents inheritance (important to protect Singleton rule).
+private constructor	Prevents object creation from outside the class.
+static variable	Stores single instance, shared across all callers.
+static method	Provides global access to the single instance.
+
+
+Visual Flow of Execution:
+Program Starts →
+Main() Calls Singleton.GetInstance() →
+Instance == null → Create New Singleton →
+Return Singleton →
+Second Call → Instance already exists → Return existing Singleton →
+Print Messages →
+Exit
+
+
+
+Why are Singleton Classes Sealed in C#?
+The following are the reasons why Singleton classes are often sealed in C#:
+
+-Preventing Inheritance: The Singleton pattern ensures that only one instance of a class exists throughout the application. If inheritance is allowed, a subclass can create additional instances, violating the Singleton Design Pattern. Making the class sealed ensures that no subclass can override methods or properties that could lead to additional instance creation.
+
+-Ensuring Singleton Integrity: By declaring the class sealed, we ensure the integrity of the Singleton instance. If the class was not sealed, a derived class could add new static members, introduce a new access point to the Singleton instance, or even create new instances independently of the original Singleton control mechanism.
+
+-Simplifying Thread Safety: Implementing thread safety in a Singleton can be challenging, especially in multi-threaded environments. Making the class sealed simplifies the synchronization logic, as we only need to consider the Singleton class itself and not any subclasses that might alter the behavior of the Singleton instance.
+
+-Optimization: The compiler can make certain optimizations, knowing that the class cannot be inherited. For example, method calls to members of a sealed class can sometimes be faster because the method dispatching process is simpler and can be more efficiently optimized during JIT (Just-In-Time) compilation.
+
+
+
+--------------------Lazy Loading vs Eager Loading---------------------
+
+EAGER LOADING :
+
+✅ Now, what is Eager Loading (Non-Lazy Loading)?
+-in Simple words, It means Creatring The SimgleTone object even without its need, and even without the class is called.
+-Eager Loading means creating the Singleton instance at the time the class is loaded — not when it's first needed.
+That means, as soon as the application starts and loads the class, the Singleton object is created and kept ready in memory.
+So, when any thread requests the Singleton object later, it’s already available — no delay, no checks required.
+
+
+⚡ Advantages of Eager Loading
+✅ Thread Safety Automatically:
+The .NET CLR (Common Language Runtime) automatically makes the static object thread-safe.
+No need to manually lock anything.
+✅ Immediate Availability:
+As soon as someone needs the object, it is ready instantly — no waiting.
+✅ Simplicity:
+The code becomes very simple, with no null-checking or thread-locking logic.
+
+🛑 Disadvantages
+❌ Memory Wastage (Sometimes):
+If your application never actually uses the Singleton object, you still have wasted memory by creating it.
+
+
+Eg :CODE FOR EGER LOADING (PAHALE HE LOAD KRNA SIGLETON OBJECT KO):
+using System;
+using System.Threading.Tasks; // Needed for Parallel.Invoke
+
+namespace SingletonDemo
+{
+    // Marking the Singleton class as 'sealed' to prevent inheritance
+    public sealed class Singleton
+    {
+        // 1️⃣ Static Readonly Instance
+        // At the time the class is loaded by CLR (Common Language Runtime), this instance is created immediately (Eager Loading)
+        private static readonly Singleton singleInstance = new Singleton();
+
+        // Counter just to check how many times constructor is called
+        private static int Counter = 0;
+
+        // 2️⃣ Private Constructor
+        // Prevents instantiation from outside classes
+        private Singleton()
+        {
+            // This block runs only once, when Singleton object is created
+            Counter++;
+            Console.WriteLine("Counter Value: " + Counter.ToString());
+        }
+
+        // 3️⃣ Public Static Method to provide global access point to Singleton instance
+        public static Singleton GetInstance()
+        {
+            // No need to check null condition, because instance is created at class load time
+            return singleInstance;
+        }
+
+        // Simple method to print a message
+        public void PrintDetails(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 4️⃣ Using Parallel.Invoke to simulate multiple threads accessing the Singleton
+            // Both methods will run in parallel (multi-threading)
+            Parallel.Invoke(
+                () => PrintTeacherDetails(),
+                () => PrintStudentDetails()
+            );
+
+            Console.ReadLine(); // Keep console open
+        }
+
+        private static void PrintTeacherDetails()
+        {
+            // Get Singleton Instance and call PrintDetails
+            Singleton singleton = Singleton.GetInstance();
+            singleton.PrintDetails("From Teacher");
+        }
+
+        private static void PrintStudentDetails()
+        {
+            // Get Singleton Instance and call PrintDetails
+            Singleton singleton = Singleton.GetInstance();
+            singleton.PrintDetails("From Student");
+        }
+    }
+}
+
+
+In this example, we eagerly created a single static instance of the Singleton class at the time of class loading.
+The private constructor ensures no external classes can create a new instance using new.
+The GetInstance() method simply returns the already available object.
+By using Parallel.Invoke(), we simulate multiple threads trying to access the Singleton instance simultaneously.
+Because of static readonly eager loading, no matter how many threads access it, only one instance is created, and only one "Counter Value: 1" is printed.
+
+🛑 Note:
+✅ This is Thread-Safe by nature because the instance is created before any thread access it.
+✅ No locks, no complex checks, and no performance issues.
+
+
+----------------LAZY LOADING -------------------------
+
+📚 Lazy Loading (Deferred Loading)
+1️⃣ What is Lazy Loading (Deferred Loading) in C#?
+Lazy Loading means:
+Delay the creation of an object until the first time it is needed.
+This saves memory and resources, especially if the object is heavy to create and not always used.
+
+🔵 Example of Lazy Loading Concept:
+Imagine you have a very large report in an application.
+Lazy loading means: Only when the user clicks "View Report", you generate the report.
+If the user never clicks, you never create the report ➔ Saving time and memory!
+
+
+2️⃣ When to use Lazy Loading?
+✅ If object creation is expensive (uses a lot of CPU/memory).
+✅ If the object might not even be needed.
+✅ If you want to improve application startup speed.
+✅ Useful when conditional execution (different flows might not use it).
+
+
+3️⃣ What is Lazy<T> in C#?
+Lazy<T> is a generic class introduced in .NET Framework 4.0.
+It automatically provides:
+Lazy initialization (only when needed).
+Thread-safety by default (safe for multi-threading).
+You don't have to write any extra code for locks or null checking.
+
+
+EG 1 : OF SINGLETONE PATTERN USING Lazy<T> class FOR LAZY LOADING
+using System;            // Import System namespace for Console and basic operations
+using System.Threading.Tasks; // Import for Parallel.Invoke (for multithreading demo)
+
+namespace SingletonDemo
+{
+    // "sealed" keyword is used so that no class can inherit from Singleton.
+    // This is important because if another class inherits, it could create multiple instances, violating Singleton.
+    public sealed class Singleton
+    {
+        // A counter to track how many times the constructor is called (i.e., how many instances are created).
+        private static int Counter = 0;
+
+        // Step 1: Lazy Loading of Singleton Instance
+        // "Lazy<T>" ensures the Singleton instance is created only when needed (i.e., first access).
+        // It also handles thread safety internally without needing manual locks.
+        private static readonly Lazy<Singleton> SingleInstance = 
+            new Lazy<Singleton>(() => new Singleton());
+
+        // Step 2: Private Constructor
+        // Making constructor "private" ensures no external class can create an instance of Singleton directly.
+        // Only the class itself can create an instance, and that too via Lazy<T>.
+        private Singleton()
+        {
+            Counter++; // Increment counter whenever constructor is called
+            Console.WriteLine("Counter Value: " + Counter.ToString());
+        }
+
+        // Step 3: Public Static Method to provide access to the Singleton instance
+        // The instance is created when "GetInstance()" is first called.
+        public static Singleton GetInstance()
+        {
+            // SingleInstance.Value will create the object the first time it is accessed.
+            // After that, it will simply return the already created instance.
+            return SingleInstance.Value;
+        }
+
+        // A simple method to print custom messages, demonstrating usage of Singleton object.
+        public void PrintDetails(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
+    // Main program class
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Parallel.Invoke will run two methods simultaneously (multithreading simulation)
+            Parallel.Invoke(
+                () => AccessSingletonFromTeacher(),
+                () => AccessSingletonFromStudent()
+            );
+
+            // This is to keep the console window open until a key is pressed
+            Console.ReadLine();
+        }
+
+        // Simulates one thread (e.g., Teacher) trying to access the Singleton instance
+        private static void AccessSingletonFromTeacher()
+        {
+            // Access the Singleton Instance
+            Singleton teacherInstance = Singleton.GetInstance();
+            teacherInstance.PrintDetails("Accessed from Teacher");
+        }
+
+        // Simulates another thread (e.g., Student) trying to access the Singleton instance
+        private static void AccessSingletonFromStudent()
+        {
+            // Access the Singleton Instance
+            Singleton studentInstance = Singleton.GetInstance();
+            studentInstance.PrintDetails("Accessed from Student");
+        }
+    }
+}
+
+
+EG 2: of lazy laoding without using the Lazy<T> Genric class, Normal code of Singletone pattern is lazy loading only without using Lazy<T> genric class
+
+using System;
+
+namespace SimpleSingletonDemo
+{
+    // Sealed class to prevent inheritance
+    public sealed class Singleton
+    {
+        // Static variable to hold the single instance (but not created yet)
+        private static Singleton instance = null;
+
+        // A simple counter to show constructor is called only once
+        private static int counter = 0;
+
+        // Private constructor so external classes can't create objects
+        private Singleton()
+        {
+            counter++;
+            Console.WriteLine("Constructor called. Counter: " + counter);
+        }
+
+        // Public static method to provide access to the instance
+        public static Singleton GetInstance()
+        {
+            // Lazy Loading: Create object only when it's accessed for the first time
+            if (instance == null)
+            {
+                instance = new Singleton();
+            }
+            return instance;
+        }
+
+        // A method to demonstrate object usage
+        public void ShowMessage(string message)
+        {
+            Console.WriteLine("Message: " + message);
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Singleton instance is NOT created yet
+
+            // First call: object is created here (lazy loaded)
+            Singleton obj1 = Singleton.GetInstance();
+            obj1.ShowMessage("Hello from obj1!");
+
+            // Second call: same object is returned (not created again)
+            Singleton obj2 = Singleton.GetInstance();
+            obj2.ShowMessage("Hello from obj2!");
+
+            // Check if both references point to the same instance
+            Console.WriteLine(Object.ReferenceEquals(obj1, obj2) ? "Same Instance" : "Different Instances");
+
+            Console.ReadLine();
+        }
+    }
+}
+
+💡 Output:
+Constructor called. Counter: 1
+Message: Hello from obj1!
+Message: Hello from obj2!
+Same Instance
+
+
+
+✅ Key Points:
+
+Concept			Explanation
+sealed	Prevents other classes from inheriting and creating their own instances.
+private constructor	Prevents external classes from directly using new Singleton().
+static Singleton instance = null	Holds the one instance of the class; initially null.
+GetInstance() method	Only creates the instance when it is accessed for the first time.
+instance == null check	Ensures lazy initialization (created only when needed).
+
+
+🎯 What this Code Does — Step-by-Step Explanation
+Singleton Class:
+The class Singleton is sealed (no one can inherit and make multiple instances).
+It has a private constructor, so nobody outside the class can create an object.
+It uses a static readonly Lazy<Singleton> to defer the creation of the instance until the first time it's accessed (Lazy Loading)
+Lazy<T> automatically handles thread safety and single object creation.
+
+Main Program:
+Two methods AccessSingletonFromTeacher() and AccessSingletonFromStudent() are run simultaneously using Parallel.Invoke.
+Both methods try to get the Singleton instance.
+Only one instance is created, and both methods use that same instance.
+You will see "Counter Value: 1" printed only once because only one object is created.
+
+
+6️⃣ Comparison: Lazy Loading vs Eager Loading
+
+Feature				Lazy Loading (Deferred)						Eager Loading (Immediate)
+Creation Time			Created when needed (first access)			Created at application start (class loading)
+Resource Saving		Saves resources if object never needed			Consumes resources even if not needed
+Startup Time			Faster startup time							Startup may be slower
+Thread-Safety			Provided by Lazy<T> automatically			Achieved because instance created at start
+Usage				Heavy/rarely-used objects					Always-used objects
+
+
+7️⃣ When Should You Choose Lazy Loading?
+Use Lazy Loading when:
+✅ Your object is expensive to create (big reports, large datasets).
+✅ Object might not always be needed.
+✅ You want a faster startup (e.g., desktop apps).
+✅ You have conditional initialization (different app flows).
+
+
+8️⃣ When Should You Choose Eager Loading?
+Use Eager Loading when:
+✅ Your object is always needed immediately after app starts.
+✅ You want simpler code without worrying about when initialization happens.
+✅ In performance-critical paths where you don't want any delay accessing the Singleton.
+
+
+----------------------THREAD SAFE SINGLETONE-------------------
+
+❌ Problem with Non-Thread-Safe Singleton
+🔥 Issue:
+If multiple threads access the GetInstance() method at the same time before the instance is created, each might create its own object. This breaks the Singleton rule.
+
+🧪 Example: Of non Thread Safe(witout using lock keyword and block)
+using System;
+using System.Threading.Tasks; // Required for Parallel.Invoke()
+
+namespace SingletonDemo
+{
+    // Applying Singleton Pattern (but this is a non-thread-safe version)
+    public sealed class Singleton
+    {
+        // Counter to check how many times the constructor is called
+        private static int Counter = 0;
+
+        // The Singleton instance variable
+        private static Singleton Instance = null;
+
+        // Private Constructor: So that no one can create object from outside
+        private Singleton()
+        {
+            Counter++;
+            Console.WriteLine("Counter: " + Counter);
+        }
+
+        // Public method to provide access to the Singleton instance
+        public static Singleton GetInstance()
+        {
+            // ❗Problem: This is not thread-safe!
+            if (Instance == null)
+            {
+                // If two threads come here at the same time, both will create new instances
+                Instance = new Singleton();
+            }
+            return Instance;
+        }
+
+        // Simple method to print a message
+        public void PrintDetails(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Parallel.Invoke will call two methods simultaneously using different threads
+            Parallel.Invoke(
+                () => PrintTeacherDetails(), // Assume Thread-1
+                () => PrintStudentDetails()  // Assume Thread-2
+            );
+
+            Console.ReadLine();
+        }
+
+        private static void PrintTeacherDetails()
+        {
+            // Thread-1 accessing GetInstance
+            Singleton fromTeacher = Singleton.GetInstance();
+            fromTeacher.PrintDetails("From Teacher");
+        }
+
+        private static void PrintStudentDetails()
+        {
+            // Thread-2 accessing GetInstance
+            Singleton fromStudent = Singleton.GetInstance();
+            fromStudent.PrintDetails("From Student");
+        }
+    }
+}
+
+OUTPUT
+Counter: 1
+Counter: 2 
+From Teacher
+From Student //Counter value is 2, this means that 2 instance have been created, Becoz the private constructor have been caleed 2 time, so for object creation only constructir is need, so 2 calls to the private constructor shows that 2 objects in the class have been created becoz of multiple threads.
+// Violation: Two instances created — Singleton rule broken!
+
+
+🧠 Explanation of the Code:
+Part						Explanation
+private static Singleton Instance = null;	Singleton instance is created only when needed (Lazy loading), but no thread safety
+private Singleton()				Private constructor ensures that no object can be created from outside the class
+GetInstance()					Returns the single instance if already created, otherwise creates a new one
+Parallel.Invoke()				Starts two threads simultaneously, each thread calls GetInstance()
+PrintTeacherDetails() and PrintStudentDetails()	Each method represents different threads trying to access the Singleton
+
+
+⚡ How Threads Break the Singleton:
+Suppose Thread-1 and Thread-2 both enter the GetInstance() method at the same time.
+Both check if (Instance == null) ➔ True for both (because no instance exists yet).
+Then both execute Instance = new Singleton();.
+So, TWO different Singleton objects get created!
+Counter will show Counter: 1 and Counter: 2, proving two objects created.
+
+
+🔄 What is Lazy Initialization?
+Lazy Initialization: The Singleton object is not created until it is needed (i.e., on first call).
+Helps reduce resource usage if the object is heavy and not always used.
+EG:
+public static Singleton GetInstance()
+{
+    if (Instance == null)
+    {
+        Instance = new Singleton(); // Created only when needed
+    }
+    return Instance;
+}
+
+
+✅ Thread-Safe Singleton Using lock
+Use a lock to synchronize access so only one thread can create the instance.
+EG : Of Thread Safe singleton Pattern code(using Lock Block)
+using System;
+using System.Threading.Tasks; // Required for Parallel.Invoke()
+
+namespace SingletonDemo
+{
+    // Implementing Singleton Pattern (Thread-Safe Version using Lock)
+    public sealed class Singleton
+    {
+        // Singleton Instance (Initially null)
+        private static Singleton Instance = null;
+
+        // Lock object for synchronizing threads
+        private static readonly object Instancelock = new object();
+
+        // Counter to check how many times constructor is called
+        private static int Counter = 0;
+
+        // Private Constructor to prevent object creation from outside
+        private Singleton()
+        {
+            Counter++;
+            Console.WriteLine("Counter: " + Counter);
+        }
+
+        // Public method to provide access to Singleton instance
+        public static Singleton GetInstance()
+        {
+            // Locking the critical section
+            lock (Instancelock)
+            {
+                // Check again inside the lock to ensure only one instance created
+                if (Instance == null)
+                {
+                    Instance = new Singleton();
+                }
+            }
+            return Instance;
+        }
+
+        // A sample method that can be called from Singleton instance
+        public void PrintDetails(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Using Parallel.Invoke to simulate multiple threads accessing Singleton at same time
+            Parallel.Invoke(
+                () => PrintTeacherDetails(), // Assume Thread-1
+                () => PrintStudentDetails()  // Assume Thread-2
+            );
+
+            Console.ReadLine();
+        }
+
+        private static void PrintTeacherDetails()
+        {
+            // Thread-1 accessing Singleton instance
+            Singleton fromTeacher = Singleton.GetInstance();
+            fromTeacher.PrintDetails("From Teacher");
+        }
+
+        private static void PrintStudentDetails()
+        {
+            // Thread-2 accessing Singleton instance
+            Singleton fromStudent = Singleton.GetInstance();
+            fromStudent.PrintDetails("From Student");
+        }
+    }
+}
+
+✅ Output (Multithreaded):
+Counter: 1 //✅ Only one instance created — Thread-Safe!
+From Teacher
+From Student
+
+
+🧠 Full Explanation:
+
+Part	Explanation
+private static Singleton Instance = null;	Singleton instance, created only once
+private static readonly object Instancelock = new object();	Special object used to synchronize thread access
+private Singleton()	Private constructor ensures no external instantiation
+lock (Instancelock)	Critical section lock: only one thread at a time can enter here
+if (Instance == null) inside lock	Double-check if the instance still doesn't exist
+Parallel.Invoke()	Creates two separate threads trying to access Singleton at the same time
+PrintTeacherDetails() and PrintStudentDetails()	Each thread tries to get the Singleton instance
+
+
+🔒 How Lock Works to Prevent Multiple Instance Creation:
+If Thread-1 reaches lock (Instancelock) first, it locks the critical section.
+Thread-2 is forced to wait until Thread-1 finishes inside the lock block.
+Thread-1 checks if (Instance == null) ➔ true, so it creates the Singleton object.
+Now when Thread-2 enters the lock, it checks if (Instance == null) ➔ false (already created by Thread-1), so no new object is created.
+Thus, only ONE Singleton object is ever created, no matter how many threads try to access it at the same time.
+
+
+🧠 Why is lock Important?
+Prevents race conditions.
+Ensures only one thread creates the instance.
+Other threads wait until the lock is released.
+
+
+⚠ Drawback of Locking:
+Locking makes GetInstance() slightly slower because only one thread can access it at a time.
+

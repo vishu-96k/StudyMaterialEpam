@@ -1,0 +1,57 @@
+------ENUM-----
+
+syteax : modifier Enum <name> 
+	{
+	// list
+	}
+
+eg : console.color is an enum
+use case : when uh have a list of supported values and uh want that uer should enter only the values form that list, and to show the user the list contains uh can create a Enum
+
+Enum is used to give specifics option to users, userbshould not enter any value other then the values mentioned in the Enum , so uh can use Enum to guid the user to choose values from a specific list
+
+for eg : if uh want that user should choose a day from the weeks, but the days he should choose must be only the bussness days (excluding sun and sat)
+
+eg : develop a application, in that application there is an option to select a week day , the user should be only able to choose the bunisess days,but when uh say enter the day user can enter any day from the week. so to guid the user to select a specific day from the num 
+
+even the Enum contains the named constat values , but these values are indexed internally bydefault, uh can also mention any interger value in front of the Enum values. The indexeing by default is from 0
+
+Enum and structure are Value type
+
+A Enum is a user defined type, (value type DT) so its always better to define the Enum directly uinder the namespace, but its also possible to define the Enum inside the class or in a structure
+
+eg : Days d = (Days)3  // it will give Thursday to uh, this is called type casting into Enum value as the Enum contains the int values also
+
+eg :	Days d1 = Days.Monday
+	CWL ("the day is " + d);
+	CWL ("trhe day number is " +(int)d) //  it will print the 0 number 
+
+Enum class: there is a Enum class which is base calss for all the Enums uh create so y deaflu all Enums has some default properties and methods
+
+Enum.getNames(passTheEnumName) = returns a string array of enums names
+Enum.getValues(typeof Days) = returns all the indices values of the Enum values 
+
+public Enum Days
+{
+	Monday
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+}
+
+foreach(int i in Enum.GetValues(typeof(days))) // uh will get the int value of all the Enum values
+
+foreach(int i in Enum.GetNames(typeof(days))) // uh will get the string value of all the Enum values
+
+syntax : modifier Enum <name> :<DType>
+{
+// list of named constants values
+}
+
+the supported options are for Dtype : byte, short , int , long, all other interger types are supported, but then the default values for that will be the dtype uh passed
+
+
+so in Enum it will allow user to only gives the specified values in that num, no other value can be assigned to the Enum valriable 
+
+When uh want to define a property or method with only a set of values to choose from, then first define and Enum and use that Enum as a type 

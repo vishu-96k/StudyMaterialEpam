@@ -1,0 +1,330 @@
+ASP .NET Core 4---
+------------------------------------
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+-✅[#1] : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords defination
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : FILE STRUCTURE📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] ASP.NET Core LaunchSettings.json File
+
+📌What is launchSettings.json?
+-The most important point you need to remember is that this launchSettings.json file is only used within the local development machine not in production or deployment phase.
+-The launchSettings.json file is a configuration file used only during development in ASP.NET Core applications. It controls how your application starts when you run it from:
+Visual Studio
+Visual Studio Code
+.NET CLI (dotnet run)
+-It does not affect production deployment—it's only for local dev environments.
+-If you have certain settings and want your application to use such settings when you publish and deploy your Application to the Production Server, then you need to store such settings in the appsettings.json file. Generally, in the ASP.NET Core application, the application-level configuration settings will be stored in the appsettings.json file.
+
+📁 Where is it located?
+You can find launchSettings.json inside the: Properties folder.
+
+📌What does launchSettings.json do?
+It contains launch profiles, which define:
+How the application should be started
+What URLs to listen on
+Which environment to use (Development, Staging, or Production)
+Whether to open a browser automatically
+Which web server to use (Kestrel, IIS Express, etc.)
+-This makes it easy for you to switch between configurations (like testing with different environments) without changing your actual application code.
+
+EG :
+📁Properties/launchSettings.json
+👇 Code:
+{
+  // Schema reference for tooling support
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+
+  // Settings specific to IIS Express (used when launching the project via IIS Express)
+  "iisSettings": {
+    // Disables Windows authentication
+    "windowsAuthentication": false,
+
+    // Enables anonymous access to the application
+    "anonymousAuthentication": true,
+
+    // Configuration for IIS Express
+    "iisExpress": {
+      // Default URL to launch the app in IIS Express
+      "applicationUrl": "http://localhost:53952",
+
+      // SSL port used for HTTPS access in IIS Express
+      "sslPort": 44312
+    }
+  },
+
+  // Defines different launch profiles (ways you can run the project)
+  "profiles": {
+    // First profile: "http"
+    "http": {
+      // Tells dotnet CLI to run the project itself (not via IIS Express)
+      "commandName": "Project",
+
+      // Enables console messages like: "Now listening on..."
+      "dotnetRunMessages": true,
+
+      // Automatically opens the browser when the app starts
+      "launchBrowser": true,
+
+      // The base URL the app will listen on when run using this profile
+      "applicationUrl": "http://localhost:5066",
+
+      // Sets environment variables — in this case, sets the environment to Development
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+
+    // Second profile: "https"
+    "https": {
+      // Same as the above — run via dotnet CLI
+      "commandName": "Project",
+
+      // Show .NET run messages
+      "dotnetRunMessages": true,
+
+      // Launches browser on start
+      "launchBrowser": true,
+
+      // Allows both HTTP and HTTPS access (separated by `;`)
+      "applicationUrl": "https://localhost:7107;http://localhost:5066",
+
+      // Set environment to Development
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+
+    // Third profile: "IIS Express"
+    "IIS Express": {
+      // Launches using IIS Express (typically used in Visual Studio)
+      "commandName": "IISExpress",
+
+      // Opens browser automatically
+      "launchBrowser": true,
+
+      // Environment variable setting for this profile
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+
+
+🔍 Summary of Key Concepts
+| Setting                  | Description                                                        |
+| ------------------------ | ------------------------------------------------------------------ |
+| `commandName`            | Determines how the app is launched (`Project`, `IISExpress`, etc.) |
+| `applicationUrl`         | Sets which URLs the app will listen on                             |
+| `launchBrowser`          | If `true`, automatically opens the app in your default browser     |
+| `dotnetRunMessages`      | Shows detailed messages when running via `dotnet run`              |
+| `ASPNETCORE_ENVIRONMENT` | Sets the environment (e.g., Development, Staging, Production)      |
+| `iisSettings`            | Used for IIS Express (mostly with Visual Studio)                   |
+
+
+📌 What is a Launch Profile?
+-Each section under "profiles" in launchSettings.json is a launch profile. Think of profiles as named configurations for starting your application in different ways.
+- Profiles can specify settings like the application URL, environment variables, whether to launch the browser, and more. By default, it comes with the following three profiles:
+
+1)HTTP Launch Profile(Kestrel Server):
+-When we use the HTTP profile to launch our application, then Kestrel is the only Web Server that is going to host the application and process the incoming HTTP requests. Here, there will be no In-Process or Out-Of-Process hosting model.
+-If you look at the launchSettings.json file, then you will see that the HTTP profile uses the commandName as Project (project means Kestrel Web Server), and also, please focus on the application URL of the HTTP profile. 
+-URL is http://localhost:5066, and the port number might vary in your case, when uh run the application using the Kestrel only (CLI or profiles), Then port number is visible
+
+NOTE :
+ Port number is shown only when you run using Kestrel directly, such as with dotnet run, not when running through IIS or IIS Express.
+
+-The HTTP profile runs the application over HTTP without HTTPS and bypasses IIS Express.
+📁Properties/launchSettings.json
+👇 Code:
+"http": {
+  "commandName": "Project",
+  "dotnetRunMessages": true,
+  "launchBrowser": true,
+  "applicationUrl": "http://localhost:5066",
+  "environmentVariables": {
+    "ASPNETCORE_ENVIRONMENT": "Development"
+  }
+}
+
+
+commandName: “Project” – This indicates that the application should be run directly using the Kestrel server (bypassing IIS/IIS Express).
+launchBrowser: true – If true, the browser will automatically open at the application root URL when the project starts. If false, the browser will not be opened.
+environmentVariables – These are used to set environment variables that are essential during the development phase. For example, the ASPNETCORE_ENVIRONMENT variable can be set to Development, Staging, or Production to simulate different environments on your development machine.
+dotnetRunMessages: true – This enables additional messages to be displayed when the project is built and run using the .NET CLI.
+applicationUrl – Specifies the URL for accessing the application here “http://localhost:5066”.
+
+2)HTTPS Launch Profile:
+-when we use the HTTPS profile to launch the application, Kestrel is the only Web Server that will host the application and process the incoming HTTP requests.
+-If you look at the launchSettings.json file, for the HTTPS profile, it uses two URLs (https://localhost:7107; http://localhost:5066) separated by comma. That means, with this profile, we can access the application using both HTTP and HTTPS protocols.
+
+-Similar to the “http” profile, it includes configurations for both HTTP and HTTPS protocols.
+📁Properties/launchSettings.json
+👇 Code:
+"https": {
+  "commandName": "Project",
+  "dotnetRunMessages": true,
+  "launchBrowser": true,
+  "applicationUrl": "https://localhost:7107;http://localhost:5066",
+  "environmentVariables": {
+    "ASPNETCORE_ENVIRONMENT": "Development"
+  }
+}
+
+applicationUrl: “https://localhost:7107;http://localhost:5066” – This means the application will listen on both HTTP (http://localhost:5066) and HTTPS (https://localhost:7107). HTTPS is preferred for secure communication.
+
+
+3)IIS Express Launch Profile:
+CASE : InProcess Hosting model
+-If we use the IISExpress profile and set the hosting model to InProcess, IIS Express is the only web server to host the application and handle the incoming HTTP requests.
+-run the application using the IIS Express profile. You will observe one thing: no command prompt is opened (as Kestrel Web Server is not used). In this case, IIS Express is the only Web Server that hosts and handles the incoming HTTP requests.
+The IIS Express profile runs the application using IIS Express, a lightweight version of IIS for development environments.
+
+CASE : Out Process Hosting Model
+-If we use the IISExpress profile and set the hosting model as OutofProcess, ASP.NET Core uses IIS Express as the External Web Server, which will host the application, and Kestrel as the Internal Web Server, which will execute our application code.
+-In this case, the External Web Server, i.e., IIS Express, will receive the incoming HTTP Requests from the client and then forward that request to the Internal Web Server, i.e., Kestrel, which will process the request. SO uh will see no port number in this case.
+
+📁Properties/launchSettings.json
+👇 Code:
+
+"IIS Express": {
+  "commandName": "IISExpress",
+  "launchBrowser": true,
+  "environmentVariables": {
+    "ASPNETCORE_ENVIRONMENT": "Development"
+  }
+}
+
+ The IIS Express profile allows testing of how the application behaves in an IIS-hosted environment without deploying it on a full IIS server.
+commandName: “IISExpress” – This indicates that the application will run under IIS Express, a lightweight, self-contained version of IIS that is optimized for the development environment.
+launchBrowser: true – Automatically opens the browser to the application URL when the project starts, similar to other profiles.
+environmentVariables – Sets ASPNETCORE_ENVIRONMENT to “Development”.
+
+-Profiles Usage: Each profile can be selected when running the application, allowing developers to test the application in different environments (e.g., with HTTP, HTTPS, or under IIS Express)
+
+📌IIS Settings
+-These settings are specific to IIS Express and affect how the application runs when using the IIS Express profile.
+📁Properties/launchSettings.json
+👇 Code:
+
+"iisSettings": {
+  "windowsAuthentication": false,
+  "anonymousAuthentication": true,
+  "iisExpress": {
+    "applicationUrl": "http://localhost:53952",
+    "sslPort": 44312
+  }
+}
+
+🔍 Explanation:
+windowsAuthentication: false → No Windows login is required.
+anonymousAuthentication: true → Anyone can access the app without login.
+applicationUrl → HTTP base address for IIS Express (used internally).
+sslPort: 44312 → SSL port used for HTTPS. Final HTTPS URL: https://localhost:44312.
+
+
+📌Global Settings
+📁Properties/launchSettings.json
+👇 Code:
+"$schema": "http://json.schemastore.org/launchsettings.json"
+-Tells Visual Studio or other editors to use JSON schema validation, helping with auto-complete, hints, and validation for this file.
+
+📌Environment Variables SETTINGS:
+📁Properties/launchSettings.json
+👇 Code:
+"environmentVariables": {
+  "ASPNETCORE_ENVIRONMENT": "Development"
+}
+
+This is how you simulate how your app behaves under different environments like:
+Development
+Staging
+Production
+
+-The ASPNETCORE_ENVIRONMENT environment variable is crucial for running your application in different environments (e.g., Development, Staging, Production). Depending on the value of this variable, different configurations are loaded (such as connection strings, logging settings, etc.).
+
+
+📌MAIN method
+- modify the Program class, as shown below, to display the name of the worker process that will process the request in the browser window.
+
+📁Program.cs
+👇 Code:
+namespace FirstCoreWebApplication
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+            var app = builder.Build();
+
+            app.MapGet("/", () => $"Worker Process Name : {System.Diagnostics.Process.GetCurrentProcess().ProcessName}");
+
+            app.Run();
+        }
+    }
+}
+
+----------✅[#2] ASP.NET Core AppSettings.json File--------------
+
+✅[#2] ASP.NET Core AppSettings.json File
+
+📌What is appsettings.json in ASP.NET Core?
+-It is also used for configurations setting, But these seetings are requrred in the Delpoyment phase also, Like when we deploy the web app on cloud.
+-If you have worked with earlier versions of ASP.NET, you may be familiar with the web.config file, which was used to store application configuration settings such as database connection strings, API keys, logging details, and global variables.
+-In ASP.NET Core, we don’t have a web.config file. We have AppSettings.Json file
+
+-In ASP.NET Core, the appsettings.json file is the primary file used to store configuration settings such as:
+Database connection strings
+API keys
+Logging behavior
+Global app settings
+URLs for external services
+Environment-specific behaviors
+
+-Unlike older ASP.NET projects (which used web.config), ASP.NET Core is built to support multiple configuration sources with flexibility and modularity.
+
+🏗️ Structure of appsettings.json
+It's a JSON file located at the root of your project.
+
+📁Properties/appSettings.josn file
+👇 Code:
+{
+  // The 'Logging' section is used to configure logging behavior for the application.
+  "Logging": {
+    "LogLevel": {
+      // 'Default' sets the default logging level for all categories
+      // "Information" means logs with levels Information, Warning, Error, and Critical will be captured.
+      "Default": "Information",
+
+      // This specifically overrides the log level for the Microsoft.AspNetCore namespace.
+      // "Warning" means only Warning, Error, and Critical level logs from ASP.NET Core framework will be shown.
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+
+  // 'AllowedHosts' is used for host filtering.
+  // The asterisk "*" allows requests from any host/domain. 
+  // For production, you can replace it with a comma-separated list of allowed domains (e.g., "example.com,localhost").
+  "AllowedHosts": "*",
+
+  // 'MyCustomKey' is a user-defined key.
+  // You can add any custom configuration here for your application to use.
+  // This is often used for storing settings like API keys, feature toggles, or global values.
+  "MyCustomKey": "MyCustomKey Value coming from appsettings.json"
+}
+

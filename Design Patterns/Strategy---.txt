@@ -1,0 +1,247 @@
+----------------Strategy Desing Pattern--------------
+
+✅ Behavioral design pattern.
+-Starategy design pattern is a type of behaviorial design pattern.
+Behavioral design patterns are design patterns that focus on how objects communicate and interact with each other. These patterns define how responsibilities are distributed among objects and how objects cooperate. They help make complex behaviors manageable and extensible.
+
+🔄 Real-Life Analogy
+Scenario: A Restaurant Waiter System
+Waiter takes an order from the customer.
+The waiter does not cook the food but forwards the request to the kitchen (Chef).
+The waiter is responsible for delivering messages and responding to actions.
+This interaction reflects behavioral design patterns:
+Objects (Customer, Waiter, Chef) collaborate but don't tightly couple.
+Each participant has a specific role in the communication process.
+
+
+✅ Strategy Design Pattern
+-Its a behaviorial design pattern.
+Purpose: Allows selecting an algorithm at runtime.
+Real-life analogy:
+A GPS navigation app that allows choosing the fastest route, shortest route, or scenic route.
+
+DEFINATION : It allows you to define a family of algorithms, encapsulate each one, and make them interchangeable. This pattern is useful when you want to vary an algorithm's behavior dynamically at runtime.
+🔷 It belongs to the Behavioral Design Patterns category.
+🔷 It enables selecting an algorithm’s behavior at runtime.
+🔷 Instead of implementing one algorithm directly, multiple algorithms are created and the client chooses one dynamically.
+
+MEANING : 
+🔍 1. “Define a family of algorithms”
+This means you have multiple ways of doing the same task.
+Each way is a different strategy or algorithm, but they all solve the same kind of problem.
+🧠 Real-life Analogy: Payment Methods
+Imagine you go to a store and want to pay for your items. You have:
+Cash
+Credit Card
+Digital Wallet (like Google Pay or Apple Pay)
+All of these are ways to pay — i.e., they form a family of algorithms (different strategies for the same task).
+
+
+🔐 2. “Encapsulate each one”
+This means that each algorithm or strategy is packaged into its own class, independent of others.
+🧠 Real-life Analogy: Payment Handlers
+You don’t want to put all the logic of cash, card, and wallet payments in one method with long if-else or switch statements.
+Instead, you create separate classes:
+CashPaymentHandler
+CreditCardPaymentHandler
+WalletPaymentHandler
+Each class knows only how to handle its own payment method. This keeps things clean and modular.
+
+
+🔁 3. “Make them interchangeable”
+This means that at runtime, you can switch the algorithm being used without changing the code that uses it.
+🧠 Real-life Analogy: Checkout System
+Let’s say you have a Checkout system in the store. It doesn’t care how the payment is done — it just uses a PaymentStrategy interface and asks the current strategy to Pay().
+So:
+If the customer selects credit card, the system uses CreditCardPaymentHandler.
+If the next customer selects wallet, it switches to WalletPaymentHandler.
+The Checkout system remains unchanged. You’re simply plugging in a different strategy at runtime.
+
+
+✅ Summary in One Line
+The Strategy Pattern lets you choose from a group of similar ways (strategies) to perform a task, encapsulate each way in its own class, and switch between them freely at runtime without touching the core system logic.
+
+
+✅ 📌 Strategy Pattern Components (UML)
+Component		Description						Example in C#
+Strategy		Interface that defines the algorithm behavior		ICompression
+ConcreteStrategy	Implements different versions of the algorithm		ZipCompression, RarCompression
+Context			Uses a Strategy object to execute the algorithm		CompressionContext
+
+
+
+EG :
+using System;
+
+#region Strategy Interface
+
+// ✅ Strategy Interface
+// This interface defines a common behavior (Pay) that all payment strategies will implement.
+// This is the core of the Strategy Pattern — all strategies must follow this contract.
+public interface IPaymentStrategy
+{
+    void Pay(decimal amount);
+}
+
+#endregion
+
+#region Concrete Strategies
+
+// ✅ Concrete Strategy: Credit Card
+// This class implements the IPaymentStrategy with logic for credit card payment.
+public class CreditCardPayment : IPaymentStrategy
+{
+    public void Pay(decimal amount)
+    {
+        Console.WriteLine($"Paid {amount:C} using Credit Card.");
+    }
+}
+
+// ✅ Concrete Strategy: PayPal
+// This class implements the IPaymentStrategy with logic for PayPal payment.
+public class PayPalPayment : IPaymentStrategy
+{
+    public void Pay(decimal amount)
+    {
+        Console.WriteLine($"Paid {amount:C} using PayPal.");
+    }
+}
+
+// ✅ Concrete Strategy: Bitcoin
+// This class implements the IPaymentStrategy with logic for Bitcoin payment.
+public class BitcoinPayment : IPaymentStrategy
+{
+    public void Pay(decimal amount)
+    {
+        Console.WriteLine($"Paid {amount:C} using Bitcoin.");
+    }
+}
+
+#endregion
+
+#region Context Class
+
+// ✅ Context Class
+// This class contains a reference to a Strategy object (IPaymentStrategy).
+// The strategy can be changed at runtime using SetPaymentStrategy method.
+// This class delegates the payment task to the current strategy object.
+public class PaymentContext
+{
+    // 🔷 Reference to the current payment strategy (composition)
+    private IPaymentStrategy _paymentStrategy;
+
+    // 🔷 Allows setting/changing the payment strategy at runtime
+    public void SetPaymentStrategy(IPaymentStrategy strategy)
+    {
+        _paymentStrategy = strategy;
+    }
+
+    // 🔷 Executes payment using the currently set strategy
+    public void PayAmount(decimal amount)
+    {
+        if (_paymentStrategy == null)
+        {
+            Console.WriteLine("Payment strategy not set!");
+            return;
+        }
+
+        _paymentStrategy.Pay(amount);
+    }
+}
+
+#endregion
+
+#region Client Code
+
+// ✅ Client Code (Main Method)
+// This demonstrates how the Strategy Pattern works.
+// The PaymentContext delegates behavior to the selected strategy object.
+class Program
+{
+    static void Main()
+    {
+        // 🔷 Create a context
+        PaymentContext context = new PaymentContext();
+
+        // 🔷 Use CreditCardPayment strategy
+        context.SetPaymentStrategy(new CreditCardPayment());
+        context.PayAmount(1500); // Delegates to CreditCardPayment.Pay()
+
+        // 🔷 Use PayPalPayment strategy
+        context.SetPaymentStrategy(new PayPalPayment());
+        context.PayAmount(800); // Delegates to PayPalPayment.Pay()
+
+        // 🔷 Use BitcoinPayment strategy
+        context.SetPaymentStrategy(new BitcoinPayment());
+        context.PayAmount(300); // Delegates to BitcoinPayment.Pay()
+    }
+}
+
+#endregion
+
+
+✅ Summary of How Strategy Pattern is Applied:
+🔷 IPaymentStrategy is the strategy interface that defines the payment behavior.
+🔷 CreditCardPayment, PayPalPayment, and BitcoinPayment are concrete strategies — each provides its own implementation of the Pay method.
+🔷 PaymentContext is the context class that holds a reference to a IPaymentStrategy.
+🔷 The client code (Main) dynamically changes the payment strategy at runtime without altering the PaymentContext logic.
+
+
+
+
+✅ Steps to Implement Strategy Design Pattern
+
+📌 Step 1: Identify the behavior that varies
+🔷 Find the part of the code where different algorithms or logic can be applied interchangeably (e.g., different payment methods).
+
+
+📌 Step 2: Define a Strategy Interface
+🔷 Create an interface that declares a method (e.g., Pay) to be implemented by all algorithms.
+🔷 This interface represents the common behavior contract.
+EG:
+public interface IPaymentStrategy
+{
+    void Pay(decimal amount);
+}
+
+
+
+📌 Step 3: Create Concrete Strategy Classes
+🔷 Implement the interface in multiple classes, each representing a different algorithm or behavior.
+🔷 Each class provides a specific implementation of the method.
+EG :
+public class CreditCardPayment : IPaymentStrategy { /* Pay logic */ }
+public class PayPalPayment : IPaymentStrategy { /* Pay logic */ }
+
+
+📌 Step 4: Create the Context Class
+🔷 This class contains a reference to the strategy interface (composition).
+🔷 It provides a method to set/change the strategy dynamically (SetPaymentStrategy).
+🔷 It delegates the behavior to the current strategy (PayAmount).
+EG:
+public class PaymentContext
+{
+    private IPaymentStrategy _paymentStrategy;
+    public void SetPaymentStrategy(IPaymentStrategy strategy) { _paymentStrategy = strategy; }
+    public void PayAmount(decimal amount) { _paymentStrategy.Pay(amount); }
+}
+
+
+
+📌 Step 5: Use the Context and Strategy in Client Code
+🔷 Create the context object.
+🔷 Set different strategy implementations based on user input or runtime condition.
+🔷 Call the method that uses the strategy.
+EG:
+var context = new PaymentContext();
+context.SetPaymentStrategy(new CreditCardPayment());
+context.PayAmount(1000);
+
+
+
+✅ Bonus Tips
+🔷 Strategy Pattern allows easy addition of new behaviors without touching existing code.
+🔷 It follows Open/Closed Principle and favor composition over inheritance.
+🔷 Use when logic is frequently changing or needs to be selected dynamically.
+
+

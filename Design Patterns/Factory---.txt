@@ -1,0 +1,256 @@
+--------FACTORY DESIGN PATTERNS----
+-FACTORY : it is a class which has a function which returns the instance, but exactly what kind of instance to return is determine by the sub classes
+-FACTORY PATTERN : Factory Design Pattern is a createional(creating objects and abstracting how the objects are creating) design pattern that provides a interface or a method for creating objects whithout specifying the excat type(class) of the object that will be created
+-The idea is to delegate the object creation logoc to a factory(class which returns the instanece) class or method, so the client code doesn't use the new keyword directly for creating the instances.
+
+
+⚙️ How It Works (Step-by-Step)
+Create a common interface or abstract class for all product types.
+Implement concrete classes (products) that inherit from the common interface.
+Create a Factory class with a method that returns the appropriate object based on input.
+Client code calls the factory method, and gets a polymorphic object without knowing the actual class name.
+
+
+🧠 Real-Life Analogy: Credit Card Factory
+Imagine you go to a Credit Card company (factory) and say:
+"I want a Platinum card."
+You don’t know how the card is designed internally — you just get it. Similarly:
+You (client) ask for a product
+The factory knows what class to create (Platinum, Titanium, MoneyBack)
+You just use the returned object
+
+
+📌 When to Use Factory Design Pattern
+When you have a superclass/interface and multiple subclasses.
+When you want to hide object creation logic from the client.
+When the object creation depends on some input or logic.
+When using new keyword all over the place causes tight coupling.
+
+
+
+EG 1: CREDIT CARD SYSTEM
+using System;
+
+namespace FactoryDesignPattern
+{
+    // ========================
+    // STEP 1: Define Interface
+    // ========================
+    // This interface defines a common contract for all types of Credit Cards.
+    // All credit card types must implement these methods.
+    public interface CreditCard
+    {
+        string GetCardType();
+        int GetCreditLimit();
+        int GetAnnualCharge();
+    }
+
+  
+    // ==================================
+    // STEP 2: Concrete Product - Titanium
+    // ==================================
+    // Another implementation of CreditCard
+    public class Titanium : CreditCard
+    {
+        public string GetCardType() => "Titanium";
+        public int GetCreditLimit() => 25000;
+        public int GetAnnualCharge() => 1000;
+    }
+
+    // ==================================
+    // STEP 3: Concrete Product - Platinum
+    // ==================================
+    public class Platinum : CreditCard
+    {
+        public string GetCardType() => "Platinum";
+        public int GetCreditLimit() => 35000;
+        public int GetAnnualCharge() => 1500;
+    }
+
+    // ===============================
+    // STEP 4: Factory Class (Core Part of Factory Design Pattern)
+    // ===============================
+    // This class contains a static method that determines which credit card object to create.
+    // This is where the Factory Pattern is applied: object creation is centralized here.
+    public class CreditCardFactory
+    {
+        public static CreditCard GetCreditCard(string cardType)
+        {
+            CreditCard cardDetails = null;
+
+            // Decision logic based on input
+            if (cardType == "Titanium")
+            {
+                cardDetails = new Titanium(); // Creates Titanium card
+            }
+            else if (cardType == "Platinum")
+            {
+                cardDetails = new Platinum(); // Creates Platinum card
+            }
+
+            // Could return null if cardType doesn't match any known type
+            return cardDetails;
+        }
+    }
+
+    // ===============================
+    // STEP 5: Client Code (Main Method)
+    // ===============================
+    // This is where the client uses the Factory method instead of creating objects directly.
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Asking the factory to create a credit card of type "Platinum"
+            // We don’t use `new Platinum()` here — this is the key benefit of the Factory pattern
+            CreditCard cardDetails = CreditCardFactory.GetCreditCard("Platinum");
+
+            // If a valid card is returned, use its methods
+            if (cardDetails != null)
+            {
+                Console.WriteLine("Card Type     : " + cardDetails.GetCardType());
+                Console.WriteLine("Credit Limit  : " + cardDetails.GetCreditLimit());
+                Console.WriteLine("Annual Charge : " + cardDetails.GetAnnualCharge());
+            }
+            else
+            {
+                Console.WriteLine("Invalid Card Type");
+            }
+
+            Console.ReadLine(); // Keep console open
+        }
+    }
+}
+
+
+
+🔍 Where is the Factory Pattern Used Here?
+Factory Pattern is applied in CreditCardFactory.GetCreditCard()
+The creation logic is encapsulated here.
+The client does not need to know which subclass to instantiate.
+If tomorrow a new card type (e.g., “Gold”) is introduced, you can add it here without touching the client code.
+
+
+✅ Key Benefits
+Loose Coupling – Client code is independent of concrete classes.
+Centralized Object Creation – All new instances are managed in one place.
+Easy to extend – Just add a new subclass and update the factory.
+
+
+
+EG 2: Piizaa Factory
+
+// Factory Design Pattern Example – Pizza System
+
+using System;
+using System.Linq;
+using System.Threading;
+
+namespace FactoryPizza
+{
+    // 🍕 1. Product Interface – Abstract representation of any Pizza
+    public interface Pizza
+    {
+        void PizzaType();   // Method to describe type of pizza
+        void PizzaPrice();  // Method to show pizza price
+    }
+
+    // 🍗 2. Concrete Product – Non-Veg Pizza
+    public class NonVegPizza : Pizza
+    {
+        public void PizzaType()
+        {
+            Console.WriteLine("Preparing Non-Veg Pizza...");
+            Thread.Sleep(2000); // Simulating preparation time
+        }
+
+        public void PizzaPrice()
+        {
+            Console.WriteLine("Price: ₹1000");
+        }
+    }
+
+    // 🥦 3. Concrete Product – Veg Pizza
+    public class VegPizza : Pizza
+    {
+        public void PizzaType()
+        {
+            Console.WriteLine("Preparing Veg Pizza...");
+            Thread.Sleep(2000); // Simulating preparation time
+        }
+
+        public void PizzaPrice()
+        {
+            Console.WriteLine("Price: ₹500");
+        }
+    }
+
+    // 🏭 4. Factory Interface – Declares a Factory Method
+    // This defines the abstract method for creating Pizza objects
+    public interface PizzaFactory
+    {
+        Pizza CreatePizza();  // Factory Method
+    }
+
+    // 🔧 5. Concrete Factory – Responsible for creating Non-Veg Pizza
+    public class NonVegFactory : PizzaFactory
+    {
+        public Pizza CreatePizza()
+        {
+            // 👉 Factory Pattern applied here – decides which object to create
+            return new NonVegPizza();
+        }
+    }
+
+    // 🔧 6. Concrete Factory – Responsible for creating Veg Pizza
+    public class VegFactory : PizzaFactory
+    {
+        public Pizza CreatePizza()
+        {
+            // 👉 Factory Pattern applied here – decides which object to create
+            return new VegPizza();
+        }
+    }
+
+    // 👨‍🍳 7. Client Code – Main class that uses the Factory
+    class Program
+    {
+        public static void Main()
+        {
+            Console.WriteLine("Which pizza do you want? (Non veg / Veg):");
+            string s = Console.ReadLine();
+
+            PizzaFactory factory;  // Declaring abstract factory reference
+
+            // 🔍 Deciding which factory to use based on user input
+            if (s.Contains("Non", StringComparison.OrdinalIgnoreCase))
+            {
+                factory = new NonVegFactory();  // Use Non-Veg factory
+            }
+            else
+            {
+                factory = new VegFactory();     // Use Veg factory
+            }
+
+            // 🏭 Factory Method Call – Object is created here
+            // 👉 This is the key point where Factory Pattern is applied
+            Pizza pizza = factory.CreatePizza();//This createPizza will return The pizza object, so store it in the pizza interface and then call the type and the price methods
+           
+
+            // 🎯 Using the created object (we don’t care what type it is)
+            pizza.PizzaType();
+            pizza.PizzaPrice();
+        }
+    }
+}
+
+🧠 Where the Factory Pattern is Applied?
+
+Component			Role				Explanation
+Pizza				Product Interface		Defines common methods for all pizzas
+VegPizza, NonVegPizza		Concrete Products		Implement the product interface
+PizzaFactory			Factory Interface (Creator)	Declares the CreatePizza() factory method
+VegFactory, NonVegFactory	Concrete Factories		Implement CreatePizza() to return specific products
+Program.Main()			Client			        Uses the abstract factory interface to create pizza without knowing which concrete class is 								used
+
+

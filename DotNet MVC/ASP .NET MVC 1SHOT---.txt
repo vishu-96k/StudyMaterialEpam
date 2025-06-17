@@ -1,0 +1,137 @@
+ASP .NET MVC 1SHOT---
+
+CH 0 : INTRO TO ASP .NET MVC
+
+**#1 INTRO :**
+
+**ASP .NET MVC** : is a web applicaytion freamwrok devloped by microsft, and this will alwyas devlop the structure of the web application in the form of MVC patern.
+
+-MVC : MODEL VIEW CONTROLLER, is a Archeteure to build web applicatyion.
+
+-Unlike traditional WEB FORMS(asp .net), MVC provides a more structure and modular approach to build web application 
+-ADVANTAGES OF MVC OVER ASP .NET (WEB FORMS):
+
+Open source, It is asscessable to any one without any payment.
+
+- Cross platfrom: It means that it can be used on any OS.
+- OPEN SOURCE
+- Complete Control over HTML and HTTP : uh can handle the UI as well (HTTP) as the liking of the backend and the frontend and hosting aspect, Thts why we have the controller in the MVC.
+- EXTENSIBLE FRAMWOKR : it is scalable, Means it can add some thhing in our project.
+- Routing : Linking between the frontent and the backing as well Hosting also.
+- API : Applicaiton Programmging interface Support.
+- Testing : uh can also write the Test cases for each model as well as the front end part. As well uh can do Unit testing becoz model and controller are available separetley
+
+**MVC PATTERN :**  
+
+**MODEL : it represents the Applicaitons data and bussness logic.** ( In the context of MVC, business logic refers to the rules, calculations, and data processing that handle how your application operates. Let me explain with some examples :Data validation rules e.g., checking if a user's age is above 18)
+
+-VIEW : Displays the UI and receives users input, Basically User interactions is doe from here.
+
+-CONTROLLER : Handles the users inputs from the UI, Updates the modesl(DB) and manupulates the view. it is coordignating between modle and view.
+
+CH 1 : MVC LIFE CYCLE
+
+**#1  MVC LIFE CYCLE:**
+
+![image.png](attachment:be48c4ee-8484-4835-b1c7-3ccc5c874030:image.png)
+
+CONTROLLER : User will request the controller, And controller will try to get the response data from the model, and then the controller will send the data to the views, Whcih the end user will be seeing.
+-The need of cummunication betwen the Controller and the Model is that, the bussness logic(Database data ) presnt in the models, Models will use the  ORM  (OBJECT RELATIONAL MAPPING) for genrating the database tables.
+VIEW : this  is the UI which will be seen by the user.
+
+-From the Views only the user will give the inputs as well, whihc will go the the database through the controller and then to the model(database). 
+
+-user cannot directly talk to the Controller , through view only they can contact the controller .
+
+MODEL :Thse use the ORM for converting the classes into tables, And the each object of the class willl become the separate entry in the table.
+
+Its just the req and response between model views and controller.
+
+ **#2 TYPES OF MVC LIFE CYCLE:**
+
+***APPLICATION LIFE CYCLE :*** 
+
+-Its the Time period from which the appication process really starts using the IIS(express server) until it ends is referred to as the application life cycle.
+
+-matlb jabse application start hoga, jaise he  vo run btn ham dabayenge, vaha se leke vo app bandh hone tk jo time rahega use ham application life cycle bolte hai.
+
+-Eg : Running a code in C++, Then uh press the start, uh build the program, out comes come on the cmd Line, Until uh stop the program, This time period is called applicaiton life cycyle.
+
+-the application starts and finish evenets in your application’s startup file indicate this.
+
+-There is  a start up file in your directry , In this start up file there is same thing like your Main function in your program.
+
+***REQUEST LIFE CYCLE :*** 
+
+it is the series of actions that are program takes each time it receivs an HTTP request, like google search.
+
+ -When uh want to buy something, Then when uh send the req to the [amz.in](http://amz.in) this is the request, and when uh are done with the  buying of thing, then uh close the req, or change the request, So this period the time when uh are sending the request and getting the response, tilll the time uh dont change the request, Is called request life Cycle.
+-Routing is the First entry point for any MVC appluication, using the URL routing Module,  the Asp .Net framewrok determines how to handle a request once it is been received.
+
+Eg : The asp .net freamwrok determines how to handle the request once it is received.
+
+So the time required between the Req and the response cycle is called the request LIFE CYCLE
+
+-For anything and eveyrthing unique name and unique address will be provided 
+-If uh want to add any models uh can add them across, even uh can make n number of pages.
+REQ LIFE CYCLE : start of the req and end of the request.
+
+![image.png](attachment:45191781-7207-4ba0-aa29-a79bd06dd723:image.png)
+
+-ROUTING : user sends the request (Routing will be done, bsed on the route the req will go), req will go the Contoller, And it will check for the action which is  binded with the req URL and it will execute the action(function).
+-Then it Come back to result execution, Views are updated and result is provided to the user.
+
+**#3 ROUTING :**
+
+Routing in ASP .Net MVC is the process of mapping the URLs to their corresponding Controllers and Actions .
+-The frontend and the backend, for eg, WE need to map the home Page URL, to the action that the home page should open. SO we need to map the URLS with their appropiricate controller and actions.
+
+-ROUTE TABLE : defines URL pattern and their corresponding handlers, Means it will have the mapping between the URLS and their action or page that should be loaded.
+-URL SEGMENT : parts of the URL that determine which controller and action to invoke.
+
+-ROLE OF Global.asax FILE :
+in these file, Where routes are registered on applicaition start.
+So in ASP MVC we have a separate file, which is globaly available, it has all the routes and the Address where uh have linked your complete website, what are the diff pages it has, What are the routes it has, Complete application URLS start Web links, routes are present in this file.
+-We need to set the website to load ur home page.
+-So uh need to set the home page of the application, and for this uh need to set your application such that it will direct to the home page, how it will know which is the home page? 
+-So the Global.asax will be having the complete details of all your rountings, Complete models, Sub models , every information and the various diff URLs without dupplciation of the URLs, All this info is present in this file.
+
+-CUSTOM ROUTES : uh can also make your own custom routes.
+uh can also create a class which is called routeConfig class, and uh can keep the custom placeholders, ids, Url in this class, uh can define optional and default url paramters as well.
+So For creating custom routes, uh need to make use of the RouteConfig class.
+HTTP METHODS : URL should also match the HTTO Methods like Get, post, Patch, put, delete. This is also called Constraints.
+
+
+-----------------------------------------------------------------------
+VIEWS:
+-Views are the components that hadle the display logic of the application of the MVC application, They are responsilble for taking the info anf presenting the out put to the user, Both things will happen in these views.
+The views are Converted into HTML which is understand by the browser engine through the Razor engine, Which helps us to write C# + HTML code and prepare a Html page, Which we call is view.
+VIEWs will take the information from the user and send it to the Controller, and then the controller will put the same info in the database, So when uh try to login then again the controller will take the info from the database and match it with the entered info by the user.
+
+-PASSING DATA DATA TO VIEWS:
+uh need to pass the data between views and the controller. and this can be happen using VIEWBAG, VIEW MODELS , VIEW DATA.
+-PARTIAL VIEWS : These are the layout, basically the headers and the footers, Which can be resualble components.
+LAYOUTS : Define a common site templatae to maintain a consistent look.
+VIEW HEPLERS : Methods That help to render HTML in view.
+-uh need html helpers to connect the html code to your model. 
+
+
+---------------------------------------------
+DIFF BETWEEN AUTHENTICATION and ATHORIZATION
+
+AUTHENTICATION :it means verifying of the user.
+	-The process of identifying who the user is , this is called Authentication.
+	-Finding out who is the user.
+	-uh can use passwords tokens Multifactor authentication, Biometrics
+	-In simple wokrds, we will identify who the user is, like admin, Customer, student, What type of suscribtion he has, all this is nothing but find out who the person is and this is called Authentication
+
+AUTHORIZATIN :This is finding out what a Authenticated person is allowed to do
+	-Process of verifying what an authenticated user is allowed to do/
+	-Authorization is basically giving powers to the users, What they can do once they have been authenticated(Find out who are they).
+	-Like admin will be given all the powers, so Admin is authorized to delete any user from the List.
+
+
+EG : Google drive 
+-AUTHENTICATION : Logging in to your Google account	
+-AUTHORIZATION  : when uh share some folder to someone and dont give access to that person, it will say request for acess, this is noth but authorization.
+	

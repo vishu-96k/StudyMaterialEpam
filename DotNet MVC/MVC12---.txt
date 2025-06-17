@@ -1,0 +1,576 @@
+MVC12---
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : DATA PARSING📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#0] DATA PARSING TECHNIQUES IN ASP .NET MVC
+
+📌How do you Pass Data to Views :
+-Uh can pass the data from Controller Action methods to the views.
+-we can pass the data from a controller action method to a view in many different ways, such as by using ViewBag, ViewData, TempData, and a Strongly Typed Model. 
+
+✅[#1] ViewData TECHNIQUE TO PASS DATA
+
+📌ViewData:
+-What is ViewData?
+ViewData is a dictionary object in ASP.NET Core MVC that lets you pass data from a controller to a view.
+It uses a key-value pair system.
+It is of type ViewDataDictionary, meaning the values are stored as object type.
+Because of this, you must often cast the values to the correct type before using them
+
+-What is ViewData in ASP.NET Core MVC Application?
+ViewData is a dictionary object in ASP.NET Core MVC that allows us to pass data from a controller action method to a view.
+- It provides a flexible way to pass data, allowing us to use key-value pairs. ViewData is useful when we need to pass dynamic data or data that doesn’t fit well into a strongly typed model.
+- If you go to the definition of ViewData, you will see that It is a property in the Controller abstract class, and its type is ViewDataDictionary class wihch implements IDictionary<string, object> Interface..
+-type of ViewData Property is ViewDataDictionary class.
+- So, ViewData in ASP.NET Core MVC is a dictionary object/Instance
+- it stores data in the form of Key-Value Pairs, where each key must be a string, and the value that we pass to the dictionary will be stored as an object type.
+-ViewData is a object of type Dictionary, so uh can directly use it by applying disctionary functions on it, and even as key value pair, uh can include values in it.
+
+📌How do you use ViewData 
+-To use ViewData in the ASP.NET Core MVC Application, we need to set the data in a controller by adding entries to the ViewData dictionary with a string key and then assign some data.
+-The key should be in string format, and data can be in any type.
+-Since ViewData is a server-side code, hence to use it on a view, we need to use the razor syntax, i.e., @ something as follows.
+@ViewData[“KeyName”]
+
+👇 Code:
+📌Basic Syntax
+Setting data in the Controller: ViewData["KeyName"] = "Some Data";
+Accessing it in the View: @ViewData["KeyName"]
+- You don’t need to cast if it’s a string. But for other types (like a class or number), you should cast it.
+
+
+📌Example 
+🧾 Step 1: Create a Student class
+🗂: Models/Student.cs
+👇 Code:
+namespace FirstCoreMVCWebApplication.Models
+{
+    public class Student
+    {
+        public int StudentId { get; set; }
+        public string? Name { get; set; }
+        public string? Branch { get; set; }
+        public string? Section { get; set; }
+        public string? Gender { get; set; }
+    }
+}
+-This class defines the structure of the student. You will use this to create and send a student object to the view.
+
+🧾 Step 2: Modify the HomeController
+🗂: Controllers/HomeController.cs
+👇 Code:
+// Importing necessary namespace for using Controller, ViewResult, and ViewData
+using Microsoft.AspNetCore.Mvc;
+
+// Importing the namespace that contains the definition of the Student class
+using FirstCoreMVCWebApplication.Models;
+
+// Declaring the HomeController class which inherits from the Controller base class
+// Controller base class is part of ASP.NET Core MVC (Microsoft.AspNetCore.Mvc)
+// It provides features like View(), ViewData, TempData, ModelState, etc.
+public class HomeController : Controller
+{
+    // Action method named 'Details' that returns a ViewResult
+    // ViewResult is used to render a Razor view (.cshtml) to the browser
+    public ViewResult Details()
+    {
+        // ----------------------------
+        // 1. Passing Simple String Data using ViewData
+        // ----------------------------
+
+        // ViewData is a dictionary provided by the Controller base class (type: ViewDataDictionary)
+        // It allows us to pass data from the controller to the view
+        // The data can be accessed using keys like "Title", "Header", etc. (case-sensitive)
+        ViewData["Title"] = "Student Details Page";   // Assigning page title
+        ViewData["Header"] = "Student Details";       // Assigning page header
+
+        // ----------------------------
+        // 2. Creating a Complex Object (Student)
+        // ----------------------------
+
+        // Creating a new instance of the Student class
+        // This object holds data about a student
+        // The Student class must be defined in FirstCoreMVCWebApplication.Models namespace
+        Student student = new Student()
+        {
+            StudentId = 101,       // Setting Student ID
+            Name = "James",        // Student name
+            Branch = "CSE",        // Computer Science Engineering
+            Section = "A",         // Section A
+            Gender = "Male"        // Gender
+        };
+
+        // ----------------------------
+        // 3. Passing Complex Object using ViewData
+        // ----------------------------
+
+        // We can also pass a full object using ViewData
+        // Note: ViewData stores values as object, so type casting will be needed in the view
+        ViewData["Student"] = student;
+
+        // ----------------------------
+        // 4. Returning the View
+        // ----------------------------
+
+        // This tells the framework to render the "Details.cshtml" view file
+        // The view will use ViewData["Title"], ViewData["Header"], and ViewData["Student"]
+        return View();
+    }
+}
+
+What happens here?
+We are setting 3 ViewData values:
+Title (a string)
+Header (a string)
+Student (a class object)
+
+
+🧾 Step 3: Create the View (Details.cshtml)
+🗂: Views/Home/Details.cshtml
+👇 Code:
+@{
+    // Setting the Layout to null means this view will not use any shared layout page (like _Layout.cshtml)
+    // Normally, shared layout files define common HTML like header, footer, menu, etc.
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Viewport meta tag for responsive design (used for mobile scaling) -->
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Title of the page is dynamically set using ViewData["Title"] -->
+    <!-- ViewData is a dictionary (ViewDataDictionary) provided by the Controller base class -->
+    <!-- This lets the controller pass data to the view -->
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <!-- Display the header passed from the controller using ViewData["Header"] -->
+    <!-- Again, ViewData["Header"] is set in the controller action -->
+    <h1>@ViewData["Header"]</h1>
+    
+    @{
+        // Extract the "Student" object from ViewData and cast it to the Student class
+        // The full type is FirstCoreMVCWebApplication.Models.Student
+        // This class must be defined in your project under Models folder
+        var student = ViewData["Student"] as FirstCoreMVCWebApplication.Models.Student;
+        
+        // If the cast fails (e.g., ViewData["Student"] is null or wrong type), 'student' will be null
+        // Safe navigation operator (?.) is used later to avoid null reference exceptions
+    }
+
+    <!-- Display each property of the student object using Razor syntax -->
+    <!-- @student?.Property safely tries to access the property, avoiding exception if student is null -->
+
+    <div>StudentId : @student?.StudentId</div>
+    <div>Name : @student?.Name</div>
+    <div>Branch : @student?.Branch</div>
+    <div>Section : @student?.Section</div>
+    <div>Gender : @student?.Gender</div>
+
+    <!-- The actual values will be filled in at runtime when the controller provides the Student object -->
+</body>
+</html>
+
+
+What’s going on?
+We display the title in the <title> tag and header in an <h1>.
+We cast the object stored in ViewData["Student"] back to the Student class.
+Then we display its individual properties.
+
+
+✅[#2] ViewBag TECHNIQUE TO PASS DATA
+
+📌ViewBag 
+-ViewBag is a dynamic object that provides a way to pass data from the controller action method to the view.
+-ViewBag is a dynamic object in ASP.NET Core MVC used to pass small bits of data from a controller to a view.
+-ViewBag is defined in the controller base calsss
+-ViewBag, which is a type of DynamicViewData. This DynamicViewData is a dynamic object that allows properties to be dynamically added at runtime.
+-ViewBag is a property in the Controller base class.
+
+-It is of type dynamic, which means:
+You don’t need to define properties ahead of time.
+The compiler doesn’t check whether a property exists — this is done at runtime.
+You can write code like ViewBag.Title = "Hello" without defining a Title property.
+
+-Although its public type is dynamic, internally, ViewBag is implemented using a class called: DynamicViewData
+-DynamicViewData is a wrapper around the ViewData dictionary.
+So when you do ViewBag.Title = "Hello", it internally sets ViewData["Title"] = "Hello".
+-So internally ViewBag also uses Dictionary only for storing the data.
+
+
+📌Example 
+🧾 Step 1: Create a Student class
+🗂: Models/Student.cs
+👇 Code:
+//Same student model as defined in above eg of ViewData
+
+🧾 Step 2: Modify the HomeController
+🗂: Controllers/HomeController.cs
+👇 Code:
+//Same class as above only the functrion is changed
+// This method is inside a Controller class (e.g., StudentController)
+// It returns a ViewResult, which tells ASP.NET Core to render a Razor View
+public ViewResult Details()
+{
+    // --------------------- ViewBag Explained ---------------------
+    // ViewBag is a dynamic property provided by ControllerBase (inherited by Controller class)
+    // It allows passing data from the controller to the view without using a strongly-typed model
+    // ViewBag uses dynamic typing — no compile-time type checking
+
+    // Set the page title to be used in the <title> tag or view heading
+    ViewBag.Title = "Student Details Page";
+
+    // Set a header string to be used in the view, like <h1>@ViewBag.Header</h1>
+    ViewBag.Header = "Student Details";
+
+    // --------------------- Creating a Student Object ---------------------
+    // Create an instance of a custom model class named "Student"
+    // This class should be defined somewhere in your project like:
+    // public class Student { public int StudentId; public string Name; ... }
+
+    Student student = new Student()
+    {
+        // Set properties of the Student object
+        StudentId = 101,
+        Name = "James",
+        Branch = "CSE",     // CSE = Computer Science and Engineering
+        Section = "A",
+        Gender = "Male"
+    };
+
+    // Pass the student object to the view using ViewBag
+    // In the Razor view, you can access it using: @ViewBag.Student.Name or similar
+    ViewBag.Student = student;
+
+    // --------------------- Returning a View ---------------------
+    // This returns a ViewResult object to the ASP.NET Core MVC framework
+    // It looks for a Razor view file named "Details.cshtml" under:
+    // 1. /Views/Student/Details.cshtml (if controller is StudentController)
+    // 2. /Views/Shared/Details.cshtml (fallback)
+    return View();
+}
+
+
+🧾 Step 3: Create the View (Details.cshtml)
+🗂: Views/Home/Details.cshtml
+👇 Code:
+@{
+    // ------------------------
+    // Razor code block
+    // Layout = null disables the use of a master layout file (_Layout.cshtml)
+    // This means the current view will render as a full standalone HTML page
+    // ------------------------
+    Layout = null;
+
+    // ------------------------
+    // ViewBag is a dynamic object provided by the ControllerBase class
+    // It is used to pass temporary data from Controller to View
+    // Here, we are extracting the 'Student' object from the ViewBag
+    // ------------------------
+    var student = ViewBag.Student;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        The title of the web page is dynamically set using ViewBag.Title
+        ViewBag.Title should be assigned a value from the controller
+        For example: ViewBag.Title = "Student Details";
+    -->
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <!--
+        Displaying a page header using ViewBag.Header
+        This is another dynamic value passed from the controller
+        For example: ViewBag.Header = "Student Profile";
+    -->
+    <h1>@ViewBag.Header</h1>
+
+    <!--
+        The ?. operator is the null-conditional operator
+        It prevents NullReferenceException if 'student' is null
+        For example, if ViewBag.Student = null, no error will occur
+        Each field (StudentId, Name, etc.) should be properties of the Student object
+    -->
+
+    <div>StudentId : @student?.StudentId</div>   <!-- Displays the Student ID -->
+    <div>Name : @student?.Name</div>             <!-- Displays the Student Name -->
+    <div>Branch : @student?.Branch</div>         <!-- Displays the Branch -->
+    <div>Section : @student?.Section</div>       <!-- Displays the Section -->
+    <div>Gender : @student?.Gender</div>         <!-- Displays the Gender -->
+</body>
+</html>
+
+
+✅[#3] ViewModel TECHNIQUE TO PASS DATA
+
+📌ViewModel
+-A View Model in ASP.NET Core MVC is a class that represents the data and logic required by a view.
+-It is specifically designed to serve the needs of the user interface and does not necessarily map directly to the domain model or database entities.
+-The primary purpose of a View Model is to encapsulate all the data that the view needs to render, making it easier to pass this data from the controller to the view.
+
+-What is a ViewModel?
+A ViewModel in ASP.NET Core MVC is a C# class specifically created to represent the data needed by a particular view. It is:
+Not tied to the database directly (unlike Entity Models).
+Created to organize and prepare data the view needs.
+Used to combine multiple models or shape data for display.
+
+📌Example
+🗂️ Project Structure and File Locations
+YourApp/
+│
+├── Controllers/
+│   └── StudentController.cs          <-- Step 4 (Controller logic)
+│
+├── Models/
+│   ├── Student.cs                    <-- Step 2 (Student domain model)
+│   └── Address.cs                    <-- Step 2 (Address domain model)
+│
+├── ViewModels/
+│   └── StudentDetailsViewModel.cs    <-- Step 1 & Step 3 (ViewModel class)
+│
+├── Views/
+│   └── Student/
+│       └── Details.cshtml            <-- Step 5 (View)
+│
+├── wwwroot/
+├── appsettings.json
+└── Startup.cs / Program.cs
+
+🧾 Step 1: Create Domain Models 
+In the example, there are two simple classes representing student data:
+🗂: Models/Student.cs
+👇 Code:
+public class Student
+{
+    public int StudentId { get; set; }
+    public string? Name { get; set; }
+    public string? Branch { get; set; }
+    public string? Section { get; set; }
+    public string? Gender { get; set; }
+}
+
+🗂:Models/Address.cs
+👇 Code:
+// Models/Address.cs
+public class Address
+{
+    public int StudentId { get; set; }
+    public string? City { get; set; }
+    public string? State { get; set; }
+    public string? Country { get; set; }
+    public string? Pin { get; set; }
+}
+
+
+🧾 Step 2: Define the ViewModel Class
+
+What is a ViewModel here?
+A ViewModel is a class that contains all the data your view needs to display.
+It can include multiple domain models or other data like titles or headers.
+It’s made specifically to organize data for a view — not necessarily matching your database structure.
+
+Why do we need a ViewModel?
+In many cases, a single domain model (like a Student class) doesn’t have all the data your view needs. Maybe your view needs:
+Student basic info
+Student address info
+Page header or title
+This combined data doesn’t exist in one place in your database or domain model — so you create a ViewModel that aggregates these pieces for the view.
+
+Now create a ViewModel that holds:
+A Student object
+An Address object
+Additional info like page title and header
+
+🗂: ViewModels/StudentDetailsViewModel.cs
+👇 Code:
+public class StudentDetailsViewModel
+{
+    public Student? Student { get; set; }
+    public Address? Address { get; set; }
+    public string? Title { get; set; }
+    public string? Header { get; set; }
+}
+//This ViewModel gathers everything the View needs: student data, address, and extra UI strings like title and header.
+
+🧾Step 3: Populate ViewModel in Controller
+In your controller (StudentController), create the domain objects (Student, Address), populate them with data, and then assign them to a new ViewModel instance. Finally, pass the ViewModel to the View using the View() method.
+🗂:Controllers/StudentController.cs
+👇 Code:
+// Namespace is omitted, assuming this is part of an ASP.NET Core MVC application
+
+// StudentController inherits from the built-in Controller class in ASP.NET Core MVC
+// Controller base class is from Microsoft.AspNetCore.Mvc namespace and provides methods for returning views, JSON, redirects, etc.
+public class StudentController : Controller
+{
+    // This action method returns a ViewResult
+    // The method name "Details" will match a route like /Student/Details
+    public ViewResult Details()
+    {
+        // ------------------------------------------------------------
+        // Step 1: Create a new Student object with mock data
+        // 'Student' is assumed to be a model class representing a student entity
+        // This data might typically come from a database, but here it's hardcoded
+        // ------------------------------------------------------------
+        Student student = new Student()
+        {
+            StudentId = 101,      // Unique ID of the student
+            Name = "Dillip",      // Student's name
+            Branch = "CSE",       // Computer Science & Engineering
+            Section = "A",        // Section A
+            Gender = "Male"       // Gender of the student
+        };
+
+        // ------------------------------------------------------------
+        // Step 2: Create a new Address object with mock data
+        // 'Address' is another model class related to student details
+        // It represents the address of the student
+        // ------------------------------------------------------------
+        Address address = new Address()
+        {
+            StudentId = 101,         // Linking to the same student ID
+            City = "Mumbai",         // City
+            State = "Maharashtra",   // State
+            Country = "India",       // Country
+            Pin = "400097"           // Postal PIN code
+        };
+
+        // ------------------------------------------------------------
+        // Step 3: Create a new ViewModel to combine student and address
+        // 'StudentDetailsViewModel' is a custom view model class used to
+        // package multiple pieces of data and send to the view
+        // This follows the ViewModel design pattern for MVC
+        // ------------------------------------------------------------
+        StudentDetailsViewModel studentDetailsViewModel = new StudentDetailsViewModel()
+        {
+            Student = student,               // Set Student object
+            Address = address,               // Set Address object
+            Title = "Student Details Page",  // Page title to display
+            Header = "Student Details",      // Page header
+        };
+
+        // ------------------------------------------------------------
+        // Step 4: Return a View and pass the ViewModel to it
+        // The 'View()' method is inherited from Controller base class
+        // It searches for a Razor View file named "Details.cshtml" under:
+        // Views/Student/Details.cshtml or Views/Shared/Details.cshtml
+        // The view will receive the ViewModel as its strongly-typed model
+        // ------------------------------------------------------------
+        return View(studentDetailsViewModel);
+    }
+}
+
+🧾Step 4: Use the ViewModel in the View
+In the Razor view (Details.cshtml), you specify the model type using the @model directive:
+🗂Views/Student/Details.cshtml
+👇 Code:
+@model StudentDetailsViewModel
+// ----------------------------------------------
+// @model directive at the top declares the type of model this Razor view expects
+// In this case, the view expects an object of type 'StudentDetailsViewModel'
+// This model will be passed from the controller action to the view
+// ----------------------------------------------
+
+
+<h1>@Model.Header</h1>
+// ----------------------------------------------
+// Displaying the value of the 'Header' property from the model
+// This could be a string like "Student Details" or something dynamic
+// 'Model' is the instance of 'StudentDetailsViewModel' passed to this view
+// ----------------------------------------------
+
+
+<div>
+    <strong>ID:</strong> @Model.Student.StudentId
+    // ----------------------------------------------
+    // Accessing the 'StudentId' property of the 'Student' object
+    // 'Student' is a property of type 'Student' inside the ViewModel
+    // 'StudentId' is an integer property in the Student class
+    // ----------------------------------------------
+</div>
+
+<div>
+    <strong>Name:</strong> @Model.Student.Name
+    // ----------------------------------------------
+    // Displaying the student's name
+    // 'Name' is a property inside the 'Student' class
+    // ----------------------------------------------
+</div>
+
+<div>
+    <strong>Branch:</strong> @Model.Student.Branch
+    // ----------------------------------------------
+    // Displaying the student's academic branch (e.g., CSE, ECE, etc.)
+    // 'Branch' is a string property in the 'Student' class
+    // ----------------------------------------------
+</div>
+
+
+
+
+<h2>Address</h2>
+// ----------------------------------------------
+// Section heading for address information
+// The 'Address' property is another object inside the ViewModel
+// Typically, it would be of a class type like 'Address'
+// ----------------------------------------------
+
+
+<div>
+    <strong>City:</strong> @Model.Address.City
+    // ----------------------------------------------
+    // Accessing 'City' property from 'Address' object
+    // 'City' is a string property in the 'Address' class
+    // ----------------------------------------------
+</div>
+
+<div>
+    <strong>State:</strong> @Model.Address.State
+    // ----------------------------------------------
+    // Showing the state part of the address
+    // 'State' is a property in the 'Address' class
+    // ----------------------------------------------
+</div>
+
+
+How does this work?
+Controller creates a ViewModel that contains all the data needed.
+The controller passes the ViewModel object to the View.
+The View receives the ViewModel and displays its data using strongly typed properties.
+You don’t have to use ViewData or ViewBag (which are loosely typed).
+
+✅[#4] TempData TECHNIQUE TO PASS DATA
+
+📌TempData
+-The limitation of both ViewData and ViewBag is they are limited to one HTTP request only. So, if redirection occurs, their values become null, meaning they will lose the data they hold. 
+- In many real-time applications, we may need to pass the data from one HTTP Request to the next subsequent HTTP Request. In such situations we need to use TempData
+-TempData in ASP.NET Core MVC serves the purpose of passing data from one request to the next, specifically between actions or redirects
+-TempData in ASP.NET Core MVC Application is one of the mechanisms for passing a small amount of temporary data from a controller action method to a view and from a controller action method to another action method within the same controller or to a different controller
+- It uses session storage to persist data across requests, ensuring data is available after a redirect. TempData is cleared after it is read, making it suitable for temporary data that doesn’t need to persist beyond a single request cycle. 
+-TempData is defined inside the Controller Base class and the data type is ITempDataDictionary, wihch is basically a dictionary only.
+- ITempDataDictionary class implements the IDictionary interface. So, we can say that TempData in ASP.NET Core MVC is a dictionary object
+
+-The following are some of the common use cases of TempData in ASP.NET Core MVC Applications:
+Passing Data After Redirects: TempData helps to pass data after redirects, a common requirement in web applications where a method performs operations and redirects to another method.
+Storing Temporary Data: It is useful for storing temporary data that does not need to be persisted in the database but must be available across requests.
+Message Passing: Commonly used for displaying success or error messages on action redirects, especially in post-redirect-get patterns.
+What is TempData in ASP.NET Core MVC?

@@ -1,0 +1,87 @@
+---Rajshekhar Sir Class ---
+
+1) DB First Apporact =>
+2) MODEL FIRST APPORACH =>
+
+==============MODEL FIRST APPROACH ===================
+first its searching for aspx
+then its searching for ascx 
+there are two engines aspx and ascx engine, find the difference between aspx and ascx engine
+
+MVC used both the engines
+
+First create Modle : as class , write all the contents of the form in it 
+
+
+new model add a class file 
+Add a new controller --> in this go to CREATE() and add view
+
+
+
+============================================================================================================================
+
+CREATE CODE FIRST APPROCAH IN MVC
+
+CHAT GPT PROMPT:
+I want to develop a simple CRUD application using asp.net mvc web forms in.net framework using code first approach, lets implement it step by step; give models and controllers too and the applicationdbcontext too; for user store UserID, FirstName, LastName, Email, Phone, Address, gender model, country model and state model, ensure the foreign key relationships, use proper attributes for the properties.
+ 
+
+copy models from gpt  (models are the DB table schema)
+then create applicationdbcontext : in this database connection code is there and it is also a .cs file in models
+if there are FK in models, add cascading in the applicationContextDb file which is also a model file (as class)
+Install the ENTITY FRAMEWROK PACKAGE FROM THE Nuget(like npm)
+
+Add connection string in web.config :fill from db name Modify the Web.Config fle : add the connection string into the file in which uh need to guve the name of the SQL server 	
+
+Run the code in the NUGET PACKAGE MANAGER CONSOLE :
+	Enable migrations 
+	Add migrations -name
+	Update Database
+
+Add controller (controller takes the data from view and send it to model and handels the bussness logic)
+As uh will add the controller then automatically the views will be created which will be the cshtml files means the web pages
+
+Modify the ApplicationDBContext.cs file  : You can modify the Seed method in the Configuration class to add initial data for Gender, Country, and State tables using the AddOrUpdate method.	
+
+Add data to ApplicationContext.cs file
+
+Run the code in the NUGET PACKAGE MANAGER CONSOLE :
+	Update Database
+
+And run the 
+
+============================17/03/2025=====
+
+ACTION FILTER
+
+-action filter can only be used when uh create action filter.
+MidlleWeres 
+
+======================.Net Framwork====27/03/25===
+-we need asp .net core for Building WEb app
+-only .net core can only make console app 
+-so we need asp .net core for building web apps
+-when we use Linux Os it uses Casteral Server, which will forword the req to the IAS (windows) server.
+Why is core faster the framework:
+-becoz of modular structure, The .netCore is More faster then framework
+-in core the libraries are divided into furter more modular libraries becoz of which it is faster then framwrok.
+-in framework uh can see that the project is only dependednt on 8 refrences, but in core uh can see that the refrences are more, so each of the libraries are light weight.
+-So becoz each libraries is lightweight, its get load faster, thts why core is faster then framework
+-Asp .net core is providing the Conteroller,modules (Frontend part), and backend is provided by the core.
+
+
+CORE :
+how does the req travel in core:
+-First (port and ip addresss) reach the sserver
+-particular controller, particular action is selected.
+-using the Atriibute rounting uh can map the url and the routes
+
+
+=============28/03/2025===========ANGULAR----
+ANGULAR : main diff between React and Angular and why is Angular a framowrk and React a library.
+stand alone archetecture
+Angular : has 2 complication, AOT and JIT see diff between AOT and JIT compiler
+Add cisuton director, and make it in Angular (GC question).
+Life Cycle hooks in Angular, like we have in React js
+
+

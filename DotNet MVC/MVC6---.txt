@@ -1,0 +1,248 @@
+MVC6---
+------------------------------------
+-📌✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+-✅[#1] : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌NOTE : Creating a new ASP.NET Core Web App (MVC) in Visual Studio or CLI:
+dotnet new mvc -n MyMvcApp
+cd MyMvcApp
+//Create ur application. add required files and logic
+dotnet run // For running the app form the CLI
+
+
+
+📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] MODELS
+
+📌 What is a Model?
+A Model in ASP.NET Core MVC is a C# class that represents the data (e.g., Student, Product) and optionally contains business logic.
+It defines the properties of the data entity and can also include methods for logic like validation, calculation, etc.
+If your application doesn't use or store data, you don't need a model.
+💡 Example: A Student class with properties like StudentId, Name, etc.
+
+📌MODELS:
+-if your application does not have data, then there is no need for a model.
+-Models also contain bussnes logic to manage the data, Which uh can write in separate .cs file and use it in the model.
+-A model is a class with a .cs (for C#) extension that defines the Properties and behaviors of the data entities in your application.
+-These are simple classes that represent the objects in your application. For example, a Product(object) model might contain properties such as ID, Name, Price, and methods that define operations related to a product.
+-Simple words, Models represents the classes which has the Data and is used to manage  the state of the application in memory.
+-All the models are created inside the MODEL folder by deafalut, Even uh can create a separate class library project, put all the model classes in that class library project and refer to that class library project in your MVC application(by adding the refrence using dll)
+
+Key Concepts:
+Model: Defines the structure of your data and may also include logic to manage it.
+Repository: Encapsulates the business logic and acts as a data source provider.
+Controller: Handles HTTP requests, interacts with the repository, and returns results (like JSON).
+Program.cs: Sets up the application and configures the middleware pipeline.
+
+
+📌EG : Taking a STUDENT data eg
+CREATING Student.cs MODEL FILE:
+-Uh can add a model file as "student.cs" in model foler with following code:
+
+🗂 Models/Student.cs – 📦 Student Model (Data Representation) 
+
+namespace FirstCoreMVCWebApplication.Models
+{
+    public class Student
+    {
+        public int StudentId { get; set; }
+        public string? Name { get; set; }
+        public string? Branch { get; set; }
+        public string? Section { get; set; }
+        public string? Gender { get; set; }
+    }
+}//This is our student model, which will store the student data in memory.
+-This is a POCO class (Plain Old CLR Object).
+-This model represents how student data is structured in memory.
+-As we already discussed, the model also contains business logic to manage the data. So, in our example, to manage the student data, i.e., to perform the CRUD operation on the student data, we will use the following IStudentRepository interface.
+
+🗂 Models/StudentRepository.cs – ⚙ Business Logic Layer //For defining rules for the data to get store(Bussness logic) and how to return the data.
+
+using System.Collections.Generic;
+using System.Linq;
+
+namespace FirstCoreMVCWebApplication.Models
+{
+    public class StudentRepository : IStudentRepository
+    {
+        public List<Student> DataSource()
+        {
+            return new List<Student>()
+            {
+                new Student() { StudentId = 101, Name = "James", Branch = "CSE", Section = "A", Gender = "Male" },
+                new Student() { StudentId = 102, Name = "Smith", Branch = "ETC", Section = "B", Gender = "Male" },
+                new Student() { StudentId = 103, Name = "David", Branch = "CSE", Section = "A", Gender = "Male" },
+                new Student() { StudentId = 104, Name = "Sara", Branch = "CSE", Section = "A", Gender = "Female" },
+                new Student() { StudentId = 105, Name = "Pam", Branch = "ETC", Section = "B", Gender = "Female" }
+            };
+        }
+
+        public Student GetStudentById(int StudentId)
+        {
+            return DataSource().FirstOrDefault(e => e.StudentId == StudentId) ?? new Student();
+        }
+    }
+}
+📘 Explanation:
+Purpose: Acts as a repository to handle the logic for retrieving data.
+DataSource():
+Returns a hardcoded list of Student objects (simulates a database).
+GetStudentById(int StudentId):
+Filters the list and returns a student matching the given ID.
+If not found, returns an empty student object.
+
+🔁 The business logic (data fetching/filtering) is separated from the controller for better organization and testing.
+-Now uh need a StudentController, Using which uh can retrive the students details from the model
+- modify the StudentController as shown below to use the StudentRepository to retrieve the student details.
+
+🗂Controller/StudentController.cs
+using FirstCoreMVCWebApplication.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace FirstCoreMVCWebApplication.Controllers
+{
+    public class StudentController : Controller
+    {
+        public JsonResult GetStudentDetails(int Id)
+        {
+            StudentRepository repository = new StudentRepository();
+            Student studentDetails = repository.GetStudentById(Id);
+            return Json(studentDetails);
+        }
+    }
+}
+📘 Explanation:
+This is a controller class for handling student-related web requests.
+Action method GetStudentDetails(int Id):
+Takes a student ID from the URL.
+Creates an object of StudentRepository.
+Fetches student data using GetStudentById().
+Returns the data as JSON.
+🌐 When you browse:
+https://localhost:<PortNumber>/Student/GetStudentDetails/102
+You’ll see JSON like:
+{ "studentId": 102, "name": "Smith", "branch": "ETC", "section": "B", "gender": "Male" }
+
+
+🗂Proram.cs FILE // in which uh have configure the Middlewere and the MVC in the request processing pipeline.
+
+namespace FirstCoreMVCWebApplication
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Create a WebApplication builder, which provides various configuration settings
+            // and services for the web application
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Add MVC services to the service container.
+            // This includes support for controllers and views.
+            builder.Services.AddMvc();
+
+            // Build the application using the configured builder
+            var app = builder.Build();
+
+            // Enable routing middleware, which matches incoming HTTP requests to endpoints defined in the application
+            app.UseRouting();
+
+            // Map the default controller route (convention: {controller=Home}/{action=Index}/{id?})
+            // This means if no specific route is provided, it will default to HomeController and Index action
+            app.MapControllerRoute(
+                name: "default", // Name of the route
+                pattern: "{controller=Home}/{action=Index}/{id?}" // URL pattern for the route
+            );
+
+            // Run the application, which blocks the calling thread and starts listening for incoming HTTP requests
+            app.Run();
+        }
+    }
+}
+
+📘 Explanation:
+Sets up the ASP.NET Core pipeline.
+AddMvc() : registers the MVC services.
+UseRouting(): enables endpoint routing.
+MapControllerRoute(): sets the default routing pattern:
+If no specific route is provided, it defaults to HomeController and Index action.
+app.Run(): starts the web app.
+
+
+-Now run the application and visit "https://localhost:<Port Numbet>/Student/GetStudentDetails/102" URL, and you will see the student data in JSON format.
+
+
+ Summary
+Component	Role
+Student.cs	Defines the data structure for a student
+StudentRepository.cs	Contains business logic to fetch student info
+StudentController.cs	Handles HTTP requests, connects controller to model
+Program.cs	Configures the middleware, routing, and starts the web server
+
+-------------✅[#2] ASP.NET Core Request Processing Pipeline--------------------
+
+✅[#2] ASP.NET Core Request Processing Pipeline
+
+🔧 What is the ASP.NET Core Request Processing Pipeline?
+In ASP.NET Core, the pipeline is a sequence of components that handle incoming HTTP requests and generate responses. These components are called middleware.
+🛣️ Think of it like:
+A highway (pipeline) where cars (HTTP requests) pass through toll gates (middleware). Each gate does something — like checking the car’s type, charging a toll, or redirecting traffic.
+
+🧱 Setting up the Pipeline Means:
+You're defining which middleware components are used and in what order they process the request.
+
+In your Program.cs, the code sets up this pipeline like this:
+
+🗂Proram.cs FILE 
+var builder = WebApplication.CreateBuilder(args); // Creates app builder
+
+builder.Services.AddMvc(); // Adds MVC services to the DI container
+
+var app = builder.Build(); // Builds the app
+
+app.UseRouting(); // Adds routing middleware
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+); // Sets the default route
+
+app.Run(); // Starts listening for requests
+
+
+💡 Explanation of Each Step
+Code			What It Does
+CreateBuilder(args)	Initializes the app with configs and services.
+AddMvc()		Registers services needed for MVC controllers and views.
+Build()			Constructs the app with the configured services.
+UseRouting()		Adds routing logic — matches incoming requests to controller actions.
+MapControllerRoute()	Specifies URL pattern (routing rule) for controllers and actions.
+Run()			Starts the application and waits for requests.
+
+
+🧩 Visual Flow of a Request
+Browser Request
+     ↓
+UseRouting (figure out which controller/action to call)
+     ↓
+Finds route → Calls the matched Controller and Action
+     ↓
+Controller uses Model/Business Logic
+     ↓
+Returns Response (e.g., JSON, View)
+     ↓
+Response goes back to the Browser
+
+
+📌✅NOTE : Without the views and model also we can create the web app, But we need the pipeline and atleast one controller with one action Method, so that The route can reach and the URL is hit.

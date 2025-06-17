@@ -1,0 +1,388 @@
+ASP .NET Core 6---
+------------------------------------
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+
+📌✅✅✅✅✅✅✅✅✅📌CH : Request Processing Pipeline📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] Request Processing Pipeline
+
+📌Request Processing Pipeline:
+The ASP.NET Core request processing pipeline is a series of middleware components that handle incoming HTTP requests and responses in an ASP.NET Core Web application.
+-Each middleware component is responsible for a specific task, such as authentication, routing, logging, caching, encryption and decryption, response generation, etc. The pipeline is configured in the Program class of an ASP.NET Core application.
+
+DIAGRAM :
+Request
+│
+├─ ExceptionHandler
+├─ HSTS
+├─ HttpsRedirection
+├─ Static Files
+├─ Routing
+├─ CORS
+├─ Authentication
+├─ Authorization
+├─ Custom middlewares (Custom1 → Custom ...)
+│
+Endpoint
+
+-The above diagram shows the ASP.NET Core Request Processing Pipeline and the sequence in which middleware components should registered and executed when a request is processed in an ASP.NET Core application.
+
+Explanation of Each Step:
+
+-Request: The incoming HTTP request enters the pipeline. This is where the incoming HTTP request enters the pipeline. Each middleware component in the pipeline can inspect, modify, or pass the request to the next component.
+-ExceptionHandler: Handles exceptions that occur during request processing.  If an unhandled exception occurs, it handles it, logs it, and returns a proper error response, usually a custom error page or a JSON error message. 
+-HSTS: Enforces HTTP Strict Transport Security (redirects HTTP to HTTPS). This middleware enforces strict security policies, telling browsers to only interact with the application over HTTPS. This means this middleware ensures that the application only serves content over HTTPS and prevents any HTTP requests by enforcing strict transport security policies. This middleware is often used in production environments to enhance security.
+-HttpsRedirection: Redirects HTTP requests to HTTPS.his middleware redirects HTTP requests to HTTPS. By redirecting any HTTP request to HTTPS, this middleware ensures that all traffic is encrypted for security.
+-Static Files: Serves static files (e.g., CSS, JS, images) if the request matches a file.  This middleware enables static files like HTML, CSS, JavaScript, and images to be served directly without passing them through the rest of the pipeline
+-Routing: Determines which endpoint (e.g., controller action) will handle the request.  This middleware maps the incoming request to a route, allowing the application to handle it appropriately. Based on URL patterns and route configurations defined in the application, this middleware determines which controller and action will handle the incoming HTTP request.
+-CORS: Handles Cross-Origin Resource Sharing policies. This middleware handles CORS policies (cross-origin requests), allowing or denying requests from different origins. CORS is important for accessing resources from different domains and is essential for APIs used by frontend applications hosted on different origins.
+-Authentication: Authenticates the user (e.g., cookie, JWT).This middleware handles the authentication or identity of the user or client making the request by validating credentials (e.g., JWT tokens, cookies, etc.). It ensures that the user is authenticated before reaching certain parts of the application.
+-Authorization: Checks if the authenticated user has permission to access the resource. This middleware determines whether an authenticated user is allowed to access a specific resource or endpoint
+-Custom Middlewares: Additional middleware(s) added by the developer, executed in order. This represents any custom middleware components you may have added to the pipeline. These custom middleware components can perform various operations on the request or response, such as logging, request modification, caching, modifying headers, custom validation, etc.
+-Endpoint: The final step where the request is processed by the selected endpoint (e.g., MVC controller, Razor Page, API action).This is the target of the request, such as a controller action in MVC, Web API, or a Razor Page. The endpoint processes the request and generates a response.
+-Response: After the endpoint generates a response, it goes back through the pipeline, allowing each middleware component to modify it before sending it back to the client.
+
+✅[#2] Request Processing Pipeline eg:
+
+Key Concepts:
+1: Use() middleware:
+Can do something before calling next(), then pass control to the next middleware. After the next middleware finishes, it can do something after too (on the way back). So it can run code before and after the rest of the pipeline.
+2: Run() middleware:
+Is a terminal middleware, meaning it handles the request and does NOT call next middleware. This is usually the last piece in the pipeline for this request.
+3: Middleware: Software components that handle HTTP requests and responses.
+4: app.Use(): Registers middleware that can call the next middleware in the pipeline.
+5: app.Run(): Registers terminal middleware that handles the request and does NOT call the next middleware.
+6: Request Flow: How an incoming request moves forward through middleware.
+7: Response Flow: How the response moves backward through middleware after the endpoint is reached.
+
+📌EXAMPLE:
+-We will create a request processing pipiline(which is  noth but middlewere components pipeline)
+-we are registering three middleware components into the Request Processing Pipeline. As you can see, the first two middleware components are registered using the Use() extension method, so they have the chance to call the next middleware component in the request processing pipeline. The last one is registered using the Run() Extension Method as it will be our terminating components, i.e., it will not call the next component. 
+
+-🗂: Program.cs
+-👇 Code:
+namespace FirstCoreWebApplication
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // WebApplication.CreateBuilder is a static method from Microsoft.AspNetCore.Builder.WebApplication class
+            // It creates a WebApplicationBuilder instance to configure and build the web app.
+            var builder = WebApplication.CreateBuilder(args);
+
+            // builder.Build() is a method of WebApplicationBuilder class.
+            // It builds the WebApplication instance which hosts the middleware pipeline.
+            var app = builder.Build();
+
+            // =====================
+            // Register middleware components into the HTTP request pipeline.
+            // Middleware components are delegates that receive an HttpContext and a "next" function.
+            // =====================
+
+            // First Middleware Component
+            // app.Use() extension method is from Microsoft.AspNetCore.Builder.UseMiddlewareExtensions class.
+            // Registers middleware that can perform work both before and after the next middleware executes.
+            app.Use(async (context, next) =>
+            {
+                // Write to the HTTP Response stream before passing request to next middleware.
+                // context.Response.WriteAsync() method is from Microsoft.AspNetCore.Http.HttpResponse class.
+                await context.Response.WriteAsync("Middleware1: Incoming Request\n");
+
+                // Call the next middleware component in the pipeline.
+                // 'next' is a delegate Func<Task> representing the next middleware.
+                await next();
+
+                // After the next middleware has run, write to the HTTP Response stream.
+                await context.Response.WriteAsync("Middleware1: Outgoing Response\n");
+            });
+
+            // Second Middleware Component
+            // Again using app.Use() to register middleware that surrounds the next delegate.
+            app.Use(async (context, next) =>
+            {
+                await context.Response.WriteAsync("Middleware2: Incoming Request\n");
+                await next();
+                await context.Response.WriteAsync("Middleware2: Outgoing Response\n");
+            });
+
+            // Third Middleware Component
+            // app.Run() extension method is from Microsoft.AspNetCore.Builder.UseMiddlewareExtensions class.
+            // Registers terminal middleware that handles the request and does NOT call next middleware.
+            app.Run(async (context) =>
+            {
+                // Write the final response indicating that the request is handled.
+                await context.Response.WriteAsync("Middleware3: Incoming Request handled and response generated\n");
+                // Since this middleware does not call 'next()', it terminates the pipeline.
+            });
+
+            // Starts the web application and begins listening for HTTP requests.
+            // app.Run() here is a method of Microsoft.AspNetCore.Builder.WebApplication class.
+            app.Run();
+        }
+    }
+}
+
+-When an HTTP request arrives, it goes to the first middleware (Middleware1), which writes "Middleware1: Incoming Request" to the response.
+
+-Middleware1 calls the next middleware (Middleware2), which writes "Middleware2: Incoming Request" and calls the next middleware.
+
+-The third middleware (Middleware3) handles the request, writes "Middleware3: Incoming Request handled and response generated," and does not call any further middleware (it’s terminal).
+
+-After Middleware3 finishes, control returns back to Middleware2, which writes "Middleware2: Outgoing Response."
+
+-Then control returns back to Middleware1, which writes "Middleware1: Outgoing Response."
+
+-Middleware components run in the order they are added for incoming requests, and in reverse order for outgoing responses.
+
+-Middleware can do work before and after calling the next middleware using the next() function.
+
+-Middleware can also stop the pipeline by not calling next() (short-circuiting).
+
+-The order of middleware matters a lot for app security, performance, and behavior
+
+📌Summary of important functions/classes from comments:
+WebApplication.CreateBuilder()
+Creates builder to configure app (class: WebApplication, namespace: Microsoft.AspNetCore.Builder).
+
+builder.Build()
+Builds WebApplication instance.
+
+app.Use()
+Registers middleware that can call next middleware (extension method on IApplicationBuilder).
+
+app.Run()
+Registers terminal middleware that handles request and does not call next (extension method on IApplicationBuilder).
+
+context.Response.WriteAsync()
+Writes string asynchronously to HTTP response body (class: HttpResponse, namespace: Microsoft.AspNetCore.Http).
+
+app.Run() (last line)
+Starts the application and listens for incoming HTTP requests.
+
+
+📌✅✅✅✅✅✅✅✅✅📌CH : WWWROOT FOLDER📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] wwwroot folder INTRO:
+
+📌wwwroot folder:
+-the wwwroot folder is the designated Web Root directory where static files are stored and served to clients. This folder, located in the project root by default, contains static assets like images, CSS, JavaScript, and other resources accessible to clients via direct URLs.
+
+Key Characteristics of the wwwroot Folder
+Default Location: The wwwroot folder sits at the root level of an ASP.NET Core project.
+Direct Access to Files: Files within wwwroot are directly accessible by clients via relative URLs. For instance, a file named styles.css in wwwroot/css can be accessed as http://<your-app-url>/css/styles.css.
+Static Files Middleware: To serve files from wwwroot, we must use the UseStaticFiles middleware in the application’s middleware pipeline.
+Enhanced Security: Files located outside wwwroot aren’t publicly accessible, which helps safeguard application logic and sensitive files. Only files within wwwroot or subdirectories are served to clients, enhancing security by preventing unauthorized access to server code.
+
+📌Can we rename the wwwroot Folder in ASP.NET Core (.NET 6)?
+-Yes, we can rename the wwwroot folder to another name and specify it as the Web Root directory. In that case, we need to use the other overloaded version of the CreateBuilder method, which takes the WebApplicationOptions instance as a parameter.
+-How to rename the wwwroot folder?
+Renaming the folder is simple but requires you to explicitly tell ASP.NET Core that the new folder is your Web Root Path (i.e., the directory that should serve static files).
+-WebApplication.CreateBuilder method has an overloaded version that takes a WebApplicationOptions object. Which uh need to pass whem uh modify the wwwroot folder name.
+-WebApplicationOptions is a class that lets you specify various application configuration options during startup, such as:
+WebRootPath — the folder to use as web root (for static files)
+Args — command-line arguments
+EnvironmentName — the current environment (e.g., Development, Production)
+ContentRootPath — the root directory of your app content and config files
+
+✅[#2] webApplicationOptions Class :
+
+📌webApplicationOptions Class:
+-The WebApplicationOptions class plays an important role in configuring the properties of a WebApplicationBuilder, which is used to create an instance of a WebApplication.  EG :var builder = WebApplication.CreateBuilder(args);
+-So, using the WebApplicationOptions Class, we can set and get the Application Environment Name, Application Name, Web Root Path, Content Root Path, command-line arguments, etc.
+
+EG: let’s rename the wwwroot folder to the MyWebRoot folder.
+PROCESS:
+
+STEP  1: To do this, we need to create an instance of WebApplicationOptions, set the WebRootPath property to the new folder name (we can also set any other properties like Args, ContentRootPath, EnvironmentName, etc), and pass this instance to the CreateBuilder method.
+-let’s rename the wwwroot folder to the MyWebRoot folder.
+
+STEP 2: modify the Program class as shown below to configure the MyWebRoot folder as the webroot folder for our application.
+🗂: program.cs
+👇 Code
+namespace FirstCoreWebApplication
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Step 1: Create an instance of the WebApplicationOptions class
+            // Class: Microsoft.AspNetCore.Builder.WebApplicationOptions
+            // Purpose: To configure options for the WebApplication, including
+            // the WebRootPath (static files folder), command-line arguments (Args),
+            // and the environment name (e.g., Development, Production)
+            WebApplicationOptions webApplicationOptions = new WebApplicationOptions
+            {
+                WebRootPath = "MyWebRoot",   // Set custom static files folder instead of default "wwwroot"
+                Args = args,                  // Pass command-line arguments to the application
+                EnvironmentName = "Production"// Set the environment name to "Production"
+            };
+
+            // Step 2: Use the WebApplication.CreateBuilder method overload that accepts WebApplicationOptions
+            // Method: static WebApplicationBuilder WebApplication.CreateBuilder(WebApplicationOptions options)
+            // Class: Microsoft.AspNetCore.Builder.WebApplication
+            // Purpose: To initialize a new WebApplicationBuilder instance configured with the specified options
+            var builder = WebApplication.CreateBuilder(webApplicationOptions);
+
+            // Step 3: Build the WebApplication instance from the builder
+            // Method: WebApplicationBuilder.Build()
+            // Class: Microsoft.AspNetCore.Builder.WebApplicationBuilder
+            // Purpose: Finalize the setup and create the WebApplication (the actual app/server)
+            var app = builder.Build();
+
+            // Step 4: Define an HTTP GET endpoint at the root URL ("/")
+            // Method: IEndpointRouteBuilder.MapGet(string pattern, Delegate handler)
+            // Class: Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions (extension method)
+            // Purpose: Map a handler function that returns environment details as a response
+            app.MapGet("/", () => 
+                $"EnvironmentName: {app.Environment.EnvironmentName} \n" +   // Get current environment name
+                $"ApplicationName: {app.Environment.ApplicationName} \n" +   // Get application name
+                $"WebRootPath: {app.Environment.WebRootPath} \n" +           // Get path for static files
+                $"ContentRootPath: {app.Environment.ContentRootPath}");      // Get root path of app content
+
+            // Step 5: Run the application
+            // Method: WebApplication.Run()
+            // Class: Microsoft.AspNetCore.Builder.WebApplication
+            // Purpose: Start the Kestrel web server and listen for incoming HTTP requests
+            app.Run();
+        }
+    }
+}
+
+Explanation Recap:
+WebApplicationOptions (Microsoft.AspNetCore.Builder.WebApplicationOptions):
+Used to specify app startup configuration like custom static files folder (WebRootPath), environment name, and command-line args.
+
+CreateBuilder(WebApplicationOptions) (Microsoft.AspNetCore.Builder.WebApplication):
+Initializes the app builder with these options.
+
+Build() (Microsoft.AspNetCore.Builder.WebApplicationBuilder):
+Finalizes configuration and prepares the app to run.
+
+MapGet() (Extension method on IEndpointRouteBuilder):
+Defines an endpoint to handle GET requests for the root URL ("/"), returning environment info.
+
+Run() (Microsoft.AspNetCore.Builder.WebApplication):
+Runs the application by starting the web server.
+
+OUTPUT:
+As you can see in the above output, the MyWebRoot folder will now act as the Webroot folder for our application and can serve static file HTTP requests.
+
+📌Key Properties of WebApplicationOptions:
+-ApplicationName: The ApplicationName property of the WebApplicationOptions class is used to get or set the application’s name. 
+-ContentRootPath: Defines the absolute path to the application’s root directory, where content files (like configuration files) are stored. This is the base for accessing content such as appsettings.json and .cshtml files for Razor Pages.
+-EnvironmentName: The EnvironmentName property of the WebApplicationOptions class specifies the environment in which the application is running. This could be Development, Staging, and Production.
+-WebRootPath: The WebRootPath property of the WebApplicationOptions class specifies the path to the root directory of static content, commonly known as the wwwroot folder in the ASP.NET Core application.
+-Args: The Args property of the WebApplicationOptions class represents the command-line arguments passed to the application. It’s an array of strings (string[]).
+
+✅[#3] STATIC FILE MIDDLEWERE :
+
+📌Static files: 
+Every modern web application (like websites or web apps) includes static files. These are files that do not change and are sent directly to the browser as they are.
+🔹Examples of static files:
+HTML files
+CSS (styling) files
+JavaScript (functionality) files
+Images (like PNG, JPG, SVG)
+
+-By default, ASP.NET Core does not allow clients (browsers) to access static files.
+To enable static file serving:
+You must create a special folder for static files (default: wwwroot)
+And enable static file handling in your code using app.UseStaticFiles() middlewere.
+
+📌How UseStaticFiles() Middleware Works Internally
+Here's what happens when you use UseStaticFiles():
+Intercepts the request: If a browser asks for a file (like /MyImage.png), this middleware catches the request.
+Matches the path: It checks if the requested file exists in wwwroot (or your custom folder).
+Serves the file: If found, the file is returned directly to the browser.
+Skips rest of the pipeline: It avoids running any extra logic (like MVC, Razor pages, etc.)
+Sends headers: It sends correct headers like Content-Type (e.g., for .png, it sends image/png).
+
+📌 Custom Static Files Directory (Custom Webroot)
+What if you don't want to use wwwroot?
+Let’s say you want to use a folder named MyWebRoot instead.
+
+Step 1️⃣: Rename wwwroot to MyWebRoot
+Step 2️⃣: Tell ASP.NET Core to use it
+Change your Program.cs:
+🗂: Program.cs
+👇 Code:
+// Required namespaces for ASP.NET Core minimal API
+using Microsoft.AspNetCore.Builder;         // Provides WebApplication and WebApplicationBuilder classes
+using Microsoft.Extensions.Hosting;         // Provides hosting-related classes like WebApplicationOptions
+
+// --------------------------------------
+// Step 1: Create the WebApplicationBuilder
+// --------------------------------------
+
+// WebApplication.CreateBuilder is a static method that initializes the application's services and configuration.
+// We're passing a new WebApplicationOptions object to customize options for the app's host configuration.
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    // WebRootPath sets the folder for serving static files like .html, .css, .js.
+    // By default, it is "wwwroot", but here we are changing it to "MyWebRoot".
+    WebRootPath = "MyWebRoot" // 👈 Custom static files directory
+});
+
+// --------------------------------------
+// Step 2: Build the WebApplication
+// --------------------------------------
+
+// builder.Build() finalizes the setup and returns a WebApplication object,
+// which represents the actual app that can process HTTP requests.
+var app = builder.Build();
+
+// --------------------------------------
+// Step 3: Configure Middleware to Serve Static Files
+// --------------------------------------
+
+// app.UseStaticFiles() adds middleware to the HTTP request pipeline to serve static files
+// like images, CSS, JavaScript, or HTML from the directory specified in WebRootPath.
+// It comes from the StaticFileMiddleware, and it looks inside "MyWebRoot" folder for files.
+app.UseStaticFiles(); // Enable serving static files
+
+// --------------------------------------
+// Step 4: Map a Simple HTTP GET Endpoint
+// --------------------------------------
+
+// app.MapGet is an extension method (from Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions).
+// It maps an HTTP GET request to the root URL ("/") to a handler that returns "Hello World!".
+// This sets up a simple endpoint at http://localhost:port/ that responds with plain text.
+app.MapGet("/", () => "Hello World!");
+
+// --------------------------------------
+// Step 5: Run the Application
+// --------------------------------------
+
+// app.Run() starts the web application and listens for incoming HTTP requests.
+// It is a blocking call that runs the app until it is stopped (e.g., with Ctrl+C).
+app.Run();
+//Now, ASP.NET Core will look for static files in MyWebRoot instead of wwwroot.
+
+🔍 Summary of Key Components:
+| Component                        | Description                                                                                   |
+| -------------------------------- | --------------------------------------------------------------------------------------------- |
+| `WebApplicationOptions`          | Class used to set options for the application like content root, web root, etc.               |
+| `WebApplication.CreateBuilder()` | Initializes a builder for setting up configuration, logging, and services.                    |
+| `WebApplicationBuilder`          | Helps register services and middleware before building the app.                               |
+| `UseStaticFiles()`               | Middleware that serves static files (e.g., `.html`, `.css`, `.js`) from the specified folder. |
+| `MapGet()`                       | Maps a GET HTTP endpoint to a delegate that handles the request.                              |
+| `Run()`                          | Starts the HTTP server using Kestrel and begins processing requests.                          |
+
+

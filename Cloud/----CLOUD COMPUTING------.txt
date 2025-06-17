@@ -1,0 +1,276 @@
+----BEFORE CLOUD COMPUTING--
+-Uh need to buy physical computers and hardwares for storeage which are of High ram and rom
+-if the traffic is low then the hardware and the devices which uh have purchased will be waste, not in use, so uh can rent the servers as uh need them instead of renting them
+-But in Cloud computing, The cost is more, becoz even if uh are paying the rent but at the end if uh would have buyed the things it would have cost less in long terms. but for this uh need to invest lot of money in the beggnining only.
+
+
+------CLOUD COMPUTING------
+
+-what is Cloud
+Cloud is basically a network, A location where our
+servers are kept.
+-Cloud refers to the servers that are accessed over the internet which are present at remote(any geographicaly locaiton).
+-Cloud computing is like using a powerful computer over the internet instead of your own device. It lets you store data, run applications, and access services without needing to buy or maintain expensive hardware.
+-, instead of saving your photos on your phone or laptop, you store them on Google Drive or OneDrive and access them from anywhere. Similarly, companies use cloud computing to run websites, store customer data, and process information without having to manage physical servers.
+
+SERVERS :A server is a computer or system that provides services, data, or resources to other computers (called clients) over a network.
+
+-A server is a powerful computer with high RAM, multiple CPU cores, and large storage that is located in a data center somewhere in the world. It is used to host websites, store data, and run applications so that people can access them over the internet.
+
+-Simple Example:
+Think of a restaurant:
+The server (waiter) takes requests (orders) from customers and brings them food.
+The customers (clients) make requests and receive what they need.
+Similarly, in computing:
+A web server hosts websites and delivers web pages when you visit a site.
+A database server stores and manages data for applications.
+A file server stores and shares files among users.
+A server can be a physical machine (a powerful computer) or a virtual machine running in the cloud. 
+
+CLOUD COMPUTING:
+-its the on demand renting of services like servers, hardware, storage, networking services, database services.
+-Pay as uh go model 
+
+
+----------------------DIFF TYPES OF CLOUD------------------
+
+1. Public Cloud (Owned by Cloud Providers AWS/Azure)
+
+-In a public cloud, services like storage, computing power, and databases are provided over the internet by companies like AWS, Azure, or Google Cloud.
+-A Public Cloud is a cloud computing model where computing resources such as servers, storage, and networking are owned, managed, and operated by third-party cloud service providers and made available to the public over the internet.
+-The customer (the one renting the cloud) does not have direct control over these physical resources but can configure and use them as per the provider's policies.
+-Example: Google Drive, Gmail, Microsoft OneDrive – You don’t own the servers but can use the storage and services online
+
+
+-What Does "No Direct Control" Mean?
+❌ No Control Over Physical Servers – Customers don’t own or manage hardware; the provider handles maintenance and upgrades.
+⚙️ Limited Customization – Users configure VMs, containers, and databases but can’t modify underlying hardware.
+🔒 Security & Compliance – Cloud provider secures infrastructure; users must follow security guidelines.
+🤝 Shared Responsibility – Provider manages infrastructure, while customers secure their data and applications.
+
+
+
+2. Private Cloud (Owned by a Single Organization)
+-A private cloud is used exclusively by one company and is either hosted on-premises (within the company) or in a dedicated cloud provider's data center.
+-Example: A bank like SBI or HDFC using its own cloud to store sensitive customer data securely
+
+PRIVATE CLOUD IS MADE BY :
+-companies that use a private cloud usually buy their own hardware (servers, storage, and networking devices) and set up a private cloud environment in one of two ways:
+
+--1. On-Premises Private Cloud (Self-Hosted)
+The company buys and installs high-performance servers, storage, and networking equipment in its own data center or office.
+IT teams use virtualization (e.g., VMware, Hyper-V) or cloud platforms (e.g., OpenStack) to create a cloud-like infrastructure.
+Data and applications are stored inside the company’s own premises, ensuring full control and security.
+
+--2. Hosted Private Cloud (Third-Party Data Centers)
+-Instead of setting up a cloud in their office, companies rent dedicated hardware from cloud providers like AWS, Microsoft Azure, or IBM Cloud but keep full control over data and applications.
+This ensures security while eliminating the need to maintain physical hardware.
+-This is like public cloud but there is diff between public cloud and Hosted Private Cloud.The key difference between Public Cloud and Hosted Private Cloud (also called Managed Private Cloud) is how resources are allocated and who has control over them.
+
+Public vs. Hosted Private Cloud - Quick Comparison
+Feature	Public Cloud (AWS, Azure)	Hosted Private Cloud (AWS, Azure)
+Hardware	Shared with others	Dedicated to one company
+Security	Moderate	High (Custom security)
+Control	Limited	Full control
+Customization	Standard options	Highly customizable
+Use Case	General workloads	Secure, regulated industries
+
+-Like in this Private cloud, if a company is rentuing a private cloud from the AWS/AZURE then the whole one server(one big room) is reserved for them, no other user us sharing the server from the rack of Servers, The whole room is owned by the company for a leace period of time(100 years).
+
+-What Does "Resources Are Shared" Mean in Public Cloud?
+In a public cloud, multiple customers (companies or individuals) use the same underlying physical infrastructure—servers, storage, and networking—provided by cloud providers like AWS, Azure, or Google Cloud. 
+These resources are virtualized and distributed among multiple users.
+Example of Shared Resources in Public Cloud:
+Let’s say Company A and Company B both host their websites on AWS public cloud.
+AWS runs their websites on the same physical server, but each company gets a virtual machine (VM).
+These virtual machines share the CPU, RAM, and storage of the underlying physical server.
+If Company A's website gets a traffic spike and consumes more CPU, it might slow down Company B's website because they share the same resources.
+📌 Real-Life Analogy:
+Imagine you are living in an apartment building (public cloud):
+You have your own apartment (VM), but the electricity, water, and internet (resources) are shared with other tenants.
+If one tenant uses too much electricity, others might experience fluctuations.
+
+
+-How Hosted Private Cloud is Different?
+Hosted private cloud means, The companies are renting the Entire Building for their use only, Companies are not renting a particular Apartment from the Building. So now the entire water, electriucity ,and internet resources are being used by the company who rents the whole apartment, This is called Hosted Private cloud, The company has more control on the building.
+In a hosted private cloud, the cloud provider (e.g., AWS, Azure) allocates dedicated physical servers only for one company.
+Example of Dedicated Resources in Hosted Private Cloud:
+If Company X rents a private cloud from AWS:
+AWS provides dedicated physical servers that only Company X can use.
+No other company shares the CPU, RAM, or storage of these servers.
+Even if another company experiences a traffic spike, Company X’s performance remains unaffected because it has isolated resources.
+📌 Real-Life Analogy:
+This is like living in your own private villa (private cloud):
+You don’t share electricity, water, or internet with anyone else.
+No one else’s usage affects your resources.
+
+
+3. Hybrid Cloud (Mix of Public + Private Cloud)
+A hybrid cloud combines both public and private clouds, allowing businesses to use public cloud for less sensitive tasks and private cloud for critical operations.
+Example: An e-commerce site using a public cloud for website traffic but a private cloud for handling secure payment processing.
+
+
+----------------------------SERVICE MODELS OF CC-----------------------
+
+1. IaaS (Infrastructure as a Service) – Renting Hardware
+💡 Think of it as renting virtual computers instead of buying physical ones.
+Cloud providers (AWS, Azure, GCP) give you virtual machines, storage, and networking, but you manage the software yourself.
+You install your own OS, applications, and databases on top of this infrastructure.
+📌 Real-Life Analogy:
+🛠 IaaS is like renting an empty house – You get the structure, but you need to bring your own furniture, appliances, and manage everything inside.
+✅ The cloud provider manages the hardware, virtualization, and networking.
+✅ The user manages the operating system, applications, and databases.
+-user need to select which Os it requies, Whats the Confugration of the CPU, RAM, What are the softwares uh need to install on that VM (like python, Java, .net) etc.
+-In this The cloud provider will just provide uh the infrastructure(Empty Computer), in which uh need to install the Os, Ram, Softwares(python,java, .net).
+
+Real-Life Analogy: Renting a House
+🏡 IaaS is like renting an empty house – The cloud provider gives you the building (hardware), but you need to:
+🔹 Set up furniture (OS, software).
+🔹 Manage utilities (networking, storage).
+🔹 Maintain security (firewalls, IAM).
+
+AWS provides several services under IaaS, including:
+
+Compute Services
+-Computing services refer to cloud-based resources that provide processing power, memory, and execution environments for running applications, handling workloads, and managing data.
+✅ Amazon EC2 (Elastic Compute Cloud) – Virtual Machines with customizable specs.
+✅ AWS Lambda (Limited IaaS) – Serverless computing (abstracts infrastructure).
+✅ Amazon Lightsail – Simplified cloud hosting for small apps.
+
+Storage Services
+✅ Amazon EBS (Elastic Block Store) – Persistent storage for EC2 instances.
+✅ Amazon S3 (Simple Storage Service) – Object storage for scalable data storage.
+✅ Amazon Glacier – Long-term archival storage.
+
+Networking Services
+✅ Amazon VPC (Virtual Private Cloud) – Private network space for AWS resources.
+✅ AWS Elastic Load Balancer (ELB) – Distributes traffic across multiple EC2 instances.
+✅ AWS Route 53 – Scalable domain name system (DNS).
+
+Security & Access Management
+✅ AWS IAM (Identity and Access Management) – Control access to AWS resources.
+✅ AWS Security Groups & NACLs – Firewall rules for controlling network traffic.
+✅ AWS Direct Connect – Private network connection to AWS.
+
+
+2. PaaS (Platform as a Service) – Renting a Ready-Made Environment
+-💡 Think of it as a fully managed platform to build and run applications.
+The cloud provider manages the OS, runtime, databases, and development tools.
+You only focus on writing and running your application code.
+No need to worry about hardware, OS updates, or infrastructure management.
+
+PaaS (Platform as a Service) is a cloud computing model where you get a ready-made platform to develop, deploy, and manage applications without worrying about infrastructure (servers, networking, storage, OS updates, etc.).
+The cloud provider takes care of the hardware, operating system, runtime, and databases.
+You only need to write your application code and deploy it.
+No need to set up or maintain servers.
+
+How PaaS Works (Step-by-Step):
+1️⃣ You write your application code.
+2️⃣ You upload it to a PaaS platform (like AWS Elastic Beanstalk).
+3️⃣ The platform automatically manages deployment(os, Storage, Seting up the Vm(like installing nesesary softwares, pyton, java etc)), scaling, and updates.
+4️⃣ Your app is live and accessible on the internet without manual setup.
+
+Real-Life Analogy
+👨‍🍳 PaaS is like renting a fully equipped kitchen –
+You bring the ingredients (your application code).
+The kitchen provides the stove, gas, utensils, and electricity (infrastructure, databases, security).
+You only focus on cooking your dish (building your app).
+No need to buy appliances, manage repairs, or pay for gas separately.
+
+AWS Services Under PaaS
+1️⃣ Application Hosting & Deployment
+✅ AWS Elastic Beanstalk – Deploy web apps without managing servers.
+✅ AWS App Runner – Run containerized apps without configuring infrastructure.
+✅ AWS Lambda (Limited PaaS) – Execute functions without provisioning servers.
+
+2️⃣ Database Services
+✅ Amazon RDS (Relational Database Service) – Managed SQL databases (MySQL, PostgreSQL, etc.).
+✅ Amazon DynamoDB – Managed NoSQL database for fast performance.
+✅ AWS Aurora – Scalable relational database with auto-recovery.
+
+3️⃣ Developer & AI/ML Services
+✅ AWS Amplify – Managed backend for web & mobile apps.
+✅ Amazon SageMaker – Managed machine learning platform.
+
+4️⃣ API Management & Messaging
+✅ Amazon API Gateway – Create, secure, and manage APIs without setting up a server.
+✅ AWS Step Functions – Automate workflows between cloud services.
+
+
+PaaS vs IaaS – What’s the Difference?
+Feature	IaaS (Infrastructure as a Service)	PaaS (Platform as a Service)
+Control	Full control over servers, OS, networking.	Limited control; only manage code & apps.
+Setup	Need to set up VMs, OS, and databases.	Pre-configured; just deploy code.
+Scaling	Manual scaling required.	Auto-scaling available.
+Example	AWS EC2, S3, VPC.	AWS Elastic Beanstalk, RDS, Lambda.
+
+
+3. SaaS (Software as a Service) – Renting Ready-to-Use Software
+💡 Think of it as using software without installing anything.
+The provider manages everything (hardware, OS, application, updates).
+You just use the software via a web browser or app.
+No need to install, update, or maintain anything
+
+SaaS (Software as a Service) is a cloud computing model where you use software over the internet without having to install, maintain, or update anything.
+The cloud provider manages everything – servers, storage, networking, security, and software updates.
+You just access the software via a web browser or an app.
+No need to worry about hardware, software installation, or maintenance
+
+How SaaS Works (Step-by-Step):
+1️⃣ You sign up for a SaaS application (e.g., Gmail, Microsoft 365).
+2️⃣ You log in via a web browser or mobile app.
+3️⃣ You use the software without installing or maintaining anything.
+4️⃣ The provider handles updates, security, and performance in the background.
+
+Key Features of SaaS
+✔️ No Installation Required – Access software via a browser/app.
+✔️ Automatic Updates – The provider handles upgrades and bug fixes.
+✔️ Pay-as-You-Go Pricing – Pay a subscription fee (monthly/yearly).
+✔️ Scalability – Easily increase or decrease usage based on needs.
+✔️ Accessibility – Use software from anywhere with an internet connection.
+
+Real-Life Analogy
+🍽 SaaS is like dining at a restaurant –
+
+The restaurant (cloud provider) cooks, serves, and cleans up (manages infrastructure, updates, and security).
+You just sit, order, and eat (use the software).
+No need to buy groceries, cook, or do dishes (no installation or maintenance required).
+
+Examples of SaaS in Real Life
+✅ Gmail – Web-based email service.
+✅ Google Drive – Cloud storage without the need for local storage.
+✅ Microsoft 365 – Online versions of Word, Excel, PowerPoint.
+✅ Netflix – Streaming movies and shows without downloading.
+✅ Zoom – Video conferencing without setup.
+
+AWS Services Under SaaS
+1️⃣ Business & Productivity Tools
+✅ Amazon WorkDocs – Cloud-based document storage and collaboration (like Google Drive).
+✅ Amazon WorkMail – Managed business email service (like Gmail).
+✅ Amazon Chime – Video conferencing and online meetings (like Zoom).
+
+2️⃣ Data & Analytics Services
+✅ Amazon QuickSight – Business intelligence and data visualization (like Power BI).
+✅ AWS Data Exchange – Marketplace for third-party data sets.
+
+3️⃣ Machine Learning & AI
+✅ Amazon Rekognition – Image and video analysis.
+✅ Amazon Comprehend – Natural language processing (NLP).
+✅ Amazon Lex – AI chatbot service (like Google Assistant).
+
+4️⃣ Security & Management
+✅ AWS Shield – DDoS protection for applications.
+✅ AWS WAF (Web Application Firewall) – Protects web apps from online threats.
+
+
+SaaS vs PaaS vs IaaS – What's the Difference?
+Feature	SaaS (Software as a Service)	PaaS (Platform as a Service)	IaaS (Infrastructure as a Service)
+Who Manages It?	Cloud provider manages everything.	Cloud provider manages infrastructure & runtime.	Cloud provider manages hardware, user manages OS & apps.
+User Responsibility	Just use the software.	Develop & deploy apps.	Manage OS, apps, networking.
+Setup Required?	No setup needed.	Some setup needed for deployment.	Full setup required (VMs, storage, networking).
+Example Services	Gmail, Netflix, Microsoft 365.	AWS Elastic Beanstalk, Azure App Services.	AWS EC2, Google Compute Engine.
+Summary
+📌 SaaS = Fully ready software, just use it (e.g., Gmail, Netflix).
+📌 PaaS = Ready-made platform, you write the code (e.g., AWS Elastic Beanstalk).
+📌 IaaS = Virtual hardware, you set up everything (e.g., AWS EC2).
+	

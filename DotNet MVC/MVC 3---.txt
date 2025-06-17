@@ -1,0 +1,535 @@
+------------------------------------
+📌✅✅📌: FOR CH NAME
+✅[#1] : FOR HASHTAG POINTS
+📌: FOR POINTS
+🔄: for eg
+----- : FOR NEW HASHTAG (✅[#1])
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+WHAT IS RESTFUL API
+WHAT ARE CURD OPERATIONS
+WHAT ARE HTTPS REQUEST(GET/POST/DELETE).
+WHAT IS API.
+WHAT IS ROUNTING
+
+📌✅✅✅✅✅✅✅✅✅📌CH :01 MVC INTRO📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] INTRO
+
+📌MVC INTRO :
+-MVC is a Archetecture Design Pattern, Which means it is used at the applications architecture level. So MVC is not a Programming language, Not a Framework, Its a Desing pattern.
+-Uh can also make use of MVC design pattern for developing Desktop, mobile applications
+-MVC design pattern was introduces in 1970s
+-It divides an application into three major components: Model, View, and Controller.
+-Main objective of this pattern is the separation of concerns.
+
+📌DIAGRAM :
++---------+         +-------------+         +---------+         +----------+
+| Client  | <-----> | Controller  | ------> | Model   | <-----> | Database |
++---------+   Req   +-------------+         +---------+         +----------+
+     ^                    |                       ^
+     |                    |                       |
+     |                    |                       |
+     |                    |                       |
+     |                    ------->+--------+      |
+     +----------------------------|  View  | ------
+                                  +--------+
+
+🔁 How MVC Works Together (Flow)
+User sends a request (e.g., clicks a link or submits a form).
+Controller receives the request.
+Controller calls the Model to get data or process logic.
+Controller selects a View and passes the Model data to it.
+View generates HTML using the Model data.
+The generated HTML is sent back to the user’s browser.   
+
+📌MVC
+ 1. Model – Data and Business Logic
+What it does:
+It contains classes that represent data (e.g., Student, Product, Employee).
+It handles data storage, retrieval, and validation.
+It may interact with a database or other data sources.
+It includes business rules or logic (e.g., calculations, constraints).
+-The Model represents a set of classes used to describe the application’s validation, business, and data access logic.
+
+EG:
+-Student.cs
+namespace ASPNETCoreMVCApplication.Models
+{
+    public class Student //this class will be converted into DB table using ORM
+    {
+        public int StudentID { get; set; }
+        public string? Name { get; set; }
+        public string? Gender { get; set; }
+        public string? Branch { get; set; }
+        public string? Section { get; set; }
+    }
+}
+
+StudentBusinessLayer.cs
+namespace ASPNETCoreMVCApplication.Models
+{
+    public class StudentBusinessLayer //The StudentBusinessLayer class manages the student data, performs the CRUD operation, Validates the Student data, etc.
+    {
+        public IEnumerable<Student> GetAll()
+        {
+            //logic to return all employees
+            return new List<Student>();
+        }
+        public Student GetById(int StudentID)
+        {
+            //logic to return an employee by employeeId
+            Student student = new Student()
+            {
+                StudentID = StudentID,
+                Name = "James",
+                Gender = "Male",
+                Branch = "CSE",
+                Section = "A2",
+            };
+            return student;
+        }
+        public void Insert(Student student)
+        {
+            //logic to insert a student
+        }
+        public void Update(Student student)
+        {
+            //logic to Update a student
+        }
+        public void Delete(int StudentID)
+        {
+            //logic to Delete a student
+        }
+    }
+}
+
+
+2. View – User Interface (UI)
+-The View is the Component in the MVC Design pattern that contains the logic to represent the model data as a user interface with which the end-user can interact.
+- the view’s one and only responsibility is to render the model data
+What it does:
+It is responsible for displaying data to the user.
+It receives the Model from the Controller.
+It contains HTML + Razor syntax to generate the UI.
+It does not contain any business logic – only presentation.
+
+EG:For example, we want to display Student data on a web page. 
+@model ASPNETCoreMVCApplication.Models.Student
+
+<html>
+<head>
+    <title>Student Details</title>
+</head>
+<body>
+    <br />
+    <br />
+    <table>
+        <tr>
+            <td>Student ID: </td>
+            <td>@Model.StudentID</td>
+        </tr>
+        <tr>
+            <td>Name: </td>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <td>Gender: </td>
+            <td>@Model.Gender </td>
+        </tr>
+        <tr>
+            <td>Branch: </td>
+            <td>@Model.Branch</td>
+        </tr>
+        <tr>
+            <td>Section: </td>
+            <td>@Model.Section </td>
+        </tr>
+    </table>
+</body>
+</html>
+
+
+3. Controller – Request Handler
+-Controllers are essential for handling incoming HTTP requests, processing them, and returning appropriate responses in MVC and Web API applications. 
+-Based on the user action, the respective controller might work with the model, select a view to render the information, and then send the response back to the user who initially made the request.
+-the Controller is the component that will interact with both the models and views to control the application execution flow. 
+-a Controller is a .cs (for C# language) file with some methods called Action Methods.
+What it does:
+It is the entry point for any request made by the user.
+It receives the request from the browser (client).
+It decides what to do, like fetching data or saving input.
+It creates or gets data from the Model.
+It selects a View and passes the data to it for display.
+-CONTROLLER : It handles(servers the traffic) the incoming requests form the client(brouser).
+
+EG: In our example, when the user issued a request, the following URL
+https://localhost:7132/Student/Details/2
+-Then, that request is mapped to the Details action method of the Student Controller using the Routing defined for our application. 
+
+using ASPNETCoreMVCApplication.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ASPNETCoreMVCApplication.Controllers
+{
+    public class StudentController : Controller
+    {
+        public ActionResult Details(int studentId)
+        {
+            StudentBusinessLayer studentBL = new StudentBusinessLayer();
+            Student studentDetail = studentBL.GetById(studentId);
+
+            return View(studentDetail);
+        }
+    }
+}
+// the Student Controller creates the Student object within the Details action method. So, here, the Student is the Model. The controller uses the StudentBusinessLayer class to fetch the Student data from the database. 
+-Once the controller creates the Student model with the necessary student data, it passes the Student model to the Details view. 
+
+
+Note: The Controller and View depend on the Model in the MVC Design Pattern, but the Model never depends on either View or Controller.
+
+-----------------------------------------------------------
+
+✅[#2] FEATURES OF MVC
+
+📌Features of ASP.NET Core MVC (Short Points)
+Open Source
+Full source code available at GitHub.
+You can view, modify, or build your own version.
+Example: A developer customizes the MVC framework for a special feature.
+
+Built-In Dependency Injection
+Makes code more modular, testable, and maintainable.
+Example: Injecting a ILoggingService into a controller instead of manually creating it.
+
+Rich Routing System
+Allows clean, SEO-friendly URLs using route patterns.
+Example: /products/details/5 instead of /products.aspx?id=5.
+
+Support for Web APIs
+Easily create RESTful services returning JSON/XML.
+Example: /api/students returns a list of students in JSON format.
+
+Built-In Middleware Support
+Handles tasks like authentication, routing, sessions, etc.
+Example: Add authentication middleware to restrict access to certain pages.
+
+Tag Helpers in Razor
+Use HTML-like syntax to generate dynamic content.
+Example: <input asp-for="Email" /> auto-generates a form input for the Email property.
+
+📌When to Choose ASP.NET MVC vs ASP.NET Core MVC
+➤ Choose ASP.NET MVC (Legacy Framework):
+You are maintaining or upgrading an existing ASP.NET MVC app.
+Your app runs only on Windows servers.
+Your team has no experience with .NET Core.
+Example: An internal HR portal developed years ago using ASP.NET MVC 5
+
+➤ Choose ASP.NET Core MVC (Modern Framework):
+You want a cross-platform, open-source solution.
+You need better performance and scalability.
+You plan for long-term support and future upgrades (.NET 8, .NET 9, etc.).
+
+--------------------------------------------------------------------------------------
+================================CH CLOSEING SYMBOL====================================
+--------------------------------------------------------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH :02 CREATING MVC APPLICATION📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] STEPS :
+📌1) Creating a new ASP.NET Core Empty Application:
+
+- Steps to Create an Empty ASP.NET Core Application
+Open Visual Studio 2022
+Click "Create a new project".
+Choose Project Template
+Select "ASP.NET Core Empty" template.
+Click "Next".
+Configure Project
+Name: FirstCoreMVCWebApplication
+Choose a location and solution name.
+Click "Next".
+Set Additional Info
+Select .NET 6 or .NET 8
+
+Check:
+ Configure for HTTPS
+ Do not use top-level statements
+Click "Create".
+Project is Created
+Basic project structure appears (Program.cs, wwwroot folder, etc.)
+
+-By default, the Empty template does not include the MVC setup. Uh need to add th MVC set up into your application(asp.net Project)
+
+------------------ADDING MVC TO EMPTY ASP .NET APPS------------------------------------
+
+✅[#2] Goal: Set (Add) up MVC in an Exsisting ASP.NET Core Empty Application
+ 
+-Setting up the MVC (Model-View-Controller) in the ASP.NET Core Application involves two steps: Configuring the Required MVC Services and Middleware Components in the Request Processing Pipeline.
+-In simple words adding the MVC architecture is the first step.
+
+📌 Step 1: Add MVC Services to the Request Processing Pipeline:
+-First, we need to add the required MVC services to the Application Request Processing Pipeline
+-Why?
+-ASP.NET Core uses Dependency Injection (DI) to register and use features like MVC.
+To use Controllers, Views, TempData, etc., you must first register the MVC service.
+ASP.NET Core does not include MVC by default in an "Empty" project. We need to add MVC services manually.
+-How?
+In Program.cs, add this line to the service container:
+-The builder.Service.AddMVC() statement will include all the services required to develop the ASP.NET Core MVC application
+
+EG :
+var builder = WebApplication.CreateBuilder(args); 
+builder.Services.AddControllersWithViews();
+
+🔍 Explanation:
+AddMvc() → Adds full support for Controllers + Views.
+AddControllersWithViews() → Preferred in most MVC scenarios (we’ll compare both later).
+-🧠 Analogy: Think of this as enabling all the features of MVC in your project toolbox. Without this, you can't use Controllers or Views.
+
+This tells ASP.NET Core to enable Controllers + Views (MVC).
+It lets you use:
+Models
+Controllers
+Views
+ViewBag, ViewData, TempData
+
+📌 Step 2:  Create a Controller
+-all the Controllers should be in a specific folder named Controllers
+-add a new class file named HomeController.cs within the Controllers folder.
+-To make a class as a controller in ASP.NET Core MVC, that class must be inherited from the Controller base class.
+-This Controller base class belongs to Microsoft.AspNetCore.Mvc namespace.
+
+Create a Controllers folder (convention).
+Add a file HomeController.cs:
+
+EG: CODE OF HomeController.cs file 
+
+using Microsoft.AspNetCore.Mvc;
+namespace FirstCoreMVCWebApplication.Controllers
+{
+    public class HomeController : Controller
+    {
+        public string Index()
+        {
+            return "This is Index action from MVC Controller";
+        }
+    }
+}
+
+🔍 What’s Happening:
+The class inherits from Controller base class.
+It returns a simple message from the Index action method.
+
+When you visit https://localhost:5000/, you'll see this message "Hello World".
+-We are not getting the output from the HomeController’s Index action method. The above output comes from the MapGet method, which you can find within the Program class’s Main method.
+-We need to tell the application to use the Index action method of our Home Controller as the default route. To do so, we must add the Required MVC Middleware Component (UseRouting and MapDefaultControllerRoute) to the application request processing pipeline.
+
+⚠️ Common Issue: Default Response from MapGet
+If your Program.cs has something like:
+EG :app.MapGet("/", () => "Hello World!");
+
+Then this will override the MVC route.
+Fix: Remove MapGet() when using MVC.
+
+-to fic this uh need to add the 2 middleWere "UseRouting " and  "MapDefaultControllerRoute "
+
+
+📌 Step 3: Add MVC Middleware to the Pipeline /Configure MVC Middleware
+Why?
+-Once services are registered, the app needs to know how to handle incoming requests (URLs like /Home/Index). That’s where middleware comes in.
+So the app can handle incoming HTTP requests and route them to controllers.
+How?
+In the same Program.cs, main method(), add the routing and endpoints:
+
+⚙ Middleware Components to Add:
+1) app.UseRouting()
+Adds routing capabilities (it parses the URL).
+Needed before defining how routes should be handled.
+
+EG : 
+var app = builder.Build();
+
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
+2) app.MapDefaultControllerRoute()
+-this middlewere Sets a default route: /Home/Index/{id?}
+-If user visits root URL (e.g., localhost:5000), it will invoke: HomeController.Index() automatically becoz of this Method() or Middlewere.
+
+Updated Program.cs:
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddMvc();
+var app = builder.Build();
+app.UseRouting();
+app.MapDefaultControllerRoute(); // Uses default route pattern
+app.Run();
+
+
+------------MIDDLEWERE CONFIGURING---DETAILED FLOW--------------------------------------
+
+✅[#3] How Do We Configure our Index Action Method of HomeController as the Default Route?
+
+-If uh are getting "hellow World" , This is becoz of the "app.MapGet("/" ()=> "hello World")" , this will over ride the home page.
+-So uh need to set the MiddleWeres so that the HomePage Controller is seen(Home view is render)
+-2 MiddleWeres uh need to add.
+
+📌1) app.UseRouting() Middleware: 
+-The "UseRouting" middleware adds the routing capabilities to the request processing pipeline. Its primary objective is to match incoming HTTP requests to the corresponding route endpoint definitions.
+-Adds routing capabilities (it parses the URL).
+Needed before defining how routes should be handled.
+-Modify the Main Method of the Program class as shown below. The UseRouting() and MapDefaultControllerRoute() Middleware Components add the MVC Middleware to the Request Processing Pipeline.
+-By adding UseRouting, we enable the application to use route matching.
+-It matches the incoming request URL to the routes that are defined in the application. This is essential for directing requests to the appropriate controllers and actions.
+-It should be placed before middleware, which depends on route matching, such as MapDefaultControllerRoute.
+Syntax: app.UseRouting();
+
+Eg : Program.cs
+namespace FirstCoreMVCWebApplication
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Create a WebApplication builder, which provides various configuration settings
+            // and services for the web application
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Add MVC services to the service container.
+            // This includes support for controllers and views.
+            builder.Services.AddMvc();
+
+            // Build the application using the configured builder
+            var app = builder.Build();
+
+            // Enable routing middleware, which matches incoming HTTP requests to endpoints defined in the application
+            app.UseRouting();
+
+            // Map the default controller route (convention: {controller=Home}/{action=Index}/{id?})
+            // This means if no specific route is provided, it will default to HomeController and Index action
+            app.MapDefaultControllerRoute(); //This line is same as writeing the below code. "{controller=Home}/{action=Index}/{id?}" is defined  and used in your ASP.NET Core application When uh just use this function. You are not manually writing the route pattern — instead, this is a shortcut method provided by ASP.NET Core.
+	   // app.MapControllerRoute(
+    	   //	name: "default",
+    	   //	pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            // Run the application, which blocks the calling thread and starts listening for incoming HTTP requests
+            app.Run();
+        }
+    }
+}
+
+EG: HomeController.cs:
+using Microsoft.AspNetCore.Mvc;
+
+namespace FirstCoreMVCWebApplication.Controllers
+{
+    public class HomeController : Controller
+    {
+        public string Index()
+        {
+            return "This is Index action from MVC Controller";
+        }
+    }
+}
+
+
+📌2)app.MapDefaultControllerRoute() MIDDLE WERE:
+
+-The MapDefaultControllerRoute method is a shorthand method to configure the default route for MVC controllers. Its primary objective is to set up a conventional routing pattern that maps URLs to controllers and actions using a predefined template.
+-It uses the default routing template {controller=Home}/{action=Index}/{id?}. This means that if no specific route is provided, the request will be directed to the HomeController and its Index action methods.
+
+
+-This method ensures that requests are routed to the appropriate controller and action method based on the URL.
+-Syntax: app.MapDefaultControllerRoute();
+-modify the Main Method of the Program class as shown below. The UseRouting() and MapDefaultControllerRoute() Middleware Components add the MVC Middleware to the Request Processing Pipeline.
+
+EG:
+namespace FirstCoreMVCWebApplication
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Create a WebApplication builder, which provides various configuration settings
+            // and services for the web application
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Add MVC services to the service container.
+            // This includes support for controllers and views.
+            builder.Services.AddMvc();
+
+            // Build the application using the configured builder
+            var app = builder.Build();
+
+            // Enable routing middleware, which matches incoming HTTP requests to endpoints defined in the application
+            app.UseRouting();
+
+            // Map the default controller route (convention: {controller=Home}/{action=Index}/{id?})
+            // This means if no specific route is provided, it will default to HomeController and Index action
+            app.MapDefaultControllerRoute(); //it will make the req move towards the homeController Index action
+
+            // Run the application, which blocks the calling thread and starts listening for incoming HTTP requests
+            app.Run();
+        }
+    }
+}
+
+📌Action Methods:
+-What is an Action Method in ASP.NET Core MVC? : An action method is a public method in a controller class that handles HTTP requests and returns a response.
+-📌 In Simple Terms:
+A Controller in ASP.NET Core MVC is like a traffic cop—it decides what should happen when a request like /Home/Index comes in.
+An Action Method is a specific task or action within that controller. It represents a unit of functionality, such as:
+Showing a page
+Saving data
+Returning a message
+Redirecting users
+
+EG : FOR UNDERSTADING ACTION METHOD
+public class HomeController : Controller
+{
+    public string Index() //this is the Index Action Method, So When the url is "/home/Index", this function will get the call
+    {
+        return "Hello from Index Action!";
+    }
+
+    public string About() //When the url is "/home/About", this function will get the call
+
+    {
+        return "This is the About Page";
+    }
+}
+/Home/Index → Calls the Index() action method.
+/Home/About → Calls the About() action method.
+
+📌 Characteristics of Action Methods:
+Feature	Description
+Must be public	Only public methods can handle HTTP requests.
+Defined in a Controller class	The class should inherit from Controller or ControllerBase.
+Return types	Can return string, IActionResult, ViewResult, JsonResult, etc.
+Handle HTTP Verbs	Can handle GET, POST, PUT, DELETE via attributes.
+
+
+
+----------CREATING CUSTOM CONTROLLER ACTION METHODS--------
+
+✅[#4] CUSTOM CONTROLLER ACTION METHODS
+
+-The MapDefaultControllerRoute() middleware uses Home as the default Controller and Index as the default action method for our application
+-This is why when we run the application, the Index action method of the Home Controller handles the request. But uh can change this behaviour 
+-To do so, we need to use the MapControllerRoute Middleware component instead of the MapDefaultControllerRoute() middleware and specify the default controller and action.
+
+📌MapControllerRoute Middleware Component:
+-The MapControllerRoute method is used to define a custom route for MVC controllers
+- Its primary objective is to map incoming HTTP requests to specific controllers and actions based on a defined URL pattern.
+It allows us to specify custom URL patterns that map to controllers and actions, providing flexibility in how URLs are structured.
+It also defines a custom URL pattern that specifies how URLs should be parsed and matched to controller actions.
+We can also define multiple routes using MapControllerRoute to handle different URL patterns and route them to different controllers and actions.

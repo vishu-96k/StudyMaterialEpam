@@ -1,0 +1,339 @@
+---DELEGATES---
+
+-delegates : It is a point safe function pointer
+-Delegates holds the refence of a method and then calls the method for excuetion, using delegate pointer.
+-Bocoz it store the refrence of a function, it is called function pointer.
+-with help of delegates uh can call the methods
+-A delegate in C# is a user-defined data type that acts as a type-safe function pointer. It is not a class, but rather a reference type used to encapsulate methods with a specific signature.
+
+-Key Features of Delegates:
+Type-safe: Ensures that the method signature matches the delegate signature.
+Encapsulates Methods: Can reference static or instance methods.
+Multicast Support: Can hold multiple methods using += and -= operators.
+Used for Callbacks & Event Handling: Commonly used for event-driven programming.
+
+-Types of Delegates:
+Single-cast Delegate – Holds a single method reference.
+Multicast Delegate – Holds multiple methods and calls them sequentially.
+Generic Delegates – Predefined delegates like Func<>, Action<>, and Predicate<>
+
+-To call a method by delegate we have 3 steeps :
+STEP 1): Define a Delegate 
+
+    SYNTAX : 
+	modifiers delegate returnType NameOfDelegate(Parametrs);
+    
+The method signature and delegate signature is exactly same 
+    eg : public delegate void AddNumDelegate(int a, int b);
+	 public void AddNum(int a, int b); //method
+
+-The return type and the paramters list of a delegate should be excalty same as that of the function the delaget is going to Point. Means delegate and the fun should have the same signature.
+This is the reason becoz delaget is a type safe fun pointer becoz both the delegate and the fun have the same singnature.
+
+-Delagate is a type like class, struct, Enum, Delegate is a User defined type, Delegate is a refrence type (object type)
+
+-Namespae is a logical container of types(by type i mean is class, structure, enums, delagets, interface). So define delagates inside the namespace, uh can define a delaget inside a class also it will be a nested type then, a type(delegate) inside a type(class). But always define the delegates inside a namespace.   	
+
+
+STEP 2): Instainshing the delegate
+
+-As delegate is a User defined data Type that stores the address of a function (refrence of fun), like class is a user defined data type(but delegate is not a class).	
+-we will create a instance of a delegate(becoz delegate is a user defined data type which stores the refrence of a function ), and the time of creating the instcane(refrence) of delaget we need to pass the function name as a parameter to the instance of the delegate.
+-uh can call the methods using delegates also
+-uh can pass any method which machets the parameter type of the delegate.
+-The address of the method is given to the delegate when we pass the method as the parameter.
+-Uh need to create the instance of the delegate like we create of the class and need to send the fun which matches the same signature as the parameter to the delegate instcane (Delegate constructor).
+
+SYNTAX : 
+	AddDelegate obj3 = Addnum; //Uh can directly point the delegate obj to the fun also without using the new keyword
+// This process is also called binding the delegate with the fun(), becoz we are assigning(pointing) the fun with the delegate obj.	
+
+		or
+		
+	AddDelegate obj = new AddDelegate(Addnum) // pass the fun method as the parameter in the delegate contructor while creating it using the new keyword, this is for the non static members of the class, uh can directly pass them in the static bloks
+	SayDelegate obj2 - new SayDelegate(clasObj.AddString)// uh can pass the instance methods using the class objects  in the delegate constructor.
+
+
+
+STEP 3): Clling the delaget instance 
+
+-Now call the delegate by passing required parameters value (method paramters which uh need to pass the method), so that internally the method which is bound with the delaget gets execute.
+- u will not call the method directly, uh will call the delegate instance by passing the required method parameters, uh have to call it in the same way as uh call the methods.
+- if ur methods returns something then delegate will also return the same thing so store the returing data in same variable from the delegate while uh are calling it 
+-uh can also use the Invoke method(), which is provide under teh delegate by default, and uh need to pass the parameters in the invoke() method.    
+-uh need to call the delegate just by writing the name of the delegates obj and passing the required fun parameters in the obj(parameter of fun) of the delegate
+   
+SYNTAX :
+	obj(10, 20) // delegate obj is "obj" and passing the paramters to the AddNum fun, which adds 2 numbers
+	string str =  obj2("hello") // caling the obj of the delegate get string, which takes the string fun which returns the string passed to it, it prints the string.
+
+
+- uh can also use the innovke fun of the delegate obj, we have a invoke fun in the delegate, invoke method, it will take the same parametrs as of the function pointing to the delegaete
+
+SYNTAX :
+	obj.Invoke(10,20); // this inoke will do the same thing, uh can also just call the delegate obj.
+	obj2.Invoke("Hello");
+
+
+EG :
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Runtime.Remoting.Channels;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    //defining a delegate, it shold have the same syntax as that of the functions
+    public delegate int AddnumDelegate(int a, int b);
+    internal class Program
+    {
+        public static int Addnum(int a, int b)
+        {
+            return a + b;
+        }
+
+        public string Concat(string s1, string s2)
+        { 
+            return s1 + s2;
+        }
+
+        static void Main(string[] args)
+        {
+            string s1 = "vishu";
+            string s2 = "gaikwad";
+            //string s3 = Concat(s1, s2); // uh cant call a non stactic method directly in the static block even in its own fun, uh need to create the obj the class program and using the object refence uh can call the non static method.
+            //string s4 = Program.Concat(s1, s2); // Uh even cant call a non static method with the name of the class in a static block, Uh cant call any non static method using the calss name 
+
+            Program p = new Program();
+            string s3 = p.Concat(s1, s2);
+            Console.WriteLine($"the string concatination is {s1} s2 : {s2} and {s3}");// this is done using the function call, but uh can also call the fun using the delegates
+
+            //int ans = Addnum(10, 30);// this is using normal fun call
+
+
+
+
+            //caling using delegate
+            Console.WriteLine("Calling the deleagets method using delegate");
+            AddnumDelegate obj = new AddnumDelegate(Addnum); // uh ar e passing the fun as the parameter to the constructor of the delegate, but the address of this fun will be stored by the delegate beciz delegates holds only the address of the  methods 
+            int ans = obj(10, 3000);
+		
+		or
+
+	    int ans = obj.Invoke(10, 2000);
+            Console.WriteLine("Using the delegates and the ans is : " + ans);
+
+        }
+    }
+}
+
+-------------PART 2----MULTICAST DELAGATE----------------------
+
+Multicast DELEGATE : A delegate will be holding the refrence of more then one method, then its called Multicase delagete
+-In a class there are multiple fucntions with the same singnature as of the delegate, then we can call all those methods using the same delegate obj.
+-Take eg of a permiter and area fun of a rectangle, both the fun wil have the same method signature , so we can create a same signature delegate for those 2 methods.
+-And when uh call the delegate obj pass only one of the fun, so uh can cll tht one fun as normally. BUt if uh want to bind both the fun (Paramter and GetArea) then uh can just use the += Operator and do that
+
+
+SYNTAX :
+	RectDelagate Obj5 = rect.GetArea;
+	obj5 += rect.Perimeter // uh can directly add the second fun in the obj of the delegate 
+
+	obj5.Invoke(Parameters); //Pas_the paramaters wihch will be passed top both the fun
+
+
+-SO one single delegate call will invoke both the functions.
+_multicast DELEGATE : The delegate which is bind with more then one fun(), Or the delegate which is holding the refrence of more then 2 methods. Make sure both the fun have the same signature. 
+-if both the methods perimeter and GetArea() are returning a Value, then the value of the fun which will get excute at the end will come in the delegate obj, so always remember to use only the void fun for multicast delegates.
+-becoz the firect call will return the value, and the same obj makes the call for the seconf fun(), so at the end the second fun () call value wil be overridden and we will get that value only
+
+
+EG :
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    public delegate void RectDelegate(int l, int h);
+    class Rectangle
+    {
+        public void GetArea(int x, int y)
+        {
+            Console.WriteLine("The area is " + (x * y));
+        }
+        public void Perimeter(int x, int y)
+        {
+            Console.WriteLine("The permiter is " + (2*(x+y)));
+        }
+    }
+    public class DelegatePart2
+    {
+        static void Main()
+        {
+            Console.WriteLine("Hello");
+            Rectangle rect = new Rectangle();
+            
+            RectDelegate obj = new RectDelegate(rect.GetArea);
+            obj += rect.Perimeter; //Binding another fun with the same delegate obj, it is called multicast Delegate.
+// the delegate is going to hold the refrence of GetArea(), plus the Perimeter also.
+
+            obj(10, 20);
+        }
+    }
+}
+
+-------ANONUMOUS METHODS---PART 3-----
+
+Anonomous method : Without binding a named method to the delegate, uh can bind a code block to the delegate.
+-Means without creating a fun() and binding it to the delegate, uh can directly bind the logic of the fun() to the delegate without creating the fun() name.
+-Same as Arrow fun in Js, we can pass directly the Body of the fun without creating the name of the fun().
+-Ananomous fun : A fun without the name of the fun() and only it contains the body of the fun is called Anonymous Method.
+
+
+SYNTAX :
+	
+	AddDelegate obj4 = new AddDelagate(addNum) // normal binding, where addNum is a normal fun and AddDelegate is a delegate defined
+
+	AddDlegate obj5 = delegate(int a, int b)
+	{
+		return a+b;
+		//This is anonympus method defined using the delegate keyword, Uh need not have to provide the access specifier of the method also, it will take it from the delegates access specifier only 
+		//This block will include the body of the fun
+		//uh need to pass the parameters of the fun also
+		//without binding the Method to the delegate, uh have directly binded the body of the fun.
+		// now uh can call the obj of delegate as normal , so that the fun is invoked
+	}
+	obj5.Invoke(10,2003);
+
+-EventHandaler : It is also a delegate which takes 2 paramters which are : 1) Object sender
+	    2) EventArgs e
+
+
+EG :
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    public class AnoumuosMethod
+    {
+        public delegate string ShowDelegate(String S);
+
+        public static string Show(string s)
+        {
+            Console.WriteLine("string :" + s);
+            return s;
+        }
+        static void Main()
+        {
+            // uh can also call the delagate by binding the show fun to the delagate aslo 
+
+            ShowDelegate obj5 = delegate (String s)
+            {
+                Console.WriteLine(s);
+                return s;
+            };// biding the anonymos fun with the delegate dirwctly has been done
+
+            obj5("hello lavde");
+        }
+    }
+}
+
+Anonoymous method : A method with a method body wihch can directly be bound with a delagete and can be called is called delegate. 
+
+----------------PART 4---LAMBDA EXPRESSIONS(ARROW FUNS)-----
+
+LAMBDA EXPRESSION : is short from to write the anonymous method.
+-in C# 3.0 they introduced LAMBDA EXPLRESSION, it is a short from to write the Delegates.
+- they way we write anonymous methods inside the delegate using the delegate keyword and passing the parameters, in the same way uh can write lambda funtions using (=>) arrow like in JS, and this is called LAMBDA EXPRESSION
+-(=>) this arrow operator is called LAMBDA Operator.
+
+SYNTAX :
+
+	SumDelegate obj = (paramter) =>
+	{
+		//uh can write the fun code here directlu
+		// SumDelegate should be already defined, with the same signature as of this lamdaba fun is returing and taking in the parametrs.
+	}
+
+
+EG :
+	string name = "Vishu";
+	GreetingDelegate obj2 = (name) => 
+	{
+		return "Hello" + name + "a very good morning"; 
+	};
+
+LAMBDA EXPRESSIONS : Are short from Of Writing the Anonymous methods.
+
+
+-----DELEGATE TYPES---FUN- ACTION- DELEGATE-PART 5----
+
+GENERIC DELEGATE : there predefined GENRIC DELEGATE ARE :
+	1)func : uh can pass the parameters as well as the return type parameter as <T>
+	2)action : Uh can just pass the parameters <T>
+	3)predicate : by default the return Type is bool and uh can just pass the Function Parameters as  <T>, Uh can also use Func<T>, in which uh need to pass the parameter and the return type as bool. 
+
+-these predefined delegates are defined in the BCL(base class libraries).
+
+-func DELEGATE : is used when uh have a value returing method.
+-action DELEGATE : it is used when your method is going to be void, non Returing method, then we use action delegate .
+-predicate DELEGATE : we r going to use this, when uh want a return type as a bool, when uh have a fun which returns bool then use predicate DELAGETE
+
+EG : 
+class GenericDelegate 
+{
+	public static double AddNum1(int x, float y)
+	{return x+y;}
+
+	public static void AddNum2(int x ,int y, int z)
+	{	
+		double ans = x+y+z;
+		CWL("The result is :" + ans);
+	}
+
+	public static bool ChechkLength(string s)
+	{
+		if(s.Length >5)
+			return false;
+	}
+
+	static void Main()
+	{
+		Func<int, int, int> obj1 = AddNum1; // this is calle Func delegate
+		int res = obj1.Invoke(20,30); 
+		CWL("ans is " : res);
+		// in this FuncT1,T2, T3> the last datatype that is t3 is the out refrence,in which we will give the data type of the returing value.
+		// use this when uh have a returning value from the fun.
+
+		Action<int, double> obj2 = Addnum2;
+		obj2.Invoke(20,30); // all T are input parameters only, The return type is void then uh can use it. becoz it donsnt have any T for Return type.
+
+		Predicate<string> obj3 = CheckLength;
+		bool ans = obj3.Invoke("Hellowrod"); // the outpur type is predefined as bool, so no need to pass the output return type as bool in thid delegate.
+		CWL("ans is : " +ans);
+		// uh will only pass the input types in <T>.
+		
+
+		or 
+		// uh can also se the fun delegate for the CheckLength fun as 
+		Func<string, bool> obj3 = CheckLength;
+		bool ans = obj3.Invoke("Hellowrod");	
+		
+	}
+} 	 
+
+- In this program we have not defiend any delegate for the Functions we have defiend.
+-We have directly used the predefined delegates for the fun and using their objects we have invoked the fun by passing the parameters.
+-Delagate is noth but a function pointer which stores the address of the fun.
+-Thereforre uh can aslwyas use a Func delegate becoz it will take all the parameter <T> type and also the return <T> type. So no need to define a delegate just use the Predefined delegate using the arro fun or uh can pass the fun as the parameters also, uh can also write it as a anonymous functions.

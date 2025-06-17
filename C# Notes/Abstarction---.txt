@@ -1,0 +1,318 @@
+---------ABSTRACTION ---------
+
+Abstract Method: a method without method body or definition 
+Abstact class : A class which contains abstract methods as well as concreate methods
+
+Summary of Abstract Class and Abstract Methods in C#
+A method that does not have a body is called an abstract method, and the class that is declared using the keyword abstract is called an abstract class. If a class contains an abstract method, it must be declared abstract.
+An abstract class can contain both abstract and non-abstract methods. If a child class of an abstract class wants to consume any non-abstract methods of its parent, it should implement all abstract methods.
+An abstract class is never usable in itself because we cannot create the object of an abstract class. The members of an abstract class can be consumed only by the child class of the abstract class.
+
+
+When to Use Abstract Classes and Methods in C#
+Define a Common Base – Avoid code duplication by providing a shared base for related classes.
+Enforce a Contract – Ensure derived classes implement required methods.
+Provide Default Implementations – Offer common functionality while allowing overrides.
+Implement Polymorphism – Enable uniform handling of different derived classes.
+Create Frameworks & Libraries – Define a contract for extensibility.
+Extend Functionality – Add new features modularly through inheritance.
+Ensure Code Consistency – Maintain structure across multiple derived classes.
+Enable Code Reusability – Share common logic among multiple classes.
+Support Extension Points – Allow customization without modifying base code.
+Implement Template Method Pattern – Define an algorithm's structure while letting derived classes implement specific steps.
+
+-----DIAMOND PROBLEM----
+WITH INTERFCAES :
+
+Diamond problem : can be occur using interfaces becoz as there is default implementation for the interfaces from V 8+ in C#, uh can define the methods in interfaces also.
+
+EG : this code will cause diamond problem and hence error
+using System;
+namespace DefaultInterfaceMethodsDemo
+{
+    interface A
+    {
+        void Method();
+    }
+    interface B : A
+    {
+        void A.Method()//Defalut implemenation
+        {
+            System.Console.WriteLine("I am From Interface B");
+        }
+    }
+    interface C : A
+    {
+        void A.Method()
+        {
+            System.Console.WriteLine("I am From Interface C");
+        }
+    }
+    class D : B, C
+    {
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+		 D obj = new D();
+            // obj.Method();  // Compiler Error: Ambiguous implementation!
+        }
+    }
+}
+
+error CS8701: Ambiguous implementation of 'void A.Method()' due to multiple default interface implementations.
+This happens becoz of multiple implementation for show method. So the compiler will get confuse wbourt which Method to call(Which implementation to call).
+
+
+DIAMOND PROBLEM WITH CLASSES :
+-A class implementation of an interface member should always win over a default implementation in an interface, even if it is inherited from a base class. Default implementations are always a fallback only when the class does not have any implementation of that member at all.
+-There is no diamond problem when uh inhirt interfaces in Class becoz even if there is default implementation for the interface methods in the interface, The compiler will alywas run the method implemented by class , becoz interface is by default abstract.
+-So compiler will always run the method definition from then class.
+-Even if uh create Refrence of the interface wich has default implementation for a method and point it towards the class obj, and then uh call the method using the interface refrence then even thouh uh chave default implementation for the Method in the interface, it will always call the implentaion given by the class.
+-This is because, at the time of Program execution, first, it will check the DefaultMethod body within the AnyClass, and if found it will execute from AnyClass. If not found, then it will check its immediate parent interface .
+ 
+
+using System;
+namespace DefaultInterfaceMethodsDemo
+{
+    interface A
+    {
+        void Method();
+    }
+    interface B : A
+    {
+        void A.Method()
+        {
+            System.Console.WriteLine("I am From Interface B");
+        }
+    }
+    interface C : A
+    {
+        void A.Method()
+        {
+            System.Console.WriteLine("I am From Interface C");
+        }
+    }
+    class D : B, C
+    {
+        // Now the compiler uses the most specific override, which is defined in the class D.
+        void A.Method()
+        {
+            System.Console.WriteLine("I am from class D");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            C c = new D();
+            c.Method();
+            Console.ReadKey();
+        }
+    }
+}
+
+EG 3 :
+using System;
+
+public interface Ione
+{
+    void Show();
+}
+
+public interface ITwo
+{
+    void Show();
+}
+
+public class MyClass : Ione, ITwo
+{
+    public void Show()
+    {
+        Console.WriteLine("Show method implementation from MyClass.");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        MyClass obj = new MyClass();
+        obj.Show(); // Calls the Show() method from MyClass.
+
+        Ione objIone = obj;
+        objIone.Show(); // Also calls the Show() method from MyClass.
+
+        ITwo objITwo = obj;
+        objITwo.Show(); // Also calls the Show() method from MyClass.
+    }
+}
+
+What's Happening:
+The MyClass implements both interfaces Ione and ITwo with a single implementation of Show().
+No ambiguity occurs because C# allows a single implementation to satisfy all interface contracts when method signatures are identical.
+When calling Show() through Ione or ITwo, the same implementation is used.
+
+----ABSTARCTION PART 2---------------
+
+EG 4:
+But What If You Want Different Implementations?
+If you want Ione.Show() and ITwo.Show() to behave differently, you must use Explicit Interface Implementation:
+
+public class MyClass : Ione, ITwo
+{
+    void Ione.Show()
+    {
+        Console.WriteLine("Show method from Ione.");
+    }
+    
+    void ITwo.Show()
+    {
+        Console.WriteLine("Show method from ITwo.");
+    }
+}
+Ione objIone = new MyClass();
+objIone.Show(); // Outputs: Show method from Ione.
+
+ITwo objITwo = new MyClass();
+objITwo.Show(); // Outputs: Show method from ITwo.
+
+
+-Now, the methods are accessible only via interface references:
+
+EG 5 :
+using System;
+
+public interface IA
+{
+    void Show();
+}
+
+public interface IB : IA
+{
+    void Show();
+}
+
+public interface IC : IA
+{
+    void Show();
+}
+
+// MyClass inherits from both IB and IC, which both inherit from IA
+public class MyClass : IB, IC
+{
+    public void Show()
+    {
+        Console.WriteLine("MyClass implementing Show.");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        MyClass obj = new MyClass();
+        obj.Show();  // Calls the Show() implementation from MyClass
+    }
+}
+
+-Why There's No Diamond Problem Here:
+Single Implementation:
+The Show() method in MyClass provides a single implementation satisfying both IB and IC (which both inherit from IA).
+
+Interface Methods Are Just Contracts:
+Interfaces only define the contract. The actual implementation happens in MyClass.
+
+No Ambiguity:
+The compiler doesn't care about the inheritance chain of interfaces (IB and IC) as long as the implementing class (MyClass) provides a valid implementation for all the methods.
+
+----DIFFRENCE BETWEEN ABSTARCT CALSS AND INTERFACE----
+
+Difference Between Interfaces and Abstract Classes in C#
+Aspect	Interface	Abstract Class
+Purpose	Defines a contract with only declarations.	Serves as a base class with partial or full implementations.
+Implementation	Cannot have implementations (before C# 8.0). From C# 8.0, can have default implementations via default interface methods.	Can have both abstract and non-abstract methods.
+Access Modifiers	All members are implicitly public.	Can have public, protected, private, etc. access modifiers.
+Inheritance	Supports multiple inheritance.	Supports single inheritance only.
+Constructor	Cannot have constructors.	Can have constructors.
+Fields	Cannot have fields (except static fields from C# 8.0).	Can have fields.
+Properties	Supports properties (auto-properties allowed from C# 8.0).	Supports properties (auto-properties and full properties).
+Use Case	When you need to define a contract without implementation details.	When you need to provide a base implementation and let derived classes extend or override.
+Performance	Slightly faster because there's no base class overhead.	Slightly slower due to inheritance.
+Keyword	interface	abstract class
+Default Implementation	From C# 8.0 onwards, can have default method implementations.	Can have concrete (implemented) methods by default.
+
+
+
+-----DIFF BETWEEN INTERFACE C#V8 AND C#-----
+
+Key Differences Table
+Feature	Before C# 8.0 (Example)	After C# 8.0 (Example)
+Default Methods	❌ Not Allowed	✅ Allowed
+```csharp	```csharp
+public interface IAnimal	public interface IAnimal
+{	{
+void Speak(); // Must be implemented	void Speak();
+}	
+void Eat() // Default Implementation
+{ Console.WriteLine("Eating..."); }
+```	```
+Static Methods	❌ Not Allowed	✅ Allowed
+N/A	```csharp
+public interface IAnimal
+{
+static void Description()
+{ Console.WriteLine("Animals are amazing."); }
+}
+```	```
+Private Methods	❌ Not Allowed	✅ Allowed
+N/A	```csharp
+public interface IAnimal
+{
+private void Helper()
+{ Console.WriteLine("Helper method"); }
+}
+```	```
+Static Fields	❌ Not Allowed	✅ Allowed (C# 11.0)
+N/A	```csharp
+public interface IAnimal
+{
+static int AnimalCount = 0;
+}
+```	```
+Instance Fields	❌ Not Allowed	❌ Not Allowed
+```csharp	```csharp
+public interface IAnimal	public interface IAnimal
+{	{
+int Age; // ❌ Error - Fields are not allowed	int Age; // ❌ Error - Still not allowed
+}	}
+```	```
+Constructors	❌ Not Allowed	❌ Only Static Constructors
+```csharp	```csharp
+public interface IAnimal	public interface IAnimal
+{	{
+public IAnimal() { } // ❌ Not Allowed	static IAnimal() { Console.WriteLine("Static Constructor"); }
+}	}
+```	```
+Multiple Inheritance Handling	✔️ No Conflict	⚠️ Potential Conflict if both have same method
+```csharp	```csharp
+public interface IA	public interface IA
+{ void Show(); }	{ void Show(); }
+public interface IB : IA
+{ void Show() { Console.WriteLine("From IB"); } }
+public interface IC : IA
+{ void Show() { Console.WriteLine("From IC"); } }
+public class MyClass : IB, IC
+{
+// Compiler Error: Ambiguous Implementation
+}
+```	```
+📌 Important Notes:
+Default Methods allow interfaces to provide method bodies, but classes can still override them.
+Static Methods in interfaces are called by the interface name, not by instances.
+Private Methods are used for internal code reuse inside the interface.
+Static Fields (From C# 11.0) can be defined but cannot be instance-specific.
+Constructors are only allowed as static constructors, not instance constructors.
+Multiple Inheritance Conflict: If two interfaces provide default implementations of the same method, implementing class must resolve the conflict.

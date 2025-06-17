@@ -1,0 +1,89 @@
+---------POlYMORPHISM----------
+
+------------Mothod Overloading------------- :
+Uh can have the same name of a method but it can have diff(types of input) parametrs, diff (number of input) number of parameters, Diff(sequence of input) sequence of paramerts  . 
+Note : method overloading dons't happen if uh change the return types of the fun, becoz the return type comes in the end in picture
+
+according to apporipriate paramter method is call at complie time only 
+
+Why we overload the Method --> 
+overloding comes in polymorphism.
+	 
+polymorphism is a mechanism which means changing the behavior based on the inputs
+it means whenever the input changes the output is changed 
+method overloading is a mechanicm in which uh can define multiple behaviorus to ur fun
+if we dont use overloading then for each method we should give a diff name even thouh that method is even if that method does the same thing and just take diff parameters 
+	
+eg is string class methods like indexOf(character),IndexOf(character, starting_index) . see this class has overlodaded the IndexOf method
+
+--------Method Overriding --->
+method overireding : means reimplementing the parent class method in the child classes with the same signature of that method
+	
+
+overloading :
+in this case we define multiple methods with the same name with diff parameters
+this can be performed in the same class as well as between parent and child class also, we can also overload a method in its child class by passing diff parameters
+while overloading a parent class method under the child class, child class doesn't require to take any permission from the parent class 
+overloading is all about defining multiple behaviours to a method.
+
+overriding :
+in this we will redefine the methods with same name and same parameters and same signature.
+this can be performed only between parent child class, It can never be performed in the same class
+becoz within the same class if we do this ambiguity arries.
+while overriding a parent class method under the child class we need to take the permission from the pareng class.
+if we want to override a parents method under the child class, then uh need to take the permission by declarayinf that parent method as virtual key word, and then that method can be overired in child using the override key word
+
+its not compulsory to override the method even if that method in the parent class is declare as a virtual, it just means that uh can override if uh want.
+and if uh override then the child method definition will be alswyas call
+
+overireind is all about changing the behavior of parents method under the child class
+
+if uh mark a method as virtual, parents class defines a mthod in it and gives it for the child for consumption, at the same time parent class gives the permission to the child class to re define the method if child class donest like the behavior of the method, and its not compulsory to redefine the method but if chilc class wants then he can redefine
+
+
+
+------Method Hiding ----
+method overriding is an approach of reimplementing a parent class method under the child class exactly with the same name and the signature
+
+Method hiding/ Method Shadowing is also same as method overriding.
+
+in the first case(overriding) child class re implements its parent class methiods which are declare as virtual where as in the second case (method hiding) child class can reimplement any parents method even if that method is not declare as virtual . 
+So in method hiding you can re implement the parent class method even if that method is not declare as virtual.
+So in method hiding you can reimplement any method of parent class in child class without using the virtual keyword, but uh have to use the new keyword while re defining that method and even if uh dont use the new keyword then also uh can do method hiding but uh will get complier warning.
+Method hiding is also called Shadowing
+
+for overriding uh have to make that method as virtual
+
+We can reimplement the parent class methods in child class using 2 methods 1) Overriding 2) hiding
+
+if same fun has a definition in the child class as well as the parent class then the obj of child class when called the fun, then always the preference will be given to the local methods, so the child methods will be invoked
+
+By using the base keyword also uh can call the parent class methods in the child class
+
+But the base and this keywords are not used inside the static blocks. that is uh cant use the base and this keyword in the main fun becoz its static function
+
+A parent class refrence even if created by using child class instance cant access any members that are purely defined in the child class becoz its a refrence type of Parent, But it can call the overridden methods of child class but it wont call the Hiding methods
+
+Hiding : in hiding A parent class refence cannot call the child class methods even if it is pointing to the child class obj
+
+
+--------DIFF BETWEEN OVERRIDE AND HIDING--------
+Overriding : as we have taken the permission from the parent class to reimpolement the parent class methods by using virtual and override keywords, so the parent class refrence which is pointing the child class instcane will always call the child class methods if that method is overridden. because Overriden methods are not consider as pure child class methods or members, but members which are reimplement by using the approach of hiding are considered as the pure child class members 	
+
+
+--------Oprator Overloading ---------
+operator overloading is an approach of defining multiple behaviours to an operator and those behaviours will vary basend on the types of operands types between which the oprator is used 
+for eg + is and addition oprator when uh used between to int, but when uh used it between 2 strings then it will contact the strings
+
+SYNTAX FOR OPRATOR OVERLODING 
+modifiers static return_type operator <which_oprator>(oprand types)
+{
+	// your logic
+} 
+
+eg public static string operator -(string a, string b) // eg for overloading the (-) operator for string to subtract the string oopporsite to string concatenation
+-For operator overloading, The operator must be of Static type only	
+
+
+
+

@@ -1,0 +1,343 @@
+-------Reflection part 2-------
+
+-----------ACCESSING META DATA USING REFLECITON -------------
+
+---1)TYPE CLASS----
+TYPE CLASS : You can get type metadata from an object or class using the typeof() operator or object.GetType().
+
+FUNCTIONS OF TYPE CLASS :
+Type type = typeof(string); // Compile-time type
+Type type2 = "Hello".GetType(); // Runtime type
+
+Once you have the Type object, you can explore the metadata using methods like:
+Method	Description
+GetMethods()	Returns all public methods
+GetProperties()	Returns all public properties
+GetFields()	Returns all public fields (variables)
+GetMembers()	Returns all public members (methods, props)
+
+using System;
+using System.Reflection;
+
+namespace ReflectionDemo
+{
+    class Person //Uh can create this class in some other project add create a .Dll file and then access the assembly  using the Assembly.load() function of assembly class
+    {
+        public string Name { get; set; }
+        public int Age;
+        public void SayHello() => Console.WriteLine("Hello!");
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Type type = typeof(Person); //or uh can import the .Dll file ling and get the class person using someother function of the assembly class
+
+            // Display metadata
+            Console.WriteLine("Class: " + type.Name);  //type will be the Person class in this
+            Console.WriteLine("Namespace: " + type.Namespace); //uh will get the namespace of the Person class assembly
+
+            Console.WriteLine("\nProperties:");
+            foreach (PropertyInfo prop in type.GetProperties()) //Uh will get the array of all the public properties of the type(Person class).
+            {
+                Console.WriteLine(prop.Name); //This will print the public properties name.
+            }
+
+            Console.WriteLine("\nFields:");
+            foreach (FieldInfo field in type.GetFields()) //this will print all the dat fields of the class Person
+            {
+                Console.WriteLine(field.Name);
+            }
+
+            Console.WriteLine("\nMethods:");
+            foreach (MethodInfo method in type.GetMethods()) //This will print all the public methods of the class person
+            {
+                Console.WriteLine(method.Name);
+            }
+        }
+    }
+}
+
+
+OUTPUT  :
+Class: Person
+Namespace: ReflectionDemo
+
+Properties:
+Name
+
+Fields:
+Age
+
+Methods:
+SayHello
+Equals   //The other 4 methods are included becoz every class inherites the Object class
+GetHashCode
+GetType
+ToString
+
+
+----2)ASSEMBLY CLASS---
+
+Key Methods and Properties:
+
+Method/Property		Description
+Assembly.Load()		Loads an assembly by its display name.
+Assembly.LoadFrom()	Loads an assembly from a file path.
+Assembly.GetTypes()	Gets all types defined in the assembly.
+Type.GetMethods()	Gets all methods in a type.
+Type.GetProperties()	Gets all properties in a type.
+
+EG :
+Step 1: Create a Separate DLL Project
+Library Project - MyLibrary.dll
+
+// File: Calculator.cs
+namespace MyLibrary
+{
+    public class Calculator
+    {
+        public int Add(int a, int b) => a + b;
+        public int Multiply(int a, int b) => a * b;
+    }
+}
+
+ Build this as a Class Library to generate MyLibrary.dll.
+
+Step 2: Create Console App to Load and Explore the DLL
+
+using System;
+using System.Reflection;
+
+class DynamicAssemblyLoader
+{
+    static void Main()
+    {
+        string dllPath = @"C:\Path\To\MyLibrary.dll";  // ✅ Update this with the correct path of the Dll file
+
+        // 1️⃣ Load the assembly from file
+        Assembly assembly = Assembly.LoadFrom(dllPath); // The aseembly consists of the assembly(dll file which has all the class which we build)
+        Console.WriteLine("Assembly Loaded: " + assembly.FullName);
+
+        // 2️⃣ Get all types from the assembly(Means get all the classes, Interfacaes, etc from the Dll file)
+        Type[] types = assembly.GetTypes(); //This GetTypes fun will return a array of all the types in that assembly 
+        Console.WriteLine("\nTypes in Assembly:");
+        foreach (Type type in types)
+        {
+            Console.WriteLine("- " + type.FullName);
+
+            // 3️⃣ Explore methods
+            MethodInfo[] methods = type.GetMethods(); //Type is basically a class of the dll file and using the GetMethods() function on this type(class), it will return all the methodsInfo of that class in form of array
+            Console.WriteLine("  Methods:");
+            foreach (MethodInfo method in methods)
+            {
+                Console.WriteLine("    " + method.Name); //Displaying all methdos name of each class
+            }
+        }
+
+        // 4️⃣ Create an instance of a type
+        Type calcType = assembly.GetType("MyLibrary.Calculator"); //this will give uh a specific class from the Assembly which is the calculator class
+        object calcInstance = Activator.CreateInstance(calcType); //This activator.CreateInstance() function will create the instance of the calculator class
+
+        // 5️⃣ Invoke a method dynamically
+        MethodInfo addMethod = calcType.GetMethod("Add");   //This will invoke the Add method of the calculator class from the aseemebly, and return it as MethodInfo class object 
+        object result = addMethod.Invoke(calcInstance, new object[] { 10, 5 });   //This will get the result of the calculation and display it 
+
+        Console.WriteLine("\nInvoking Add(10, 5): " + result);  // Output: 15
+    }
+}
+
+-Use BindingFlags.NonPublic | BindingFlags.Instance if you want private members.
+-For plugin systems, combine Directory.GetFiles() + Assembly.LoadFrom() for dynamic discovery.
+
+
+----3)MethodInfo class and Invoke() Method -------
+
+Concept		Class/Method Used	Purpose
+Get the Type	typeof(ClassName) / obj.GetType()	Get metadata about the class
+Get the Method	type.GetMethod("MethodName")	Retrieve metadata about the method
+Invoke Method	MethodInfo.Invoke()	Call the method on an object
+
+EG
+Step 1: Create a Separate DLL Project
+Library Project - MyLibrary.dll
+
+public class MathOperations
+{
+    public int Add(int a, int b)
+    {
+        return a + b;
+    }
+
+    public string Greet(string name)
+    {
+        return "Hello, " + name;
+    }
+}
+
+ Step 2 :Create Console App to Load and Explore the DLL
+
+using System;
+using System.Reflection;
+
+class Program
+{
+    public class MathOperations
+    {
+        public int Add(int a, int b) => a + b;
+        public string Greet(string name) => "Hello, " + name;
+    }
+
+    static void Main()
+    {
+        // 1. Get Type
+        Type type = typeof(MathOperations); //it will give uh the Type (class) of the mathoperaion class
+
+        // 2. Get MethodInfo
+        MethodInfo addMethod = type.GetMethod("Add"); //it will give uh the Add method of the class
+        MethodInfo greetMethod = type.GetMethod("Greet"); //it will give uh the greet method of the class
+
+        // 3. Create Instance
+        object instance = Activator.CreateInstance(type);  //this creates the inctacne of the class, This activator is a class and the CreateInstance method create the Object of the type(class) uh passed in it
+
+
+	//addMethod is the Add method of the MathOperations class
+        // 4. Invoke Methods
+        object addResult = addMethod.Invoke(instance, new object[] { 5, 3 });  // this will invoke the addMethod
+        Console.WriteLine("Add Result: " + addResult);
+
+        object greetResult = greetMethod.Invoke(instance, new object[] { "Bob" });
+        Console.WriteLine("Greet Result: " + greetResult);
+    }
+}
+
+
+------3)BlindingFlags------------
+
+BlindingFlags : using this Enum uh can acess the private and protected data of the class
+-BindingFlags is an enum that tells the reflection API what kind of members you're trying to access.
+
+
+
+ Key Classes & Concepts:
+Concept	API/Class Used	Description
+Get Type Info	typeof(Class) / obj.GetType()	Get metadata about the class
+Property Access	type.GetProperty()	Get metadata about a property
+Field Access	type.GetField()	Get metadata about a field
+BindingFlags	BindingFlags enum	Used to access private/public/static
+
+
+EG :
+using System;
+using System.Reflection;
+
+public class Person
+{
+    public string Name { get; set; }
+    private int age = 25;
+    private string Secret => "I love C#";
+}
+
+class Program
+{
+    static void Main()
+    {
+        Person p = new Person();
+        Type type = p.GetType();  //Now type is the class person
+
+        // 1. Public Property
+        PropertyInfo nameProp = type.GetProperty("Name"); //Uh will get the name property In the variable nameProp 
+        nameProp.SetValue(p, "Alice"); //Setting the property
+        Console.WriteLine("Name: " + nameProp.GetValue(p)); //Displaying the property uh have set
+
+        // 2. Private Field
+        FieldInfo ageField = type.GetField("age", BindingFlags.NonPublic | BindingFlags.Instance); //uh can include all the  blindingFlags if uh want, it is a Enum which will include the type of properties uh mention into them.
+        Console.WriteLine("Private age (before): " + ageField.GetValue(p));
+        ageField.SetValue(p, 30); //Modifying the private data feild
+        Console.WriteLine("Private age (after): " + ageField.GetValue(p));
+
+        // 3. Private Property (getter-only)
+        PropertyInfo secretProp = type.GetProperty("Secret", BindingFlags.NonPublic | BindingFlags.Instance);
+        Console.WriteLine("Secret: " + secretProp.GetValue(p));
+    }
+}
+
+-1. BindingFlags.NonPublic
+This tells reflection:
+👉 "I want to include members that are not public, such as private or protected ones."
+Without this, private fields like age won’t be found, and you'd get null from GetField.
+
+-2. BindingFlags.Instance
+This tells reflection:
+👉 "I want to include instance-level members, not static ones."
+Since age is a non-static field, we need this flag.
+
+
+ Explanation of BindingFlags
+BindingFlag	Purpose
+ BindingFlags.Public	Includes public members
+ BindingFlags.NonPublic	Includes private/protected
+ BindingFlags.Instance	Includes instance (non-static) members
+ BindingFlags.Static	Includes static members
+Combine with `	` (OR) operator
+
+--------ACTIVATOR.CREATEINSTANCE() METHOD -------------
+
+-Activator.CreateInstance(type) : using this method and class uh can create the instance of the type(class) which uh passed in as a parameter in the function.
+-this is called Dynamic instance Creation at runtime.
+-Uh can also call the default and the parametrrized constructions using this class
+
+Activator.CreateInstance
+Overload					Purpose
+CreateInstance(Type)				Calls the default (parameterless) constructor
+CreateInstance(Type, params object[] args)	Calls a constructor with parameters
+
+EG :
+
+using System;
+using System.Reflection;
+
+public class Product
+{
+    public string Name { get; set; }
+    public double Price { get; set; }
+
+    public Product()
+    {
+        Name = "Default";
+        Price = 0;
+    }
+
+    public Product(string name, double price)
+    {
+        Name = name;
+        Price = price;
+    }
+
+    public void Display()
+    {
+        Console.WriteLine($"Product: {Name}, Price: {Price}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Type type = typeof(Product); //Uh will get the Product class in the type
+
+        // 1. Default constructor     
+        object obj1 = Activator.CreateInstance(type); //Creating instance of the Product class using the Defalut constructor
+         type.GetMethod("Display").Invoke(obj1, null); //This will invoke the Display method
+
+        // 2. Parameterized constructor
+        object[] parameters = { "Phone", 499.99 }; 
+        object obj2 = Activator.CreateInstance(type, parameters); //This will create the instcne of the type(Person class) with the invocation of the parametrized construiction, this function takes the prarmeters as an array and which ever overloaded constructor it matches will be given the parameters
+        type.GetMethod("Display").Invoke(obj2, null);
+    }
+}
+
+
+-To access private members, use BindingFlags.NonPublic along with BindingFlags.Instance.
+

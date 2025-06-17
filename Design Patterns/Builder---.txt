@@ -1,0 +1,408 @@
+-----------Builder Design Pattern----------
+
+Definition :
+The Builder pattern is a creational design pattern that separates the construction of a complex object from its representation, allowing the same construction process to create different representations.
+
+Simple Explanation :
+Imagine you're building a house. Instead of trying to build the entire house at once (which would be messy and complicated), you build it step by step - first the foundation, then the walls, then the roof, etc. The Builder pattern works similarly - it breaks down object construction into steps, and you can execute these steps in a specific order to build different variations of an object.
+
+
+🏗️ Builder Pattern Example: House Construction
+🔹 Purpose:
+To build different representations (Wooden House, Brick House) using the same construction process.
+
+EG :
+using System;
+
+// Step 1: Product class - This is the complex object that will be built
+public class House
+{
+    public string Foundation { get; set; }
+    public string Walls { get; set; }
+    public string Roof { get; set; }
+
+    public override string ToString()
+    {
+        return $"Foundation: {Foundation}, Walls: {Walls}, Roof: {Roof}";
+    }
+}
+
+// Step 2: Builder interface - Declares building steps for creating a House
+public interface IHouseBuilder
+{
+    void BuildFoundation();
+    void BuildWalls();
+    void BuildRoof();
+    House GetHouse();
+}
+
+// Step 3: Concrete Builder - Builds a wooden house using the steps
+public class WoodenHouseBuilder : IHouseBuilder
+{
+    private House house = new House();
+
+    public void BuildFoundation()
+    {
+        house.Foundation = "Wooden Poles";
+    }
+
+    public void BuildWalls()
+    {
+        house.Walls = "Wooden Walls";
+    }
+
+    public void BuildRoof()
+    {
+        house.Roof = "Wooden Roof";
+    }
+
+    public House GetHouse()
+    {
+        return house;
+    }
+}
+
+// Step 4: Another Concrete Builder - Builds a brick house using the same steps
+public class BrickHouseBuilder : IHouseBuilder
+{
+    private House house = new House();
+
+    public void BuildFoundation()
+    {
+        house.Foundation = "Concrete Base";
+    }
+
+    public void BuildWalls()
+    {
+        house.Walls = "Brick Walls";
+    }
+
+    public void BuildRoof()
+    {
+        house.Roof = "Concrete Roof";
+    }
+
+    public House GetHouse()
+    {
+        return house;
+    }
+}
+
+// Step 5: Director - Controls the building process using a builder
+public class HouseDirector
+{
+    private IHouseBuilder builder;
+
+    // Constructor accepts any builder (wooden, brick, etc.)
+    public HouseDirector(IHouseBuilder builder)
+    {
+        this.builder = builder;
+    }
+
+    // This method defines the order of building steps
+    public House Construct()
+    {
+        builder.BuildFoundation();
+        builder.BuildWalls();
+        builder.BuildRoof();
+        return builder.GetHouse();
+    }
+}
+
+// Step 6: Client Code - Uses the builder and director to create houses
+public class Program
+{
+    public static void Main()
+    {
+        // Building a Wooden House
+        IHouseBuilder woodenBuilder = new WoodenHouseBuilder();
+        HouseDirector director1 = new HouseDirector(woodenBuilder);
+        House woodenHouse = director1.Construct();
+        Console.WriteLine("Wooden House:\n" + woodenHouse);
+
+        Console.WriteLine();
+
+        // Building a Brick House
+        IHouseBuilder brickBuilder = new BrickHouseBuilder();
+        HouseDirector director2 = new HouseDirector(brickBuilder);
+        House brickHouse = director2.Construct();
+        Console.WriteLine("Brick House:\n" + brickHouse);
+    }
+}
+
+
+Component | Role in Builder Pattern | Purpose
+House | Product | The complex object we are building.
+IHouseBuilder | Builder Interface | Declares all the steps needed to build the house.
+WoodenHouseBuilder, BrickHouseBuilder | Concrete Builders | Implement the steps differently to build different types of houses.
+HouseDirector | Director | Controls the construction process (step-by-step) regardless of the final house type.
+Program class | Client | Chooses which builder to use and starts the construction through the director.
+
+
+✅ Key Benefits of Using the Builder Pattern
+Separates construction logic from the final object.
+Allows creating different variations of an object using the same process.
+Makes the code more flexible, readable, and maintainable.
+
+
+
+EG 2 :
+using System;
+using System.Linq;
+namespace BuilderPattern
+{
+    public class Computer
+    {
+        public string Name { get; set; }
+        public string CPU { get; set; }
+        public string RAM { get; set; }
+        public string Storage { get; set; }
+
+        public void Display()
+        {
+            Console.WriteLine("----COMPUTER DETAILS----");
+            Console.WriteLine("Name : " + Name);
+            Console.WriteLine("CPU : " + CPU);
+            Console.WriteLine("RAM " + RAM);
+            Console.WriteLine("Storage " + Storage);
+        }
+    }
+
+    public interface IComputerBuilder 
+    {
+        void SetComp();
+        Computer GetComputer();
+    }
+
+
+    public class GamingBuilder : IComputerBuilder
+    {
+        private Computer gameComputer = new Computer();
+
+        public void SetComp()
+        {
+            gameComputer.Name = "GAMING COMPUTER";
+            gameComputer.CPU = "20 Cores";
+            gameComputer.RAM = "20 GB";
+            gameComputer.Storage = "2 TB";
+        }
+
+        public Computer GetComputer()
+        {
+            return gameComputer;
+        }
+    }
+
+    public class OfficeBuilder : IComputerBuilder
+    {
+        public Computer OfficeComputer = new Computer();
+        public void SetComp()
+        {
+            OfficeComputer.Name = "OFFICE COMPUTER";
+            OfficeComputer.CPU = "10 Cores";
+            OfficeComputer.RAM = "10 gb";
+            OfficeComputer.Storage = "1 TB";
+        }
+
+        public Computer GetComputer()
+        {
+            return OfficeComputer;
+        }
+    }
+
+    public class ComputerMaker
+    {
+        public Computer BulidComp(IComputerBuilder builder)
+        {
+            builder.SetComp();
+            return builder.GetComputer();
+        }
+    }
+
+    class Program
+    {
+        public static void Main()
+        {
+            ComputerMaker c = new ComputerMaker();
+
+            Console.WriteLine("Enter the type of computer uh wanna make");
+
+
+             IComputerBuilder comp;
+        string s = Console.ReadLine();
+            if (s.Contains("game"))
+            {
+              comp   = new GamingBuilder();
+            }
+            else
+            {
+                comp = new OfficeBuilder();
+            }
+
+            Computer GamingComputer = c.BulidComp(comp);
+
+            GamingComputer.Display();
+    
+     }
+
+    }
+}
+
+
+---Explanation of the code-----------
+
+1. Product Class ➡️ Computer
+
+public class Computer
+{
+    public string Name { get; set; }
+    public string CPU { get; set; }
+    public string RAM { get; set; }
+    public string Storage { get; set; }
+
+    public void Display()
+    {
+        Console.WriteLine("----COMPUTER DETAILS----");
+        Console.WriteLine("Name : " + Name);
+        Console.WriteLine("CPU : " + CPU);
+        Console.WriteLine("RAM " + RAM);
+        Console.WriteLine("Storage " + Storage);
+    }
+}
+
+Computer is the final product you want to build.
+It has properties like Name, CPU, RAM, and Storage.
+Display() method prints the computer's details.
+
+
+2. Builder Interface ➡️ IComputerBuilder
+public interface IComputerBuilder 
+{
+    void SetComp();
+    Computer GetComputer();
+}
+
+Defines what steps must be performed to build a computer.
+Two main methods:
+SetComp() → Set the properties.
+GetComputer() → Return the completed computer.
+
+3. Concrete Builders ➡️ GamingBuilder and OfficeBuilder
+
+a. Gaming Computer Builder
+public class GamingBuilder : IComputerBuilder
+{
+    private Computer gameComputer = new Computer();
+
+    public void SetComp()
+    {
+        gameComputer.Name = "GAMING COMPUTER";
+        gameComputer.CPU = "20 Cores";
+        gameComputer.RAM = "20 GB";
+        gameComputer.Storage = "2 TB";
+    }
+
+    public Computer GetComputer()
+    {
+        return gameComputer;
+    }
+}
+
+b. Office Computer Builder
+public class OfficeBuilder : IComputerBuilder
+{
+    public Computer OfficeComputer = new Computer();
+
+    public void SetComp()
+    {
+        OfficeComputer.Name = "OFFICE COMPUTER";
+        OfficeComputer.CPU = "10 Cores";
+        OfficeComputer.RAM = "10 gb";
+        OfficeComputer.Storage = "1 TB";
+    }
+
+    public Computer GetComputer()
+    {
+        return OfficeComputer;
+    }
+}
+These two classes implement the builder interface.
+Each sets the computer properties differently based on the type (gaming/office).
+
+
+4. Director Class ➡️ ComputerMaker
+
+public class ComputerMaker
+{
+    public Computer BulidComp(IComputerBuilder builder)
+    {
+        builder.SetComp();  // Build the parts
+        return builder.GetComputer();  // Return final product
+    }
+}
+ComputerMaker controls the construction process.
+It uses a builder (IComputerBuilder) but doesn't care which specific one (Gaming or Office).
+It calls the steps (SetComp ➔ GetComputer) in order.
+
+5. Client (Main Program)
+
+class Program
+{
+    public static void Main()
+    {
+        ComputerMaker c = new ComputerMaker();
+
+        Console.WriteLine("Enter the type of computer uh wanna make");
+
+        IComputerBuilder comp;
+        string s = Console.ReadLine();
+
+        if (s.Contains("game"))
+        {
+            comp = new GamingBuilder();
+        }
+        else
+        {
+            comp = new OfficeBuilder();
+        }
+
+        Computer computer = c.BulidComp(comp);
+
+        computer.Display();
+    }
+}
+The user inputs what type of computer they want.
+Based on the input, the program chooses the correct builder.
+Then it uses ComputerMaker (Director) to build the computer.
+Finally, it displays the created computer.
+
+
+
+🧠 Step-by-Step Summary of Builder Pattern Usage in Your Code
+Step	Element			Description
+1	Product			Computer class represents the complex object being created.
+2	Builder Interface	IComputerBuilder defines steps to build a computer (SetComp, GetComputer).
+3	Concrete Builders	GamingBuilder and OfficeBuilder set computer properties differently.
+4	Director		ComputerMaker handles building process — calls steps in order.
+5	Client Code		Program.Main picks a builder based on user input and constructs a computer.
+
+
+🔥 Why is this called "Separating Construction from Representation"?
+Construction = The steps (set CPU, set RAM, etc.) are same for both Gaming and Office computers.
+Representation = The final computer differs based on builder (gaming computer vs office computer).
+Thus, how you build (steps) is separated from what you are building (gaming/office).
+
+
+✨ Key Advantages of Builder Pattern Shown Here:
+Easy to add new computer types (e.g., ServerBuilder, LaptopBuilder) without changing old code.
+The construction process (ComputerMaker) remains same — no need to change it.
+Clean, modular, flexible, and scalable design.
+
+
+------------------------
+
+STEP : 
+	1) Product class : Make the final product as uh want , and without seting its properties.
+	2) Builder INterfaces : In this just make the function which need to be run for making the product
+	3) Concreate uilder : it will follow the steps which are need to build the entire product at once, the way we want
+	4) Client class.

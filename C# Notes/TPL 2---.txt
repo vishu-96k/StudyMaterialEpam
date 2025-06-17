@@ -1,0 +1,298 @@
+------------TPL PART 2----------------
+------Task Scheduling and TaskSchedulers-----------
+
+-TASK SHADULING : it refers to when and how a task is executed.
+-By default the TPL TASK(.net) uses the default task shaduler to queue and run the tasks using ThradPool threds.
+
+-DEFAULAT TASK SHADULER :  it uses the ThreadPool internally to shadule and manage the tasks, which shares threads across multiple tasks and manages them automactically internally.
+
+-When you call Task.Run() or Task.Factory.StartNew() without specifying a scheduler, the default scheduler is used.
+EG :
+Task task = Task.Run(() =>
+{
+    Console.WriteLine("Running on thread: " + Thread.CurrentThread.ManagedThreadId);
+});
+
+
+WORKING OF DEFALUT TASK SHADULER :
+1. ThreadPool Based
+The default scheduler uses the ThreadPool, which manages a pool of worker threads.
+2. Task Queuing
+When you start a task (Task.Run, Task.Factory.StartNew), it's queued to the ThreadPool. The ThreadPool decides when and which thread will execute the task.
+3. Fairness and Efficiency
+The ThreadPool tries to balance load across threads.
+4. No Guaranteed Order
+Tasks are not guaranteed to run in the order they are started.
+5. Parallelism, Not Concurrency
+The default scheduler allows parallel execution, but the degree depends on available threads.
+
+-Inshort, Defalu task shaduler is totally based on the ThreadPool, ThreadPool decided when which task will be executed and how.
+
+-CUSTOM TASK SHADULER :
+TaskScheduler is an abstract base class.
+You can create custom schedulers by inheriting from it if you want to change how tasks are scheduled (e.g., limit concurrency, run tasks on a specific thread, etc.).
+
+-A custom task scheduler lets you control how tasks are queued and executed — for example:
+Limiting the number of concurrent tasks
+Running tasks on a dedicated thread (e.g., UI thread)
+Scheduling based on custom priorities or rules
+
+-TaskShaduler Class : This is an abstract base class which has 3 abstract methods which uh need to override for making custom task shadulers.
+-So uh need to make a class which inhirits the TaskShaduler class and Overrides the 3 three function.
+
+-QueueTask(Task task) : this is the abstract function, which we need to override, it defines How a task is queued for execution.
+-This is the core method where you define how to queue a task for execution.
+When a Task is created and scheduled, this method gets called.
+
+SYNTAX  :
+protected abstract void QueueTask(Task task);
+
+TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued) : This method is part of the TaskScheduler base class and must be overridden when you're creating a custom TaskScheduler.
+-it tells us that Whether a task can run inline (on the calling thread)
+-its purpose is to determine whether a task can be executed immediately (inline) on the current calling thread instead of being queued and run later.
+
+SYNTAX :
+protected abstract bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued);
+
+- it returns a bool, indicatuing that wether the Task which is being passed in as the parameter has run immditaitly(executed inline) or not
+Returns false if the task could not be executed inline (e.g., due to thread restrictions or scheduler rules).
+
+-What Is Inline Execution?
+The task is executed immediately on the current thread rather than being queued to another thread.
+
+-This method tells the scheduler whether it can run a task immediately on the current thread (i.e., "inline") instead of queuing it.
+
+EG :
+protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
+{
+    return TryExecuteTask(task); // Run task on current thread
+}
+
+
+GetScheduledTasks() : This method returns an IEnumerable<Task> that represents the tasks currently scheduled but not yet executed in your custom task scheduler.
+-so it returns a Task which is currently being shadule to execute.
+-This method is optional to implement for creating Custom Task Shadulers.
+
+SYNTAX:
+protected internal abstract IEnumerable<Task> GetScheduledTasks();
+
+
+
+ 6. Why Create a Custom TaskScheduler?
+Thread affinity: Execute all tasks on a single thread (e.g., GUI thread).
+Task ordering: Customize how tasks are prioritized or ordered.
+Limited concurrency: Restrict number of concurrently running tasks (e.g., I/O-bound operations).
+
+
+-------------------TASK CANCELLATION-----------
+
+Task Cancellation :Task cancellation in C# is a mechanism to request that a running task should stop executing. It's a cooperative cancellation, meaning the task must regularly check for cancellation requests and respond accordingly.
+-Task Cancellation refers to the process of stopping the execution of a running task before it completes
+-in C# there are many built in Methods for Task cancellation, one of them is CancellationToken and CancellationTokenSource classes, which allow uh to singnal tasks to stop their execution gracefully.
+
+CancellationTokenSource : is a class that is responsible for requesting cancellation of one or more tasks.
+It creates a CancellationToken, which can be passed to tasks or operations. This token is then used by those tasks to check if cancellation has been requested.
+The primary method of CancellationTokenSource is Cancel(), which triggers the cancellation request.
+
+✅ Key Properties and Methods:
+Token:
+This property provides access to the CancellationToken object associated with the CancellationTokenSource.
+Example: CancellationToken token = cancellationTokenSource.Token;
+
+Cancel():
+This method signals cancellation. It requests cancellation of tasks or operations that are using the associated CancellationToken.
+Example: cancellationTokenSource.Cancel();
+
+CancelAfter(TimeSpan):
+Cancels the token after a certain time period, making it useful for timeouts.
+Example: 
+cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(5));
+
+Dispose():
+Disposes of the CancellationTokenSource to release resources when it’s no longer needed.
+Example: cancellationTokenSource.Dispose();
+
+
+EG :
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+class Program
+{
+    static void Main()
+    {
+        var cancellationTokenSource = new CancellationTokenSource();
+        var token = cancellationTokenSource.Token;
+
+        // Simulate a task
+        var task = Task.Run(() =>
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    Console.WriteLine("Task cancelled.");
+                    break; // Exit early if cancellation is requested
+                }
+                Console.WriteLine($"Task running: {i + 1}");
+                Thread.Sleep(1000);
+            }
+        }, token);
+
+        // Request cancellation after 3 seconds
+        Thread.Sleep(3000);
+        cancellationTokenSource.Cancel();  // Initiate cancellation
+
+        task.Wait();  // Wait for the task to complete
+
+        Console.WriteLine("Main thread completed.");
+    }
+}
+
+
+2. CancellationToken
+✅ What Is It?
+CancellationToken is a struct (value type) that represents the cancellation signal.
+It does not cancel tasks by itself; instead, it’s used by tasks to check if cancellation has been requested.
+-A CancellationToken is created by the CancellationTokenSource and passed to tasks that need to monitor cancellation.
+
+✅ How Does It Work?
+The token acts as a flag. It’s set to "canceled" once the CancellationTokenSource calls Cancel().
+
+
+✅ Key Properties and Methods:
+IsCancellationRequested:
+
+Returns true if cancellation has been requested.
+
+Example: if (token.IsCancellationRequested) { // stop the task }
+
+ThrowIfCancellationRequested():
+
+Throws an OperationCanceledException if cancellation has been requested. This can be used in tasks to terminate early by throwing an exception.
+
+Example: token.ThrowIfCancellationRequested();
+
+CanBeCanceled:
+
+Indicates whether cancellation is possible for this token.
+
+Example: if (token.CanBeCanceled) { // Do something }
+
+WaitHandle:
+
+Provides a WaitHandle that can be used for blocking on cancellation.
+
+Example: token.WaitHandle.WaitOne();
+
+
+EG :
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+class Program
+{
+    static void Main()
+    {
+        var cancellationTokenSource = new CancellationTokenSource();
+        var token = cancellationTokenSource.Token;
+
+        var task = Task.Run(() =>
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                token.ThrowIfCancellationRequested();  // Throws exception if canceled
+                Console.WriteLine($"Task running: {i + 1}");
+                Thread.Sleep(1000);
+            }
+        }, token);
+
+        // Cancel after 3 seconds
+        Thread.Sleep(3000);
+        cancellationTokenSource.Cancel();
+
+        try
+        {
+            task.Wait();
+        }
+        catch (AggregateException ex)
+        {
+            Console.WriteLine($"Task was canceled: {ex.InnerExceptions[0].Message}");
+        }
+
+        Console.WriteLine("Main thread completed.");
+    }
+}
+
+
+-----------DATA PARALLILISM----------
+Data Parallelism means performing the same operation (or set of operations) on different pieces of data, in parallel. 
+✅ Key Characteristics:
+Same Operation: All threads perform the same computation.
+Different Data: Each thread works on a different part of the dataset.
+Best Used For: Large datasets (arrays, lists, collections) where each element can be processed independently.
+-means data Paralllism is applied on Collecitn of data .
+
+Example using Parallel.For
+EG :
+
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10000];
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = i;
+        }
+
+        // Data parallelism using Parallel.For
+	//now uh can see that this operation will happen very fast becoz interanally it will use many Threads, for performing the opration
+        Parallel.For(0, numbers.Length, i =>
+        {
+            numbers[i] = numbers[i] * numbers[i];  // Same operation on different data
+        });
+
+        Console.WriteLine("Squaring done in parallel.");
+        Console.WriteLine("Result for index 5: " + numbers[5]);  // Should be 25
+    }
+}
+
+
+-Instead of squaring each number in a regular for loop, we used Parallel.For:
+This splits the work across multiple threads.
+Each thread processes a different part of the array.
+
+
+ Example using Parallel.ForEach
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+class Program
+{
+    static void Main()
+    {
+        List<int> data = new List<int>();
+        for (int i = 0; i < 10000; i++)
+        {
+            data.Add(i);
+        }
+
+        Parallel.ForEach(data, item =>
+        {
+            int result = item * item;
+            Console.WriteLine($"Square of {item} is {result}");
+        });
+
+        Console.WriteLine("All tasks completed.");
+    }
+}
+
+This will also work in the same way, its like foreach loop and for loop 

@@ -1,0 +1,702 @@
+MVC7---
+------------------------------------
+-📌✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+-✅[#1] : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+
+
+📌✅✅✅✅✅✅✅✅✅📌CH :06 VIEWS📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] INTRO VIEWS 
+
+📌VIEWS :
+-Views are the UI.
+-View is the component that contains logic to represent the model data (the model data provided to it by a controller) as a user interface with which the end-user can interact.
+-In short Views are the html pages which are having the extension as .cshtml, And this is called the razor syntax(C# + HTML).
+- The View combines programming language (C#) and HTML (Hypertext Mark-up Language) and genrally re return to the client from the controller action methods.
+
+📌TYPES OF VIEWS :
+-Razor views
+-Partial views
+-View components
+-Layout views
+
+📌 1. Razor Views
+Razor Views are .cshtml files that contain a mix of HTML and C# code using Razor syntax.
+Razor syntax starts with @ to embed C# inside HTML.
+These are the default view types used to render dynamic content in ASP.NET Core MVC.
+
+Example:
+🗂 Project Structure
+/MyMvcApp
+│
+├── Program.cs
+├── Startup.cs (if using .NET Core 3.1 or earlier)
+│
+├── /Controllers
+│   └── HomeController.cs
+│
+├── /Views
+│   └── /Home
+│       └── Welcome.cshtml
+│
+├── /Views/Shared
+│   └── _Layout.cshtml (optional)
+│
+├── /wwwroot
+│   └── (static assets like CSS, JS)
+
+📁 Code Files
+1️⃣ Program.cs
+//All code of Program.cs file, like AddMvc(), app.Userouting() etc
+//All configuration code.
+
+2️⃣ Controllers/HomeController.cs
+Suppose you have a controller action:
+using Microsoft.AspNetCore.Mvc;
+
+namespace MyMvcApp.Controllers
+{
+    public class HomeController : Controller
+    {
+        public IActionResult Welcome()
+        {
+            ViewBag.Name = "Alice";  //This is the paramters or data members, which can be used in the html page for passing data from the controller Actions.
+            return View(); //this will return the HTML page, which is named as "Welcome.cshtml"
+        }
+    }
+}
+//Razor view engine renders the view, and reads the .cshtml file, parses the html and replaces @ViewBag.Name with Alice
+
+3️⃣ Views/Home/Welcome.cshtml
+@{
+    ViewData["Title"] = "Welcome Page"; //This will set the "TITLE" of the html page which is seen in the browser top URL
+}
+<h2>Welcome, @ViewBag.Name!</h2>  //"@ViewBag.Name = alice" takes form controller.
+
+OUTPUT :
+User visits : http://localhost:5000/Home/Welcome
+This will render: <h2>Welcome, Alice!</h2>
+
+📌 2. Partial Views
+These are reusable view components that can be embedded within other views.
+They are useful for rendering common elements like headers, footers, or navigation menus.
+Partial Views are reusable view fragments (sub-views).
+Think of them as components that can be included inside other views.
+They do not contain layout or complete HTML; instead, they focus on a portion of the UI.
+
+Example:
+Let's say you want to reuse a user profile card in multiple places.
+Let’s build a simple ASP.NET Core MVC app to demonstrate:
+A User model.
+A HomeController returning a list of users.
+A ParentView.cshtml that loops through users and injects _UserCard.cshtml.
+🗂 Folder Structure
+/MyMvcApp
+│
+├── Program.cs
+│
+├── /Models
+│   └── User.cs
+│
+├── /Controllers
+│   └── HomeController.cs
+│
+├── /Views
+│   └── /Home
+│       ├── UserList.cshtml         ← Main view
+│       └── _UserCard.cshtml        ← Partial view
+│
+├── /Views/Shared
+│   └── _Layout.cshtml (optional)
+
+
+📁 Code Files
+1️⃣ Program.cs
+//This include all the startup code, Which is needed for MVC configuration.
+//app.AddMvc() , App.UseRouting() etc functions 
+
+2️⃣ Models/User.cs
+namespace MyMvcApp.Models
+{
+    public class User
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
+}
+
+3️⃣ Controllers/HomeController.cs
+using Microsoft.AspNetCore.Mvc;
+using MyMvcApp.Models;
+
+namespace MyMvcApp.Controllers
+{
+    public class HomeController : Controller
+    {
+        public IActionResult UserList()
+        {
+            var users = new List<User>
+            {
+                new User { Name = "Alice", Email = "alice@example.com" },
+                new User { Name = "Bob", Email = "bob@example.com" },
+                new User { Name = "Charlie", Email = "charlie@example.com" }
+            };
+
+            return View(users);  // Pass list of users to view
+        }
+    }
+}
+
+4️⃣ Views/Home/UserList.cshtml (Parent View)
+@model List<MyMvcApp.Models.User>
+<h2>User List</h2>
+
+@foreach (var user in Model)
+{
+    @Html.Partial("_UserCard", user)  // Inject partial view with one user
+}
+
+5️⃣ Views/Home/_UserCard.cshtml (Partial View)
+
+@model MyMvcApp.Models.User
+
+<div class="user-card" style="border:1px solid #ccc; padding:10px; margin:5px;">
+    <h4>@Model.Name</h4>
+    <p>@Model.Email</p>
+</div>
+
+
+-User visits: http://localhost:5000/Home/UserList
+ASP.NET Core finds:
+Controller: HomeController
+Action: UserList()
+Returns view: Views/Home/UserList.cshtml with List<User> model.
+
+-Use Case:
+uh can use it in Repeating UI patterns like user cards, comment boxes, navigation menus, Header, Footer etc.
+
+📌 3. View Components
+-They are strongly-typed, reusable UI blocks that include:
+A class for logic (C#)
+A view for display (.cshtml).
+-These are similar to partial views but more powerful. They can encapsulate both the view and the logic needed to generate it.
+-What are they?
+View Components are more powerful than partial views.
+They include both logic (C#) and view (HTML) and are similar to mini-controllers + views.
+They don’t use ViewBag or ViewData; instead, they use strongly typed models.
+
+EXAMPLE
+🧠 Real-Life Analogy
+Imagine your website homepage needs to show:
+🔥 “Top 3 Products of the Week”
+Instead of writing that logic in a controller and passing it to a view, you encapsulate everything into a View Component that fetches data and renders it.
+
+📁Folder Structure:
+/MyMvcApp
+│
+├── Program.cs
+│
+├── /Models
+│
+├── /Controllers
+│   └── HomeController.cs
+│
+├── /ViewComponents
+│   └── TopProductsViewComponent.cs  ← Logic
+│
+├── /Views
+│   └── /Home
+│       └── Index.cshtml             ← Using the component
+│
+├── /Views/Shared
+│   └── /Components
+│       └── /TopProducts
+│           └── Default.cshtml       ← Component’s View
+
+
+📂 Code Implementation
+1️⃣ Program.cs
+//This files inlcdues all the configuration code, needed to start and set up the MVC and middle weres like app.useRouting(), app.AddMvc()
+//Add.UseDefalutRoute()   ---> middlewere
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
+
+2️⃣ Controllers/HomeController.cs
+using Microsoft.AspNetCore.Mvc;
+namespace MyMvcApp.Controllers
+{
+    public class HomeController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View(); // Just loads Index.cshtml
+        }
+    }
+}
+
+3️⃣ ViewComponents/TopProductsViewComponent.cs  :💡 This is your reusable logic class.
+using Microsoft.AspNetCore.Mvc;
+namespace MyMvcApp.ViewComponents
+{
+    // View Component class must inherit from ViewComponent
+    public class TopProductsViewComponent : ViewComponent
+    {
+        // This method is called when using @await Component.InvokeAsync("TopProducts")
+        public IViewComponentResult Invoke()
+        {
+            // Simulate fetching top products (could be from DB)
+            var products = GetTopProducts();
+            return View(products);  // Looks for /Views/Shared/Components/TopProducts/Default.cshtml
+        }
+
+        private List<string> GetTopProducts()
+        {
+            return new List<string> { "Laptop", "Phone", "Tablet" };
+        }
+    }
+}
+
+4️⃣ Views/Shared/Components/TopProducts/Default.cshtml : 📄 This is the view that gets rendered when the component is invoked.
+@model List<string>
+<h4>Top Products</h4>
+<ul>
+@foreach (var item in Model)
+{
+    <li>@item</li>
+}
+</ul>
+
+5️⃣ Views/Home/Index.cshtml : 💡 Use the view component here with Component.InvokeAsync
+<h2>Welcome to Our Store</h2>
+<!-- Render the TopProducts component -->
+@await Component.InvokeAsync("TopProducts")
+
+
+🔄 How Does It Work Internally?
+| Step                                          | Description                                                                                  |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `@await Component.InvokeAsync("TopProducts")` | Tells the framework to **look for** a View Component class named `TopProductsViewComponent`. |
+| Framework finds `TopProductsViewComponent`    | Executes the `Invoke()` method and gets the list of products.                                |
+| `return View(products)`                       | Automatically maps to the view at: `/Views/Shared/Components/TopProducts/Default.cshtml`     |
+| Final Render                                  | The rendered HTML is injected into the parent view (e.g., `Index.cshtml`).                   |
+
+-now uh can Use it in any view as: @await Component.InvokeAsync("TopProducts")
+Just need to write this line in any view , and uh can use this page.
+-Use Case:
+uh can use it in Sidebar widgets, search boxes, shopping cart previews, etc.
+
+💡 View Component Naming Convention
+| Part          | Convention                                                                       |
+| ------------- | -------------------------------------------------------------------------------- |
+| Class         | Must end with `ViewComponent` (e.g., `TopProductsViewComponent`)                 |
+| Invoke Method | You can use `Invoke()` or `InvokeAsync()`                                        |
+| View File     | Named `Default.cshtml` inside `/Views/Shared/Components/{ComponentName}/` folder |
+
+
+🔄 Summary
+| Feature          | Partial View    | View Component                 |
+| ---------------- | --------------- | ------------------------------ |
+| Logic            | In Controller   | In Component class             |
+| ViewBag/ViewData | ✅ Yes           | ❌ No                           |
+| Strongly-typed   | Optional        | Recommended                    |
+| Usage            | `@Html.Partial` | `@await Component.InvokeAsync` |
+| Best for         | Simple UI reuse | UI + Logic encapsulation       |
+
+
+
+📌 4. Layout Views
+Layouts are like templates or wrappers for your pages.
+Instead of duplicating HTML (e.g., header/footer) in every view, you define it once in a layout.
+- These provide a consistent look and feel across multiple views in your application.
+They define a common template(define a common strture like master page) for your pages, including headers, footers, and navigation bars.
+-What are they?
+Layout Views provide a common template or structure (like a master page).
+Helps maintain a consistent look and feel across multiple pages (e.g., same header, footer, menu).
+
+Example:
+Imagine your website is a book:
+Layout View = Book cover, table of contents, same chapter layout
+Individual Views = Actual content of each chapter
+
+📁 Folder Structure
+/MyMvcApp
+│
+├── Program.cs
+│
+├── /Controllers
+│   └── HomeController.cs
+│
+├── /Views
+│   ├── /Home
+│   │   └── Index.cshtml            ← Child View
+│   └── /Shared
+│       └── _Layout.cshtml          ← Layout Template
+
+
+1️⃣ Program.cs
+//Contains the configuration code for MVC and middle wres
+app.AddMvc()
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
+
+
+2️⃣ Controllers/HomeController.cs
+using Microsoft.AspNetCore.Mvc;
+
+namespace MyMvcApp.Controllers
+{
+    public class HomeController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View(); // Renders Views/Home/Index.cshtml
+        }
+    }
+}
+
+
+3️⃣ Views/Shared/_Layout.cshtml: This is the layout file (like master page in WebForms).
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"] - My Website</title>
+</head>
+<body>
+    <header>
+        <h1>My Website</h1>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/Home/About">About</a> |
+            <a href="/Home/Contact">Contact</a>
+        </nav>
+    </header>
+
+    <main role="main">
+        <!-- This is where the child view will inject its content -->
+        @RenderBody()
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Website</p>
+    </footer>
+</body>
+</html>
+
+💬 Explanation:
+@ViewData["Title"] — Page-specific title from child view.
+@RenderBody() — This is where the child view content will be rendered.
+Shared layout elements like header/footer are reused across all views.
+
+
+4️⃣ Views/Home/Index.cshtml : This is a child view that will use _Layout.cshtml.
+
+@{
+    ViewData["Title"] = "Home Page"; // Used in the <title> tag of layout
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Specify the layout
+}
+
+<h2>Welcome to the Home Page</h2>
+<p>This is your starting point!</p>
+
+
+This results in:
+<header>My Website</header>
+<h2>Welcome to the Home Page</h2>
+<footer>© 2025 My Website</footer>
+
+🧠 How the Mapping Works Internally
+| Step                                       | What Happens                                                 |
+| ------------------------------------------ | ------------------------------------------------------------ |
+| `return View();` in HomeController         | Tells ASP.NET to render `Views/Home/Index.cshtml`            |
+| `Layout = "~/Views/Shared/_Layout.cshtml"` | Tells ASP.NET to wrap the view inside this layout            |
+| `@RenderBody()` in `_Layout.cshtml`        | Inserts the content from `Index.cshtml` at this point        |
+| `@ViewData["Title"]`                       | Populates the layout's `<title>` dynamically from child view |
+
+
+🔧 Bonus: Set Layout Globally (Optional)
+Instead of setting Layout = "~/Views/Shared/_Layout.cshtml" in every view, you can set it once globally: 
+Views/_ViewStart.cshtml
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+//Now you don't need to specify Layout = ... in every view unless you want to override it.
+
+📝 Summary
+| Concept              | Description                            |
+| -------------------- | -------------------------------------- |
+| `_Layout.cshtml`     | Master layout file for consistent UI   |
+| `@RenderBody()`      | Injects child view content             |
+| `@ViewData["Title"]` | Dynamically sets page title            |
+| `@{ Layout = ... }`  | Specifies which layout to use          |
+| `_ViewStart.cshtml`  | Optional file to globally apply layout |
+
+
+
+Use Case:
+Ensuring all views share common layout (header, footer, CSS/JS includes, etc.)
+
+
+| View Type      | Purpose                                       | Contains Logic | Reusability     | Layout Support |
+| -------------- | --------------------------------------------- | -------------- | --------------- | -------------- |
+| Razor View     | Regular dynamic views                         | ❌              | ❌               | ✅              |
+| Partial View   | Reusable fragments inside other views         | ❌              | ✅               | ❌              |
+| View Component | Encapsulated UI + logic, reusable and dynamic | ✅              | ✅               | ❌              |
+| Layout View    | Master page for consistent page structure     | ❌              | ✅ (across site) | ✅              |
+
+
+-----------------✅[#2]VIEWS FOLDER-------------------------------
+
+✅[#2]VIEWS FOLDER
+
+📌 Basic Rule
+All views go inside the Views folder.
+Inside the Views folder, you create subfolders for each Controller in your application.
+Each controller's views (HTML pages) are stored in its corresponding folder.
+The name of each subfolder must match the controller name (without "Controller" suffix).
+
+Folder Structure Example : Suppose you have these two controllers in your app:
+
+📁Controllers/HomeController.cs
+public class HomeController : Controller
+{
+    public IActionResult Index() { return View(); } //The return type of the Index() action method is ViewResult/IActionResult, which means it will return a view. To return a view, we use the View() extension method, which belongs to the Controller Base Class.
+    public IActionResult AboutUs() { return View(); }
+    public IActionResult ContactUs() { return View(); } //
+}
+
+-If uh navigate  to the “/Home/Index” URL
+-MVC Framework will look for a file with the name Index.cshtml in the following three locations.
+First, it will look for the “Index.cshtml” file within the “/Views/Home” folder, as the action method belongs to the Home Controller.
+Then it will look for the “Index.cshtml” file in the “/Views/Shared/” folder.
+Then it will look for the “Index.cshtml” file in the “/Pages/Shared/” folder.
+
+
+📁Controllers/StudentController.cs
+public class StudentController : Controller
+{
+    public IActionResult Index() { return View(); }
+    public IActionResult Details() { return View(); }
+    public IActionResult Edit() { return View(); }   // This "return view() " function looks for Views/Student/Edit.cshtml
+    public IActionResult Delete() { return View(); }
+}
+
+
+🗂 View Folder Structure
+/Views
+│
+├── /Home
+│   ├── Index.cshtml //The URL "https:/port/Home/Index" will render this html page
+│   ├── AboutUs.cshtml //The URL "https:/port/Home/AboutUs" will render this html page
+│   └── ContactUs.cshtml
+│
+├── /Student
+│   ├── Index.cshtml
+│   ├── Details.cshtml  
+│   ├── Edit.cshtml  // The URL "https:/port/Student/Edit" will render this "Edit.cshtml " html page
+│   └── Delete.cshtml
+│
+├── /Shared
+│   ├── _Layout.cshtml
+│   ├── _ValidationScriptsPartial.cshtml
+│   └── _ViewImports.cshtml
+
+
+🧠 How It Works
+When a user visits a URL like /Home/Index, the Index method in HomeController gets called.
+The View() method returns a view file named Index.cshtml.
+ASP.NET Core looks for this file in the Views/Home/ folder.
+So, it renders Views/Home/Index.cshtml.
+
+The same process happens for all controller actions:
+/Student/Details → Views/Student/Details.cshtml
+/Home/AboutUs → Views/Home/AboutUs.cshtml
+
+📌Special Folders Inside Views
+-Views/Shared/ : This folder is for shared views like:
+Layouts (_Layout.cshtml)  //This page is share among all the veiws
+Partial Views (like headers, footers) //Like footer is common for all the views
+Error pages or common components
+
+ 🔹_ViewStart.cshtml
+Optional file placed in Views/ or subfolders.
+Used to automatically apply a layout to multiple views.
+
+@{
+    Layout = "_Layout";
+}
+
+ 🔹Summary
+Views are stored inside the Views folder.
+Each controller has its own subfolder under Views.
+View files (.cshtml) are placed in the matching subfolder according to the action method names.
+There’s also a Shared folder for reusable or common views like layout pages.
+
+
+✅[#3]VIEWS DISCOVERY
+
+📌VIEWS DISCOVERY 
+-View Discovery in asp .net MVC core is a process by which the freamwork determines which view file to use when rendering a response to HTTP request
+-This process (of view discovery) involves locating appropriate view file based on the action method and controller.
+
+📌Understanding View() Method 
+-This view() method is in the Controller base class, you will find four overload versions of the View() method available in Controller base class.
+
+View() Method Overloads
+-In ASP.NET Core MVC, the View() method of the Controller class has 4 main overloaded versions:
+
+| Method Signature                      | When to Use                                                  |
+| ------------------------------------- | ------------------------------------------------------------ |
+| `View()`                              | Return a view with **same name as action**; no data passed.  |
+| `View(object model)`                  | Return a view with **same name as action**; pass data to it. |
+| `View(string viewName)`               | Return a view with a **custom name**; no data passed.        |
+| `View(string viewName, object model)` | Return a view with a **custom name** and pass data to it.    |
+
+
+🎯 Real-Life Analogy
+Imagine you're building custom invitations for different people.
+View() → You use a default template because the person's name matches the invitation file (e.g., "John" uses John.cshtml).
+View(object model) → You use a default template but add personal details like a message or address.
+View("Birthday") → You manually select a template called "Birthday" instead of using "John" even though the request came from John.
+View("Birthday", personData) → You use a "Birthday" template with John’s personalized data (name, age, etc.).
+
+
+📌1. View()
+🧠 When:
+When the view name is same as action name.
+No need to send any data to the view.
+
+
+👇 Code:
+public class HomeController : Controller
+{
+    public ViewResult Index() // Action name is "Index"
+    {
+        return View(); // Will load Views/Home/Index.cshtml
+    }
+}
+
+📁 Folder: Views/Home/Index.cshtml
+<h2>Welcome to Index View</h2>
+
+🔍 How it works:
+The action is Index.
+The framework looks in Views/Home/Index.cshtml (same as controller name and action).
+No model data passed.
+
+
+📌 2. View(object model)
+🧠 When:
+You want to use the default view (Index.cshtml) but send data to it.
+
+👇 Code:
+public class HomeController : Controller
+{
+    public ViewResult Index()
+    {
+        string message = "Welcome to ASP.NET Core!";
+        return View(model: message); // Pass string to view
+    }
+}
+
+📁 Folder: Views/Home/Index.cshtml
+@model string
+<h2>@Model</h2> //this "@Model" is noth but the message passed.
+
+🔍 How it works:
+Still uses Views/Home/Index.cshtml.
+Now you can access the model passed (string message) in the view via @Model.
+
+
+📌3. View(string viewName)
+🧠 When:
+You want to return a view that is different from the action method name.
+You do not need to pass data.
+
+Setup:
+Add a view file manually
+📁 Views/Home/Test.cshtml
+👇 View Code (Test.cshtml):
+<h2>This is Test View</h2>
+
+👇 Controller Code:
+public class HomeController : Controller
+{
+    public ViewResult Index()
+    {
+        return View("Test"); // Loads Views/Home/Test.cshtml instead of Index.cshtml
+    }
+}//In this the "return view() will be the test view"
+🔍 How it works:
+The action is Index(), but the view loaded is "Test".
+Useful when you want to reuse views across multiple actions.
+ 
+📌4. View(string viewName, object model)
+🧠 When:
+You want to load a custom view file name and pass data to it.
+
+👇 Controller Code:
+public class HomeController : Controller
+{
+    public ViewResult Index()
+    {
+        var productList = new List<string> { "TV", "Laptop", "Phone" };
+        return View("Test", productList); // Loads Test.cshtml and passes model
+    }
+}
+
+📁 Views/Home/Test.cshtml
+👇 View Code (Test.cshtml):
+@model List<string>
+
+<h2>Product List</h2>
+<ul>
+@foreach (var product in Model)
+{
+    <li>@product</li>
+}
+</ul>
+
+🔍 How it works:
+Action is Index().
+Loads view file "Test.cshtml".
+Sends a list of products to the view.
+
+
+/FirstCoreMVCWebApplication
+│
+├── Program.cs
+├── /Controllers
+│   └── HomeController.cs
+├── /Views
+│   ├── /Home
+│   │   ├── Index.cshtml     ← Used by View()
+│   │   └── Test.cshtml      ← Used by View("Test")
+│   └── /Shared
+│       └── _Layout.cshtml   ← Optional layout view
+
+
+🧭 Summary Table
+| Scenario                | Method Used                      | Looks for File              | Model Data |
+| ----------------------- | -------------------------------- | --------------------------- | ---------- |
+| Default view, no data   | `View()`                         | Views/{Controller}/{Action} | ❌          |
+| Default view, with data | `View(object model)`             | Views/{Controller}/{Action} | ✅          |
+| Custom view, no data    | `View("ViewName")`               | Views/{Controller}/ViewName | ❌          |
+| Custom view, with data  | `View("ViewName", object model)` | Views/{Controller}/ViewName | ✅          |
+

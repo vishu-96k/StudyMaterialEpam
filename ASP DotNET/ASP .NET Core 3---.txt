@@ -1,0 +1,766 @@
+----------ASP .NET Core PART 3-------
+WHAT IS KESTRAL, IIS, IIS EXPRRESS.
+WHAT IS IN PROECESS AND OUT PROCESS MODEL.
+WHAT IS HOSTING MODEL
+
+
+-----------✅ SERVERS---------
+
+-HOSTING : Hosting refers to the service that allows our web application to be accessible over the Internet.
+-Hosting ,means internet pr apani application ko intsall krna kise server pr.
+
+
+✅ SERVER :
+A server is a computer (or software program) that provides services or responds to requests made by other computers or devices, called clients.
+📌 Examples:
+When you open Gmail, your browser sends a request to Google’s email server, which sends back your inbox.
+When you play online games, the game communicates with a game server to sync data between all players.
+
+🧠 Real-Life Analogy:
+Think of a server like a waiter in a restaurant:
+You (the client) ask the waiter (the server) for food.
+The waiter takes your request to the kitchen and brings back your food.
+
+💻 Examples of Different Servers:
+Type of Server	What It Does	Example Use Case
+Web Server	Hosts websites	Serves HTML pages
+Database Server	Stores and serves data	SQL Server, MySQL
+File Server	Stores and sends files	Cloud storage like Dropbox, OneDrive
+Game Server	Syncs gameplay between users	Online multiplayer games
+Mail Server	Sends/receives emails	Gmail, Outlook	
+
+
+✅ WEB SERVER : 
+-This is the physical or virtual machine that runs the server software, such as Apache, Nginx, or Microsoft’s Internet Information Services (IIS), where we host(install) our application.
+-The web server handles requests from clients (web browsers), executes the appropriate application logic, and then sends the response back to the client.
+-A web server is a special type of server that handles HTTP requests from clients (usually browsers) and sends back web pages, files, or data.
+
+📌 Example in Real Life:
+You open Chrome and type: https://www.wikipedia.org
+Your browser sends a request to Wikipedia’s web server
+The server sends back the web page you see
+
+🧠 Real-Life Analogy:
+Think of a web server like an online librarian:
+You (client) walk into the digital library (web).
+You ask the librarian (web server) for a specific book (web page).
+The librarian finds the book and gives it to you.
+If you ask for a book that doesn't exist, the librarian says "404 Not Found."
+
+
+🔄 How a Web Server Works (Step by Step):
+You type a website URL in your browser.
+Your browser sends an HTTP request to the web server.
+The web server receives the request and processes it.
+It sends back an HTTP response (HTML, CSS, JS, image, etc.).
+Your browser shows the content to you.
+
+
+🏢 Common Web Servers:
+Web Server	Platform	Use Case
+Kestrel	ASP.NET Core (cross-platform)	Built-in web server
+IIS	Windows	Enterprise-level hosting
+Apache	Linux / cross-platform	Hosting static and dynamic sites
+Nginx	Linux / cross-platform	High-performance load balancer
+Node.js (http)	JavaScript	Custom lightweight web server
+
+
+🔄 Server vs Web Server Summary Table
+Feature	Server	Web Server
+General Purpose	Can serve anything (files, emails, etc.)	Specifically serves websites & web apps
+Protocol	Any (FTP, SMTP, etc.)	Uses HTTP/HTTPS
+Examples	File server, DB server	Kestrel, Apache, IIS, Nginx
+Clients	Any client software	Web browsers (Chrome, Firefox, etc.)
+
+
+-----------WORKER PROCESS-------------------------
+
+✅ What is a "Worker Process" in ASP.NET Core?
+📘 Definition:
+A worker process is the actual program (process) running in memory that executes your application code. It handles incoming HTTP requests and returns responses.
+-In Windows, a process is something you can see in Task Manager (like chrome.exe, notepad.exe, etc.).
+-In ASP.NET or ASP.NET Core, when someone visits your website, it's the worker process that receives the request and runs your code to respond.
+
+
+🧠 Real-Life Analogy:
+Imagine your web application is a restaurant, and the worker process is the chef in the kitchen.
+
+The web server (like IIS Express or Kestrel) is the front desk.
+
+When a customer (browser) places an order (HTTP request), the front desk forwards the order to the chef (worker process).
+
+The chef (worker process) cooks the food (executes app logic) and gives it back to the front desk to serve.
+
+So:
+👨‍🍳 Worker process = The actual execution engine for your code
+📬 Web server = Interface that receives and sends reques
+
+
+
+✅ What Does "Worker Process Will Be Express" Mean?
+In the statement:
+
+“... and the worker process will be express.”
+
+This refers to IIS Express, which is a lightweight version of IIS (Internet Information Services) for developers. It runs your app in development mode.
+
+So when you're using IIS Express (as per your launch profile):
+
+The process running your app is: iisexpress.exe
+
+This is the "worker process" in this case.
+
+🧠 Analogy:
+You have two chefs available: Chef Express and Chef Kestrel.
+If you choose to use IIS Express, then Chef Express (process: iisexpress.exe) is the one cooking (executing your app).
+If you use Kestrel, then either Chef Dotnet (dotnet.exe) or Chef AppName (FirstCoreWebApplication.exe) runs the show.
+
+
+✅ Is IIS Express a Web Server?
+Yes, IIS Express is a web server — but only used during development (usually inside Visual Studio).
+
+It’s a simplified, easy-to-use version of the full IIS Web Server used in production on Windows servers.
+
+✅ Does IIS Express Run in a Process?
+Yes, when you run your app using IIS Express:
+It launches the process: iisexpress.exe
+That process is what hosts and runs your app.
+You can see this process in Task Manager while debugging:
+
+----------------✅HOSTING MODELS IN ASP .NET CORE-----------------------
+
+✅HOSTING MODELS :
+-A Hosting models define how your application is Hosted(installed on server), configured, and served to handle http incoming requests.
+-It determines the realtion between server and application, including factors such as performance, flexibility etc.
+-These models determines which web server is being used, how req are being processed etc.
+
+TWO TYPES OF HOSTING MODELS IN APS .NET :
+1)In-Process Hosting
+2)Out-Process Hosting
+
+✅IN PROCESS HOSTING MODEL :
+-In this the web application runs inside the IIS worker process(w3wp.exe).
+-In the InProcess model, your ASP.NET Core app runs directly inside the IIS process itself (w3wp.exe).
+-Its the deafalut hosting model for applications running on windows OS and in IIS or IIS express web server.
+-The key benefit of InProcess hosting is better performance because there is no need for communication between IIS and an external process, AS the web applicartion is running in the IIS running process only.
+
+-The  InProcess Hosting Model comes into the picture when we only host the application using IIS on the Windows Operating System.
+
+-The InProcess Hosting Model is used when you deploy your ASP.NET Core application to IIS (Internet Information Services) on a Windows machine. In this model, the ASP.NET Core application runs inside the same process as the IIS worker (w3wp.exe).
+
+🔁 Real-Life Analogy:
+Imagine a restaurant (IIS) that also has a kitchen (ASP.NET Core app) inside the same building. When a customer (browser/user) places an order, the waiter (IIS) walks a few steps into the kitchen (app), gets the food (response), and serves it directly—quick and efficient.
+
+WORKING OF InProcess MODEL :
+
+📌 STEP 1: INTERNET (User’s Request)
+The user initiates a request from a browser (e.g., typing https://example.com or calling an API endpoint).
+This request travels across the internet and reaches the server where IIS is running.
+📦 Real-Life Analogy:
+Customer places an order online. The order travels to the restaurant.
+
+📌 STEP 2: IIS (Internet Information Services)
+-IIS is the web server that first receives the incoming request from the client over the internet. It checks: Is the application already running?
+
+Two cases:
+ If NOT running: IIS forwards the request to ASP.NET Core Module (ANCM).
+ If YES: IIS directly processes the request using the IIS HTTP Server.
+
+🧠 Think of IIS as the manager. If the kitchen isn't open yet, the manager calls the chef (ANCM) to open it.
+
+
+📌STEP 3: ASP.NET Core Module (ANCM)
+-The ASP.NET Core Module (ANCM) is a component within IIS that manages the ASP.NET Core application
+- It is responsible for loading and starting the ASP.NET Core application inside the IIS worker process (w3wp.exe) 
+-ANCM (AspNetCoreModuleV2.dll) is a native IIS module.
+-It does two things:
+If the application has not been started yet, ANCM will start it, Starts the ASP.NET Core application by loading the .NET runtime.
+Forwards the request to the IIS HTTP Server.
+
+👨‍🍳 Real-Life Analogy:
+The manager (IIS) checks if the kitchen is closed. If it is, the chef (ANCM) starts the stove, opens the kitchen (starts the app), and gets ready to cook.
+
+❓ Does ANCM handle every request?
+No. Only when the app isn't running. After that, IIS directly handles requests.
+-Main responsibility of ANCm is to start the app, after that req directly goes to the application IIS.
+
+
+📌STEP 4: IIS HTTP Server
+-This component acts as the HTTP protocol handler.
+It deals with everything related to the HTTP protocol, such as URL, HTTP method, HTTP Headers, etc.
+-It’s the protocol handler. It understands HTTP.
+It decodes the request (e.g., method = GET or POST, headers, content type, etc.)
+Passes this decoded request to the ASP.NET Core application (your Program.cs & Middleware Pipeline).
+-It sends the processed request to the Application Code by passing HTTP context information (like the URL, headers, etc.) for further handling.
+
+📤 Real-Life Analogy:
+The server (IIS HTTP Server) understands the order slip and passes it to the kitchen with instructions (like “Make a vegetarian pizza”).
+
+
+📌 STEP 5: Application Code (ASP.NET Core App)
+-This is where the business logic and web page generation happen.
+-This is your actual ASP.NET Core app (controllers, Razor pages, services, database calls, etc.)
+The request goes through the middleware pipeline:
+Authentication & Authorization
+Routing
+Custom Middleware (e.g., Logging, Error Handling)
+Then it reaches the endpoint (e.g., controller/action).
+-Finally, the Controller Action processes the request, interacts with the database if needed, prepares a response (such as an HTML page, a JSON response, or other data), and returns that response to the IIS HTTP Server.
+
+📤 Real-Life Analogy:
+The kitchen processes the order—reads the instructions, cooks the food, and prepares the dish.
+
+
+📌 STEP 6: IIS HTTP Server (Again)
+Now, the ASP.NET Core app returns a response (like HTML or JSON).
+IIS HTTP Server receives this response and passes it back to IIS.
+- the response goes from the application code to the IIS HTTP Server and then directly to IIS. ANCM does not handle responses
+🧾 Real-Life Analogy:
+The kitchen gives the prepared dish to the waiter.
+
+
+📌 STEP 7: IIS Sends the Response to the Client
+IIS sends the final response over the internet to the client (browser/app).
+The client sees the output (web page, API result, etc.).
+
+📤 Real-Life Analogy:
+The waiter delivers the dish to the customer.
+
+
+BENEFIT OF INPROCESS HOSTING:
+Fast Performance: Since the application runs inside the same process as IIS (w3wp.exe), no inter-process communication is needed.
+Less overhead = faster request handling.
+-in Process means within the same IIS process, So there is no intern process communication.
+-The process name used to execute the application code is w3wp in the case of IIS. Similarly, if it is IIS Express, the process name will be iisexpress.
+
+
+ Summary of the Full Journey in Steps:
+🌐 Client sends HTTP Request → IIS
+📡 IIS receives request
+⚙️ IIS checks if app is running
+🧩 If not, IIS invokes ANCM
+🔥 ANCM starts the ASP.NET Core app
+🧠 IIS HTTP Server processes HTTP
+🛠 App processes logic and generates response
+📬 Response flows back via IIS HTTP Server
+🚀 IIS sends response to client
+
+
+✅ In-Process Hosting Model (with IIS)
+IIS acts as the web server.
+Your ASP.NET Core app runs inside the IIS worker process (w3wp.exe).
+There's no Kestrel involved — requests are handled directly by the ASP.NET Core app running inside IIS.
+🧠 Think of this as IIS and your app being fused together in the same process — which is why it’s called in-process.
+
+
+
+✅ Out-of-Process Hosting Model (with IIS + Kestrel)
+IIS acts as a reverse proxy.
+ASP.NET Core app runs in a separate process (e.g., dotnet.exe with Kestrel).
+IIS forwards HTTP requests to the Kestrel server via the ASP.NET Core Module (ANCM).
+🧠 Think of this as IIS just passing messages to your app running elsewhere.
+
+
+
+🚦 Summary:
+Hosting Model		Web Server	App Process	Uses Kestrel?	Example Process
+In-Process (IIS)	IIS		Inside IIS	❌ No		w3wp.exe
+Out-of-Process (IIS)	Kestrel		Separate	✅ Yes		dotnet.exe
+Self-Hosted		Kestrel		Self		✅ Yes		dotnet.exe
+
+
+
+✅ IIS is Platform-Dependent — Here's Why:
+IIS is a Windows-only web server developed by Microsoft.
+It runs only on Windows operating systems (such as Windows Server, Windows 10/11).
+It is tightly integrated with Windows architecture, including:
+Windows Authentication
+NTFS file system
+COM, .NET Framework
+Windows process and service models
+-You can still develop on IIS (Windows) and deploy on Kestrel + Nginx (Linux).	
+
+💡 If You Need Cross-Platform Options:
+If your application needs to run on Linux, macOS, or containers (like Docker), use:
+Kestrel Web Server (cross-platform, included in ASP.NET Core)
+Nginx or Apache (Linux-compatible reverse proxies)
+ASP.NET Core (runs on Windows, Linux, and macOS)
+
+
+🧠 Summary Table:
+Web Server	Platform Support	Used With
+IIS	✅ Windows only	ASP.NET, ASP.NET Core (InProcess)
+Kestrel	✅ Cross-platform	ASP.NET Core
+Nginx	✅ Cross-platform (esp. Linux)	Reverse proxy + Kestrel
+
+
+----------------KESTREL WEB SERVER---------------
+
+-Microsoft developed the Kestrel web server as the default Cross-Platform Web Server for hosting the ASP.NET Core Web Application on Windows, Linux, and MacOS. 
+- the application code executes within the Kestrel server’s worker process when using the Kestrel web server. The process name depends on the how the application is deployed.
+-Kestrel is a lightweight, cross-platform web server used to run ASP.NET Core applications. It's the default web server for ASP.NET Core apps.
+
+🛠 Real-Life Analogy:
+Think of Kestrel like a cashier in a store. Customers (users) come with their orders (HTTP requests), and Kestrel handles them quickly and efficiently. If needed, Kestrel can also work with a supervisor (like IIS or Nginx) who forwards requests to it.
+
+🟢 Kestrel itself is a web server, not specifically tied to one hosting model — it supports both In-Process and Out-of-Process hosting models depending on how your ASP.NET Core application is configured.
+In ASP.NET Core:
+Hosting Model	Kestrel Role	Description
+In-Process	Not used as entry web server	IIS (on Windows) directly hosts the ASP.NET Core app in the same process (w3wp.exe), bypassing Kestrel.
+Out-of-Process	✅ Kestrel is the primary server	Kestrel hosts the app (dotnet.exe) and receives traffic forwarded by IIS, Nginx, or Apache.
+
+
+
+🖥 2. What is a Process Name in ASP.NET Core?
+The process name is what you see in Task Manager when your application runs — it shows which executable is currently processing requests.
+
+Two Ways to Deploy ASP.NET Core Apps
+✅ A. Self-Contained Deployment
+-When an ASP.NET Core application is published as self-contained, it includes the .NET runtime, therefore (meaning) it does not require the .NET runtime to be pre-installed on the host(server) machine.
+-This deployment type generates an executable file specific to the application (e.g., FirstCoreWebApplication.exe on Windows or FirstCoreWebApplication on Linux/macOS).
+-The resulting executable file (e.g., FirstCoreWebApplication.exe) runs as its own process. 
+- Therefore, the process name will be the name of the application’s executable file without the extension
+
+Analogy: Imagine a food truck — it has its own chef (runtime) and doesn’t rely on the building's kitchen.
+
+EG:
+dotnet publish -c Release -r win-x64 --self-contained true
+This creates: FirstCoreWebApplication.exe
+Process in Task Manager: FirstCoreWebApplication
+
+
+✅ B. Framework-Dependent Deployment
+-When we publish the application as framework-dependent, it relies on a shared .NET runtime installed on the host machine.
+-in this deployment, Your app runs using the .NET runtime installed on the host machine.
+-he process name in this scenario will be dotnet.exe (on Windows) or dotnet (on Linux/macOS)
+Process Name: dotnet.exe
+
+Analogy: Think of this like a restaurant that shares a kitchen with others (the host runtime). Your app borrows the tools from the existing environment.
+
+EG:
+Application Name: FirstCoreWebApplication
+Process Name: dotnet.exe (on Windows) or dotnet (on Linux/macOS)
+
+
+-------------RUNNING APPS ON KESTRAL WEB SERVER-------------
+
+-To run with Kestrel, ASP.NET Core uses launchSettings.json, which tells it how to launch the app. And on which server to launch the app.
+-In the Properties ->  launchSettings.json  file is presnt
+
+--------------------Lunch Profiles section.-------------
+
+-WHEN UH RUN THE WEB APPLICATION UH CAN SEE THESE OPTIONS
+
+✅ 1. IIS Express Profile
+🔍 What is it?
+IIS Express is a lightweight version of the Internet Information Services (IIS) web server.
+It is used only for development, not for production.
+It runs the application InProcess, meaning within IIS Express itself (process name: iisexpress.exe).
+
+⚙ How does it work?
+When you click Run in Visual Studio, it uses IIS Express by default.
+It reads settings (like port numbers) from the launchSettings.json file under this profile.
+💡 Real-life Analogy:
+Think of IIS Express like a local simulation of a real-world factory. You build and test your machines in a controlled environment before sending them to the real factory (production IIS).
+
+🧾 Example in launchSettings.json:
+"IIS Express": {
+  "commandName": "IISExpress",
+  "launchBrowser": true,
+  "environmentVariables": {
+    "ASPNETCORE_ENVIRONMENT": "Development"
+  }
+}
+
+Key Features:
+Works only on Windows.(platform dependent server is IIS express)
+Uses the process: iisexpress.exe.
+Supports HTTP & HTTPS.
+Simulates real IIS, making it ideal for testing how your app would behave in a real IIS server.
+
+
+✅ 2. HTTP and HTTPS Profiles (Kestrel Web Server)
+🔍 What is it?
+This profile uses Kestrel, the built-in web server in ASP.NET Core.
+Runs directly in your application process — either:
+dotnet.exe (framework-dependent)
+or your .exe file (self-contained)
+
+⚙ How does it work?
+Defined in the launchSettings.json file with commandName set to Project.
+-It starts your app and makes it available on specified HTTP/HTTPS ports.
+
+💡 Real-life Analogy:
+Imagine Kestrel as a stand-alone restaurant. Customers (users) come directly to it, or sometimes through a delivery service like Zomato (reverse proxy like Nginx/IIS).
+
+ Key Features:
+Cross-platform (works on Windows, Linux, macOS).
+Uses Kestrel, the default web server for ASP.NET Core.
+Process name:
+dotnet.exe (if run as dotnet MyApp.dll)
+or MyApp.exe (if published as self-contained)
+Great for testing how your app behaves in real production-like setups, especially non-IIS environments.
+
+
+✅ 3. WSL Profile (Windows Subsystem for Linux)
+🔍 What is it?
+This lets you run your ASP.NET Core app inside a Linux environment — from Windows.
+It still uses Kestrel, but runs using Linux system libraries and tools.
+
+⚙ How does it work?
+Windows Subsystem for Linux (WSL) allows you to install a Linux distro (like Ubuntu) on your Windows machine.
+You can open a terminal in WSL and run your app just like on a Linux server.
+
+💡 Real-life Analogy:
+This is like training in a simulated foreign country before you move there permanently. You speak the language (use Linux libraries), eat the food (file paths and commands), and see how things will really work once you move (deploy).
+
+Key Features:
+Helps test and debug Linux-specific issues from Windows.
+Prepares your app for Linux deployment (like on Azure Linux, Docker, etc.).
+App runs using Kestrel as if it's on Linux.
+Configured in launchSettings.json or launched manually in WSL terminal.
+
+
+🧾Summary Table
+Launch Profile	Server Used		Process Name			Platform		Use Case
+IIS Express	IIS Express		iisexpress.exe			Windows only		Develop/test with simulated IIS
+HTTP/HTTPS	Kestrel			dotnet.exe or .exe		Cross-platform		Local dev or Linux-like prod
+WSL		Kestrel in Linux	Linux-based process		Linux via Windows	Simulate Linux deployment
+
+✅ Final Tips
+Use IIS Express if you're developing on Windows and want to simulate IIS hosting.
+Use Kestrel (HTTP/HTTPS) if you're building for Linux or cross-platform.
+Use WSL if you want to test your app in a real Linux environment without leaving Windows.
+
+------------OUT OF PROCESS HOSTING ------------
+	
+✅OUT OF PROCESS :
+In out of process hosting model the ASP .Net Core application runs in a separate worker process then the web server worker process that handles the incoming HTTP requests.
+-Means here 2 worker process are there, One for the Server and other for the ASP application to run. . This is different from the In-Process hosting model, where the application runs within the same worker process as the web server.
+-With Out-of-Process Hosting model, IIS or other web servers such as Apache or Nginx serve as reverse proxy, receiving incoming HTTP requests and then forwarding them to an internal server, Kestrel(which has the ASP Application running).
+-So in this hosting model, 2 web servers are there. External web server and other is Internal Web server.
+
+
+A. External Web Server
+Examples:
+IIS (on Windows)
+Apache or Nginx (on Linux or other platforms)
+
+🌐2. Role of the External Web Server (IIS, Apache, Nginx)
+-EXTERNAL WEB SERVER :This server is commonly IIS (Internet Information Services) on Windows(BECOZ IIS IS OS BASED) but can also be Apache or Nginx on other platforms.
+-The External Web Server acts as a gateway or middleman between the internet (clients) and your actual ASP.NET Core application(internal server where application is running).
+
+📌 Key Responsibilities:
+Listens to HTTP or HTTPS requests from clients (users' browsers).
+Handles TLS/SSL encryption (HTTPS security).
+Can do load balancing (distribute traffic across servers).
+Implements firewalls, IP filtering, and other security measures.
+Acts as a reverse proxy: it forwards the request to Kestrel for processing.
+
+
+B. Internal Web Server
+This is Kestrel, which is built into ASP.NET Core.
+-Kestrel is the default cross-platform web server for ASP.NET Core applications.
+-Kestrel is the default cross-platform web server for ASP.NET Core applications.
+-Means the application runs in the kestrel web servers process.
+-the Kestrel web server processes the request and generates a response.
+📌 Key Responsibilities:
+Processes the incoming HTTP requests passed by the external server.
+Executes your ASP.NET Core code (Controllers, Razor Pages, APIs, etc.).
+Generates the response (HTML, JSON, etc.).
+Sends the response back to the external server, which then sends it to the client.
+
+💡 Think of Kestrel as the actual person doing the work (developer), while IIS/Nginx is the person at the front desk managing visitors.
+
+-This sepration of internal and external web server, allows the internal web server(kestral) to be optimized for handling core application code execution.
+
+
+✅ Why Configure Out-of-Process?
+More flexibility (cross-platform support).
+Lets you use Kestrel’s performance benefits.
+Required when you're using IIS as a reverse proxy.
+ 
+
+🛠️ How to Configure Out-of-Process Hosting
+You can do it in two ways:
+
+🔹 Method 1: Modify the Project File (.csproj)
+This is the most direct way. You're telling .NET to use Out-of-Process hosting by default when it builds the application.
+
+🪛 Steps:
+Open your .csproj file.
+Inside the <PropertyGroup> tag, add this line:
+	<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+
+📌 This tells the build system:
+"Host this app using Kestrel (not directly inside IIS)."
+
+
+🔹 Method 2: Use Visual Studio GUI (Graphical Interface)
+If you prefer using the Visual Studio interface instead of editing the .csproj manually, do this:
+
+🪛 Steps:
+Right-click on the project in Solution Explorer.
+Click on Properties.
+Go to the Debug tab.
+Click on "Open debug aunch profiles UI" (a button inside the Debug tab).
+Select the IIS Express profile.
+Scroll down to find Hosting Model dropdown.
+Set it to "OutOfProcess".
+
+
+📂 Where the Configuration is Saved
+Method	File Affected
+.csproj change	Project file (controls hosting model for all environments)
+GUI / VS	launchSettings.json (affects local debugging only)
+
+So ideally, use the .csproj method for actual hosting configuration, and the GUI method for local development/debugging.
+
+✅ Summary
+Aspect	InProcess	OutOfProcess
+Web Server	IIS only	Kestrel + IIS/other
+Performance	Slightly better for IIS	More flexible and cross-platform
+Config Method 1	<AspNetCoreHostingModel> in .csproj	✅
+Config Method 2	Visual Studio UI (Debug tab)	✅
+
+
+✅ Statement Overview
+"If we run the app using HTTP or HTTPS profiles, InProcess or OutOfProcess hosting models are not involved. In that case, Kestrel is the only web server hosting the app. InProcess and OutOfProcess apply only when running with IIS Express launch profile in Visual Studio."
+
+🔥 What’s Really Going On?
+1. ASP.NET Core apps always need a web server to run.
+This can be:
+Kestrel (cross-platform, internal server for ASP.NET Core)
+IIS (external server, Windows-only)
+IIS Express (local development version of IIS)
+Nginx or Apache (on Linux)
+
+
+👨‍💻 When You Run Your App in Visual Studio
+There are 3 common ways to run the app:
+🔹 A. Run using HTTP or HTTPS launch profile (Kestrel only)
+You select "ProjectName" or a custom launch profile with just HTTP/HTTPS.
+Visual Studio runs the app directly on Kestrel.
+No IIS, no reverse proxy.
+No InProcess or OutOfProcess hosting model is used.
+ Kestrel directly serves your app.
+
+🔹 B. Run using IIS Express launch profile
+Visual Studio uses IIS Express to handle HTTP traffic.
+
+IIS Express either:
+Hosts your app inside IIS (InProcess) or
+Forwards the request to Kestrel (OutOfProcess)
+This is when the hosting model (InProcess or OutOfProcess) matters.
+
+🧠 Key Concept:
+InProcess/OutOfProcess only apply when IIS or IIS Express is involved.
+If you run with just Kestrel, then those hosting models don't apply at all — because Kestrel is the only server involved.
+
+
+✅Kestrel as Internet-Facing Web Server (External Web Server)
+
+-What Does This Mean?
+Kestrel as the Only Web Server (No IIS, Apache, or Nginx)
+When you run your ASP.NET Core app directly using profiles like HTTP or HTTPS (for example, by clicking "ProjectName" in Visual Studio), you are using Kestrel directly without any external web server in front.
+
+🔍 Explanation in Simple Terms:
+1. What is Kestrel?
+Kestrel is the default and built-in web server for ASP.NET Core.
+It's cross-platform, lightweight, and very fast.
+It’s responsible for:
+Listening to incoming HTTP requests.
+Running your application code.
+Sending responses back to the client.
+
+
+2. What is an External Web Server?
+Servers like IIS, Apache, or Nginx.
+They are often placed in front of Kestrel to:
+Add security (e.g., SSL termination).
+Handle load balancing.
+Serve static files.
+Provide reverse proxying to forward requests to Kestrel.
+
+3. Kestrel as an Internet-Facing Server means:
+Role	Who Does It?
+Receives HTTP Requests	✅ Kestrel
+Runs App Code	✅ Kestrel
+Sends Response to Client	✅ Kestrel
+Acts as Public Server	✅ Kestrel
+Reverse Proxying	❌ Not Needed
+
+So, Kestrel is doing everything — no IIS, no Apache, just Kestrel talking directly to the client browser.
+
+📌 When Does This Happen?
+This scenario happens when:
+You run the app directly from Visual Studio using HTTP/HTTPS profile.
+You deploy your app directly to a Linux server or VM without configuring a reverse proxy.
+You're building lightweight internal services like microservices or APIs.
+
+
+🧠 Real-Life Analogy:
+Imagine you're a chef:
+If Kestrel is working alone, the chef cooks the food and serves it directly to customers — fast, simple.
+If you have an external server (like IIS), then the chef only cooks, and the waiter (IIS) serves the food — better organization, scalability, and control.
+
+
+------------DIAGRAM--------------
+ ____________________________           ____________________________
+|                            |         |                            |
+|      In-Process Hosting    |         |     Out-of-Process Hosting |
+|____________________________|         |____________________________|
+|                            |         |                            |
+|    IIS (Web Server)        |         |    IIS / Nginx / Apache    |
+|         (w3wp.exe)         |         |     (acts as a reverse     |
+|                            |         |          proxy)            |
+|            |               |         |              |             |
+|            v               |         |              v             |
+|    ASP.NET Core App        |         |     Kestrel Web Server     |
+|     (runs inside IIS)      |         |     (dotnet.exe process)   |
+|____________________________|         |              |             |
+                                       |              v             |
+                                       |    ASP.NET Core App        |
+                                       |  (runs inside Kestrel)     |
+                                       |____________________________|
+
+
+📌 Notes:
+The left column represents In-Process Hosting: IIS runs and executes your ASP.NET Core application inside its own process (w3wp.exe).
+The right column represents Out-of-Process Hosting: IIS (or another web server) forwards requests to Kestrel, which runs in a separate process (dotnet.exe), and Kestrel hosts the app.
+
+--------DIAGRAM ----Out-of-Process Model in ASP.NET Core----
+
+  Client (Browser)
+      |
+      | HTTP Request
+      v
+  [Reverse Proxy]
+  (IIS, Nginx, Apache)
+      |
+      | Forwarded Request
+      v
+  [Kestrel Server] (ASP.NET Core)
+  -------------------------------
+  |                             |
+  |   ASP.NET Core Application  |
+  |   (Your App Code)           |
+  |                             |
+  -------------------------------
+
+Client -> Reverse Proxy -> Kestrel -> Your App
+          (IIS/Nginx)    (Out-of-Process)
+
+Key Components:
+
+Client: Makes HTTP requests to your application
+
+Reverse Proxy:
+Handles SSL termination
+Serves static files
+Acts as a buffer between internet and your app
+Common options: IIS, Nginx, Apache
+
+Kestrel:
+The built-in, cross-platform web server
+Runs your ASP.NET Core app in a separate process
+Handles the actual application logic
+
+---DIAGRAM---OUT OF PROCESS MODEL-----------
+  ___________________________
+ |        Internet           |
+ |___________________________|
+            |
+            | HTTP Request/Response
+            v
+  ___________________________
+ | Reverse Proxy Server      |
+ | (e.g., IIS - w3wp.exe)    |
+ |___________________________|
+            |
+            | (via ASP.NET Core Module)
+            v
+  ___________________________
+ | Kestrel Web Server        |
+ | (dotnet.exe process)      |
+ |___________________________|
+            |
+            | Executes
+            v
+  ___________________________
+ | ASP.NET Core Application  |
+ | (Your Application Code)   |
+ |___________________________|
+
+
+------------------------WORKING OF OUT OF PROCESS MODEL----------------- 
+
+-What is Out-of-Process Hosting?
+ASP.NET Core apps can run inside IIS (In-Process) or separately (Out-of-Process).
+In Out-of-Process, IIS acts as a reverse proxy, forwarding requests to a Kestrel server (which runs the app).
+
+How It Works (Step-by-Step with Example)
+1. User Sends a Request (Browser → Internet)
+Example: You open https://example.com/products in Chrome.
+Your browser sends an HTTP request to the server (IIS).
+
+2. IIS Receives the Request
+IIS (Windows web server) gets the request.
+Instead of processing it directly, it forwards it to ASP.NET Core Module (ANCM).
+
+3. ASP.NET Core Module (ANCM) Handles the Request
+Checks if Kestrel is running (if not, starts it).
+Forwards the request to Kestrel (a lightweight, cross-platform web server).
+
+4. Kestrel Processes the Request
+Kestrel receives the request (/products).
+Passes it to the ASP.NET Core app (your C# code).
+
+5. ASP.NET Core App Generates Response
+Middleware Pipeline runs (Authentication, Routing, etc.).
+Example:
+A ProductsController fetches data from a database.
+Returns a JSON response (e.g., list of products).
+
+6. Kestrel Sends Response Back to ANCM
+Kestrel takes the JSON response and sends it back to ANCM.
+
+7. ANCM Forwards Response to IIS
+ANCM does no processing, just passes the response to IIS.
+
+8. IIS Sends Response to User
+IIS sends the JSON response back to the browser.
+
+9. Browser Displays the Result
+Example: Chrome receives the JSON and renders the product list.
+
+
+-Key Roles
+
+ROLES OF IIS(OUT OF PROCESS) Worker Process (w3wp.exe)
+Reverse Proxy: Shields Kestrel from direct internet exposure.
+Security:
+SSL/TLS termination (HTTPS decryption).
+IP filtering, request validation.
+Performance:
+Serves static files (CSS, images) directly.
+Caches responses.
+Routing:
+URL rewrites (e.g., hide /api prefixes).
+Load balancing (in production).
+Kestrel (dotnet.exe)
+App Execution:
+Runs your C# code (controllers, services).
+Processes dynamic content (e.g., database queries).
+Middleware Pipeline:
+Handles auth (UseAuthorization()).
+Logs requests (UseLogging()).
+Cross-Platform: Works on Linux/macOS (unlike IIS)
+
+
+KEY ROLES OF KESTRAL WORKER PROCESS:
+Application Logic Execution:
+Request Processing and Response Generation:
+Communication Back to IIS: 
+ROuting
+Code execution of the application

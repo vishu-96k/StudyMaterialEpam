@@ -1,0 +1,228 @@
+IMP DSA---
+📌✅✅✅✅✅✅✅✅✅📌CH : DSA FUNCTIONS📌✅✅✅✅✅✅✅✅✅📌
+
+
+✅✅✅[#1] ARRAY FUNCTIONS:
+-In C#, you can define a matrix using either:
+📌A multidimensional array ([,]) : This creates a rectangular matrix where all rows have the same number of columns.
+👇 Code:
+static void Main()
+{
+	int[,] matrix = new int[3, 4]; // 3 rows, 4 columns, Normal array
+	int[,] matrix = new int[,]
+	{
+    		{ 1, 2, 3, 4 },
+    		{ 5, 6, 7, 8 },
+   		{ 9, 10, 11, 12 }
+	};
+	Console.WriteLine(matrix[i, j]); //Acessing Array Elements
+	int rows = grid.GetLength(0);      // ✅ This is okay
+	int cols = grid.GetLength(1);  //for ascessing number of colums, as its same in each row
+
+	int rows = grid.Length;         // ❌ Gives total number of elements, not rows
+int cols = grid[0].Length;      // ❌ Compile-time error: 'int[,]' does not support grid[0]
+
+
+}
+
+📌A jagged array ([][]) : This is an array of arrays, and each row can have a different number of columns.
+👇 Code:
+static void Main()
+{
+	int[][] matrix = new int[3][]; // 3 rows
+	// Initialize each row separately
+	matrix[0] = new int[4];
+	matrix[1] = new int[4];
+	matrix[2] = new int[4];
+
+
+	int[][] matrix = new int[][]
+	{
+    	  new int[] { 1, 2, 3, 4 }, //Initializing with diff sizes
+          new int[] { 5, 6, 7},
+          new int[] { 9, 10, 11, 12 }
+	};
+	Console.WriteLine(matrix[i][j]); //Acessing the size.
+	int rows = grid.Length;              // Number of rows
+	int cols = grid[0].Length;           // Number of columns in the first row 
+
+}
+
+-GetLength(1) only works on multidimensional arrays (int[,]) — not on jagged arrays (int[][]).
+FOR MULTIDIAMENTION ONLY:
+int rows = grid.GetLength(0);      // ✅ This is okay, 
+	int cols = grid.GetLength(1);  //for ascessing number of colums, as its same in each row
+
+-Correct Way for Jagged Arrays (int[][]):
+int rows = grid.Length;              // Number of rows
+int cols = grid[0].Length;           // Number of columns in the first row (check for null first!)
+
+
+🔍 Differences
+| Feature              | Multidimensional Array (`[,]`) | Jagged Array (`[][]`)     |
+| -------------------- | ------------------------------ | ------------------------- |
+| Memory layout        | Continuous block               | Array of array references |
+| Row size flexibility | Fixed                          | Can vary per row          |
+| Access syntax        | `matrix[i, j]`                 | `matrix[i][j]`            |
+
+
+✅✅✅[#2] MATH FUNCTIONS:
+📌Math.Max(var1, var2) : returns the maximum value out of the 2 variables
+📌Most Commonly Used System.Math Functions
+
+| Function          | Description                                      | Example                     |
+| ----------------- | ------------------------------------------------ | --------------------------- |
+| `Math.Abs(x)`     | Returns the absolute value of a number.          | `Math.Abs(-5)` → `5`        |
+| `Math.Ceiling(x)` | Rounds a number up to the nearest integer.       | `Math.Ceiling(4.2)` → `5.0` |
+| `Math.Floor(x)`   | Rounds a number down to the nearest integer.     | `Math.Floor(4.8)` → `4.0`   |
+| `Math.Round(x)`   | Rounds a number to the nearest integer.          | `Math.Round(4.5)` → `4`     |
+| `Math.Pow(x, y)`  | Returns `x` raised to the power of `y`.          | `Math.Pow(2, 3)` → `8`      |
+| `Math.Sqrt(x)`    | Returns the square root of a number.             | `Math.Sqrt(9)` → `3`        |
+| `Math.Max(a, b)`  | Returns the larger of two numbers.               | `Math.Max(4, 7)` → `7`      |
+| `Math.Min(a, b)`  | Returns the smaller of two numbers.              | `Math.Min(4, 7)` → `4`      |
+| `Math.Sin(x)`     | Returns the sine of an angle (in radians).       | `Math.Sin(Math.PI/2)` → `1` |
+| `Math.Cos(x)`     | Returns the cosine of an angle (in radians).     | `Math.Cos(0)` → `1`         |
+| `Math.Tan(x)`     | Returns the tangent of an angle (in radians).    | `Math.Tan(Math.PI/4)` → `1` |
+| `Math.Log(x)`     | Returns the natural logarithm (base e).          | `Math.Log(Math.E)` → `1`    |
+| `Math.Log10(x)`   | Returns the base-10 logarithm.                   | `Math.Log10(100)` → `2`     |
+| `Math.Exp(x)`     | Returns `e^x`.                                   | `Math.Exp(1)` → `2.718...`  |
+| `Math.Sign(x)`    | Returns a value indicating the sign of a number. | `Math.Sign(-10)` → `-1`     |
+
+
+✅✅✅[#3] String Function:
+
+📌str1.Contains("subString") :
+Contains method is used to check whether a specified substring exists within a string. It is a built-in method of the string class and returns a bool value (true or false).
+-Contains is case-sensitive by default. EG :"Hello".Contains("hello") // false
+👇 Code:EG:
+string sentence = "Hello, world!";
+bool result = sentence.Contains("world");  // true
+
+📌 1. == Operator (Equality Operator)
+Behavior:
+Compares values (contents) of the strings, not references.
+Case-sensitive.
+Internally calls string.Equals().
+👇 Code:EG:
+static void Main()
+{
+	string a ="hello";
+	string b = "hello";
+	string c = "Hello";
+
+	Console.WriteLine(a == b); // true
+	Console.WriteLine(a == c); // false (case-sensitive)
+}
+
+📌2. str.Equals() Method
+Behavior:
+Also compares contents of two strings.
+By default, case-sensitive.
+Allows more control with options.
+👇 Code:EG:
+static void Main()
+{
+	string a ="hello";
+	string b = "hello";
+	string c = "Hello";
+
+	Console.WriteLine(a.Equals(b))	// true
+	Console.WriteLine(a.Equals(c));                  // false case sensetive
+	Console.WriteLine(a.Equals(c, StringComparison.OrdinalIgnoreCase)); // true (case-insensitive)
+}
+
+📌3. String.Compare()
+Behavior:
+Returns an int:
+0 if equal
+<0 if a < b
+>0 if a > b
+You can specify case and culture rules.
+👇 Code:EG:
+static void Main()
+{
+
+	int result = String.Compare("apple", "Apple", StringComparison.OrdinalIgnoreCase);
+	Console.WriteLine(result); // 0 → equal
+
+		
+}
+
+📌4. ReferenceEquals() (Not commonly used for strings)
+Behavior:
+Checks if two variables point to the same object in memory (reference comparison).
+Rarely used for strings because strings are interned (shared) in C#.
+👇 Code:EG:
+static void Main()
+{
+
+	string a = "hello";
+	string b = "hello";
+	Console.WriteLine(Object.ReferenceEquals(a, b)); // true (because of interning)		
+}
+
+🧠 Summary Table
+| Method / Operator           | Case-Sensitive     | Value-Based | Reference-Based | Culture-Aware |
+| --------------------------- | ------------------ | ----------- | --------------- | ------------- |
+| `==`                        | ✅ Yes              | ✅ Yes    | ❌ No           | ❌ No        |
+| `.Equals()`                 | ✅ Yes (by default) | ✅ Yes     | ❌ No          | Optional     |
+| `.Equals(StringComparison)` | Optional           | ✅ Yes       | ❌ N          | Optional      |
+| `String.Compare()`          | Optional           | ✅ Yes       | ❌ N          | Optional      |
+| `Object.ReferenceEquals()`  | ❌ No              | ❌ No        | ✅ Yes        | ❌ No        |
+
+📌5. number.ToString() = this will convert anything into string.
+👇 Code:
+static void Main()
+{
+	int number = 123;
+	string str = number.ToString();
+	Console.WriteLine(str);  // Output: "123"
+}
+
+📌6.  str.Split(' ') = It splits a string into an array of words using space ' ' as the separator.
+👇 Code:
+static void Min()
+{
+	string s = "hello world ";
+	string[] str = s.Split(' ');
+	foreach(var a in str)
+	Console.WriteLine(a);
+}
+
+📌7. String Reversing : 
+STEPS : First convert the string into character array using "ToCharArray()" function.
+	Then use the Reverse function of the Array class to reverse the character aray.
+	again convert the character array back to string
+
+static void Main()
+{
+	string str = "vishwajeet jaysingh Gaikwad ";
+	//Uh need to reverse he string
+	char[] arr = str.ToCharArray();
+	//The string has been converted into character arrya, where each character of the string, is been saved in array indices.
+	//Now reverse the character array
+	Array.Reverse(arr);
+	string ans = new string(arr);
+	Console.WriteLine("Reversed string is : " + ans);
+}
+
+✅✅✅[#4] DICTIONAY FUNCTIONS:
+
+📌How to find key related to value in dictionary.
+👇 Code:
+static void Main()
+{
+	Dictionary<string, int> myMap = new Dictionary<string, int>()
+	{
+    		{ "apple", 10 },
+    		{ "banana", 20 },
+    		{ "cherry", 30 }
+	};
+	int targetValue = 20;
+	string foundKey = myMap.FirstOrDefault(pair => pair.Value == targetValue).Key; //pair is a Collection in the C#
+	Console.WriteLine("The key related to the target value is " + foundkey) 
+}
+-FirstOrDefault() is a LINQ method that:
+Returns the first element of a sequence (like an array, list, dictionary, etc.).
+-What it does:
+It searches for the first key-value pair in the dictionary (myMap) where the value matches the targetValue (20), and then returns the key of that pair.

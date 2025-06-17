@@ -1,0 +1,241 @@
+✅ PROXY DESING PATTERN
+-Proxy design pattern is a structural design pattern that provides a surrogate or placeholder for another object to control access to it.  It is useful when you want to add an extra level of control (like logging, access control, lazy initialization, etc.) without modifying the actual object.
+-in simple words, we will be using a fake object in front of the client and then we will give permission to the client to access the og object.
+📌 Simple Explanation of the Proxy Design Pattern:
+🔷 In Proxy Design Pattern, we put a fake (or helper) object in front of the real object.
+🔷 This fake object (Proxy) acts as a middleman between the client and the real object.
+🔷 The proxy decides whether or not to allow the client to access the real object.
+🔷 It can also add extra logic like logging, permission checks, or loading the object only when needed.
+
+
+📌 Structural Design Pattern
+-means the one in which "has a " realtion ship is there
+- Structural patterns focus on how classes and objects are composed(has a relation) to form larger structures while keeping them flexible and efficient.
+-Other class has object of other class.
+-It deals with how objects are connected and how they interact, aiming to make these relationships easy to maintain and extend.
+
+📌"Provides a surrogate or placeholder for another object to control access to it"
+🔹 Meaning:
+Surrogate or placeholder means a substitute object that acts in place of the real object. means fake object which is replaced in place of the real object for some time, in simple words it means "substitute player".
+-The proxy looks like the real object (same interface) but adds some control logic before delegating the work to the real object.
+💡 Real-life Analogy:
+Imagine a celebrity manager (proxy) who you must contact instead of talking to the celebrity directly. You can request an appointment, but the manager decides whether or not to let you meet them.
+⚙️ In software: The proxy decides if the client is allowed to use the real object and when.
+
+📌"It is useful when you want to add an extra level of control"
+🔹 Meaning:
+You use a proxy when you need to:
+Add access control (e.g., who can call a method)
+Delay object creation (e.g., lazy loading)
+Log method calls
+Cache results
+Track usage or analytics
+Without changing the actual object.
+
+💡 Real-life Analogy:
+At a library, instead of accessing rare books directly, you request them from a librarian (proxy) who:
+Checks if you're allowed to see it
+Logs your name
+Brings the book only if needed (lazy load)
+
+
+✅ Real-life Analogy of Proxy Pattern
+📌 Example: ATM and Bank Server
+🔷 When you use an ATM (proxy) to access your bank account (real object):
+🔹 You don’t directly access the bank’s server.
+🔹 The ATM acts as a proxy to validate your card, check PIN, and then connect to the server.
+🔹 It controls access, adds security, and gives you a simplified interface.
+
+
+✅ Key Concepts and Keywords
+
+📌 1. Subject Interface
+🔷 This defines the common interface for both the Real Object and Proxy.
+🔷 It ensures the client can interact with both the proxy and the real object in the same way.
+
+📌 2. RealSubject (Real Object)
+🔷 This is the actual object that does the real work.
+🔷 Proxy delegates requests to this object after performing its own logic.
+
+📌 3. Proxy
+🔷 This class implements the Subject interface.
+🔷 It holds a reference to the RealSubject.
+🔷 It can add extra behavior like logging, lazy loading, etc.
+
+📌 4. Client
+🔷 The class or method that interacts with the Subject (could be Proxy or RealSubject).
+
+
+
+✅ Use Cases of Proxy Pattern
+📌 When to Use
+🔷 Lazy loading – delaying object creation until it's really needed.
+🔷 Access control – security checks before accessing the real object.
+🔷 Logging – tracking access to an object.
+🔷 Remote proxy – when the real object is on a remote server (e.g., Web API).
+🔷 Smart references – adding extra actions when an object is accessed.
+
+
+✅ Types of Proxies
+🔷 Virtual Proxy – controls access to resources that are expensive to create.
+🔷 Protection Proxy – adds access control to the real object.
+🔷 Remote Proxy – represents an object in a different address space or machine.
+🔷 Cache Proxy – caches results of expensive operations.
+
+
+        ISubject
+        | Request()
+        |
+       / \
+      /   \
+RealSubject Proxy
+     |         | 
+ Request()  _realSubject: RealSubject
+               | Request()
+               |
+            Client
+
+
+
+✅ Simple Real-Life Example: Library System (Proxy)
+📌 Scenario: Borrowing Books from a Library
+Imagine you are trying to borrow a book from a library. But instead of directly walking to the bookshelf and picking it up yourself, there is a librarian (proxy) who controls your access.
+You (the client) go to the librarian (proxy) and ask for the book.
+The librarian (proxy) checks if you're allowed to borrow the book (e.g., if you have a membership or if the book is available).
+If everything checks out, the librarian hands you the book (accesses the real book).
+If not, the librarian tells you the book is not available, or you can't borrow it (access denied).
+
+In this analogy:
+The librarian (proxy) represents the Proxy.
+The book represents the Real Object.
+You (the client) interact with the proxy, not the real object (the book) directly.
+
+📌EG : Library System where a Proxy (the librarian) 
+
+
+using System;
+
+public interface IBook
+{
+    void BorrowBook();
+}
+
+public class RealBook : IBook
+{
+    private string _bookTitle;
+
+    // Constructor to initialize the book with a title
+    public RealBook(string bookTitle)
+    {
+        _bookTitle = bookTitle;
+    }
+
+    // The actual action of borrowing the book
+    public void BorrowBook()
+    {
+        Console.WriteLine($"You have borrowed the book: {_bookTitle}");
+    }
+}
+
+// Proxy class that controls access to the RealBook
+public class LibraryProxy : IBook
+{
+    private RealBook _realBook;  // The real book object
+    private string _userMembershipStatus;
+    private string _bookTitle;
+
+    // Constructor initializes user membership status and book title
+    public LibraryProxy(string userMembershipStatus, string bookTitle)
+    {
+        _userMembershipStatus = userMembershipStatus;
+        _bookTitle = bookTitle;
+    }
+
+    // The proxy controls access to the RealBook
+    public void BorrowBook()
+    {
+        // Proxy logic to check if the user is eligible to borrow the book
+        if (_userMembershipStatus == "Active")
+        {
+            // If the real book is not yet initialized, load it (Lazy Loading)
+            if (_realBook == null)
+            {
+                _realBook = new RealBook(_bookTitle);
+            }
+
+            Console.WriteLine("Proxy: Checking if the book is available...");
+            // Simulate checking book availability
+            if (_bookTitle == "C# Programming")  // Example condition for availability
+            {
+                _realBook.BorrowBook();  // Delegate the task to the real book object
+            }
+            else
+            {
+                Console.WriteLine("Proxy: The book is currently unavailable.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Proxy: You need an active membership to borrow books.");
+        }
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        // Example 1: User with an active membership borrows the book
+        Console.WriteLine("Client (Active Member): Requesting to borrow the book.");
+        IBook book1 = new LibraryProxy("Active", "C# Programming");
+        book1.BorrowBook();  // Should allow access and borrow the book
+
+        // Example 2: User with an inactive membership tries to borrow a book
+        Console.WriteLine("\nClient (Inactive Member): Requesting to borrow the book.");
+        IBook book2 = new LibraryProxy("Inactive", "C# Programming");
+        book2.BorrowBook();  // Should deny access due to inactive membership
+    }
+}
+
+
+✅ Code Explanation
+📌 1. IBook Interface
+
+The IBook interface defines the BorrowBook() method, which is implemented by both the RealBook and LibraryProxy classes. This allows the Client (user) to interact with either the proxy or the real object using the same interface.
+
+📌 2. RealBook Class
+The RealBook class represents the real object in the proxy pattern.
+It contains the actual data (book title) and simulates the task of borrowing the book by printing a message to the console.
+
+
+📌 3. LibraryProxy Class (Proxy Design Pattern)
+The LibraryProxy class represents the proxy. It controls access to the RealBook based on certain conditions (user membership status and book availability).
+Proxy Logic:
+It first checks if the user has an active membership. If not, it denies access.
+If the membership is active, it checks if the book is available (simulated here by a hardcoded condition).
+If everything is okay, the proxy delegates the task of borrowing the book to the RealBook.
+Lazy Loading: The RealBook object is only created when the user actually requests to borrow the book, which is a common feature of the Proxy Pattern to optimize performance.
+
+
+📌 4. Client Code (Program Class)
+The Client (user) interacts with the LibraryProxy and requests to borrow a book. The LibraryProxy checks the user's membership status and book availability before delegating the task to the RealBook.
+
+
+
+✅ Where Proxy Design Pattern is Used in This Code:
+The LibraryProxy class is the Proxy in this example. It acts as an intermediary between the client (user) and the RealBook.
+
+Access Control: The proxy checks if the user has an active membership before allowing access to the real book.
+
+Lazy Loading: The proxy only creates the RealBook instance when the user actually requests to borrow the book, optimizing performance by delaying object creation until it's needed.
+
+Delegation: The proxy delegates the task of borrowing the book to the RealBook once access is granted.
+
+
+
+✅ Key Takeaways:
+The Proxy allows you to add additional logic (like access control and lazy loading) without modifying the actual object (RealBook).
+
+The Client interacts with the Proxy, unaware of the extra logic being applied before reaching the real object.
+
+The Proxy Design Pattern can help in scenarios where controlling access, lazy loading, or adding extra responsibilities without changing the real object is required.

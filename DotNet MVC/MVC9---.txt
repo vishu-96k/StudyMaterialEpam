@@ -1,0 +1,595 @@
+MVC9---
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+
+📌✅✅✅✅✅✅✅✅✅📌CH 01:ROUTING📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] ROUTING:
+
+📌Routing:
+-Routing in ASP.NET Core MVC is a mechanism that inspects the incoming HTTP request (i.e., URLs) and then maps those HTTP requests to the appropriate controller actions. It enables the framework to determine what code to execute based on the URL of the request.
+-In simple words, Routing is a pattern-matching system that monitors an incoming HTTP request and decides what to do with that incoming HTTP request
+-URL contains infrmation about the controller action, type of req(GET POST DELETE PUT PATCH).
+
+DIAGAM :
++----------------------------------------------+
+|          Incoming HTTP Request               |
+|                    |                         |
+|              [URL Parsing]                   |
+|                    |                         |
+|          [Find Matching Route]               |
+|                    |                         |
+|              Is Route Found?                 |
+|              /             \                 |
+|             /               \                |
+|            /                 \               |
+|         YES                   NO             |
+|          |                    |              |
+| [Process the Request]     [HTTP 404 Error]   |
++----------------------------------------------+
+
+Note:
+- This diagram represents the Routing Engine.
+- The Routing Engine receives an HTTP request, parses the URL, 
+  tries to find a matching route, and based on that:
+   • If found → forwards to Controller/Action.
+   • If not found → returns a 404 Not Found.
+
+📌TYEPES OF ROTING:
+-There are 2 ways to configure routes in ASP .NET MVC:
+1)Convention-Based Routing: Conventional-based routing means defining URL patterns globally in one place (usually in Program.cs or Startup.cs), and letting ASP.NET Core match URLs to controller actions based on a standard naming convention.
+-This is the normal URL based routing, Where the routing will be based onthe user enter URL request.
+🗂:Program.cs
+👇 Code:
+{
+// Maps a conventional route for controllers in an ASP.NET Core MVC application.
+// This method is an extension method from the 'Microsoft.AspNetCore.Builder.ControllerEndpointRouteBuilderExtensions' class.
+
+// Syntax: app.MapControllerRoute(name, pattern)
+// - `name`: A unique name for the route.
+// - `pattern`: A URL pattern that tells the routing system how to match URLs to controller actions.
+
+app.MapControllerRoute(
+    name: "default", // Name of the route (used internally and can be referenced in links, etc.)
+    //This name : "defalut" menas that, when there is no route in the UR, like "https:/Potnum/ " then the applicationwill use the default roue which is set as the "homeController.Action()" method, This will et excute.
+
+    // URL Pattern Format:
+    // {controller=Home}   → if no controller is specified in the URL, use "Home"
+    // {action=Index}      → if no action is specified, use "Index"
+    // {id?}               → "id" is optional (indicated by the "?")
+    // Examples:
+    // - /                → maps to HomeController.Index()
+    // - /Product         → maps to ProductController.Index()
+    // - /Product/Details → maps to ProductController.Details()
+    // - /Product/Details/5 → maps to ProductController.Details(5)
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+    //Pattern parameter will tell that, which controller and acion to map
+}
+
+-how is the /Home/Index URL mapped to the Index action method, and how is the /Home/Details/2 URL mapped to the Details action method of the Home Controller class? This is done by the MVC Routing Middleware Component, which is registered into the Request Processing Pipeline. 
+
+
+🔍 What does name: "default" mean?
+The name parameter is used to give a unique identifier to the route you're defining. In this case, "default" is the name of the route.
+
+🔍Why is it called "default"?
+Because this route is usually the main or fallback route used when no specific route is provided in the URL. For example, when a user visits / (i.e., no controller/action in the URL), the app uses this default route to map the request to HomeController.Index().
+
+🧠 What is the purpose of naming a route?
+URL Generation:
+You can use the route name when generating URLs using helper methods like:
+👇 Code:
+Url.RouteUrl("default", new { controller = "Product", action = "Details", id = 5 });
+
+🧠 How It Works:
+{controller} → Maps to a controller class (e.g., HomeController)
+{action} → Maps to a method inside the controller (e.g., Index())
+{id?} → Optional parameter passed to the method (e.g., id = 5), this parameter will go inside the Method, which will be send as the Query parameter from the URL to the action Method
+
+-When using conventional routing, the system follows a template: /{controller}/{action}/{id?}
+
+-This will generate a URL like: /Product/Details/5.
+-Naming helps you identify different routes in your app. For example:
+"default" for the main route
+"api" for an API route
+"admin" for an admin dashboard route
+
+2)Attribute-Based Routing.
+-Attribute-based routing uses attributes (annotations) placed directly above controllers or action methods to define URL paths. This gives precise control over how individual endpoints are accessed.
+-Means the routes from the URL will directly match the attribute route which are placed above the controller .
+-In attribute-based routing, the URL patterns are matched directly to the routes that you define using attributes placed above controllers and/or action methods.
+EG:
+Let the incoming URL be : https://portNum//products/details/5
+🗂:Controller/ProductController.cs
+Will be matched against this code:
+👇 Code:
+using Microsoft.AspNetCore.Mvc; // This namespace provides the Controller base class and routing attributes
+
+// [Route("products")] is an attribute that applies a route prefix to all action methods in this controller.
+// It tells ASP.NET Core that all routes in this controller will start with "products".
+// This is known as "Attribute Routing".
+[Route("products")]
+
+// ProductsController is a controller class used to handle HTTP requests related to products.
+// It must inherit from the Controller base class to gain access to View(), RedirectToAction(), etc.
+public class ProductsController : Controller
+{
+    // Define an Action Method with a Custom Route
+ 
+    // [Route("details/{id}")] defines a route that matches "products/details/{id}".
+    // The `{id}` is a **route parameter**, which will be passed to the method as an integer.
+    //
+    // For example, navigating to: /products/details/5
+    // will invoke this method with id = 5.
+    [Route("details/{id}")]
+    public IActionResult Details(int id)
+    {
+        // This method returns a view named "Details.cshtml".
+        // The view is searched in the folder: /Views/Products/Details.cshtml
+        //
+        // IActionResult is the return type that represents various result types,
+        // like ViewResult, RedirectResult, JsonResult, etc.
+        //
+        // Here, View() returns a ViewResult that renders the "Details" view.
+        return View();
+    }
+}
+
+⚔️ Comparison Table:
+| Feature                  | Conventional Routing           | Attribute Routing                     |
+| ------------------------ | ------------------------------ | ------------------------------------- |
+| **Defined**              | In `Program.cs`                | Directly on controllers/actions       |
+| **Control**              | Limited (follows pattern)      | Full control over individual routes   |
+| **Flexibility**          | Low to medium                  | Very high                             |
+| **Ideal For**            | MVC apps with standard URLs    | APIs or apps needing custom URLs      |
+| **Route Centralization** | Centralized                    | Decentralized (per method/controller) |
+| **Example URL Setup**    | `/{controller}/{action}/{id?}` | `[Route("api/products/{id}")]`        |
+
+
+✅[#2]CONVENTIONAL ROUTING:
+
+📌CONVENTIONAL BASED ROUTING:
+-Eg for the routing
+-Choose: ASP.NET Core Web App (Model-View-Controller), and make one projevct with MVC.
+🗂PROJECT STRUCTUE
+/Controllers
+   /HomeControllers.cs
+/Models
+   /ErrorViewModel.cs
+/Views 
+   /Home
+   /Shared
+Program.cs
+Startup.cs (for older templates)
+appsettings.json
+ 
+-So uh can see that the conventional routing is included using the Routing Middleware Components that are added using the UseRouting and MapControllerRoute methods:
+🗂Program.cs
+👇 Code:
+{
+	app.UseRouting();
+	app.MapControllerRoute(
+		name :"defalut",
+		Pattern: "{Controler=Home}/{action =index}"
+	)
+}
+
+📌WORKING OF THE app.MapControllerRoute :
+-The MapControllerRoute method is invoked during the application startup process to define the route templates and their corresponding patterns. 
+- It registers all the route templates into the route table once when the application starts.
+EG OF ROUE TEMPLATE:
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+//This line defines a route template with the pattern parameter.
+- MapControllerRoute does not execute for each incoming request. Instead, it only runs during the application startup to populate the route table with the defined route templates.
+-MapControllerRoute implicitly sets up the endpoint middleware (i.e., UseEndpoints) necessary for handling the routes. The UseEndpoints middleware is responsible for executing the corresponding endpoints when a matching request comes in
+
+📌app.UseRouting() middlewere:
+-app.UseRouting() middlewere: The UseRouting middleware examines incoming HTTP requests and matches them against the route template stored in the route table to determine the appropriate routes. It runs for each incoming HTTP request.
+-When a request arrives, the UseRouting middleware parses the URL and matches it against the defined route templates stored in the route table. If a match is found, it then extracts values (like controller name, action method name, and parameters) and stores them in the HttpContext under RouteData.
+
+📌Configure Multiple Conventional Routing
+-In ASP.NET Core MVC, we can define multiple conventional routes to handle various URL patterns in our application. This allows us to create more flexible and maintainable routing configurations.
+
+💡 Why Use Multiple Conventional Routes?
+To support custom URLs like:
+/Student/All instead of /Student/Index
+/StudentDetails/10 instead of /Student/Details/10
+These make the URLs cleaner, friendlier, and more readable
+
+🛠️ Step-by-Step Configuration
+We define 3 routes in Program.cs:
+
+1) 1. Route for /Student/All 
+-For example, we want to access the Index Action Method of the Student Controller using the following URL.
+https://localhost:44359/Student/All
+To achieve this, we can configure the MapControllerRoute method as :
+app.MapControllerRoute(
+    name: "StudentAll",
+    pattern: "Student/All",
+    defaults: new { controller = "Student", action = "Index" }
+);
+🔍 Explanation:
+When someone visits https://localhost:44359/Student/All
+It will go to StudentController → Index() method
+No parameters needed
+
+2) Route for /StudentDetails/10
+-Next, we want to access the Details of the action method for the Student Controller using the following URL.
+https://localhost:44359/StudentDetails/10
+-To achieve this, we can configure another MapControllerRoute method, as shown
+app.MapControllerRoute(
+    name: "StudentIndex",
+    pattern: "StudentDetails/{ID}",
+    defaults: new { controller = "Student", action = "Details" }
+);
+🔍 Explanation:
+When someone visits https://localhost:44359/StudentDetails/10
+The number 10 is passed as the {ID} route parameter
+It goes to StudentController → Details(int ID) method
+
+3) Default Route for All Other URLs
+ Here, you can see we have specified the pattern as StudentDetails/{ID} and specified the default controller and action name as controller = Student”, action = Details.
+-We also need to configure the default controller and action names as Home and Index.
+-https://localhost:44359/{Controller Name}/{Action method Name}
+To achieve this, we can configure another MapControllerRoute method, as shown
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller}/{action}/{id:int?}",
+    defaults: new { controller = "Home", action = "Index" }
+);
+
+🔍 Explanation:
+
+Handles general URLs like /Product/List/5
+
+{controller}: Name of controller (e.g., Product)
+
+{action}: Name of action method (e.g., List)
+
+{id:int?}: Optional integer parameter
+
+🧪 Examples:
+
+/Product/List → ProductController.List()
+
+/Employee/Edit/5 → EmployeeController.Edit(5)
+
+/ → HomeController.Index() (default)
+
+
+📌ASP.NET Core MVC File/Folder Structure
+🗂PROJECT STRUCTUE
+RoutingInASPDotNetCoreMVC/
+│
+├── Controllers/
+│   ├── HomeController.cs
+│   └── StudentController.cs
+│
+├── Models/
+│   └── (Optional: Student.cs if using strongly typed views)
+│
+├── Views/
+│   ├── Home/
+│   │   └── Index.cshtml
+│   │
+│   └── Student/
+│       ├── Index.cshtml       <-- For /Student/All
+│       └── Details.cshtml     <-- For /StudentDetails/{ID}
+│
+├── wwwroot/
+│   └── (static assets like CSS, JS, images)
+│
+├── Program.cs                <-- Routing configuration here
+│
+├── appsettings.json
+├── RoutingInASPDotNetCoreMVC.csproj
+└── Properties/
+    └── launchSettings.json
+
+
+Example Code Snippets
+🗂StudentController.cs
+👇 Code:
+public class StudentController : Controller
+{
+    public IActionResult Index()
+    {
+        return View(); // Views/Student/Index.cshtml
+    }
+
+    public IActionResult Details(int id)
+    {
+        ViewBag.StudentId = id;
+        return View(); // Views/Student/Details.cshtml
+    }
+}
+
+🗂program.cs
+👇 Code:
+// Define the root namespace for the application
+namespace RoutingInASPDotNetCoreMVC
+{
+    // The Program class contains the application's entry point (Main method)
+    public class Program
+    {
+        // Entry point of the application, required for all .NET apps
+        public static void Main(string[] args)
+        {
+            // ------------------------------------------------------------------
+            // Create a builder for the web application using default configuration
+            // WebApplication.CreateBuilder is a factory method from Microsoft.AspNetCore.Builder
+            // It sets up configuration, dependency injection, and logging
+            // ------------------------------------------------------------------
+            var builder = WebApplication.CreateBuilder(args);
+
+            // ------------------------------------------------------------------
+            // Register MVC services (Controllers + Views) into the DI container
+            // This enables support for MVC pattern in the app
+            // AddControllersWithViews comes from Microsoft.Extensions.DependencyInjection
+            // ------------------------------------------------------------------
+            builder.Services.AddControllersWithViews();
+
+            // ------------------------------------------------------------------
+            // Build the WebApplication object — it represents the app and its middleware pipeline
+            // ------------------------------------------------------------------
+            var app = builder.Build();
+
+            // ------------------------------------------------------------------
+            // Configure middleware pipeline based on environment
+            // Check if the app is running in a non-development (Production) environment
+            // If true, use a custom error handler and enable HSTS (HTTP Strict Transport Security)
+            // ------------------------------------------------------------------
+            if (!app.Environment.IsDevelopment())
+            {
+                // Redirect unhandled errors to the /Home/Error route
+                app.UseExceptionHandler("/Home/Error");
+
+                // Enable HTTP Strict Transport Security (HSTS) to enforce HTTPS
+                app.UseHsts();
+            }
+
+            // ------------------------------------------------------------------
+            // Middleware to redirect HTTP requests to HTTPS
+            // Provided by app.UseHttpsRedirection() from Microsoft.AspNetCore.Builder namespace
+            // ------------------------------------------------------------------
+            app.UseHttpsRedirection();
+
+            // ------------------------------------------------------------------
+            // Middleware to serve static files (like HTML, CSS, JS, images) from wwwroot
+            // Without this, static content is not served
+            // ------------------------------------------------------------------
+            app.UseStaticFiles();
+
+            // ------------------------------------------------------------------
+            // Adds routing capabilities to the middleware pipeline
+            // This is required before calling MapControllerRoute
+            // ------------------------------------------------------------------
+            app.UseRouting();
+
+            // ------------------------------------------------------------------
+            // Adds authorization middleware (used with [Authorize] attributes)
+            // Even if not used yet, it's often added for future use
+            // ------------------------------------------------------------------
+            app.UseAuthorization();
+
+            // ------------------------------------------------------------------
+            // Custom Route 1: Matches URL exactly /Student/All
+            // It routes the request to StudentController's Index() method
+            // This is a fixed route, no parameters
+            // ------------------------------------------------------------------
+            app.MapControllerRoute(
+                name: "StudentAll",                          // Route name (optional identifier)
+                pattern: "Student/All",                      // Exact URL path to match
+                defaults: new { controller = "Student", action = "Index" } // Target controller/action
+            );
+
+            // ------------------------------------------------------------------
+            // Custom Route 2: Matches /StudentDetails/{ID}
+            // Example: /StudentDetails/10 → routes to StudentController.Details(10)
+            // {ID} is a route parameter; it's passed to the action method as an argument
+            // ------------------------------------------------------------------
+            app.MapControllerRoute(
+                name: "StudentIndex",                         // Route name
+                pattern: "StudentDetails/{ID}",               // URL pattern with route parameter
+                defaults: new { controller = "Student", action = "Details" } // Target method
+            );
+
+            // ------------------------------------------------------------------
+            // Default Route: Fallback if none of the above match
+            // Matches URLs like /Home/Index or /Product/List/5
+            // controller = Home, action = Index are the defaults if not provided
+            // {id:int?} = optional parameter, must be an integer if provided
+            // ------------------------------------------------------------------
+            app.MapControllerRoute(
+                name: "default",                              // Default route
+                pattern: "{controller}/{action}/{id:int?}",   // Route template with optional integer id
+                defaults: new { controller = "Home", action = "Index" } // Default values
+            );
+
+            // ------------------------------------------------------------------
+            // Starts the application and begins listening for incoming HTTP requests
+            // This call is blocking and keeps the app running
+            // ------------------------------------------------------------------
+            app.Run();
+        }
+    }
+}
+
+📌✅✅✅✅✅✅✅✅✅📌CH 02:CUSTOUM CONVENTIONAL ROUING📌✅✅✅✅✅✅✅✅✅📌
+
+
+✅[#1] CUSTROM ROUTING WITHOUT DEFALUT VALUES :
+
+📌 Custom Routing Without Default Values
+-Default Routing Behavior
+By default, ASP.NET Core MVC allows a route pattern like: {controller=Home}/{action=Index}/{id?}
+
+-This means:
+If no controller/action is specified in the URL, it defaults to HomeController and its Index action.
+The id parameter is optional.
+
+- Custom Route Without Default Values
+To have strict control over the URL and force users to specify controller and action explicitly:pattern: "{controller}/{action}"
+
+This removes default values and optional parameters. For example:
+app.MapControllerRoute(
+    name: "CustomRoute",
+    pattern: "{controller}/{action}"
+);
+
+🔍 Result:
+If you now navigate to:
+https://localhost:44359/Student/Details
+https://localhost:44359/Student/Index
+You will reach the respective action methods, but navigating to https://localhost:44359/ gives a 404 error — because there are no defaults.
+
+📌Custom Routing with Route Parameters (like ID)
+ Adding Route Parameters
+To match routes like:
+https://localhost:44359/Student/Details/20
+https://localhost:44359/Student/Index/10
+Update the route pattern to include an id parameter : pattern: "{controller}/{action}/{id}"
+
+🔧 Controller Example:
+🗂Controller/StudentController.cs
+👇 Code:
+// Define a controller class named StudentController
+// The class must inherit from Controller base class to use MVC features
+// Controller class is defined in the Microsoft.AspNetCore.Mvc namespace
+public class StudentController : Controller
+{
+    // ----------------------------------------------------------------------
+    // Action Method 1: Index
+    // This method handles HTTP GET requests mapped to /Student/Index or custom routes like /Student/All
+    // The method accepts a string parameter `id`, which can be passed via the route or query string
+    // Returns a plain string as a response — for demonstration (not a View)
+    // ----------------------------------------------------------------------
+    public string Index(string id)
+    {
+        // String interpolation to return a custom message
+        // Example response: "Index(5) Action Method of StudentController"
+        return $"Index({id}) Action Method of StudentController";
+    }
+
+    // ----------------------------------------------------------------------
+    // Action Method 2: Details
+    // Handles HTTP GET requests mapped to /Student/Details/{id} or custom routes like /StudentDetails/10
+    // Like Index, it receives an `id` parameter from the route (automatically bound by model binding)
+    // Returns a string message — again, no view is returned
+    // ----------------------------------------------------------------------
+    public string Details(string id)
+    {
+        // Responds with a string showing which method was called and what the ID was
+        return $"Details({id}) Action Method of StudentController";
+    }
+}
+⚠️ Issue:
+This accepts any value for id, including strings like:
+/Student/Details/ABC
+
+📌Route Constraints in ASP.NET Core MVC
+- Purpose:
+Route Constraints restrict route parameters to specific data types or patterns (e.g., int, bool, datetime).
+- Applying an Integer Constraint
+EG :
+To restrict id to integers only, use inline constraints: 
+
+SYTNAX :
+pattern: "{controller}/{action}/{id:int}" //Now uh can see that there is no(?) question mark in front of the int, So this means that the id parameter is not optional, it must be passed in the URL.
+
+-Now only URLs with integer IDs like:
+/Student/Details/20
+/Student/Index/10
+will work. URLs like /Student/Details/ABC return 404 Not Found.
+
+🧠 Where Is This Used?
+In Program.cs, it’s used like this:
+🗂program.cs
+👇 Code:
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller}/{action}/{id:int?}", // '?' makes the 'id' optional paramter and this parameter should be interger only
+    defaults: new { controller = "Home", action = "Index" }
+);
+
+🗂Controller/StudentController.cs
+👇 Code 
+public class StudentController : Controller
+{
+    public string Index()
+    {
+        return "Index() Action Method of StudentController";
+    }
+
+    public string Details(string id)
+    {
+        return $"Details({id}) Action Method of StudentController";
+    }
+}
+
+🔍 Valid URLs:
+/Student/Index
+/Student/Details
+/Student/Details/10
+
+
+🚧 Route Pattern Components
+| Segment        | Meaning                                                                                                                                                                                                       |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `{controller}` | A **route token** – it tells ASP.NET Core to extract the first URL segment as the controller name. Example: `/Student/...` means `StudentController`.                                                         |
+| `{action}`     | A **route token** – the second URL segment maps to the method (action) inside the controller. Example: `/Student/Details/...` maps to `Details()` method.                                                     |
+| `{id:int}`     | A **route token** with a **constraint**. The third segment is optional and must be an integer. It will be passed as a parameter to the action method. Example: `/Student/Details/10` → `Details(int id = 10)` |
+
+
+📌Providing Default Route Values
+Purpose:
+To handle requests like / or /Home without specifying everything in the URL.
+You can specify defaults in the route pattern:
+pattern: "{controller=Home}/{action=Index}/{id:int?}"
+Now:
+/ = /Home/Index
+/Home = /Home/Index
+
+-Alternative Method using defaults:
+🗂program.cs
+👇 Code:
+// Registers a custom conventional route for controller-based routing in ASP.NET Core MVC
+// This method is an **extension method** defined in the class:
+// Microsoft.AspNetCore.Builder.ControllerEndpointRouteBuilderExtensions
+// It is used to define a **route template** that maps incoming URL patterns to controller actions
+app.MapControllerRoute(
+    
+    // 🔹 name: A unique name given to this route configuration.
+    // This is optional but helps in identifying and debugging routes.
+    name: "CustomRoute",
+
+    // 🔹 pattern: The route template that defines the URL structure.
+    // This pattern supports **tokens/placeholders** which are matched dynamically.
+    // - {controller}: name of the controller (without "Controller" suffix).
+    // - {action}: name of the action method inside the controller.
+    // - {id:int?}: optional integer route parameter named 'id'. The `int?` is a **route constraint**
+    //              that ensures the value must be an integer if it exists.
+    pattern: "{controller}/{action}/{id:int?}",
+
+    // 🔹 defaults: Specifies default values if the URL does not include them.
+    // This is useful for handling root URLs like `/` with default controller/action.
+    // - If the user visits `/`, it will be treated as `/Home/Index` by default.
+    defaults: new { controller = "Home", action = "Index" }
+);

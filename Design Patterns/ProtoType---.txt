@@ -1,0 +1,555 @@
+-------------ProtoType---DESIGN----PATERN---------
+------------------MEMBERWISE CLONE () FUNCTION ------------------
+-MemberwiseClone() Method:
+MemberwiseClone() is a protected method of the System.Object class in C#.
+It is used to create a shallow copy of the current object.
+A shallow copy means:
+The new object will have copies of the original object's values for all fields.
+However, if the object has any reference-type fields (like arrays, classes), both objects will share the same reference for those fields.
+-For Value types(int, float, Struct, Enum) Shallow copy means deep copy only(shallow copy behaves like deep copy.)
+-This method always do Shallow copy, So uh can use this method only for Value types, becoz Values types shallow copy behaves like deep copy only
+
+-Where is MemberwiseClone() Defined?
+It is defined in the System.Object class.
+So, every C# class (because all classes inherit from Object class directly or indirectly) can use it.
+SYNTAX :
+	protected object MemberwiseClone ();
+
+It is protected, which means:
+You cannot call it outside the class directly.
+You can call it inside the class where you are implementing cloning.
+	
+
+-Why Use MemberwiseClone()?
+When you want to quickly duplicate an object without writing manual copying code.
+It is fast and automatic: copies all field values into a new object.
+Saves you from writing manual code to assign each property individually.
+It’s very useful for implementing the Prototype Design Pattern.
+
+
+-----Important: Shallow Copy vs Deep Copy----
+Shallow Copy (done by MemberwiseClone()):
+Value types (int, double, bool) are copied.
+Reference types (classes, arrays) are shared (both objects refer to the same object).
+
+Deep Copy:
+Everything is copied, including separate copies of reference types.
+MemberwiseClone() does not do deep copy (you must write extra code for deep copy if needed).
+
+-----SHALLOW COPY == DEEP COPY FOR VALUE TYPES--------:
+Why?
+Value types hold their data directly (not a reference to memory).
+So when you copy a value type, the entire data gets copied.
+After copying, the two values are completely independent — changing one does not affect the other.
+Thus:
+Shallow copy = Deep copy for value types.
+
+EG:
+int a = 5;
+int b = a; // shallow copy
+b = 10;
+Console.WriteLine(a); // 5 (still 5, unaffected)
+Console.WriteLine(b); // 10
+//After copying, a and b are independent.
+
+EG Struct:
+struct Point
+{
+    public int X;
+    public int Y;
+}
+
+Point p1 = new Point { X = 1, Y = 2 };
+Point p2 = p1; // shallow copy
+
+p2.X = 100;
+
+Console.WriteLine(p1.X); // 1 (unaffected)
+Console.WriteLine(p2.X); // 100
+//➡️ p1 and p2 are independent after copying.
+
+
+---How to Use MemberwiseClone()?
+You override or implement a Clone method in your class, and inside it, you call MemberwiseClone().
+SYNTAX :
+	return (className)this.MemberwiseClone();
+
+
+EG:
+using System;
+
+namespace PrototypeExample
+{
+    public class Employee
+    {
+        public string Name { get; set; }
+        public string Department { get; set; }
+
+        // Implementing Clone using MemberwiseClone
+        public Employee Clone()
+        {
+            return (Employee)this.MemberwiseClone();//Type casted this to Empolyee
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee emp1 = new Employee();
+            emp1.Name = "Anurag";
+            emp1.Department = "IT";
+
+            // Clone emp1 to emp2
+            Employee emp2 = (Employee)emp1.Clone();
+
+            // Change the Name of emp2
+            emp2.Name = "Pranaya";
+
+            Console.WriteLine("Employee 1:");
+            Console.WriteLine("Name: " + emp1.Name + ", Department: " + emp1.Department);
+
+            Console.WriteLine("Employee 2:");
+            Console.WriteLine("Name: " + emp2.Name + ", Department: " + emp2.Department);
+
+            Console.Read();
+        }
+    }
+
+}
+
+ Step-by-step Explanation:
+Create emp1, set name and department.
+Clone emp1 to emp2 by calling MemberwiseClone().
+emp2 is a new object.
+Modify emp2.Name to "Pranaya".
+Print emp1 and emp2 ➔ You see that emp1 remains unchanged!
+✅ Success: Now both emp1 and emp2 are separate objects.
+
+-----Visual Representation:
+
+Before Cloning:
+emp1 ---> [Name: Anurag, Department: IT]
+
+After Cloning:
+emp1 ---> [Name: Anurag, Department: IT]
+emp2 ---> [Name: Anurag, Department: IT]  (Copy)
+
+After changing emp2.Name:
+emp1 ---> [Name: Anurag, Department: IT]
+emp2 ---> [Name: Pranaya, Department: IT]
+
+
+even though we have done shallow copy, but stilll changing the name at once refrence why does does not affect the other name?
+
+BECOZ:
+Shallow Copy (MemberwiseClone) = Copies value types directly and reference types by reference.
+
+In your Employee class:
+Name and Department are both of type string.
+String in C# is a special case: it is a reference type, BUT it is immutable (cannot be changed once created).
+
+▶️ Because of string immutability!
+👉 Although string is a reference type, when you assign a new value (emp2.Name = "Pranaya";):
+It does not modify the existing string.
+Instead, it creates a new string object "Pranaya" in memory.
+Then, emp2.Name now points to the new string, but emp1.Name still points to the original string "Anurag".
+✅ So they no longer share the same string after the assignment.
+
+
+
+EG 2:
+using System;
+
+namespace PrototypeDesignPattern
+{
+    // Step 1: Create a class Employee
+    public class Employee
+    {
+        public string Name { get; set; } //uh are using refrence type(string), but still if uh change the String (Name) after doing clone of the objects, then also changing one string(Name) data Field will not reflect into the other becoz strings are immutable. So changing string will store a new string at a new memory location.
+	//But if uh use another refrecne type like class as a data feild, So if uh do the cloing using the function MemberWiseClone(), Then it will do the shallow copy, So changes to that data feild(the feild whose type is a class) will reflect in another objects data feild
+	//eg : if uh have a data feild as "public Email e {get; set;}" where Email is a custom class, Tehn even if uh clone the objects using the MemberwiseClone() function, Then also (as this function does Shallow copy), changes in one of the objects (Email) feild will be reflected in another. 
+        public string Department { get; set; }
+
+        // Step 2: Create a Clone method to perform Shallow Copy using MemberwiseClone
+        public Employee Clone()
+        {
+            // Applying MemberwiseClone here to create a shallow copy
+            return (Employee)this.MemberwiseClone();
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Step 3: Create an original object (emp1)
+            Employee emp1 = new Employee();
+            emp1.Name = "Anurag";
+            emp1.Department = "IT";
+
+            // Step 4: Clone emp1 to create emp2 using Clone method
+            Employee emp2 = emp1.Clone(); // <-- MemberwiseClone() is internally called here
+
+            // Step 5: Change the Name property of emp2
+            emp2.Name = "Pranaya";
+
+            // Step 6: Display the data of emp1
+            Console.WriteLine("Employee 1 Details:");
+            Console.WriteLine("Name: " + emp1.Name + ", Department: " + emp1.Department);
+
+            // Step 7: Display the data of emp2 
+	    //Since string are immutable, Changing the string will get store at a diff memory location , resulting in Deep copying instead of shallow copy.
+	    //The function MemeberwiseClone() will do shallow copy only, But in case of string the result will be diff, If uh change string of one object it wont be reflected into other objects data, becoz string are immutable.
+	    //But if uh change any other refrence type, Then in the other objects data also uh can see the change
+	    //If uh change any Value type data, then it wont be shown in the other objects data, becoz value type always do Deep copy.
+            Console.WriteLine("\nEmployee 2 Details:");
+            Console.WriteLine("Name: " + emp2.Name + ", Department: " + emp2.Department);
+
+            Console.ReadKey();
+        }
+    }
+}
+🔵 Output:
+Employee 1 Details:
+Name: Anurag, Department: IT
+
+Employee 2 Details:
+Name: Pranaya, Department: IT
+
+
+----------PROTOTTYPE DESIGN PATTAERN------------
+
+The Prototype Design Pattern allows you to create new objects by copying an existing object, rather than creating a new object from scratch.
+This pattern is useful when object creation is resource-intensive or complicated, as it provides a way to avoid expensive operations by cloning an existing object (the "prototype").
+
+
+Real-life Analogy for Prototype Design Pattern:
+Analogy: Cloning a Car Design
+Imagine you're designing a car. Instead of designing a new car from scratch every time you want a new one, you decide to use an existing car as a template. You can then clone this car (i.e., copy its design), and make small modifications (color, type of tires, interior features) for each new car model.
+Prototype: The first car (a pre-existing, fully designed car).
+Cloning: Copying the design of the car and creating new instances (clones) from the original.
+Changes: The cloned car can be customized, but the original design remains unchanged.
+Thus, you’re not reinventing the wheel each time you need a new car. You’re just modifying an existing prototype (the original car) to create a new one.
+
+
+Points Explaining the Prototype Design Pattern:
+Purpose of the Prototype Pattern:
+It’s used to avoid re-creating objects from scratch by copying an existing object (called a prototype).
+Instead of calling constructors or using complex logic to create objects, you clone the prototype.
+This is especially helpful when creating new objects is resource-intensive or time-consuming.
+
+Advantages:
+Performance Optimization: Instead of creating objects from scratch every time, cloning reduces time complexity.
+Less Code: By using prototypes, you avoid duplicating the logic of object creation.
+Flexibility: The prototype can be customized or extended by modifying the cloned objects.
+
+When to Use:
+When object creation is complex or involves several steps.
+When you need many objects of the same type with minor differences.
+When creating new objects from scratch is costly in terms of performance or memory.
+
+Key Components:
+Prototype: The base object that is cloned.
+Client: The code that clones objects from the prototype.
+Concrete Prototype: The actual implementation of the prototype interface, which can be cloned.
+
+How It Works:
+The prototype object contains the original state of the object.
+The client makes a clone of this prototype whenever a new object is needed.
+Shallow Clone: The object is copied, but nested objects (references) are still shared.
+Deep Clone: The object and all its nested references are copied (recursively).
+
+EG :
+using System;
+
+namespace PrototypePatternExample
+{
+    // Step 1: Create the Prototype Interface
+    public interface IPrototype
+    {
+        IPrototype Clone();  // Method to clone the object
+    }
+
+    // Step 2: Create a Concrete Prototype Class
+    public class Car : IPrototype
+    {
+        public string Model { get; set; }
+        public string Color { get; set; }
+
+        // Step 3: Implement Clone method (using MemberwiseClone)
+        public IPrototype Clone()
+        {
+            // Create a shallow copy of the current car instance
+            return (IPrototype)this.MemberwiseClone();
+        }
+
+        // Step 4: Method to display car details
+        public void DisplayCarDetails()
+        {
+            Console.WriteLine($"Car Model: {Model}, Color: {Color}");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Step 5: Create an instance of the Car (prototype)
+            Car car1 = new Car
+            {
+                Model = "Tesla Model S",
+                Color = "Red"
+            };
+
+            Console.WriteLine("Original Car:");
+            car1.DisplayCarDetails();
+
+            // Step 6: Clone car1 to create a new car (car2) from the prototype
+            Car car2 = (Car)car1.Clone();
+            car2.Color = "Blue";  // Change color for the cloned car
+
+            Console.WriteLine("\nCloned Car:");
+            car2.DisplayCarDetails();  // Display the new car details
+
+            Console.ReadLine();
+        }
+    }
+}
+
+OUTPUT :
+Original Car:
+Car Model: Tesla Model S, Color: Red
+Cloned Car:
+Car Model: Tesla Model S, Color: Blue
+
+
+-Explanation of the Code (Prototype Design Pattern):
+Prototype Interface (IPrototype):
+This defines the Clone() method, which must be implemented by any class that is intended to be a prototype.
+
+Concrete Prototype (Car):
+The Car class implements the IPrototype interface.
+The Clone() method uses MemberwiseClone() to create a shallow copy of the Car object.
+The DisplayCarDetails() method is just a helper to print car details.
+
+Cloning:
+In the Main method, we first create a Car object car1.
+Then, we clone car1 into car2 by calling the Clone() method.
+After cloning, we modify car2's color, which doesn’t affect car1.
+
+
+Key Points in This Example:
+Prototype Object: car1 is the original prototype object.
+Cloning: We use car1.Clone() to create car2, which is a clone of the original.
+Independence of Clones: Changing car2's color to "Blue" does not affect car1, demonstrating how the clone operates independently after being created.
+
+
+📌 Example where MemberwiseClone() is not enough:
+Imagine : we have a Custom class which uh have used as data feild in another class, So if uh use the function MemberwiseClone() it wont work, Becoz this function will do shallow copy and Chnages in one of the Obejcts data field(of the class) will be reflecting in another. 
+
+
+Suppose you have one class (Address) and another class (Person) that has an Address as a field.
+PROBLEMATIC CODE :
+1. Code using only MemberwiseClone() (Problematic)
+
+using System;
+
+namespace DeepCloneExample
+{
+    public class Address
+    {
+        public string City { get; set; }
+        public string Country { get; set; }
+    }
+
+    public class Person
+    {
+        public string Name { get; set; }
+        public Address Address { get; set; }
+
+        // Shallow Clone (problematic for reference types)
+        public Person ShallowClone()
+        {
+            return (Person)this.MemberwiseClone(); // MemberwiseClone() only shallow copies
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Create original object
+            Person person1 = new Person
+            {
+                Name = "John",
+                Address = new Address { City = "New York", Country = "USA" }
+            };
+
+            // Create clone
+            Person person2 = person1.ShallowClone();
+
+            // Modify cloned object's Address
+            person2.Address.City = "Los Angeles";
+
+            Console.WriteLine("Original Person:");
+            Console.WriteLine($"{person1.Name} lives in {person1.Address.City}");
+
+            Console.WriteLine("\nCloned Person:");
+            Console.WriteLine($"{person2.Name} lives in {person2.Address.City}");
+        }
+    }
+}
+
+🛑 Output:
+
+Original Person:
+John lives in Los Angeles
+
+Cloned Person:
+John lives in Los Angeles
+
+
+📣 WHY MemberwiseClone() does not work here?
+MemberwiseClone() only creates a shallow copy:
+Value types (like int, double, etc.) are copied properly.
+Reference types (like Address object) are only copied by reference (not duplicated).
+So both person1 and person2 share the same Address object.
+Changing person2.Address.City also changes person1.Address.City.
+
+
+✅ Solution: Custom Deep Clone logic
+You need to manually clone the Address object too.
+2. Code with Custom Deep Clone
+
+
+using ProtoType; // Importing the namespace ProtoType
+using System;
+namespace ProtoType
+{
+    // Address class which represents the address of a person
+    public class Address
+    {
+        public string City { get; set; }
+        public string State { get; set; }
+
+        public Address Clone()
+        {
+            // Deep copy of Address object
+            return new Address
+            {
+                City = this.City, // Copy the City
+                State = this.State // Copy the State
+            };
+        }
+        // If uh dont write this function and call it, Then when uh use the Funciton MemberwiseClone(), 
+        // Then it will do Shallow copy, becoz of which the changes in one of the Data Feild of the Address will reflect in another one
+    }
+
+    // Person class which represents a person having Name and Address
+    public class Person
+    {
+        public String Name {get; set;} // This is property, not a data field
+    	public Address Add { get; set; } // Association with Address class
+
+        // Deep Copy	
+        public Person Clone()
+        {
+            //Person p2 = new Person();// this is wrong becoz uh are creating new object here, Using new keyword, 
+            //This is not the concept of the Prototype Design pattern , Uh should not use the New Person .
+            
+            Person p2 = (Person)this.MemberwiseClone(); // Shallow copy the Person object (copies Name and Address reference)
+                                                         // p2.Name = this.Name; // no need becoz name will automatically be cloned using the MemberwiseClone method
+
+            p2.Add = (Address)this.Add.Clone(); // Deep copy for Address object to avoid reference sharing
+            return p2;
+        }
+    }
+
+    // Client code where the objects are created and cloning is performed
+    public class Program
+    {
+        public static void Main() // no need of public modifier in front of the Main function, and also the string args are optional
+        {
+            // Creating the original Person object (p4)
+            Person p4 = new Person()
+            {
+                Name = "Vishwajeet",
+                Add = new Address
+                {
+                    City = "pune",
+                    State = "Maharashtra"
+                } // setting up the person p4 Object
+            };
+
+            // Cloning p4 to create p5 using Prototype pattern (deep copy)
+            Person p5 = (Person)p4.Clone(); 
+
+            // Changing p5's Name (primitive type, so shallow copy would have been fine)
+            p5.Name = "Gaikwad";
+
+            // Changing p5's Address fields (deep copy needed to prevent affecting p4's address)
+            p5.Add.City = "LA";
+            p5.Add.State = "USA";
+
+            // Displaying person p4 information (original object)
+            Console.WriteLine("Person p4 info is ");
+            Console.WriteLine("p4 name " + p4.Name);
+            Console.WriteLine("p4 add is " + p4.Add.City + " \nState is " + p4.Add.State);
+
+            // Displaying person p5 information (cloned and modified object)
+            Console.WriteLine("Person p5 info is ");
+            Console.WriteLine("p5 name " + p5.Name);
+            Console.WriteLine("p5 add is " + p5.Add.City  + " \nState is " + p5.Add.State);
+        }
+    }
+}
+
+
+
+🧠 Detailed Explanation of the Code (in paragraph)
+In this program, we are applying the Prototype Design Pattern. The goal of the Prototype pattern is to create a copy (clone) of an existing object instead of creating it from scratch using the new keyword. We have two classes: Address and Person. The Person class contains a reference to an Address object.
+When we clone a Person, we use the MemberwiseClone() method which creates a shallow copy of the object — meaning all value types are copied, but reference types (like Address) are not deeply copied; only their memory addresses are copied.
+
+To avoid having both Person objects (p4 and p5) share the same Address object, we manually deep copy the Address inside the Clone() method by calling this.Add.Clone().
+Thus, after cloning, modifying the Address of p5 does not affect the Address of p4.
+In the Main method, we create an original Person object p4, clone it to p5, modify p5's Name and Address, and finally print both objects' details to show that they are now completely independent.
+
+
+
+🚨 What would have happened if we hadn't deep copied the Address manually?
+If we did not manually clone the Address inside the Person.Clone() method (i.e., if we only used MemberwiseClone() without p2.Add = this.Add.Clone();),
+then both p4 and p5 would share the same Address object in memory!
+
+This would cause the following dangerous behavior:
+If you change the Address.City or Address.State of p5, it would also change the Address of p4.
+Both Person instances would incorrectly point to the same Address object.
+In real applications, this could cause very critical bugs like changing someone's shipping address just because another order was edited!
+🔴 Example of wrong behavior without deep copy:
+
+p5.Add.City = "LA"; // would ALSO make p4.Add.City = "LA"
+Thus, to make the clone truly independent, we must deep copy any referenced objects.
+
+
+----------------------------------
+
+🧠 If you had done this:
+Suppose inside your Clone() function, you wrote something like:
+
+public Person Clone()
+{
+    Person p2 = new Person(); // creating a new object manually
+    p2.Name = this.Name;
+    p2.Add = this.Add.Clone();
+    return p2;
+}//But don't do this, don't create new object here using the new key word
+✅ This would still be a valid Prototype Pattern implementation.
+
+
+🎯 Why is this still Prototype?
+In Prototype Design Pattern, the main goal is to clone an existing object, not to create a totally new instance with different data manually.
+How you clone (whether by MemberwiseClone() + fixing references, or by creating a new object and copying fields manually) does not violate the prototype pattern.
+As long as you are copying the current object's data into a new object based on the existing object's structure and state, it is still Prototype Pattern.
+
+
+✅ Yes, if you create a new Person and manually copy every field from the current object into it, it still counts as Prototype Pattern.
+(Just that it becomes more coding effort and slightly slower than MemberwiseClone.)

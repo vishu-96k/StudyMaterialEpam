@@ -1,0 +1,511 @@
+---------------------PART - 1---ASYNCHORNOUS PROGRAMMING-------DEFINATIONS--------------------
+
+#1)DIFF b/t PARALLILISM AND CONCURANCY
+
+-Asynchronous Programming allows us to use threads efficiently and threads are prevented from being unnecessarily blocked.
+Suppose you ordered a pizza using any food delivery app and they tell you it will take 30 minutes to deliver the pizza to your location. What will you do in those 30 minutes? Do you just freeze yourself waiting for the pizza, or will you do some other tasks while the pizza arrives? So, obviously, you want to do a few things while waiting for the pizza.
+In our example, pizza preparation is an operation and that operation is not going to be satisfied immediately. And you are just like a thread. Instead of being stuck waiting for the result of the operation, it is better to do some other tasks.
+
+
+🧠 What is Context Switching?
+Context switching is when the CPU stops working on one task (or thread) and starts working on another.
+But before it switches, it has to save everything about the current task (its "context") — like:
+Current instruction it's on (program counter)
+Variables and register values
+Stack pointer
+Etc.
+So later, it can resume exactly where it left off.
+
+
+-Concurrancy: means, Switching between the CPU resources when the fun is going for the I/O operations(Context switching between CPU resources).
+	-In this, The main focus is, your Thread should not get block, or wait for some I/O operations(or network Connnection, or Db connection).
+	-here no true parallelism is achived, Meaning the tasks are not running parally on diff threads, Just the Threads are utilised in more efficient way
+	- In concurrency, it's more about efficiently switching between tasks to avoid idle time.
+	-Achived using async and await, Asynchronous Programmuing
+ 	-Why Context Switching Happens in Concurrency:
+	-Context switching is when the CPU stops working on one task (or thread) and starts working on another.
+	In concurrent programming, there might be many threads/tasks waiting for their turn to use the CPU.
+	The CPU quickly switches between these threads to give the illusion that all are running at the same time.
+	This helps avoid blocking and keeps the system responsive, especially during I/O operations.
+	-Asynchronous Programming allows us to use threads efficiently and threads are prevented from being unnecessarily blocked.
+
+
+-Parallalism : In this ture Parallalism is achived, Using multiple Threads for running multiple functions paralllay
+	-CPU resources are being shared among each thread, and each Thread runs independtly of CPU resources, So if a function is going for I/O operation, then The Thread will be blocked, but the other Threads will be still running. This is called True parallislism.
+	-All threads require CPU resources to run. In parallelism, multiple CPU cores can run multiple threads truly at the same time and independently.
+	-Achived using multiple Threads running at the same time
+	-In Parallal programming also context switching can happen if uh have created more threads then the CPU Cores.
+	-🧵 Context Switching in Threads (Multithreading)
+	-When you create multiple threads in your application, but your system has fewer CPU cores than the number of threads, then the CPU must switch between threads — this is context switching.
+	-🧠 So yes: In multithreading, context switching is how the CPU shares its time across threads. and its optional in Parallilism
+	🔄 How it works:
+	Let’s say you create 5 threads, but you only have 2 CPU cores:
+	Only 2 threads can run at the same time (1 per core).
+	The other 3 threads wait in a queue.
+	The operating system uses a scheduler to switch threads in and out.
+	This switch involves saving the current thread's state and loading the next one — that's context switching.
+
+✅ Quick Definitions:
+🧵 Concurrency:
+Multiple tasks in progress at the same time, but not necessarily running at the exact same time.
+Achieved by context switching.
+Useful for I/O-bound tasks (e.g., web requests, file access).
+Example: A single chef preparing 3 dishes — switching between tasks while others are cooking.
+
+🧠 Parallelism:
+Multiple tasks literally running at the same time — usually on multiple cores or processors.
+Achieved by multiple threads running truly in parallel.
+Useful for CPU-bound tasks (e.g., calculations, data processing).
+Example: 3 chefs in a kitchen each making a dish at the same time.
+
+So what about context switching?
+Feature	Concurrency	Parallelism
+Tasks running simultaneously	❌ (not truly)	✅ (truly parallel)
+Context switching	✅ Yes, a key part of it	✅ May still happen, but less often
+Main benefit	Efficient use of a single thread	Faster execution with multiple cores
+Best for	I/O-bound operations	CPU-bound operations
+
+Concurrency relies heavily on context switching.
+Parallelism can still involve context switching, but not always — especially if there are enough CPU cores.
+
+
+
+✅ Concurrency:
+Definition: Concurrency is the ability of a system to handle multiple tasks at once by interleaving(leaving one task in between when it goes for I/O operations, and starting another task with the same Thread, not allowing Thread to block) their execution — not necessarily at the same time.
+How it works:
+The CPU switches context between tasks (threads), especially when one is waiting on I/O (like file, DB, or network).
+The focus is to avoid blocking a thread — instead of waiting, the system moves to the next task.
+True parallelism? ❌ No — tasks don't run simultaneously, just efficiently interleaved.
+Goal: Maximize resource utilization.
+Achieved using: async, await, Task, Task.Run, etc.
+Correct Example: Async file download, async DB query, etc.
+
+✅Parallelism:
+Definition: Parallelism is about running multiple tasks at the same time, typically on multiple threads or processors.
+How it works:
+Tasks are divided and run simultaneously on different cores.
+Each thread runs independently, and multiple threads can be active at the same time.
+True parallelism? ✅ Yes — multiple threads can execute code in parallel.
+Goal: Speed up computation-heavy operations.
+Achieved using: Parallel.For, Parallel.Invoke, Task, Thread, PLINQ, etc.
+Correct Example: Image processing, matrix multiplication, CPU-heavy loops.
+
+
+✅ What is Concurrency?
+Definition:
+Concurrency means performing multiple tasks at the same time, or managing multiple tasks that make progress over time.
+Goal:
+To reduce the total execution time by not waiting for one task to finish before starting another.
+Example:
+Instead of doing 1 million tasks one by one, we can do them simultaneously or switch between them smartly.
+
+✅ Real-life Example: Restaurant Analogy
+Single Cook Scenario:
+One cook prepares all customer orders.
+Tasks are handled sequentially.
+Result: High waiting time for customers.
+Cook is switching between tasks (not necessarily completing them at once).
+This is an example of concurrency without parallelism.
+Adding More Cooks:
+You hire another cook to help.
+Now tasks are divided and done at the same time.
+Example:
+Cook 1 handles veg orders.
+Cook 2 handles non-veg orders.
+
+✅ What is Parallelism?
+Definition:
+Parallelism means splitting a task into subtasks and executing them at the same time, often on multiple CPU cores.
+
+Difference from Concurrency:
+-Concurrency is about managing multiple tasks, so that no thread is blocked, and during the I/O operation the Threds are not left ideal, So this is called Concyrrency.
+-Parallelism is about executing multiple tasks truly simultaneously on different threads, and true parallelism is achived.
+
+
+🔁 Difference Between Concurrency and Parallelism
+Feature		Concurrency								Parallelism
+Definition	Managing multiple tasks at once, possibly switching between them.	Performing multiple tasks at the same time.
+Execution	Tasks start and progress together, not necessarily simultaneously.	Tasks run simultaneously, often on multiple cores.
+Goal		Better responsiveness (especially for I/O-bound tasks).			Faster execution (especially for CPU-bound tasks).
+Example		One cook switches between cooking 3 dishes.				Three cooks each prepare a dish at the same time.
+Used For	I/O-bound operations (web requests, file I/O).				CPU-bound operations (calculations, processing).
+
+🔀 Concurrency vs. 🧵 Parallelism in C#
+Concept		Description									Real-life Analogy
+Concurrency	Handling multiple tasks at the same time, possibly by interleaving execution	A single waiter handling multiple tables at once
+Parallelism	Performing multiple tasks simultaneously by using multiple processors/cores	Multiple waiters serving multiple tables together
+
+Concurrency is about structure: how you design a system to handle multiple things at once.
+Parallelism is about execution: how those things actually run at the same time
+
+📌 Summary Table
+Feature			Concurrency			Parallelism
+Runs simultaneously?	Not necessarily			Yes, if multi-core is available
+Focus			Task management			Speeding up execution
+CPU Usage		May use 1 or more cores		Uses multiple cores
+Use case		I/O-bound (file, network) tasks	CPU-bound (calculations, loops)
+Examples in C#		async/await, Task, Thread	Parallel.For, Parallel.Invoke
+
+#2)PARALLEL PROGRAMMING AND  Asynchronous Programming
+
+Parallel Programming :
+-Parallel programming is a way to make a program run faster by doing many things at the same time(using multiple Threads), using multiple CPU cores or processors(one Thread can be run on One core of CPU).
+🍕 Real-Life Analogy: Making Pizza Orders
+🍽️ Scenario 1: Single Chef (Serial Programming)
+You have 1 chef in the kitchen.
+The chef takes 3 orders:
+Makes the dough
+Bakes the pizza
+Packs the box
+The chef completes each pizza one by one.
+⏱️ Time: Total time = Dough + Bake + Pack × 3 pizzas.
+
+🧑‍🍳🧑‍🍳 Scenario 2: 3 Chefs (Parallel Programming)
+Now you have 3 chefs, each working on a different pizza at the same time.
+Each chef does all steps independently.
+⏱️ Time: Total time = Time to make 1 pizza (all 3 done together!)
+
+
+-we can implement Parallel Programming in two ways. They are as follows:
+-Task Parallel Library (TPL):TPL (Task Parallel Library) abstracts the low-level detail of thread handling i.e. how to create threads and how to execute the tasks using multiple threads is handled by the TPL. This allows us to concentrate on program logic rather than threads.
+
+Parallel LINQ (PLINQ): LINQ, we can filter the elements of an array. Then with Parallel LINQ, we can filter the same array in parallel.
+
+
+Asynchronous Programming:
+-Asynchronous Programming allows us to handle the threads of our processes in a more efficient way. The idea is to avoid blocking a thread while waiting for a response, either from an external system such as a Web service or from the computer’s file management system.
+-Async :The idea is that we need to use the async keyword to mark a method as asynchronous
+-Await : with await, we can wait for an asynchronous operation in such a way that the original thread is not blocked.
+
+-TASK : The method which is marked with the async keyword must return a Task or Task<T>. The idea of a Task is that it represents an asynchronous operation and does not return anything (TASK measn Void Return type for Asynchronous Methods). 
+-TASK<T> : In the case of Task<T>, it is like a promise that in the future this method will return a value of the data type T.
+
+I/O Bound :Some examples of IO-bound operations are calls to a Web Service, interaction with a Database, interaction with a file system, etc
+-When we make a call to an external entity, we have to wait for a response and while waiting for the response, it is productive to free the thread that started the operation so that it can proceed to perform other tasks.
+-If your operation requires communication with some external system to your program, then it is IO bound and therefore you can consider asynchronous programming.
+
+CPU BOUND :Some examples of CPU operations are finding the inverse of a matrix, sorting the elements of an array, etc.
+- If we have multiple CPU operations that are independent, we may want to use parallel programming to decrease the time it takes to perform these operations.
+-, if the operation is done entirely within your program and its execution time depends on the processor, then it is a CPU-bound operation and therefore you can consider using parallel programming.
+
+-----------------TYPES OF PROGRAMMING----------------
+
+🧵 Sequential Programming:
+-Sequential programming is the one in which the instructions are done one at a time. That is where there is no concurrency of any kind.
+Think of a chef cooking a full-course meal alone in a kitchen.
+He makes one dish at a time.
+He waits until one dish is fully cooked before starting another.
+If a dish needs 30 minutes in the oven, the chef waits — doing nothing else during that time.
+📌 Result: Simple, but slow and inefficient.
+
+✅ Concurrency:
+Now imagine the same chef finds a way to multitask:
+He puts the cake in the oven, and instead of waiting, he starts chopping vegetables for a salad.
+Then, while boiling pasta, he starts preparing the sauce.
+⏳ He's not doing everything at once, but he's switching tasks efficiently, not wasting time waiting.
+📌 In programming: This is like using async/await — you're not blocking the thread while waiting for slow tasks like file or network access.
+
+✅ Multithreading:
+ Multithreading is the ability to use multiple threads. It is important to clarify that multithreaded does not imply parallelism, since we can have a computer with a processor that is not multicore and I still can use multithreading. This is because an operating system can provide several threads and execute them sequentially without using parallelism
+Now suppose the chef hires assistants, and each one is assigned a different task:
+One assistant is baking.
+Another is chopping veggies.
+Another is boiling pasta.
+🔧 Each assistant represents a thread, and the chef (main thread) is managing them.
+🧠 But here’s the catch — the kitchen has only one stove, so they must take turns (context switching).
+📌 Multithreading without parallelism = tasks appear to run at the same time, but the CPU is switching between them quickly (like one stove shared between cooks).
+
+✅ Parallelism
+Imagine a restaurant with multiple kitchens, each with their own staff and stoves.
+Each team can work on different dishes at the same time, truly simultaneously.
+🏁 This is parallel programming — actual simultaneous execution of code, requires multiple CPU cores.
+📌 In C#: Using Parallel.For, Task.WhenAll(), or PLINQ can achieve this.
+
+
+✅ Multitasking
+Now think of a hotel kitchen serving multiple events:
+Breakfast buffet
+Wedding dinner
+Conference lunch
+👨‍🍳 Each event is a program, and each one has its own chefs (threads).
+The kitchen manager (OS) assigns time slices to each event's chefs, rapidly switching between them.
+📌 Multitasking: This is when multiple programs (apps) run seemingly simultaneously — like your browser, music player, and Word all open at once.
+
+---------------------------------PART 2---Async and Await-----------------------------
+
+✅Async : Async Keyword makes the method asynchronous, means uh can use the await keyword in this method. uh cannot return string or any data type from a async function, Uh can only return void, Task, Task<T> from the async function, becoz You must return Task or Task<T> to use await. Without Task, await cannot track or resume the method when the asynchronous work finishes.
+-another reason why we return task is that When a method returns a Task, any exceptions thrown inside the async method are captured and placed inside the Task.
+✅Await : This await keyword allows us to suspend the current Thread, Avoiding Blocking it, when we use await operator, what we are doing is, we are freeing the current thread from having to wait for the execution of the task, In this way, we are avoiding blocking the current thread that we’re using and then that thread can be used in another task.
+
+EG: Sequential Programming eg:
+using System;
+namespace AsynchronousProgramming{
+   class Program
+   {
+	public static SomeMethod()
+	{
+	   Console.WriteLine("SomeMethod execution started by the Main Thread...");
+	   Thread.Sleep(2000);// the Main Thread will sleep for 2 sec. And no other Task is going to perform becoz main Thread has been Blocked
+	   Console.WriteLine("\n");
+           Console.WriteLine("Some Method End");
+	}
+	static void Main()
+   	{
+	   Thread.CurrentThread.Name = "Main Thread";
+	   Console.WriteLine("main Method started using only one Thread");
+	   Console.WriteLine("This is the Main Thread running...");
+	   SomeMethod();//This method is called by the Main Thread;
+	
+		//the program will wait until the someMethod is completed the execution.
+	   
+           Console.WriteLine("Main Method End");
+	}
+   }
+}
+-Thread.Sleep() is a synchronous method, So uh need to use Task.Delay() which is an asynchronous method when uh use Async and Await. Both do the same work.
+-The Main thread is responsible for executing the code And when we call Thread.Sleep method the current thread is blocked for 10 seconds. This is a bad user experience.
+
+
+OUTPUT :
+main Method started using only one Thread
+This is the Main Thread running...
+SomeMethod execution started by the Main Thread..
+	2 sec waiting
+Some Method End
+Main Method End
+
+EG 2: Using Async And await
+
+using System;
+using System.Threading.Tasks;
+
+namespace AsynchronousProgramming
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Main Method Started......");
+
+            SomeMethod(); // since the someMethod is async, So the compiler will not wait for the method to complete, It will just call the method and if the method takes some time to finished the execution, then The main thread will start the next line execution, without waiting for the someMethod to get finish.
+
+            Console.WriteLine("Main Method End");
+            Console.ReadKey();
+        }
+	
+	//marking this function as async will tell Thread that it requires time to complete, and dont wait for the function to get complete.
+        public async static void SomeMethod() //this 'Void' will work, but use task, Becoz task is A aynchornous opretion and it promise that the task will be completed in future and retuns the value in future
+        {
+            Console.WriteLine("Some Method Started......");
+
+            //Thread.Sleep(TimeSpan.FromSeconds(10));
+            await Task.Delay(TimeSpan.FromSeconds(10)); //This function will wait here until this line is executed, but The Thread will not be Blocked becoz of await keyword, insted it will tell the Thread to do some other work, Till the time the await keyword line gets Finished execution.
+            Console.WriteLine("\n");
+            Console.WriteLine("Some Method End");
+        }
+    }
+}
+
+OUTPUT :
+Main Method started.....
+Some Method Started....
+	//The some method will require 10 sec to get finsish, so the calling Thread(Method calling Thread, thatr is the Main thread in our case), will not get blocked, it will start the other line of Code execution from the Main function.
+
+Main Method Eneded....
+	//After 10 sec
+some method eneded...
+
+✅Async If uh mark a function as async, it just means that uh can use Await keyword in it
+-async : It just allows uhh to use await keyword in that method,=. and marks the method as asynchronous method.
+-async is a modifier you add to a method to tell the compiler, "Hey, this method will contain await, and it will run asynchronously."
+
+✅Await : This keyword will wait for that line to finish the exectution and return the result, and also it will not block the thread, But if uh dont use await keyword then it means, The compiler will not stop for the method to finish its execution, It will just call the method and then immidiatly start with the next line, or it will wait for the function to finishing resulting in blocking of the thread.
+-await : if uh dont use await, then it the line of code will not be waited for finishing its exectuition and becoz of this, random result will be returned.
+-await is used inside an async method.
+It tells the program: "Wait here without blocking the thread until this task is done, then continue."
+-await : waits for the line to finish the exection
+	dont block the Thread, Allow the Thread to do some other Task, resulting in Achicving Concurrancey, and asynchronization.
+
+
+EG : USING async and await (Non blocking)
+public async Task<string> GetDataAsync() //Uh cannot return a string from a aysnc function, uh can only return void, Task, and Task<T>
+{
+    HttpClient client = new HttpClient();
+    string result = await client.GetStringAsync("https://example.com");//This method will wait here until the client.getstringAsync() method returns , and it also releses the Thread to do some other task, until the method gets resolve.
+    return result;
+}
+Non-blocking: The method gives control back to the caller while waiting.
+Good for UI/Server apps: Keeps UI responsive or server free for other tasks.
+
+
+EG : Without async and await (blocking)
+public string GetData()
+{
+    HttpClient client = new HttpClient();
+    // This blocks the current thread until the task finishes, so ur program will be freez(hang)
+    string result = client.GetStringAsync("https://example.com").Result;
+    return result;
+}
+Blocks the current thread: If this is a UI thread or server thread, it freezes!
+Not ideal for scalability or responsiveness.
+
+
+-Task.Delay() and Thread.Sleep() both pause execution.
+✅ Task.Delay()
+Asynchronous method
+Non-blocking → does not block the thread
+Returns a Task that can be awaited
+Good for async/await programming
+
+EG :
+await Task.Delay(2000); // Waits 2 seconds without blocking
+💡 Use when:
+You’re in an async method
+You want the thread to be free to do other work while "waiting"
+You’re building responsive apps (UI, Web, etc.)
+
+
+✅ Thread.Sleep()
+Synchronous method.
+Blocks the current thread
+Freezes execution completely (e.g., freezes UI if on UI thread)
+
+EG : 
+Thread.Sleep(2000); // Pauses the thread for 2 seconds
+💡 Use only when:
+You’re doing synchronous testing
+You need to block the thread for a fixed delay (rare in modern apps)
+
+
+---------------------------PART 3---TASK CLASS-----------------------------
+
+1)-TASK CLASS:
+
+-Uh can also use Task for returing from a normal fuctions also, Not nessasry that alswyas only async function should return task
+EG :
+public Task<string> GetMessage()
+{
+    return Task.FromResult("Hello from normal function");
+}
+✔️ This is valid. No async used.
+✔️ This returns a completed Task<string> with the value.
+
+-When we are working with the asynchronous method, We need to return Task(Void) and Task<T>(where T is any data type uh want to return) from the methods.
+-The Task data type represents an asynchronous operation. A task is basically a “promise” that the operation to be performed will not necessarily be completed immediately, but that it will be completed in the future.
+-returning a task means, returning a promise, and uh should always use await keyword in front of the line which is calling a method which is returning a Task(promise).
+
+EG :
+private static async Task Wait() //This function is returning a task(promise, means this function will finished its work in future)
+{
+    await Task.Delay(TimeSpan.FromSeconds(10));
+  Console.WriteLine("\n10 Seconds wait Completed\n");
+}
+public async static void SomeMethod()
+{
+    Console.WriteLine("Some Method Started......");
+
+    Wait();//Compiler will give uh a warning if uh dont use await in front of the Wait() function call. Uh should always use a await keyword in front of the function which is returning a Task(Promise).
+
+    Console.WriteLine("Some Method End");
+}
+
+-await Wait(); // This means, Wait for this operation (without blocking the Thread) to finish before running the next line of code.
+-uh should alwyas uhse teh await keywrd while calling the async function that is returing a TASK<T>, Becoz Task is asynchronous.
+
+2)-RETURING TASK :
+-what happens when you omit the await keyword while calling an async method that returns a Task.
+EG :
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace AsynchronousProgramming
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Main Method Started......");
+            Console.WriteLine("Enter the Name: ");
+            string Name = Console.ReadLine();
+            
+            SomeMethod(Name);
+
+            Console.WriteLine("Main Method End");
+            Console.ReadKey();
+        }
+
+        public async static void SomeMethod(string Name)
+        {
+            Console.WriteLine("Some Method Started......");
+
+            try //If Grretings Throws error(Exceptions) then try will catch it and execute the Catch block, but if uh dont use the await keyword to call the mthod(Greetings()), then the execution i snot going to reach us.
+            {
+                var GreetingSMessage = Greetings(Name); //Uh are not using await keyword to call the GrretingsMethod(), so Compiler will not stop for the response to return from this mehod.
+                //Console.WriteLine($"\n{GreetingSMessage}");
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"\nError Occurred. {ex.Message}");
+            }
+
+            Console.WriteLine("Some Method End");
+        }
+        
+        public static async Task<string> Greetings(string Name)
+        {
+            string message = string.Empty;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:58937/"); //Grettings method calls a Web API which Grrets us, means simple call a  HTTP Get req. 
+                
+                HttpResponseMessage response = await client.GetAsync($"api/greetings2/{Name}");
+                response.EnsureSuccessStatusCode();
+                message = await response.Content.ReadAsStringAsync();
+            }
+            return message;
+        }
+    }
+}
+
+-You called an async method (Greetings) inside another async method (SomeMethod) but did not use await(await Grrentings()), and you expected to catch any exceptions it might throw. However, the exception never reaches your catch block.
+-uh started the Grreting methods, But not waiting for it to finsih, So then the compiler will go in the next line, So even if the exeception is occurred in the Greetings() function, Already the compiler has come out of the try block becoz uh have not use the await keywrod, so compiler will move ahead and come out of the try block thinking that there is no error occure, since the error is going to occur after some time, So as the compiler has already move out of the  try block it will not catch the error, and hence no catch block will be execeuted even if there is error in the Grretings() function.
+
+
+🧠 Why This Happens (Key Concept)
+✅ 1. async Methods Return a Task
+-When you define an async method like this:
+EG : 
+	public static async Task<string> Greetings(string Name)
+
+-It returns a Task<string>, which is an object representing the ongoing operation.
+   
+   2. If You Don’t await It, the Task Just Runs in Background
+EG :
+	var GreetingMessage = Greetings(Name); // Not awaited
+
+-You're saying: “Start this task, but don’t wait for it to finish now.”
+-Any exception that occurs stays inside the Task.
+-You don’t unwrap the Task, so the exception is never thrown to the outer try-catch.
+
+    3. Exception is Stored Inside the Task
+If an exception occurs in the Greetings method, like this:
+Eg :
+	HttpResponseMessage response = await client.GetAsync(...); // Fails!
+
+-The exception is captured inside the Task.
+-Since you never awaited it, the Task is left unobserved.
+-Result: The catch block in SomeMethod never runs.
+ 
+✅ 4. To Get the Exception, You MUST Await
+EG:
+	var GreetingMessage = await Greetings(Name); // Exception now thrown here
+
+-Now, if an exception happens in Greetings, it will be thrown at the await point, and caught by the catch block in SomeMethod.
+
+ Key Takeaways
+🔑 Why You Did Not Get the Exception:
+Greetings() returns a Task that holds the exception.
+Since you never awaited it, the exception never surfaced.
+try-catch won’t help unless the exception is thrown, which happens only when the Task is awaited.
+

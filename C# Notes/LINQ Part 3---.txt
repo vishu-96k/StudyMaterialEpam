@@ -1,0 +1,653 @@
+LINQ practice question
+// Online C# Editor for free
+// Write, Edit and Run your C# code using C# Online Compiler
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+public class HelloWorld
+{
+    public class Employee
+    {
+        public int Eno;
+        public string Ename;
+        public string Job;
+        public decimal Salary;
+        public string Dname;
+    }
+    public static void Main(string[] args)
+    {
+    
+        List<Employee> emps = new List<Employee>()
+        {
+             new Employee { Eno = 1, Ename = "John", Job = "Manager", Salary = 50000, Dname = "HR" },
+    new Employee { Eno = 2, Ename = "Alice", Job = "Developer", Salary = 40000, Dname = "IT" },
+    new Employee { Eno = 3, Ename = "Bob", Job = "Developer", Salary = 45000, Dname = "IT" },
+    new Employee { Eno = 4, Ename = "Charlie", Job = "Manager", Salary = 60000, Dname = "Finance" },
+    new Employee { Eno = 5, Ename = "David", Job = "Clerk", Salary = 30000, Dname = "HR" }
+        };
+        
+        //Select only Ename and salary of all employees whose salary is gretern then 40k
+        // var Result = from i in employees
+        //              where i.Salary > 40000
+        //              select new {i.Ename, i.Salary};
+        
+        // Q1. Retrieve names of all employees who work in the 'IT' department, ordered by their salary in descending order.
+        
+        // var res = from i in emps
+        //           where i.Dname == "IT"
+        //           orderby i.Salary descending
+        //           select new {i.Ename, i.Salary};
+        
+        // Q2. Find all employees whose names start with 'A' or 'B' and display them ordered by name.
+        // var res = from i in emps
+        //           where i.Ename.StartsWith("A") || i.Ename.StartsWith("B")
+        //           orderby i.Ename
+        //           select new {i.Ename};
+        
+        // Q3. List all employees earning more than 35,000, sorted by their Job titles in alphabetical order.
+        // var res = from i in emps
+        //           where i.Salary>35000
+        //           orderby i.Job
+        //           select i;
+        
+        // Q4. Display the names of all employees who have 'a' in their name and belong to the 'HR' department. Order the result by Salary in ascending order.
+        //  var res = from i in emps
+        //             where i.Ename.Contains("a") && i.Dname == "HR"
+        //             orderby i.Salary
+        //             select i;
+        
+        //                      -----IMP---
+        //  Q5. Retrieve the top 2 highest-paid employees from the 'IT' department.
+        // var res =   (from i in emps
+        //             where i.Dname == "IT"
+        //             select i).Take(2);
+        
+        // Q6. Find the names of all employees whose jobs are either 'Manager' or 'Developer' and display them ordered by Salary.
+        // var res = from i in emps
+        //             where i.Job == "Manager" || i.Job=="Developer"
+        //             orderby i.Salary
+        //             select new {i.Ename};
+        
+        //  Q7. List all employees whose names end with 'e' and order them by their Eno.
+        // var res = from i in emps
+        //             where i.Ename.EndsWith("e")
+        //             orderby i.Eno
+        //             select i;
+        
+        //  Q8. Retrieve employees whose Salary is between 30,000 and 50,000, sorted by their Salary.
+        // var res = from i in emps
+        //             where i.Salary>30000 && i.Salary<50000
+        //             orderby i.Salary
+        //             select i;
+        
+        // Q9. Find the name and department of employees whose Job is not 'Manager' and order them by Dname and then by Ename.
+        // var res = from i in emps
+        //             where i.Job != "Manager"
+        //             orderby i.Dname, i.Ename
+        //             select new {i.Ename, i.Dname, i.Job};
+        
+        foreach(var j in res)
+        {
+            // Console.WriteLine($"{j.Ename } --{j.Ename}--- {j.Dname}--- {j.Job}");
+            Console.WriteLine($"{j.Ename } ");
+        }
+    }
+}
+
+
+
+----------METHOD SYNTAX---------------
+
+Let's go through each type of LINQ query using method syntax with the provided employees list.
+
+1. Select - Projecting Data
+Use Case: To select specific properties from the Employee objects.
+
+var employeeNames = employees.Select(e => e.EName);
+foreach (var name in employeeNames)
+{
+    Console.WriteLine(name);
+}
+Explanation: This query selects only the EName property of each Employee and returns a list of names.
+Output:
+John
+Alice
+Bob
+Charlie
+David
+
+2. Where - Filtering Data
+Use Case: To filter employees based on specific conditions.
+var developers = employees.Where(e => e.Job == "Developer");
+foreach (var dev in developers)
+{
+    Console.WriteLine($"{dev.EName} - {dev.Job}");
+}
+Explanation: Filters the list to include only employees whose Job is "Developer".
+Output:
+Alice - Developer
+Bob - Developer
+
+
+3. OrderBy & OrderByDescending - Sorting Data
+Use Case: To sort employees by their Salary in ascending and descending order.
+var sortedBySalary = employees.OrderBy(e => e.Salary);
+Console.WriteLine("Employees sorted by Salary (Ascending):");
+foreach (var emp in sortedBySalary)
+{
+    Console.WriteLine($"{emp.EName} - {emp.Salary}");
+}
+
+var sortedBySalaryDesc = employees.OrderByDescending(e => e.Salary);
+Console.WriteLine("\nEmployees sorted by Salary (Descending):");
+foreach (var emp in sortedBySalaryDesc)
+{
+    Console.WriteLine($"{emp.EName} - {emp.Salary}");
+}
+Explanation:
+
+OrderBy() sorts the employees by Salary in ascending order.
+OrderByDescending() sorts them in descending order.
+
+Output:
+Employees sorted by Salary (Ascending):
+David - 30000
+Alice - 40000
+Bob - 45000
+John - 50000
+Charlie - 60000
+
+Employees sorted by Salary (Descending):
+Charlie - 60000
+John - 50000
+Bob - 45000
+Alice - 40000
+David - 30000
+
+4. GroupBy - Grouping Data
+Use Case: To group employees by their Job.
+
+var employeesByJob = employees.GroupBy(e => e.Job);
+
+foreach (var group in employeesByJob)
+{
+    Console.WriteLine($"\nJob: {group.Key}");
+    foreach (var emp in group)
+    {
+        Console.WriteLine($"{emp.EName} - {emp.Dname}");
+    }
+}
+Explanation: Groups the employees by the Job property.
+
+Output:
+
+
+Job: Manager
+John - HR
+Charlie - Finance
+
+Job: Developer
+Alice - IT
+Bob - IT
+
+Job: Clerk
+David - HR
+
+5. SelectMany - Flattening Collections
+Use Case: To get a flattened list of all employee skills.
+
+var allSkills = employees.SelectMany(e => e.Skills).Distinct();
+
+Console.WriteLine("All Unique Skills:");
+foreach (var skill in allSkills)
+{
+    Console.WriteLine(skill);
+}
+Explanation: Flattens the Skills collection and uses Distinct() to remove duplicates.
+
+Output:
+
+sql
+
+All Unique Skills:
+Leadership
+Communication
+C#
+SQL
+JavaScript
+HTML
+CSS
+Finance Management
+Planning
+Filing
+Data Entry
+
+6. Any & All - Conditional Checks
+
+Use Case: Check if there are any employees with the skill "C#".
+
+bool hasCSharpDevelopers = employees.Any(e => e.Skills.Contains("C#"));
+Console.WriteLine($"Has C# Developers: {hasCSharpDevelopers}");
+
+var firstManager = employees.FirstOrDefault(e => e.Job == "Manager");
+if (firstManager != null)
+{
+    Console.WriteLine($"First Manager: {firstManager.EName}");
+}
+Output:
+int itEmployeeCount = employees.Count(e => e.Dname == "IT");
+
+
+----------METHOD SYNTAX FUNCTIONS PART 3--------------
+
+TYPE 1: Ordering Operations
+	1) OrderBy()
+	2)ThenBy()
+🔍 OrderBy()
+Used to sort a sequence in ascending order by a specified key.
+Returns an IOrderedEnumerable<T> if used with in-memory collections or IQueryable<T> for querying data sources.
+
+🔍 ThenBy()
+Used for secondary sorting. It sorts the sequence after the primary sorting (OrderBy() or OrderByDescending()).
+If there are duplicate keys from the first sorting, ThenBy() will sort them further.
+
+EG
+var orderedStudents = students
+                      .OrderBy(s => s.Age)//First sorts on basis of Age. And when same age is there it is sorted by name
+                      .ThenBy(s => s.Name);//First on basisi of Age, and then on baisi of the name.
+
+✅ Key Points
+OrderBy() sorts data in ascending order by default.
+ThenBy() is used after an OrderBy() or OrderByDescending() to sort further by another key.
+
+TYPE 2 : Selecting operators
+	1)Select()
+	2)SelectMany()
+
+🔍 Select()
+Projects each element of a sequence into a new form.
+Works on individual elements in a collection.
+
+🔍 SelectMany()
+-So if uh have a element which itself is a collection, then select many will flattern that collection and return it. Used for 2D colections
+Projects each element of a sequence to an IEnumerable and flattens the resulting sequences into one sequence.
+Used when each element has a collection property, and you want to flatten it into a single sequence.
+
+🔑 Key Differences
+Select()					SelectMany()
+Projects individual items.			Projects and flattens collections.
+Returns IEnumerable<T>.				Returns a flattened IEnumerable<T>.
+Used for simple projections.			Used for nested collections.
+
+TYPE 3 :Partitins Operators
+	1)Take()
+	2)TakeWhile()
+	3)Skip()
+	4)SkipWHile()
+
+📌 1. Take()
+Returns a specified number of contiguous elements from the start of a sequence.
+Take(1) : then only one top most element will be taken
+If second largest element uh wanna select, then Do skip(1) and take(1)
+EG:
+   var numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+        var result = numbers.Take(3);  // Taking the first 3 elements
+
+📌 2. TakeWhile()
+Returns elements from a sequence as long as a specified condition is true.
+Stops the moment the condition becomes false.
+EG:
+   var numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+        var result = numbers.TakeWhile(n => n < 5);  // Take while number is less than 5
+
+📌 3. Skip()
+Bypasses a specified number of elements and returns the remaining elements.
+used for selecting 2nd largest, 5th largest (Skip(4). Take(1));
+EG:
+   var numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+        var result = numbers.Skip(4)  // Skip the first 4 elements, so it will return the elements from 5 to 7 only
+			    .take(1) // it will take one element, after skiping the 4 starting elements		
+
+📌 4. SkipWhile()
+Bypasses elements as long as a specified condition is true and returns the remaining elements.
+Stops skipping as soon as the condition becomes false.
+EG:
+   var numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+        var result = numbers.SkipWhile(n => n < 5);  // Skip while number is less than 5
+
+TYPE 4 :Quantifier Operators
+Quantifier operators are used to check if elements in a sequence satisfy certain conditions.
+
+📌 1. All()
+Checks whether all elements in a sequence satisfy a specified condition.
+Returns true if the condition is true for all elements, otherwise false.
+EG:
+   var numbers = new List<int> { 2, 4, 6, 8 };
+        // Check if all numbers are even
+        bool areAllEven = numbers.All(n => n % 2 == 0);
+        Console.WriteLine($"Are all numbers even? {areAllEven}");
+
+📌 2. Any()
+Checks whether any element in a sequence satisfies a specified condition.
+Returns true if at least one element satisfies the condition, otherwise false.
+EG:
+  var numbers = new List<int> { 1, 3, 5, 7, 8 };
+        // Check if there are any even numbers
+        bool hasEvenNumber = numbers.Any(n => n % 2 == 0);
+
+📌 3. Contains()
+Checks whether a sequence contains a specified element.
+Returns true if the element is found, otherwise false.
+EG:
+ var fruits = new List<string> { "Apple", "Banana", "Cherry" };
+        // Check if the list contains "Banana"
+        bool hasBanana = fruits.Contains("Banana");
+
+🔑 Key Differences
+Operator		Purpose							Returns
+All()			Checks if all elements satisfy a condition.		true or false
+Any()			Checks if at least one element satisfies a condition.	true or false
+Contains()		Checks if a specific element exists in the sequence.	true or false
+
+
+TYPE 5 :  Aggregate Operators
+Aggregate operators are used to perform mathematical and aggregation operations on sequences.
+
+📌 1. Count()
+Returns the number of elements in a sequence.
+Can accept a condition to count only matching elements.
+EG:
+        var numbers = new List<int> { 1, 2, 3, 4, 5, 6 };
+        int count = numbers.Count();  // Counts all elements
+        int evenCount = numbers.Count(n => n % 2 == 0);  // Counts only even numbers
+        Console.WriteLine($"Total Count: {count}");
+        Console.WriteLine($"Even Count: {evenCount}");
+
+📌 2. Min() & Max()
+Min(): Returns the smallest element.
+
+Max(): Returns the largest element.
+EG:
+      var numbers = new List<int> { 10, 5, 30, 20, 15 };
+        int min = numbers.Min();
+        int max = numbers.Max();
+
+📌 3. Sum()
+Calculates the sum of numeric values in a sequence.
+EG:
+    var numbers = new List<int> { 10, 20, 30, 40, 50 };
+        int sum = numbers.Sum();
+
+📌 4. Average()
+Calculates the average value of numeric elements.
+
+📌 5. Aggregate()
+Applies an accumulator function over a sequence.
+Useful for custom aggregation operations.
+EG:
+    var words = new List<string> { "Hello", "World", "From", "LINQ" };
+       string sentence = words.Aggregate((acc, word) => acc + " " + word); //It will do concatinations operaton, Join can also do the same thing
+        Console.WriteLine($"Concatenated Sentence: {sentence}");
+
+
+TYPE 6:  Element Operators 
+
+📌 1. First()
+Returns the first element of a sequence.
+Throws an exception if the sequence is empty.
+Eg:
+   static void Main()
+    {
+        var numbers = new List<int> { 10, 20, 30, 40 };
+
+        int firstNumber = numbers.First();
+        Console.WriteLine($"First Number: {firstNumber}");
+    }
+
+📌 2. FirstOrDefault()
+Returns the first element, or a default value (null for reference types, 0 for integers, etc.) if the sequence is empty.
+Eg:
+  static void Main()
+    {
+        var numbers = new List<int>();
+
+        int firstNumber = numbers.FirstOrDefault();
+        Console.WriteLine($"First Number (Or Default): {firstNumber}");
+    }
+
+📌 3. Last()
+Returns the last element of a sequence.
+Throws an exception if the sequence is empty.
+EG:
+  static void Main()
+    {
+        var numbers = new List<int> { 10, 20, 30, 40 };
+
+        int lastNumber = numbers.Last();
+        Console.WriteLine($"Last Number: {lastNumber}");
+    }
+
+📌 4. LastOrDefault()
+Returns the last element, or a default value if the sequence is empty.
+EG:
+ static void Main()
+    {
+        var numbers = new List<int>();
+
+        int lastNumber = numbers.LastOrDefault();
+        Console.WriteLine($"Last Number (Or Default): {lastNumber}");
+    }
+
+📌 5. Single()
+Returns the only element in a sequence.
+Throws an exception if the sequence contains zero or more than one element.
+EG:
+  static void Main()
+    {
+        var numbers = new int[] { 5 };
+
+        int singleNumber = numbers.Single();
+        Console.WriteLine($"Single Number: {singleNumber}");
+    }
+
+📌 6. SingleOrDefault()
+Returns the only element of a sequence or a default value if the sequence is empty.
+Throws an exception if there is more than one element.
+EG:
+  static void Main()
+    {
+        var numbers = new int[] { };
+
+        int singleNumber = numbers.SingleOrDefault();
+        Console.WriteLine($"Single Number (Or Default): {singleNumber}");
+    }
+
+📌 7. ElementAt()
+Returns the element at a specified index.
+Throws an exception if the index is out of range.
+EG:
+  static void Main()
+    {
+        var numbers = new int[] { 10, 20, 30, 40 };
+
+        int element = numbers.ElementAt(2); // Index starts from 0
+        Console.WriteLine($"Element at index 2: {element}");
+    }
+
+📌 8. ElementAtOrDefault()
+Returns the element at a specified index, or a default value if the index is out of range.
+EG:
+  static void Main()
+    {
+        var numbers = new int[] { 10, 20, 30 };
+
+        int element = numbers.ElementAtOrDefault(5); // Index 5 doesn't exist
+        Console.WriteLine($"Element at index 5 (Or Default): {element}");
+    }
+
+TYPE 7 : Conversion and Concatenation Methods
+📌 1. Concat()
+Combines two sequences into one sequence.
+Both sequences must have the same type.
+EG:
+   static void Main()
+    {
+        var evenNumbers = new List<int> { 2, 4, 6 };
+        var oddNumbers = new List<int> { 1, 3, 5 };
+
+        var allNumbers = evenNumbers.Concat(oddNumbers);
+
+        Console.WriteLine("Combined Sequence:");
+        foreach (var num in allNumbers)
+        {
+            Console.WriteLine(num);
+        }
+    }
+
+
+📌 2. ToList()
+Converts a sequence (IEnumerable) to a List<T>.
+EG:
+   static void Main()
+    {
+        var numbers = Enumerable.Range(1, 5); // Creates a sequence of 1 to 5
+
+        List<int> numberList = numbers.ToList(); //LINQ query returns IEnumerable<int>, so we convert that into List, becoz list is also Ienumarable
+ and Immditaiadte execution of query will take place.
+        Console.WriteLine("List of Numbers:");
+        foreach (var num in numberList)
+        {
+            Console.WriteLine(num);
+        }
+    }
+
+📌 3. ToArray()
+Converts a sequence (IEnumerable) to an array (T[]).
+EG:
+  static void Main()
+    {
+        var names = new[] { "Alice", "Bob", "Charlie" };
+
+        string[] nameArray = names.Where(n => n.StartsWith("A")).ToArray();
+
+        Console.WriteLine("Array of Names Starting with 'A':");
+        foreach (var name in nameArray)
+        {
+            Console.WriteLine(name);
+        }
+    }
+
+
+
+
+-----------------Deferred Execution------------
+
+1)Deferred Execution:
+
+What is IEnumerable?
+IEnumerable<T> is an interface that represents a read-only sequence of elements that can be enumerated (looped through).
+It only provides a way to iterate over a collection. It doesn't allow modifying elements directly.
+
+Why do LINQ Operations Return IEnumerable?
+Deferred Execution:  becox of deferred excuetion
+LINQ methods (Where(), Select(), etc.) return IEnumerable<T> (Itrator to itrate over the result) which means the query is not executed immediately.
+The query is only executed when you enumerate over the sequence (e.g., using a foreach loop).
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+        // This query is only defined, not executed yet.
+        IEnumerable<int> evenNumbers = numbers.Where(n => n % 2 == 0);
+
+        // The query gets executed here when enumerated
+        foreach (int number in evenNumbers)
+        {
+            Console.WriteLine(number);  // Output: 2, 4
+        }
+        
+        // Trying to modify the result directly will cause a compile-time error.
+        // evenNumbers.Add(6);  // ERROR: 'IEnumerable<int>' does not contain a definition for 'Add'
+    }
+}
+
+
+Why Can't We Modify the Result Directly?
+The result of LINQ operations is typically a read-only, deferred-execution sequence (IEnumerable<T>).
+The purpose of IEnumerable is to iterate over a collection, not to modify it.
+To modify the results, you need to materialize the query into a modifiable collection like a List<T>:
+
+ToList() : So when we convert the deferred excuetion in List, The query gets excueted there only and in the result we will get the actual data, which we can modfify aslo
+
+📌 Summary:
+IEnumerable<T> from LINQ is a read-only, deferred-execution sequence.
+It allows iterating over elements but does not allow modifying the original data.
+To modify the result, you need to convert it to a different type, like List<T> or Array.
+
+
+📊 Comparison Table: Deferred Execution vs. Immediate Execution
+Aspect	Deferred Execution	Immediate Execution
+Definition	Query execution is postponed until enumeration occurs.	Query execution happens immediately when called.
+Methods Involved	Where(), Select(), OrderBy(), Take(), etc.	.ToList(), .ToArray(), .Count(), .First(), etc.
+When Execution Occurs	When the query result is iterated or enumerated (e.g., foreach).	As soon as the method is called.
+Memory Usage	Low (No memory is used until enumeration).	High (Results are stored in memory as a collection).
+Performance	High efficiency for filtering, sorting, etc., when the data is not immediately needed.	Better when you need to store or modify data right away.
+Modification of Data Source	Reflects changes made to the original source after query definition.	Does not reflect changes made to the original source after execution.
+Read/Write Capability	Read-Only Access to the data source.	Allows modification of the data (e.g., .Add(), .Remove()).
+Lazy Evaluation	Applies to individual elements only when accessed.	Entire sequence is processed and stored immediately.
+Use Cases	Building complex queries, handling large datasets, filtering data on demand.	Caching results, modifying results, or preventing repeated queries.
+Example Methods	Where(), Select(), Skip(), TakeWhile().	.ToList(), .ToArray(), .Count(), .First().
+When to Use	When you want to delay execution until absolutely necessary.	When you want to materialize results immediately for modification or reuse.
+Risk	If the original data source changes, the query results change unpredictably.	Uses more memory and processing power up front.
+
+
+✅ IEnumerable vs. IQueryable in C#
+Both IEnumerable and IQueryable are interfaces used for data manipulation and querying. However, they have significant differences in how they execute queries and how they are used.
+
+📊 Comparison Table: IEnumerable vs. IQueryable
+Aspect			IEnumerable (System.Collections)				IQueryable (System.Linq)
+
+Definition		Used to iterate over a collection of objects in memory.		Used for remote querying (e.g., databases) using expression trees.
+
+Namespace		System.Collections /System.Collections.Generic			System.Linq
+
+Query Execution		Immediate Execution. Processes data in memory.			Deferred Execution. Translates queries into SQL queries when working 											with databases.
+
+Data Source		In-memory collections (Lists, Arrays, etc.).			Out-of-memory data sources (e.g., Database, LINQ to SQL, Entity 											Framework).
+
+Performance		Inefficient for large data sources, as it loads all .		Efficient for remote data sources, fetching only necessary data.
+			data into memory
+
+Lazy Evaluation		Not supported. Data is retrieved immediately.			Supported. Queries are executed when enumerated.
+
+Filtering		Filters data in memory after fetching it.			Filters data at the source before fetching.
+
+Use Cases		When working with in-memory data collections.			When working with large datasets or databases.
+
+Return Type		Returns IEnumerable<T>						Returns IQueryable<T>
+
+Extension Methods	Supports LINQ operators like Where(), Select(), etc.		Supports the same operators but with expression trees.
+
+Example Methods		ToList(), Count(), Any(), First().				AsQueryable(), Where(), Select(), Include().
+
+Best Usage		When working with collections in memory.			When working with Entity Framework, LINQ to SQL, or remote data 			Immidiate Exceution happens					sources.
+											Deffered Excecution happens
+
+
+Aspect			IEnumerable (In-Memory)						IQueryable (Remote/Database)
+Execution Time		Immediate							Deferred
+Filtering Location	After loading all data into memory				At the data source (e.g., SQL database)
+Performance		Can be slow for large collections				Efficient for large data sources
+Use Case		In-memory collections						Databases (LINQ to SQL, Entity Framework)
+
+
+
+

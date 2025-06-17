@@ -1,0 +1,140 @@
+----OOPS---
+Class Type	Description	Key Features	Example
+Abstract Class	A class that cannot be instantiated and may contain abstract methods.	- Can have abstract and non-abstract methods.
+- Must be inherited by another class.
+- Used as a base class.	abstract class Animal { public abstract void MakeSound(); }
+Concrete Class	A regular class that can be instantiated.	- Implements all methods.
+- Can be inherited unless marked sealed.	class Car { public void Drive() { } }
+Sealed Class	A class that cannot be inherited.	- Prevents further inheritance.
+- Used for security and stability.	sealed class FinalClass { }
+Static Class	A class that cannot be instantiated and only contains static members.	- Only static methods and fields.
+- Cannot be inherited or instantiated.
+- Used for utility functions.	static class MathHelper { public static int Add(int a, int b) { } }
+Partial Class	A class split into multiple files.	- Helps manage large projects.
+- Uses partial keyword.
+- All parts must be in the same namespace.	partial class Person { public string Name; } (in one file)
+Nested Class	A class inside another class.	- Can access private members of the outer class.
+- Helps in grouping logically related classes.	class OuterClass { class InnerClass { } }
+Generic Class	A class that works with different data types using type parameters.	- Increases code reusability.
+- Uses <T> to define a generic type.
+- Type specified at instantiation.	class Box<T> { public T Value; }
+Anonymous Class	A class without a name, created at runtime.	- Used for temporary objects.
+- Properties are read-only.
+- Mostly used with LINQ.	var student = new { Name = "John", Age = 20 };
+Record Class	A class for immutable data with value-based equality (C# 9+).	- Uses record keyword.
+- Auto-generates Equals, ToString.
+- Ideal for data transfer objects (DTOs).	record Person(string Name, int Age);
+
+
+
+-----IMPORTANT RULES----
+
+-even in the same class, A non stactic member (method) of a class can never be accessed from a static block directly(static function even in the same class also) , uh can access it only by creating the instcane of that class.
+
+-Static methods can be called directly inside the other static methods inside the same class and outside the class uh need to   
+
+-Private contructor : if ur calss just havs private sontructor then uh cannot create instance of that classs and also uh cannot inhirit that class.
+
+-Non staic members of a class can never be accessed directly in a static block within the same Class also, They can only be accessed by making teh obj of the class in the static block. But if it is non static block, then uh can directly call the members .
+
+
+-----------IMPORTANT QUESTIONS-------------
+
+1) what is tightly typed and  loosly typed 
+2) what is tightly coupled and loosly coupled
+-->In C#, tightly coupled refers to a design where components or classes are highly dependent on each other. Changing one class often requires modifying other classes that rely on it.
+EG :
+public class Engine
+{
+    public void Start() => Console.WriteLine("Engine started.");
+}
+
+public class Car
+{
+    private Engine _engine = new Engine();  // Tightly coupled to Engine class.
+
+    public void Start()
+    {
+        _engine.Start();
+        Console.WriteLine("Car started.");
+    }
+}
+
+
+loosely coupled refers to a design where components or classes are independent and interact through interfaces, abstractions, or dependency injection. This allows for flexibility and easier maintenance.
+Characteristics:
+Uses Interfaces, Dependency Injection (DI), and Abstraction.
+Low dependency between classes.
+Easier to modify, test, and extend.
+Promotes scalability and maintainability.
+EG:// Define an interface
+public interface IEngine
+{
+    void Start();
+}
+
+// Implement the interface
+public class Engine : IEngine
+{
+    public void Start() => Console.WriteLine("Engine started.");
+}
+
+public class Car
+{
+    private readonly IEngine _engine;
+
+    // Dependency Injection via Constructor
+    public Car(IEngine engine)
+    {
+        _engine = engine;
+    }
+
+    public void Start()
+    {
+        _engine.Start();
+        Console.WriteLine("Car started.");
+    }
+}
+
+
+Q3) what are the design priciplaes, Explain SOLID
+
+Q4) Diff between finalize and dispose(finalize and Distructor are same)?
+Finalize Method in C#:
+Purpose: The Finalize method is used for cleanup operations before an object is garbage collected. It’s typically overridden to release unmanaged resources that the object holds. The garbage collector calls the Finalize method automatically.
+Control: You do not call Finalize directly. It’s invoked by the garbage collector.
+Non-deterministic: The exact time when Finalize is called is non-deterministic, depending on the garbage collector’s schedule.
+Inheritance: The Finalize method is inherited from the Object class. It should always call the Finalize method of its base class if overridden to ensure that all resources are released properly.
+Dispose Method:
+Purpose: The Dispose method is part of the IDisposable interface and is implemented to release both managed and unmanaged resources deterministically.
+Control: Unlike Finalize, Dispose is called explicitly in your code, usually when you are done using an object. This allows for the immediate freeing of resources.
+Deterministic: Dispose provides a deterministic way to release resources, meaning you know exactly when the resources are released.
+Pattern: When implementing Dispose, it’s common to follow the dispose pattern, which includes a finalizer call (GC.SuppressFinalize(this)) to prevent the garbage collector from calling Finalize if Dispose has already been called.
+
+Key Differences Between Finalize and Dispose in C#:
+Timing: Finalize is called by the garbage collector in a non-deterministic manner, while Dispose is called explicitly at a known point in the program.
+Resources: Finalize is typically used for unmanaged resources, whereas Dispose can be used for both managed and unmanaged resources.
+Control: Dispose gives you more control over resource management compared to Finalize.
+Best Practices:
+Implement Dispose to allow deterministic cleanup of resources.
+Use a finalizer (Finalize method) only for cleaning up unmanaged resources that are not wrapped in a safe handle and when there’s no guarantee that Dispose will be called.
+In the Dispose method, call GC.SuppressFinalize to prevent the garbage collector from calling Finalize, if it has already been disposed of.
+Follow the dispose pattern, especial)ly if your class owns unmanaged resources.
+
+Q5)Covariance : It is achived using out keyword.
+-uh ask for fruits and it gives uh apples.
+-So uh ask for something general type(Like Fruits) and uh get a specific type of it(apple)
+-Covariance help in assignment compatibility between parent and child relationship during dynamic polymorphism(function overriding).
+EG : bike indicate Yamaha then 
+     group of bike indicates group of Yamaha
+
+     Bike obj  = new Yamaha(); /Refrence points the Yamaha obj
+     IEnumerable<Bike> Gobj = new List<Yamaha>(); //but this is invalid statement, It gives uh error. 
+-so it means assignment compatibility between parent and child raise error. this happen in 3.5 dotnet	
+-But in .net framworek above 3.5 it is allowed becoz of the <out T>.
+-Using out keyword in IEnumerable<T> covariace is obtained between parent and child relationship during dynamic polymorphism.
+
+
+ContraVariance : it is achived using in keyword
+-uh ask for something specific but uh get something more genral which includes that specific type
+-uh ask for apples and uh get basket of fruits, since apples are fruits so uh will accpt that

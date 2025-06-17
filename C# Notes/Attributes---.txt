@@ -1,0 +1,410 @@
+-----------------Attributes---
+✅ What Are Attributes?
+-Attributes : using this uh can add meta data to your code. This metadata provides additional information about the code elements (classes, methods, properties, etc.)
+-Attributes are special kinds of tags or annotations you can place above code elements (like classes, methods, etc.) in square brackets [].
+-They allow you to describe behaviors or characteristics of code elements without changing their actual logic.
+
+Syntax :
+	[ATTRIBUTE NAME] //Adding of attribute to the class, Basically ,meta data
+	Class exam
+	{
+	//Your class which will follow the attributes
+	}
+	
+	//If the attribute has parameters:
+	[AttributeName(positionalParam, NamedParam = value)]
+
+
+You can apply attributes to:
+Assemblies
+Classes
+Structs
+Enums
+Interfaces
+Methods
+Properties
+Fields
+Events
+Parameters
+Return values
+
+Attributes provide a way to:
+Add declarative information to your code.
+Control behavior of tools like serializers (e.g., JSON or XML serialization).
+Support code documentation, runtime behavior, and reflection.
+
+ What are Attributes in C#?
+Attributes are like tags or annotations you can apply to code elements to provide extra information.
+They are enclosed in square brackets [].
+Attributes can control behaviors like serialization, marshaling, security, data validation, etc.
+
+
+Commonly Used Built-in Attributes in C#
+
+Attribute	Usage
+[Obsolete]	Marks code as outdated and warns users
+[Serializable]	Marks a class as serializable
+[NonSerialized]	Prevents a field from being serialized
+[DllImport]	Used for interop with unmanaged code (P/Invoke)
+[WebMethod]	Used in ASP.NET web services
+[Required], [Range]	Used in validation (DataAnnotations)
+[TestMethod]	Marks a method as a test case in unit testing
+
+------PART 2--EXAMPLES-----------
+
+1. [Obsolete] – Warns developers that a method/class is outdate
+-The [Obsolete] attribute is used in C# to mark program elements (like methods, classes, properties, etc.) as outdated or deprecated, meaning they should no longer be used by the programmer.
+- It helps inform developers during development that there's a better or newer alternative available.
+-1. Purpose of [Obsolete]
+Warns or prevents developers from using outdated code.
+Helps maintain backward compatibility while steering developers toward updated implementations.
+
+SYNTAX :
+[Obsolete]
+public void OldMethod()
+{
+    Console.WriteLine("Old method");
+}
+- This will compile, but show a compiler warning when OldMethod() is used.
+
+EG 1 :
+   With Custom Message
+   [Obsolete("Use NewMethod instead")]
+   public void OldMethod()
+   {
+      Console.WriteLine("Old logic");
+   }
+
+- When this method is used, the compiler will show a warning like: When this method is used, the compiler will show a warning like:
+
+EG 2 :
+
+Enforce as a Compilation Error
+[Obsolete("Use NewMethod instead", true)]
+public void OldMethod()
+{
+    Console.WriteLine("Old logic");
+}
+
+-The second parameter true means this is an error now, not just a warning.
+-The compiler will prevent compilation if OldMethod() is used.
+
+EG 3: 
+public class Demo
+{
+    [Obsolete("Use NewMethod instead", false)] // false means warning, and if uh set True then, uh will get compiler error if uh use this method
+    public void OldMethod()
+    {
+        Console.WriteLine("Old logic");
+    }
+
+    public void NewMethod()
+    {
+        Console.WriteLine("New and improved logic");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Demo d = new Demo();
+        d.OldMethod(); // Shows warning, But still uh can use this
+        d.NewMethod(); // Preferred method
+    }
+}
+
+2. [Serializable] and [NonSerialized] ----
+[Serializable] Attribute :Marks a class or struct as serializable so that it can be serialized using formats like BinaryFormatter, or other serializers that support it.
+
+Syntax:
+[Serializable]//This marks that, this class can be serialized, which is the default behaviour, Even if uh dont write this and try to serialize the class, uh can serialize.
+public class Person
+{
+    public string Name;
+    public int Age;
+}
+
+
+[NonSerialized] Attribute :Used to exclude a field from being serialized, even when the class itself is marked [Serializable]
+
+
+Syntax:
+[Serializable]
+public class Employee
+{
+    public string Name;
+
+    [NonSerialized]
+    public string Password; // Will NOT be serialized
+}
+
+
+EG :
+[Serializable]
+public class Employee
+{
+    public string Name;
+    
+    [NonSerialized] //uh cannot include the password feild in the serialize file becoz its marked as NonSerialized, it helps in data hiding, and safety for the feilds like password
+    public string Password;
+}
+
+class Program
+{
+    static void Main()
+    {
+        Employee emp = new Employee { Name = "John", Password = "secret123" };
+
+        FileStream fs = new FileStream("emp.dat", FileMode.Create);
+        BinaryFormatter bf = new BinaryFormatter(); //In this case, the Password field will not be stored in the file.
+        bf.Serialize(fs, emp);
+        fs.Close();
+
+        Console.WriteLine("Employee serialized.");
+    }
+}
+
+ Important Notes:
+Only works with fields, not properties
+[NonSerialized] applies only to fields, not auto-properties.
+For properties, custom serialization logic is needed.
+BinaryFormatter is obsolete in .NET 5+
+It's not recommended for security reasons.
+Use System.Text.Json, Newtonsoft.Json, or XML serialization for modern .NET projects.
+Serializable doesn’t serialize static fields
+Static fields are automatically skipped during serialization.
+
+3. [DllImport] Attribute----
+[DllImport] :[DllImport] is an attribute from the System.Runtime.InteropServices namespace.
+It allows C# code to call unmanaged functions from native DLLs (like C/C++ libraries). This process is called P/Invoke (Platform Invocation Services).
+-purpose :To access functions written in native (unmanaged) code such as Windows API, C/C++ libraries, etc. Helps bridge .NET code with low-level system libraries or legacy code.
+-Uh can even handle Marshaling using this attribute
+
+📌 Basic Syntax
+[DllImport("user32.dll")]
+public static extern int MessageBox(IntPtr hWnd, string text, string caption, uint type); // This imports the MessageBox function from the Windows user32.dll.
+
+💡 Use Cases
+Calling Windows API functions (like MessageBox, Beep, etc.)
+Using legacy C/C++ libraries in modern .NET applications
+Interfacing with hardware drivers or low-level system services
+
+🚫 Limitations
+Platform-specific (won’t work cross-platform if the DLL is Windows-only)
+Error-prone if the function signature doesn’t match
+Can lead to memory issues if marshaling isn’t handled correctly
+
+🔄 Real-Life Analogy
+Think of [DllImport] as a translator or adapter.
+You're asking your C# app to "speak" with a native C/C++ library.
+[DllImport] is like giving it a phrasebook to communicate correctly.
+
+EG :
+
+using System;
+using System.Runtime.InteropServices;
+
+class Program
+{
+    [DllImport("user32.dll")]
+    public static extern int MessageBox(IntPtr hWnd, string text, string caption, uint type);
+
+    static void Main()
+    {
+        // Call native Windows MessageBox
+        MessageBox(IntPtr.Zero, "Hello from native code!", "Message Box", 0);
+    }
+} //This will show a native Windows message box using the unmanaged user32.dll.
+
+⚠️ Important Parameters
+Parameter	Description
+"user32.dll"	Name of the DLL file to import from
+extern	Tells C# the method is implemented externally
+Method signature	Must match the unmanaged function EXACTLY
+
+
+4. [WebMethod] Attribute----
+[WebMethod] :The [WebMethod] attribute is used in ASP.NET ASMX Web Services to mark methods in a class so they can be invoked remotely over HTTP by clients
+-This was a popular way to expose services before WCF and Web API came along.
+
+1. 🔧 Purpose
+To expose C# methods as web services over SOAP (Simple Object Access Protocol).
+Clients can call these methods using XML-based requests over HTTP.
+
+2. 🗂️ Where is it used?
+Inside a class that inherits from System.Web.Services.WebService.
+Typically in a file with .asmx extension.
+
+5. 📡 How It Works
+The method marked with [WebMethod] is converted to a SOAP operation.
+ASP.NET handles the SOAP formatting, parsing, and HTTP communication.
+
+7. 🧠 Use Cases
+Used in older enterprise applications to expose server functionality to clients.
+Useful for SOAP-based integrations with systems that don’t support REST/JSON.
+
+
+🔄 Real-Life Analogy
+Think of [WebMethod] as putting a "public phone number" on a method. It tells the ASP.NET system:
+"Hey, make this method callable over the web!"
+
+Eg :
+using System.Web.Services;
+
+[WebService(Namespace = "http://tempuri.org/")]
+public class CalculatorService : WebService
+{
+    [WebMethod]
+    public int Add(int a, int b)//this method can be called over Http protocol
+    {
+        return a + b;
+    }
+}
+
+
+5. [Required] and [Range] Attributes----
+
+🔷 What are Data Annotations?
+Data Annotations are attributes applied to class members (like properties) to:
+Add validation rules
+Provide metadata
+Control behavior in UI or database
+They live in the System.ComponentModel.DataAnnotations namespace.
+
+🔹 [Required] Attribute :Ensures that a property must have a non-null and non-empty value.
+
+3. 🔤 Syntax
+[Required(ErrorMessage = "Name is required.")]
+public string Name { get; set; }
+
+EG:
+public class User
+{
+    [Required(ErrorMessage = "Username is required")]
+    public string Username { get; set; }
+    
+    [Required(ErrorMessage = "Email is required")]
+    public string Email { get; set; }
+}//If Username or Email is missing, the framework will generate a validation error.
+
+5. ⚠️ Notes
+For value types (like int, bool), Required is usually unnecessary because they can't be null (unless nullable).
+Works in ASP.NET MVC, Web API, Blazor, etc.
+
+
+🔹 [Range] Attribute :Ensures a numeric (or date/time) value falls within a specified range.
+
+2. 🔤 Syntax
+[Range(min, max, ErrorMessage = "Custom message")]
+
+EG :
+public class Product
+{
+    [Required]
+    public string Name { get; set; }
+
+    [Range(1, 1000, ErrorMessage = "Price must be between 1 and 1000")]
+    public int Price { get; set; } //If Price is below 1 or above 1000, it will fail validation.
+
+}
+
+✅ Real-Life Analogy
+[Required]: Like marking a field on a form as mandatory (e.g., “Name is required”).
+[Range]: Like saying “Enter a value between 1 and 100”.
+
+
+Eg :
+public class RegisterViewModel
+{
+    [Required(ErrorMessage = "Username is required")]
+    public string Username { get; set; }
+
+    [Range(18, 60, ErrorMessage = "Age must be between 18 and 60")]
+    public int Age { get; set; }
+}//The model will be automatically validated before the controller action is invoked.
+
+EG 3:
+[HttpPost]
+public IActionResult Register(RegisterViewModel model)
+{
+    if (ModelState.IsValid)
+    {
+        // Proceed with saving to DB
+    }
+    else
+    {
+        // Return validation messages to view
+        return View(model);
+    }
+}
+
+6. [TestMethod] Attribute ---
+The [TestMethod] attribute marks a method as a unit test that should be executed by the MSTest test runner.
+-It is part of the MSTest framework, Microsoft’s built-in testing framework for .NET.
+
+-1. 🧪 Purpose
+Identifies a method as a unit test case.
+Executed automatically by a test runner like Visual Studio Test Explorer or CI/CD pipelines.
+
+-3. 🛠️ Test Class Requirements
+Must be marked with [TestClass]
+Methods must:
+Be public
+Have no return type (void)
+Take no parameters
+
+EG :
+🔢 Class to Test
+public class Calculator
+{
+    public int Add(int x, int y)
+    {
+        return x + y;
+    }
+}
+🧪 Test Class
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+[TestClass]
+public class CalculatorTests
+{
+    [TestMethod]
+    public void Add_WithTwoPositiveNumbers_ReturnsCorrectSum()
+    {
+        // Arrange
+        Calculator calc = new Calculator();
+        int a = 10, b = 20;
+
+        // Act
+        int result = calc.Add(a, b);
+
+        // Assert
+        Assert.AreEqual(30, result);
+    }
+}
+
+7. 🧠 Real-Life Analogy
+Think of [TestMethod] like tagging a quality assurance checklist item that needs to be verified every time you make changes.
+
+EG 2:
+[TestClass]
+public class CalculatorTests
+{
+    [TestMethod]
+    public void Add_TwoNumbers_ReturnsSum()
+    {
+        // Arrange
+        int a = 3;
+        int b = 4;
+        int expected = 7;
+
+        // Act
+        int result = a + b;
+
+        // Assert
+        Assert.AreEqual(expected, result);
+    }
+}
+

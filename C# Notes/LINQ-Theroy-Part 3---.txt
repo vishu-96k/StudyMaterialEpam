@@ -1,0 +1,170 @@
+LINQ part 3---
+
+------IEnumerable---&----IQuerable-------
+-IEnumerable and IQueryable are two interfaces that are frequently used for data manipulation and querying, but they serve different purposes and have distinct behaviors.
+
+----------IEnumerable-------------:
+-Each collection has implemented IEnumerable interface, which has a GetEnuemrator method, which returns a IEnumerator (itrator), which helps in the foreach loop for traversing the collections.
+-So each Collection is a IEnumerable also.
+
+HERIRACHY :
+	IEnumerable : has GetEnumerator method
+	   ---IEnumerator: has 3 method, move, current, and prev to get teh itrator
+		---Collections: all the collecitons ihhit these Interfaces and implement GetEnumerator() method, which returns Itrator for itrating
+		
+
+EG:
+   static void Mian()
+   {
+	List<int> l1 = new List<int>(){1,2,3,4,5,6,7};
+	var ans = l1.Where(e=> e%2==0);
+	Console.WriteLine("All teh even number form the list are :");
+	foreach(var i in l1)
+	{
+	   Conosle.WriteLine(i);
+	}//Defeerred Exectuin will take place
+   }
+
+-so in the above eg, in place of the var keyword to create the ans variable for storeing teh result of the query, uh can have also used type as IEnumerable<int>, which is a generic type.
+
+Eg :IEnumerable<int> ans = l1.Where(e=> e%2==0);
+
+-What is IEnumerable<T>?
+IEnumerable<T> is an interface in C# that allows iteration over a collection using a foreach loop. It defines one method:
+SYNTAX :
+	IEnumerator<T> GetEnumerator()
+	{
+		return l1.GetEnumerator();//This method should always return a IEnumerator, so all the Collections inhirtits this interface and ahve implemented this method, so uh can also Return this method form any of the collections, like here we have return it from the List collections
+	}
+
+-This method returns an IEnumerator<T> object, which is responsible for iterating over the collection.
+
+-What is IEnumerator<T>?
+IEnumerator<T> is another interface that provides three main members:
+   1)MoveNext() → Moves to the next element. Returns true if there is a next element, otherwise false.
+   2)Current → Gets the current element in the collection.
+   3)Reset() → Resets the enumerator to its initial position (before the first element).
+
+Example of How It Works Internally
+EG:
+	List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+	IEnumerator<int> enumerator = numbers.GetEnumerator();//This returns a itrator for itrating over the list, one iteam at a time
+	
+	while (enumerator.MoveNext())  // Moves to the next element, enumerator is variable which is a itrator basically, and we are callting MoveNext() method of this itrator so that we can itravte over the List.
+	{
+    	Console.WriteLine(enumerator.Current);  // Prints current element
+	}
+
+-Internally, foreach works like this! It calls MoveNext() and accesses Current in each iteration.
+
+-Summary
+IEnumrable<T> interface has a method called GetEnumerator()which returns an IEnumerator<T> that helps iterate over the collection.
+IEnumerator<T> if another interface which has MoveNext(), Current, and Reset() to navigate through the collection.
+foreach loop automatically calls GetEnumerator() and uses MoveNext() + Current.
+
+-So when uh used Linq Queries on a internal collections, as it is a IEnumerable type, so it returns a IEnumerable (iterator).
+-Execution: When you use LINQ methods on an IEnumerable, the query is executed in the client’s memory. This means all the data is loaded into memory from the data source (like a database), and the operation is performed.
+-Deferred Execution: It supports deferred execution, but the query logic is executed locally on the client side.
+
+
+------------- IQueryable----
+IQueryable is a interface in C# that is used to retrive data from the Data Source(Database or some other, from remote source, online source).
+-IQueryable is designed for querying data sources where the query is not executed until the object is enumerated(itrated using foreach loop).
+IQueryable interface also inhirites IEnumerable interface
+-Deferred Execution: IQueryable defers the execution of the query until the queryable object is actually iterated over. This means the query is not executed when defined but when the results are required(menas when uh use foreach loop over the result tht time only the query is execueted).
+-Purpose: It is intended to query data from out-of-memory sources, like a database or web service. It is a powerful feature for LINQ, SQL, and Entity Framework.	
+-Execution: The query logic is translated into a format suitable for the data source (like SQL for a relational database). The query is executed on the server side, which can improve performance and reduce network traffic.
+
+EG:
+ class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Student> studentList = new List<Student>()
+            {
+                new Student(){ID = 1, Name = "James", Gender = "Male"},
+                new Student(){ID = 2, Name = "Sara", Gender = "Female"},
+                new Student(){ID = 3, Name = "Steve", Gender = "Male"},
+                new Student(){ID = 4, Name = "Pam", Gender = "Female"}
+            };
+            
+            //Linq Query to Fetch all students with Gender Male
+            IQueryable<Student> MethodSyntax = studentList.AsQueryable()
+                                .Where(std => std.Gender == "Male");
+                                              
+            //Iterate through the collection
+            foreach (var student in MethodSyntax)
+            {
+                Console.WriteLine( $"ID : {student.ID}  Name : {student.Name}");
+            }
+            Console.ReadKey();
+        }
+    }
+    public class Student
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Gender { get; set; }
+    }
+
+
+Feature	IEnumerable<T>	IQueryable<T>
+Definition	Interface for iterating over in-memory collections.	Interface for querying data from a database.
+Execution Context	Executes in client memory (in-memory).	Executes on the database server (translated to SQL).
+Filtering	Applied after fetching data into memory.	Applied at the database level (more efficient).
+Performance	Slower for large datasets (loads all data first).	Faster for large datasets (fetches only required data).
+Suitability	Best for LINQ to Objects (Lists, Arrays).	Best for LINQ to SQL / Entity Framework.
+Deferred Execution	❌ No, executes immediately.	✅ Yes, executes only when iterated (e.g., .ToList()).
+Query Translation	Cannot translate LINQ to SQL.	Converts LINQ queries into SQL commands.
+Example Query	context.Employees.ToList().Where(emp => emp.Salary > 50000);	context.Employees.Where(emp => emp.Salary > 50000);
+When to Use?	✅ When working with in-memory collections.	✅ When querying a database for better performance.
+
+------------DEFERRED and IMMIDIATE EXECUTION-----
+
+1. Deferred Execution
+Query execution is delayed until the result is accessed (e.g., inside a foreach loop or when calling .ToList()).
+
+Changes to the data source before execution will reflect in the query result.
+
+Used in IQueryable<T> (for databases) and IEnumerable<T> (for collections).
+
+EG:
+List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+var query = numbers.Where(n => n > 2); // Query is defined but NOT executed
+
+numbers.Add(6); // Modifying the list before execution
+
+foreach (var num in query) // Execution happens here
+{
+    Console.WriteLine(num);//✔ Why? Since query is not executed when defined, the newly added 6 is included in the results.
+
+}
+
+2. Immediate Execution
+Query executes as soon as it is declared.
+The result is materialized (stored in memory) immediately.
+Used with methods like .ToList(), .ToArray(), .Count(), .First(), etc.
+-First the Defered execution happens, but as uh convert the query into a List (ToList), so becoz List is a Enumerable, so already it has GetEnumrrator() method implemented and the query is execueted so that the result will come becoz the result has to be converted into list so immediate execution happens as uh convert the query into List.
+
+EG:
+List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+var result = numbers.Where(n => n > 2).ToList(); // Query executes immediately
+
+numbers.Add(6); // Modifying the list after execution
+
+foreach (var num in result)
+{
+    Console.WriteLine(num);//Why? The .ToList() method executes the query immediately, so the new 6 is not included.
+}
+
+
+Key Differences:
+Feature	Deferred Execution	Immediate Execution
+Definition	Query is executed only when iterated.	Query is executed immediately.
+Execution Timing	When foreach, .ToList(), .First(), etc., are called.	At the point of declaration.
+Data Changes	Affected by changes to the data source before execution.	Not affected (results are already materialized).
+Performance	More efficient (fetches only when needed).	May consume more memory (stores all results).
+Examples	var query = numbers.Where(n => n > 2);	var result = numbers.Where(n => n > 2).ToList();
+Best Used With	LINQ to Objects, Databases (IQueryable).	LINQ to Collections (IEnumerable) when results must be stored immediately.

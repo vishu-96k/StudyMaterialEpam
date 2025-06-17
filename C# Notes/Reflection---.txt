@@ -1,0 +1,279 @@
+--------------REFLECTIONS---------
+-----PART 1----REFLECTION INTRO----------
+
+-REFLECTION :reflection means the ability of a program to interact with its won meta data at runtime. It’s provided by the System.Reflection namespace.
+-Reflection is needed when you want to determine or inspect the content of an assembly. 
+-content means the metadata of an assembly like what are the methods in that assembly, what are the properties in that assembly, are they public, are they private, etc.
+- one of the biggest implementations of Reflection is Visual Studio itself. 
+-using reflection uh can :
+   -inspect the assembly,
+   -Types, methods, Properties
+   -Feilds, attributes etc
+   -All meta data of the program
+   -Create instances, invoke methods, and access fields/properties, even if they're private.
+
+EG :
+-using reflection uh can axess any Aseembly(.DLL or .exe files) in any program, Any other project directory also, Uh just need to copy paste the path of the .DLL file and then using reflection namespace uh can acess the meta data of that assembly, uh can get all the classes which are present in that aseembly, All the private, public, members, properties of the class, uh can also create a instance of the class using the methods of the reflection namespace class
+
+-Real-Life Analogy:
+Imagine you have a sealed box (a compiled program). Normally, you can't see what's inside. But if you had X-ray glasses, you could see everything inside the box—its components, labels, how things work.
+-Reflection is like those X-ray glasses—it lets you look inside objects, types, and assemblies at runtime, even if you didn’t know their structure at compile-time.
+
+
+-Key classes in System.Reflection NAMESPACE:
+Assembly: Represents a compiled .NET assembly.
+Type: Represents type declarations (classes, interfaces, enums, etc.).
+MethodInfo, PropertyInfo, FieldInfo: Represent members of a type.
+ConstructorInfo: Represents a class constructor.
+MemberInfo: Base class for all member types.
+
+-Reflection It allows you to:
+Load assemblies (DLLs) dynamically.
+Inspect types (classes, interfaces, etc.).
+Access metadata: properties, methods, fields.
+Create objects and invoke methods dynamically.
+
+
+--------PART 2---CLASS OF REFLECTION NAMESPACE-------------
+
+System.Reflection : this namespace is used to inspect the metadata about the aseemblies, modules, and types at the runtime. It is particularly usedful for dynamic type discovery, late binding, building Freameworks and code generation tools.
+-This namespace includes lot of class which are
+	1)Assembly class
+	2)Type class
+	3)MethodInfo class
+	4)PropertyInfo Class
+	5)FeildInfo Class
+	6)ConstructorInfo Class
+	7)MemberInfo class
+
+-1) ASSEMBLY CLASS :This class represents a .net Assembly (.DLL or .exe) files. You can load and inspect the types(classes, Interfaces, delegates etc) defined within in the assembly.
+EG :
+using System;
+using System.Reflection;
+
+class AssemblyExample
+{
+    static void Main()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly(); // this function will return uh the Exixteing Assembly, and using other functions and classes uh can create the instances of the classes which are inside this specifies assemblies.
+        Console.WriteLine("Assembly Full Name: " + assembly.FullName);
+
+        Type[] types = assembly.GetTypes(); //This function returns a array of all the TYPES(clases, Interfaces etc) within that assembly.
+        Console.WriteLine("Types in Assembly:");
+        foreach (Type type in types)
+        {
+            Console.WriteLine(type.Name);
+        }
+    }
+}
+
+-2) TYPE CLASS : This class represents type declaration such as classes, interfaces, arrays, enums etc whitin that aseembly
+
+EG :
+class Person
+{
+    public string Name { get; set; }
+    public void Greet() => Console.WriteLine("Hello!");
+}
+
+class TypeExample
+{
+    static void Main()
+    {
+        Type type = typeof(Person); //This will return the Person class
+        Console.WriteLine("Type Name: " + type.Name); //uh can access the public, private data fields of this person class using the Type class object
+        Console.WriteLine("Namespace: " + type.Namespace);
+
+        Console.WriteLine("Methods:");
+        foreach (MethodInfo method in type.GetMethods())//This function returns uh the array of all the methods which are in the Type(person class).
+        {
+            Console.WriteLine(method.Name); //Accessing the name of the methods of the person class using the Type class
+        }
+    }
+}
+
+-3)MethodInfo Class :This class represents the method information of a class, which can be accessed using the Type class
+
+EG :
+class Calculator
+{
+    public int Add(int a, int b) => a + b;
+}
+
+class MethodInfoExample
+{
+    static void Main()
+    {
+        Type type = typeof(Calculator); //uh will get the calculator class in the type becoz of TYPE class.
+        MethodInfo method = type.GetMethod("Add");
+
+        object obj = Activator.CreateInstance(type); //this Activator class method(CreateInstacne()) will create the object of the type(which is a calculator class).
+        object result = method.Invoke(obj, new object[] { 5, 3 });
+        Console.WriteLine("Add(5, 3) = " + result);
+    }
+}
+
+
+Summary Table:
+
+Class	Description	Example Usage
+Assembly	Represents a compiled assembly (DLL/EXE)	Load types, metadata
+Type	Describes a class, struct, enum, interface	typeof(ClassName)
+MethodInfo	Info about methods	Invoke method dynamically
+PropertyInfo	Info about properties	Get/Set property value
+FieldInfo	Info about fields	Access field directly
+ConstructorInfo	Info about constructors	Dynamically create objects
+MemberInfo	Base for all type members	Loop over all members
+
+
+---------------THREE STAE PROCESS EG ------------
+
+Step 1: Import the Reflection Namespace
+
+Step 2: Load the Assembly and Get the Type
+Eg:
+// Load the DLL (external library)
+Assembly MyAssembly = Assembly.LoadFile(@"D:\Projects\ReflectionDemo\SomeClassLibrary\bin\Debug\SomeClassLibrary.dll"); //This LoadFile function will load the external assembly in your code
+
+// Get class type (e.g., Class1 inside SomeClassLibrary)
+Type MyType = MyAssembly.GetType("SomeClassLibrary.Class1");
+
+Step 3: Create Instance and Inspect Metadata
+EG:
+// Create object dynamically
+dynamic MyObject = Activator.CreateInstance(MyType);
+
+// Get metadata info from Type object
+Type parameterType = MyObject.GetType();
+
+// List all public fields
+foreach (var field in parameterType.GetFields())
+    Console.WriteLine(field.Name);
+
+
+
+EG 2 :Create 1 project, and one DLL file, Without adding the reference of the DLL file in your project uh can create the instance of the classes which are there inside the DLL file.
+
+-----Class1 in the DLL:
+namespace SomeClassLibrary
+{
+    public class Class1
+    {
+        public int x = 10;               // public field
+        public string P1 { get; set; }   // public property
+
+        public void Method1()            // public method
+        {
+            Console.WriteLine("Method1 called");
+        }
+    }
+}
+
+-----PROJECT program.cs File code :
+
+using System;
+using System.Reflection;
+
+namespace ReflectionDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Step1: Import reflection and load assembly
+            Assembly MyAssembly = Assembly.LoadFile(@"D:\Projects\ReflectionDemo\SomeClassLibrary\bin\Debug\SomeClassLibrary.dll");
+
+            // Step2: Get the class reference
+            Type MyType = MyAssembly.GetType("SomeClassLibrary.Class1");
+            dynamic MyObject = Activator.CreateInstance(MyType);
+            Type parameterType = MyObject.GetType();
+
+            // Show basic info
+            Console.WriteLine($"Full Name: {MyType.FullName}");
+            Console.WriteLine($"Class Name: {MyType.Name}");
+            Console.WriteLine($"Namespace: {MyType.Namespace}");
+
+            // Step3: Browse Metadata
+            Console.WriteLine("\n--- Fields ---");
+            foreach (var field in parameterType.GetFields()) //Uh will get all the paramterType information aboute the feilds of the Members of the class
+                Console.WriteLine(field.Name);
+
+            Console.WriteLine("\n--- Properties ---");
+            foreach (var prop in parameterType.GetProperties()) //Uh will get all the properties of the class.
+                Console.WriteLine(prop.Name);
+
+            Console.WriteLine("\n--- Methods ---");
+            foreach (var method in parameterType.GetMethods())
+                Console.WriteLine(method.Name);
+
+            // Invoke Method1
+            Console.WriteLine("\n--- Invoking Method1 ---");
+            parameterType.InvokeMember("Method1",
+                BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.Instance,
+                null, MyObject, null);
+
+            Console.ReadKey();
+        }
+    }
+}
+
+EG 3 :
+----Class1.cs file of the dll project
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Person
+{
+    public class Class1
+    {
+        public int X;
+        private int Y;
+        public int P1 { get; set; }
+        private int P2 { get; set; }
+        public void Method1()
+        {
+            Console.WriteLine("Method1 Invoked");
+        }
+        private void Method2()
+        {
+            Console.WriteLine("Method2 Invoked");
+        }
+
+        
+    }
+}
+
+
+----Program.cs File :
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+class Program
+{
+
+    static void Main()
+    {
+        /// Step1: Import reflection and load assembly
+        Assembly assObj = Assembly.LoadFile(@"C:\Users\vishwajeetjaysingh_g\Documents\EPAM folders\Practice programs C#\Person\bin\Debug\Person.dll");
+
+        //get the class person 
+        Type p = assObj.GetType("Person.Class1");
+        dynamic pobj = Activator.CreateInstance(p);
+        Type parameterType = pobj.GetType();
+
+     
+        // Invoke Method1 of the Dll file class 
+        Console.WriteLine("\n--- Invoking Method1 ---");
+        parameterType.InvokeMember("Method1",
+            BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.Instance,
+            null, pobj, null);
+
+    }
+
+}
+

@@ -1,0 +1,32 @@
+MAIN METHOD PARAMETERS
+
+Valid Main Method Signatures:
+
+// Standard Main method
+static void Main() { }
+
+// Main method with arguments (command-line arguments)
+static void Main(string[] args) { }
+
+// Main method with arguments and return type (int) - used to return an exit code
+static int Main(string[] args) { return 0; }
+
+-only the above signature of the main methods is valid, uh can only pass the string arry as parameter in the main
+-static void Main(1001, "Vishwajeet", 800000, "SDE") ===> this is not valid
+-You can pass parameters via Command-Line Arguments. If your Main method is:
+
+EG :
+
+static void Main(string[] args)
+{
+    foreach (string arg in args)
+    {
+        Console.WriteLine(arg);
+    }
+}
+
+-compiled your program to MyProgram.exe, you can run it like:
+
+MyProgram.exe 1001 Vishwajeet 800000 SDE
+
+-send the parameters while running the program using a CLI and uh can pass n number of parameters in form of array and even uh can acess that arry in the Main program like we can acess any array in normal functions

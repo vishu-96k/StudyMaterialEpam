@@ -1,0 +1,52 @@
+AWS vs. Azure Services Mapping
+AWS Service		Azure Alternative
+EC2			Virtual Machines (VMs)
+Lambda			Azure Functions
+S3			Blob Storage
+RDS			Azure SQL Database
+DynamoDB		Azure Cosmos DB
+Redshift		Azure Synapse Analytics
+VPC			Virtual Network (VNet)
+IAM			Azure Active Directory (Azure AD)
+Route 53		Azure DNS
+CloudFront		Azure Front Door / CDN
+Elastic Beanstalk	Azure App Service
+API Gateway	Azure API Management
+SQS	Azure Service Bus / Queue Storage
+SNS	Azure Event Grid / Notification Hubs
+CloudWatch	Azure Monitor
+CloudFormation	Azure Resource Manager (ARM)
+EKS	Azure Kubernetes Service (AKS)
+ECS	Azure Container Apps / ACI
+Fargate	Azure Container Instances (ACI)
+SSM (Systems Manager)	Azure Automation / Azure Arc
+KMS (Key Management Service)	Azure Key Vault
+WAF (Web Application Firewall)	Azure WAF
+GuardDuty	Microsoft Defender for Cloud
+Cognito	Azure AD B2C
+Direct Connect	ExpressRoute
+Glue	Azure Data Factory
+Step Functions	Azure Logic Apps
+CodePipeline	Azure DevOps Pipelines
+CodeBuild	Azure DevOps Build Services
+CodeDeploy	Azure DevOps Release Management
+CloudTrail	Azure Activity Log
+Cloud9	Azure Cloud Shell
+App Runner	Azure App Service
+Snowball	Azure Data Box
+Kinesis	Azure Event Hubs / Stream Analytics
+Elastic Transcoder	Azure Media Services
+WorkSpaces	Azure Virtual Desktop
+Macie	Microsoft Purview
+Textract	Azure Form Recognizer
+Rekognition	Azure Computer Vision
+SageMaker	Azure Machine Learning
+Glue DataBrew	Azure Data Wrangling
+IoT Core	Azure IoT Hub
+Elasticache (Redis/Memcached)	Azure Cache for Redis
+Opensearch (Elasticsearch)	Azure Cognitive Search
+Neptune	Azure Cosmos DB (Graph API)
+Transcribe	Azure Speech-to-Text
+Translate	Azure Translator
+SES (Simple Email Service)	Azure Communication Services (Email)
+Polly	Azure Speech Services (Text-to-Speech)

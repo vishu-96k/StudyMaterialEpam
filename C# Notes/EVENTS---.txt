@@ -1,0 +1,132 @@
+---EVENTS---
+
+Feature					Function (Method)					Event
+Definition			A block of code that performs a task			A notifier that triggers subscribed functions
+Invocation			Called directly						Cannot be called directly, only raised
+Logic				Contains logic						Does not contain logic, only triggers handlers
+Subscription			Cannot have multiple subscribers			Supports multiple subscribers (functions)
+Usage				Used for calculations, operations, etc.			Used for notifications and event-driven programming
+
+--QUESTIONS--
+
+Here are all the prompts you asked today:
+
+What is the type of an event?--> Delegate
+Is an event a function? --> NO
+What do publisher and subscriber mean in the whole process of event creation and handling in C#? -> Binding of Fun to event
+Hooking up the event in the Main method—does this mean binding the subscriber and publisher? --> YES
+TEventArgs must be a class that inherits from EventArgs. What is this EventArgs? Is it a predefined class? --> EVENTARGS is a class
+Can we write the body of the event? --> NO, But uh can write logic for custom add and remove methods
+What is EventHandler? Is it a class? --> No, eventHandler is a predefined Delegate, And EvenetHandler<T> is a Genric delegate which takes T as EventArgs.
+
+
+Q1. Differences Between Delegates and Events
+Feature						Delegate					Event
+Definition			A reference type that holds method references			A wrapper around a delegate that restricts access
+
+Usage				Used to call methods dynamically (callback mechanism)		Used for publish-subscribe communication
+
+Invocation			Can be called (invoked) directly				Can only be invoked inside the declaring class
+
+Encapsulation			No restrictions on invocation from other classes		Can only be subscribed (+=) or unsubscribed (-=) externally
+
+Multiple Subscribers		Supports multiple method references (+=, -=)			Also supports multiple subscribers but cannot be invoked 												externally
+
+Purpose				A function pointer mechanism for calling methods dynamically	Used to signal that an event has occurred
+
+Default 			Storage	No automatic storage mechanism				Stores handlers using the event keyword
+
+
+
+Q2)What is a Delegate?
+A delegate is a type-safe function pointer that can refer to methods.
+It allows methods to be assigned dynamically and invoked later.
+EG :using System;
+
+public delegate void MyDelegate(string message); // Declaring a delegate
+
+class Program
+{
+    static void ShowMessage(string msg) => Console.WriteLine("Message: " + msg);
+
+    static void Main()
+    {
+        MyDelegate del = ShowMessage; // Assigning a method to a delegate
+        del("Hello, Delegates!");     // Calling the method via delegate
+    }
+}
+
+
+Q3 . What is an Event?
+An event is a special kind of delegate used in the publisher-subscriber model.
+Only the declaring class can invoke the event, ensuring better encapsulation.
+
+EG:
+using System;
+
+public class EventPublisher
+{
+    public event EventHandler MyEvent;  // Declare an event
+
+    public void RaiseEvent()
+    {
+        Console.WriteLine("Raising an event...");
+        MyEvent?.Invoke(this, EventArgs.Empty);  // Invoke event if there are subscribers
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        EventPublisher publisher = new EventPublisher();
+
+        // Subscribe to the event
+        publisher.MyEvent += (sender, e) => Console.WriteLine("Event received!");
+
+        publisher.RaiseEvent(); // Raise the event
+    }
+}
+
+EG 2 : for a button click
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    static void Main()
+    {
+        Button button = new Button { Text = "Click Me" };
+        button.Click += (sender, e) => MessageBox.Show("Button Clicked!");
+        Application.Run(new Form { Controls = { button } });
+    }
+}
+
+
+Q4 .Real Life senarios of delegate and events :
+DELEGATES :
+Using Delegates for Callbacks (Asynchronous Processing)
+📌 Scenario: Background Processing with a Callback
+Imagine you have a long-running operation (e.g., downloading a file). You don't want to block the main thread, so you use a delegate as a callback when the task is complete.
+
+Using Delegates for Strategy Pattern
+📌 Scenario: Implementing Sorting Strategies
+Delegates allow dynamic method selection, useful in sorting algorithms.
+
+
+EVENTS :
+Event-Driven Programming (Button Click Event)
+📌 Scenario: Handling UI Button Clicks
+GUI frameworks like WinForms or WPF rely on events for handling user interactions.
+
+Observer Pattern Using Events
+📌 Scenario: Stock Market Price Change Notification
+A stock market application notifies investors when a stock price changes. Investors (subscribers) listen to the stock price changes.
+
+
+Scenario: Messaging System Using Event Aggregator
+When components in a large application need to communicate without direct dependencies, an event aggregator (mediator) can be used.
+
+
+Use Delegates when you need callbacks or strategy patterns.
+Use Events when implementing publish-subscribe patterns or GUI event handling.

@@ -1,0 +1,9 @@
+-------Random---
+Extensions Methods : if uh want to add on any functions into a class or extend the functionality of a class then uh can use the extensions method
+Extension methods are used to follow the second principal of SOLID principal that is open and close principal
+
+extension methods allows us to add a new method to an exixtsing class: without modifying it or adding code to that class, without extending it or recreating a new derived class , withour re compiling the class
+
+
+EG : LINQ is based on Extensions methods
+system>.linq has extensions metjods which extend the INumrable interface

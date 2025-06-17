@@ -1,0 +1,360 @@
+DATA TYPES IN C#---
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+📌✅✅✅✅✅✅✅✅✅📌CH :DATA TYPES IN C#📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] DATA TYPES:
+
+📌NULLABLE DATA TYPES:
+-Uh cannot store "null" in value types like int,  int, double, bool, DateTime, structs, etc. These data type contains default values, which is 0 for int, and many more value types.
+-so,to make them hold null value, becoz when delaing with the database, the defalt value wont be working, as we need to store null , not 0.
+-So for databases uh need to store null" values into the int, float, struct, datatime etc datatypes.
+
+1) NULLABLE OPERATOR "?":
+
+-NULLABLE<> STRUCT:
+Nullable<T> is a struct, using which uh can store null values into the value types:
+
+SYNTAX :
+Nullable<int> x = null; //NUllable Int
+Nullable<double> y = 3.14;
+
+👇 Code:
+//This syntax is shorthand for:
+int? x = null;       // Nullable int
+double? y = 3.14;    // Nullable double
+bool? isReady = null;  // Nullable bool
+DateTime? date = null;  // Nullable DateTime
+
+PROPERTIES OF NULLABLE :
+HasValue — tells if the nullable contains a value or is null.
+👇 Code:
+if (num.HasValue)
+{
+    Console.WriteLine("Has a value: " + num.Value); //Value — gets the value if HasValue is true; throws exception if null.
+    COnsole.WriteLine(num.GetValueOrDefalutt);
+}
+//GetValueOrDefault() — returns the value or the default for the underlying type (0 for int) if null.
+else
+{
+    Console.WriteLine("Null");
+}
+
+2) Null-coalescing operator "??":
+You can provide a fallback/default value if nullable is null:
+-Like uh can set a value of some other variable if any other variable is null
+
+👇 Code:
+static void Main()
+{
+	int? x =null;
+	int y = x??-1;
+	Console.WriteLine(y) //OUTPUT : will be -1
+	//Becoz x is null, so uh have assign the "-1" value to the y, If x was not null then the value of x would have been assign to the y variable.
+
+
+	int? a = 10;
+	int b = a ?? -1;  // b = 10 because a has value
+	Console.WriteLine(b) //Output : 10
+}
+
+3) Null-coalescing assignment "??="
+-The null-coalescing assignment operator (??=) is used to assign a value to the same variable only if it is currently null.
+-Like if uh have a variable whose value is null, and uh want to use a diff value if its value is null, then uh can use this operator.
+
+Syntax:
+variable ??= valueIfNull;
+
+//If variable is null, it will be assigned valueIfNull.
+//If variable is not null, nothing happens.
+
+Static void Main()
+{
+	string name  =null;
+	name ??= "Guest"; //it means that, if the name is null, then use Guest
+	Console.WriteLine(name);
+
+}
+-Diff is that, It will assign the value to the same variable, and the null cosellen( ?? ), this will assign the value to another variable.
+
+
+📌 VAR, OBJECT and DYNAMIC :
+1) VAR :
+var is used to declare implicitly typed local variables — meaning the compiler infers the variable's type from the right-hand side (RHS) of the assignment at compile time.
+-Once the type is inferred, then after that uuh can only change the value of the same type that the compiler has infred.
+-Uh cannot store string, if the variable is infred as int, but uh can change the value to some another int value.
+-Uh can use any type to store with var, like Collections, Classes, Structures etc.
+
+SYNTAX :
+var variableName = value;
+
+The type is determined automatically based on the value assigned.
+Once assigned, the variable has a fixed, strong type.
+
+Example 1:
+👇 Code:
+var number = 10;          // Compiler infers int
+var name = "John";        // Compiler infers string
+var isActive = true;      // Compiler infers bool
+var list = new List<int>(); // Compiler infers List<int>
+//These variables still have strong types (they're not dynamic). So they cannot be change the type of the variable once infer
+
+
+🧠 Important Rules of var
+1)Must be initialized at the time of declaration:
+EG :var x;       // ❌ ERROR: Cannot use var without initialization
+
+2) Cannot be null unless you cast:
+EG :
+static void Main()
+{
+	var data = null ; // ❌ ERROR: Cannot infer type from null
+	object obj = null;     // ✅ Okay (explicit type)
+	var obj = (object)null;  // ✅ Okay with explicit cast
+}
+
+3) The type is fixed at compile time, not dynamic:
+EG :
+var x = 10;     // x is int forever
+x = "hello";    // ❌ ERROR: Cannot assign string to int
+
+4)var is only for local variables, not for:
+Method parameters
+Fields
+Return types (unless using var in modern C# with lambdas or anonymous types)
+
+USE CASE: 
+Used in LINQ
+When uh don't know the type.
+
+
+🔍 var vs dynamic vs Explicit Types
+| Feature       | `var`                | `dynamic`          | Explicit (e.g., `int`) |
+| ------------- | -------------------- | ------------------ | ---------------------- |
+| Type Inferred | ✅ Yes (compile time) | ❌ (runtime bound)  | ❌                      |
+| Compile Time  | ✅ Checked            | ❌ Not checked      | ✅ Checked              |
+| Flexibility   | ❌ Fixed after init   | ✅ Very flexible    | ❌ Fixed                |
+| Performance   | ✅ Better             | ❌ Slower (runtime) | ✅ Better               |
+	
+2) DYNAMIC:
+The dynamic keyword in C# tells the compiler that the type of the variable will be determined at runtime, not at compile time.
+You can store any type of value in a dynamic variable.
+You can call any method or access any property, and the compiler won’t check if it exists — it trusts you'll use it correctly.
+If you make a mistake, you’ll get a runtime error, not a compile-time error.
+-Uh can store any values with Dynamic, Like string, Classes, Collections etc.
+-dynamic is a special type introduced in C# 4.0 (.NET Framework 4.0). Internally, it uses reflection and Dynamic Language Runtime (DLR) to defer type checking.
+
+SYNTAX :
+dynamic x = 5;
+Console.WriteLine(x);   // Output: 5
+
+x = "Hello";
+Console.WriteLine(x);   // Output: Hello
+
+x = DateTime.Now;
+Console.WriteLine(x);   // Output: current date/time
+//The type of x changes dynamically at runtime.
+
+🔧 Practical Usage
+static void Main()
+{
+	dynamic person = new {Name = ""Vishwajeet", Age =30};
+	Console.WriteLine(person.Name+  Person.Age);
+
+	person = "Now im string";
+	Console.WriteLine(person.GetType + person);
+}
+
+dynamic:
+Type determined at runtime.
+You can change the type anytime. not strongly typed.
+
+EG :
+dynamic b = 10;
+b = "hello";       // ✅ OK, b is now a string
+
+
+Example 
+dynamic x = "Vishwajeet";
+Console.WriteLine(x.ToUpper());  // Works
+
+x = 123;
+// The following line will cause RUNTIME ERROR
+// because int does not have ToUpper()
+Console.WriteLine(x.ToUpper());  // ❌ Runtime error
+//The compiler won’t warn you — the error will happen when the program runs.
+
+
+🔁 Summary Table
+| Feature                     | `var`                         | `dynamic`                     |
+| --------------------------- | ----------------------------- | ----------------------------- |
+| Type Inference              | At compile time               | At runtime                    |
+| Type Safety                 | Strongly typed                | Weakly typed                  |
+| Must initialize on declare? | ✅ Yes                         | ❌ No (can be assigned later)  |
+| Can change type after init? | ❌ No                          | ✅ Yes                         |
+| Compile-time error?         | ✅ Yes (if misuse)             | ❌ No (error comes at runtime) |
+| Performance                 | ✅ Fast                        | ❌ Slower (uses reflection)    |
+| Use Cases                   | Clear known types, LINQ, etc. | COM, JSON, scripting          |
+
+
+3 OBJECT :
+object is the base type for all data types in C#.
+Every value type and reference type inherits from object — either directly or indirectly.
+It can store any data type, but you may need to cast it back to the original type when using it.
+
+Syntax:
+object obj = 10;         // Stores an int
+obj = "Hello";           // Stores a string
+obj = new Student();     // Stores a class object
+
+object can hold:
+value types (like int, double, bool, etc.) — boxed
+reference types (like string, arrays, classes)
+
+🔄 Boxing and Unboxing
+Boxing
+When a value type (like int) is stored in an object, it is boxed — wrapped inside an object, meansn converted to refrence type, so now it will get store in the heap memory not stack.
+EG :
+int x = 42;
+object obj = x;    // Boxing: int → object
+
+
+Unboxing
+To get the original value back from object, explicit casting is needed.
+Refrence Type is agaon back converted into value type, so that it can get store on the stack memory
+EG :int y = (int)obj;  // Unboxing: object → int
+
+🧠 Compile-Time vs Runtime
+| Feature                       | `object`                                         |
+| ----------------------------- | ------------------------------------------------ |
+| Type known at compile time?   | ✅ Yes, it is known as `object`                   |
+| Actual data type known?       | ❌ No — not until **runtime**                     |
+| Needs casting to use members? | ✅ Yes — unless using methods from `object` class |
+
+
+🔍 Basic Example:
+object name = "John";
+Console.WriteLine(name);  // Output: John
+
+// Trying to use string methods directly: ❌
+// Console.WriteLine(name.ToUpper()); // ERROR, Becoz now string is caste to OBject type, BOxed
+
+// Need to cast first:
+Console.WriteLine(((string)name).ToUpper()); // Output: JOHN
+
+🎯 Comparison: object vs var vs dynamic
+| Feature                  | `object`                         | `var` (compile-time)       | `dynamic` (runtime) |
+| ------------------------ | -------------------------------- | -------------------------- | ------------------- |
+| Type determined at?      | Compile time (as object)         | Compile time (actual type) | Runtime             |
+| Type-safe?               | ✅ Yes (but cast needed)          | ✅ Yes                      | ❌ No                |
+| Can store any type?      | ✅ Yes                            | ❌ Only inferred type       | ✅ Yes               |
+| Access members directly? | ❌ No (need cast)                 | ✅ Yes                      | ✅ Yes (risky)       |
+| Useful for?              | Generic storage, class libraries | Strong typing              | Runtime flexibility |
+
+
+EG :
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        object x = 100;         // Boxing int
+        object y = "Hello";     // Storing string
+        object z = true;        // Storing bool
+
+        Console.WriteLine(x);   // Output: 100
+        Console.WriteLine(y);   // Output: Hello
+
+        // Must cast to use string methods
+        string actualY = (string)y;
+        Console.WriteLine(actualY.ToUpper());  // Output: HELLO
+
+        // Unboxing
+        int actualX = (int)x;
+        Console.WriteLine(actualX + 50);       // Output: 150
+    }
+}
+
+
+Drawbacks of object
+Slower due to boxing/unboxing.
+Requires casting to use specific type members.
+Easy to make runtime errors if unboxing to the wrong type.
+
+Summary
+| Feature                  | Description                                 |
+| ------------------------ | ------------------------------------------- |
+| Base class of all types  | Every type in C# derives from `object`      |
+| Can hold any value       | But needs casting to retrieve/use           |
+| Involves boxing/unboxing | For value types                             |
+| Compile-time type        | Always `object`, even if holding other type |
+| Not flexible for members | Need to cast to use type-specific methods   |
+
+
+📌 BOXING and UNBOXING :
+Boxing?
+Boxing is the process of converting a value type (like int, bool, etc.) into an object type(or refrence type).
+
+Example:
+int num = 10;
+object obj = num;   // Boxing happens here
+
+-Boxing happens automatically whenever needed.
+num is a value type (int)
+obj is a reference type (object)
+C# wraps the value in an object → Boxing
+
+
+Unboxing?
+Unboxing is the process of converting an object back into a value type.
+Example:
+object obj = 10;      // Boxing
+int num = (int)obj;   // Unboxing (explicit cast required)
+
+//The value inside obj is extracted and converted back to int.
+-For UNBOXING, uh need to expliclitty do it, It wont happen automactiicaly, and even if uh are converting a string into object, Then also BOXING will happen, and uh wont be able to use any strong methods on the OBJECT variable, Uh need to UNBOX that variable again back to string type to use its Mthods.
+
+
+Example: Boxing a string and Unboxing to Use Its Methods
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Step 1: Create a string
+        string original = "hello";
+
+        // Step 2: BOXING — store the string in an object (reference type)
+        object obj = original;
+
+        // Step 3: Try to call string method directly on 'obj'
+        // Console.WriteLine(obj.ToUpper()); // ❌ ERROR: 'object' does not contain 'ToUpper'
+
+        // Step 4: UNBOXING — cast object back to string
+        string unboxed = (string)obj;
+
+        // Now you can use string methods
+        Console.WriteLine(unboxed.ToUpper());  // ✅ Output: HELLO
+    }
+}
+
+Why This Happens
+obj is of type object, and object doesn't know it contains a string unless you cast it.
+So you must explicitly unbox using (string)obj to use string-specific methods like .ToUpper(), .Length, etc.

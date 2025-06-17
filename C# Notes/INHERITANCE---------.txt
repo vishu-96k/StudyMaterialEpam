@@ -1,0 +1,39 @@
+                         --------INHERITANCE---------
+
+
+parent class constructor must be asseccesbal to child class or else inheritance will not be possible , the reason is that becoa the parent class constructor will initialize the variables of the parent class so for that the parent class const should be accessable to the child class
+
+If you dont create any const then there is implicit constructor and it will be called automaticallt, child class cont calls the parent class const by implicit
+
+we can initialize a parent class variable by using its child classes instance to make it as a refrance and that refrence will be consuming the memory of child class instance but with that refrence we cannot call any child class methods.
+
+it means that if u create a variable of parent class and make it as a refrence to a child class obj then parent class variable will be a ref foer that child class obj but still it wont be able to access the members of the child class
+
+we can initialize a parent classes variables by using the child class instance to make it as a refrence of child class instance. it means that the parent class variable donst have any memeory alloction here, its just a refrence of child class, so it (parent class variable) will be consuming the memory of child class instance. memory allocation is just done for the instcnaces not for the pointers or the refencerences.
+
+even thogh the parent class variable is the refrence of the child class instcnae still it wont can asscess the pure members of the child class
+
+
+object is the ultimate class or the parent class for all the classes and that parent class is defined inside the system namespace, so the members of object class (Equals(), GetHashCode(), ToString(), GetType())are accessible form anywhere
+
+default parent classes for all the predefined or the user defined classes is the object class. in short object is parent of all the classes prenst in the .net
+
+so any class obj will always call the object class constructor first becoz its the parent class for all the classes and then it will call the remaining parent classs constructor according to the hericachy
+
+in C#, Only single inheritance is supported by the Classes(single, Multilevel, and hirachical).
+
+for multiple(multiple and Hybrid ) we have concept of Interfaces
+
+if parent class has a parameter const then its responsibility of child class to pass the const and its parameter to the parent using the base keyword
+
+----------------------------------------------VIDEO 3 ---------------
+SCHOOL APPLICATION -->
+Entity : Student, techingi staff , non teaching staff
+Attricutes of student entity : id, name address, phone, class, Marks
+teaching staff : id, name, address, Phone, salary, designation 
+NtS attributes : Id name address, phone, salary, manager Id
+
+you need to define a class for each entity so we will make 3 classes
+now there are some attributes common to each entity(class), so make these attributes as a parent class so that there is no duplycacy in your code, this cannot be dont with structures becoz struc cannot do inheritance therefore we are using the OOPs soncept.
+Structuire concept comes in the Procedureal programming concept
+
