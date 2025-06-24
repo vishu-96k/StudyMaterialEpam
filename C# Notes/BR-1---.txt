@@ -36,5 +36,26 @@ EG : For devoping desktop application, we need to use CPP, but these cpp lanuage
      For devloping web applciation we reqiuired to take support of JS, or PHP, ASP etc.
      For devloping mobile applicaiton uh need to use some other language like 
 
-So the solution for this problem was Dot Net, becoz as a programmer uh need to learn diffrrent languages for devoping diff types of application.
--So microsoft came up with DotNet, in which uh can built all types of applications, becoz dotNet supports more then 50 languages. 
+-So the solution for this problem was Dot Net, becoz as a programmer uh need to learn diffrrent languages for devoping diff types of application.
+-So microsoft came up with DotNet, in which uh can built all types of applications, becoz dotNet supports more then 50 languages.
+-So mircrsoft give DotNet a product for devloping various kinds of application. WHich include many languages supports.
+-the devolpers who are comming from CPP, are workig with C# languages, becoz syntax is similar.
+-If uh come from VB (visual basic language), then dot Net has VB .net.
+-Even we have F#, J# languages supported in dot Net.
+-So programmer has  choice of langage chossing for devloping the application.
+-If uh are from java backrounf choice, J# .net language
+-Even though we have many languges, But mostly used langage is C# for devloping .Net Application
+-So .net was coppiteter for java.  
+
+📌C# language:
+-C ---> CPP ---> C#   //Extension 
+CPP: is best used fo devloping desktop application only, But C# is used for devloping any kind of application.
+-We have the same advantage with java also, like uh can devlop any kind of appluction wiht java, but the java and .net are 2 diff products of diff companyes, therefore comppitetors.
+-Almost 8 to 10 % of the world progammers who are using C# for devloping applicaitons. Most widly used language
+
+-FEATURES OF C# :
+oop
+Securty and resuibillity
+Platform Independent, Uh can run on any OS
+Language INDEPNDENT : means language inerpolability, can communicate with other languages also. Like code of C#, can use other code of VB .net in their application.
+

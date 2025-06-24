@@ -15,8 +15,17 @@ MVC14---
 ------------------------------------
 ========CH CLOSEING SYMBOL==========
 ------------------------------------
-
 📌✅✅✅✅✅✅✅✅✅📌CH : DI 📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1]What is Dependency Injection (DI)?
+Dependency Injection is a design pattern that deals with how components acquire their dependencies. Rather than creating objects directly, DI provides them from an external source. So we will be making lossly coupled objects, by sending the objects through constructor injections, property injectsions, or through function injection.
+ Goal:
+To achieve loose coupling between classes and their dependencies, improve testability, and follow the SOLID principles, especially the D - Dependency Inversion Principle.
+
+
+
+
+📌✅✅✅✅✅✅✅✅✅📌CH : DI WORKING 📌✅✅✅✅✅✅✅✅✅📌
 
 ✅[#1] How DI Works in ASP.NET MVC
 
