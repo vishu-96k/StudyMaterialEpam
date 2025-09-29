@@ -220,6 +220,32 @@ Compatible with Agile, DevOps, Lean IT.
 Emphasized value co-creation (between provider and customer).
 Still ongoing: ITIL 4 continues to expand with more modules (e.g., Create Deliver Support, Direct Plan Improve).
 
+
+📌Timeline & Versions of ITIL:
+| ITIL Version | Year Released | Why New Version / Update           | Key Changes                                | Impact / Focus                          |
+|--------------|---------------|------------------------------------|--------------------------------------------|------------------------------------------|
+| ITIL v1      | ~1989         | - Standardize IT in govt.          | - 30+ books                                | - Used by UK govt.                       |
+|              |               |                                    |                                            | - Some large companies                   |
+|--------------|---------------|------------------------------------|--------------------------------------------|------------------------------------------|
+| ITIL v2      | 2001          | - V1 too large (30+ books)         | - Reduced to 7 core books                  | - Simplified                              |
+|              |               | - Needed simplification            | - Focus on Service Support & Delivery      | - Worldwide adoption began               |
+|--------------|---------------|------------------------------------|--------------------------------------------|------------------------------------------|
+| ITIL v3      | 2007          | - IT evolved (cloud, agile, etc.)  | - 5 lifecycle stages:                      | - Lifecycle-based management             |
+|              |               |                                    |   • Strategy                               |                                          |
+|              |               |                                    |   • Design                                 |                                          |
+|              |               |                                    |   • Transition                             |                                          |
+|              |               |                                    |   • Operation                              |                                          |
+|              |               |                                    |   • CSI                                    |                                          |
+|--------------|---------------|------------------------------------|--------------------------------------------|------------------------------------------|
+| ITIL 2011    | 2011          | - Fix inconsistencies              | - Refinement of processes & roles          | - Cleanup/enhancement of v3              |
+|              |               | - Clarify guidance                 |                                            |                                          |
+|--------------|---------------|------------------------------------|--------------------------------------------|------------------------------------------|
+| ITIL 4       | 2019          | - Digital transformation           | - Service Value System (SVS)               | - Value co-creation                      |
+|              |               | - DevOps, Agile, Cloud             | - 4 Dimensions of Service Mgmt             | - Modern IT practices                    |
+|              |               |                                    | - Works with Agile, DevOps, Lean           |                                          |
+
+
+
 -Who Owns ITIL Now?
 Originally: UK Government (CCTA)
 Then: Cabinet Office → Formed a joint venture

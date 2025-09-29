@@ -25,6 +25,10 @@ ITIL 2---
 -Current ongoing version of ITIL is v4. But we will study v3 version.
 
 📌What is ITIL :
+-ITIL is a set of best practices for providing IT services and managing IT services 
+-ITIL its basically a systematic approach for providing High quality of IT serices, by inculcating  the best practices for documention as part of service management which actually provides a common language towards undurstading of the service.  
+-ITIL is basically a set of process, which are optimize, sequential and available to make sure uh can accommodate your existing service needs. 
+-ITIL is a systematic approach which provides the high quality IT services delivary, So basically ITIL is noth but documentation/Documenting best practices for providing IT service 
 -ITIL (Information Technology Infrastructure Library) is a set of best practices to help organizations manage IT services better.
 -Curreently the version of ITIL framweok is v4
 
@@ -62,7 +66,7 @@ ITIL provides the common languge with well denied terms, and this was developed 
 -ITIL is derived form this, which is now used for providing the best IT servies, as a bussness offring to any client who needs to establish his bussneiss.
 -The end goal of ITIL is to meet the requrienments of the end user. 
   
--in 1980s, 40 publications were there in ITIL.
+-ITIL started in 1980s, 40 publications were there in ITIL.
 -v2 (2000 to 2002): in v2 version there were 8 books in this, and it came in 2002
 
 v3 (2007) : 
@@ -73,24 +77,71 @@ v3 (2007) :
 
 
 📌DEFINATIONS :
-SERVICE : 
+1)SERVICE : 
 -Service is noth but delivering value to the customer.
 -So service is delivering the values to the customer by facilating the outcomes customers wants to achive end goal/ or product without the ownership of the specific costs and ricks.
-- for eg : "BackUp Service" it means that you dont have to care about how much tapes, disks or robots cost and you dont have to worry if one of the staff is off sick or levaes.
+-for eg : "BackUp Service" it means that you dont have to care about how much tapes, disks or robots cost and you dont have to worry if one of the staff is off sick or levaes.
 -Service is a term, which the service provider will offer to the bussiness owners. Bussniess owners will come into establishment with the servie provider where the service provides, once the bussniess is actually given to the bussneiss provider , they will deliver value to the customers by facilitating  all the outcomes for their customers who wants to achive the goals without any ownership of costs and risks.
 -so customer will just have the deal with the provides, and oroviders will have to make sure that they deliver the best service to them without any risks.
- 
-SERVICE LEVEL :
+Simple Definition: A service is something that delivers value to a customer by helping them achieve their goals without them worrying about costs or risks.
+Example: Using Spotify – you enjoy music without buying CDs or maintaining storage servers. 
+
+2)SERVICE LEVEL :
 -Service level is actually measured and reported achievement against one or more service level targets 
 Its actually measuring a value of services uh deliver.
 EG : Red = 1 hour responce 24/7
      Amber = 4 hour response 8/5(that is 8 hours, from mon to friday)
      Green = Next business day
+Simple Definition: Service level is the measurable quality or performance of a service.
+Example: A pizza delivery promises delivery within 30 minutes. If it takes longer, service level is not met.
 
-KEY PERFORMANCE INDICATORS(KPIs) :
--KPIs are the quantifiable measurements that reflect the critical success factors of an organisation
+3)KEY PERFORMANCE INDICATORS(KPIs) :
+-KPIs are the quantifiable measurements that reflect the critical success factors of an organisation.
+Simple Definition: KPIs are measurable values that show how well an organization or service is performing.
+Example: In a call center, one KPI could be average call wait time (e.g., less than 2 minutes).
 
-SERVICE LEVEL ARGREEMENT :
+4)SERVICE LEVEL ARGREEMENT :
 -Its a sign agreement between the service provider and the customer.
- 
-CONFIGURATIONAL MANAGEMENT SYSTEM :
+Simple Definition: An SLA is a written agreement between the service provider and the customer that defines the expected service levels.
+Example: Your internet provider promises 99.9% uptime per month in the SLA.
+
+5)CONFIGURATIONAL MANAGEMENT SYSTEM (CMS):
+-CMS is a kind of database, and this database includes all the pivertal points like hardware, software, software lisences , all thses is under the Configuration manageenet database
+-CMS contains tools and DataBases to manage IT service providers configuration data.
+Simple Definition: A CMS is a system (set of tools and databases) that stores and manages information about all the IT assets and their relationships—like hardware, software, licenses, and documentation—so services can run smoothly.
+Real-Life Example: Think of it like a library catalog system. The library catalog tells you which books exist, where they’re located, who borrowed them, and how they’re connected to different sections. Similarly, a CMS keeps track of all IT components (servers, apps, licenses) and how they work together.
+-CMS / CMSB is the heart of IT, like how the kernel is the heart of OS
+-Tools used for CMS are. IBM(tivoli), BMC(atrium), jeera etc 
+
+6)RELESE :
+-Its noth but a collection hardware, software and documention process require to implement one or more approved changes to IT services.
+Simple Definition: A release is a collection of hardware, software, and documents bundled together to deliver or update an IT service.
+Real-Life Example: When Apple launches a new iOS update, it includes the updated software, documentation, and installation process — that’s a release.
+
+7)INCIDENT : 
+-Incident is sudden inttruption to any service or unplanned interruption to an IT service or Unplanned reduction in its quality 
+Simple Definition: An unplanned interruption or reduction in the quality of an IT service.
+Real-Life Example: Your office Wi-Fi suddenly stops working during work hours — that’s an incident.
+
+8) PROBLEM :
+-Unknown underlying cause of one or more incidents 
+Simple Definition: The unknown root cause behind one or more incidents.
+Real-Life Example: If Wi-Fi keeps dropping often, the faulty router (unknown at first) is the problem causing repeated incidents.
+
+9) WORK AROUND :
+Reducing or elimiunating the impact of an incident without resolving it 
+Simple Definition: A temporary solution that reduces or removes the impact of an incident without fixing the root cause.
+Real-Life Example: If Wi-Fi is down, you use mobile hotspot until the router is fixed — that’s a workaround.
+
+📌SERVICE DELIVARY LEVELS :
+1)saas :software as a service eg: Apllications
+2)paas :platfrom as a service Eg: os & middleweres
+3)Iaas :Infrastruture as a service EG : HW and Building infrastructre
+
+📌SERVICE LIFECYCLE STATGES :
+1)service startergy
+2)service design
+3)service tansition
+4)service opretions
+5)continual service improvement
+-Primariayly therir are only 4 stages , the 5 th stage is just added by end user, this 5 th stage will make all the 4 stages go again and again

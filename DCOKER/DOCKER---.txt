@@ -1,5 +1,6 @@
 DOCKER-1---
--📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+APANA COLLEGE NOTES
+-📌✅✅✅✅✅✅✅✅✅📌CH :APANA COLLEGE NOTES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
 - : FOR HASHTAG POINTS (HashTag)
 -📌: FOR POINTS (Black pens)
 -🔄: for eg
@@ -15,7 +16,7 @@ DOCKER-1---
 ------------------------------------
 ========CH CLOSEING SYMBOL==========
 ------------------------------------
-INDEX:
+🗂INDEX:
 Docker intro
 images and containers
 installation
@@ -35,13 +36,19 @@ docker networking
 
 ✅[#1]DOCKER INTRO
 
+📌WHITOUT DOCKER :
+-if uh try to repilcate the project enironment from one pc to the other then many problems can be occur
+-PROBLEMS : if uh require node in the project then the OG project may have the node version as V16, But when uh replicate the project that time in the other PC the node version may get installed as V20, Which may cause problem
+-So becoz of this change in the envrionment, The proect may not work on the other PC.
+-So here came the docker, which will repilicate the whole envrionment in form of docker images, and container, withthe specific enviriopnment.
+
 📌Why Docker:
 -It solves the problem of "It works on my PC"
 -Docker is needed for large Projects, Where there are many devlopers working.
--It is needed to replicate ur project environment into someones others machine.
+-It is needed to replicate your project environment into someones others machine. 	   
 -It is used to replicate the local environment needed for development.
 -If ur application requires a specific version of some library, then docker helps to install that specific version.
--Docker is needed if uh want to replicate ur project which is developed on Linux, and uh want it on windoes or mac OS.
+-Docker is needed if uh want to replicate ur project which is developed on Linux, and uh want it on windows or mac OS.
 
 📌DOCKER CONTAINER:
 -Docker hame "Docker containers" build karne main help krrta hian.
