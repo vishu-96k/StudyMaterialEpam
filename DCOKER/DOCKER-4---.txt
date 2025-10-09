@@ -1,0 +1,113 @@
+DOCKER-4---
+APANA COLLEGE NOTES
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+➡️ : for points
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+ 
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : COMPOSE FILE📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1]COMPOSE FILE 
+
+📌DOCKER COMPOSE TOOL :
+-Docker compose is a tool for defining and running multi-container applications using a yaml code file
+-Using this uh can set/Create/Download ur multiple docker container and pass all the needed commands like environmental variabls, binding of the ports, setting the network environments, everything related to ur docker container, using a .ymal file.
+-For setting all this from the terminal it becomes very difficlult, though uh can do this from the terminal by running the docker container in the detach modes. 
+-All the options related to the container can be send(through yaml file) using this docker compose command, on the terminal it becomes difficult to set all the options, so we use this compose file or compose commands
+-All these options ( like environmental variabls, binding of the ports) can be writtin inside a docker compose file, and this is a .yaml file uh can give any name to this file, just it should be .yaml file.
+-YAML : yet another markup language.
+
+📌📌NOTE📌📌 : PROJECT WALA EG HE LE RAHE HAIN, JISAME HAMANE MONGO AND MONGO-EXPRESS CONTAINER BANAYA THA 
+
+🔄EXAMPLE : the below is the terminal code for setting up a "MONGODB" image container, in a network and binding it with the host ports.
+📦TERMINAL CODE :
+	👇 Code:
+	docker run -d -p27017:27017 \    ----> this "\" means that uh can write the code into the next line also.
+	-e username="admin"
+	-e password="qwerty"
+	network mongo-network
+
+
+📦COMPOSE YAML FILE CODE
+-uh can do the same configuration using this mongodb.yaml file , its like the AWS terraform and IAAC type of thing.
+-Uh need to create this file inside ur project directory, and run using the compose command so that the docker can download and run the containers using it.
+-Docker yaml file jo hian vo sare containers ko ek default network main he create krega,  becoz by default docker jo bhi yaml file ke containers hiote hian unhe ek default network main create krega, mtlb sare containers same network main run honge.
+-So automatically docker compose file hamare liye network create krti hian by default, and sare containers uss file ke usi network main run hote hian.
+
+🗂:testapp
+	-nodemodules
+	-public
+	-mongodb.yaml // this is the docker file for crating the containers
+	-server.js //the backedn of the project
+
+👇 Code mongodb.yaml:
+--------------------------------------------MONGO.YAML FILE------------------------------------------
+# 📝 docker-compose.yml
+# This file sets up a MongoDB container using Docker Compose
+
+version: "3.8"  # Docker Compose file version
+
+services:
+  mongodb:                   # Service name (you can name it anything)
+    image: mongo             # Official MongoDB image from Docker Hub
+    container_name: mongodb_container   # Optional: give a name to the container
+    ports:
+      - "27017:27017"        # HostPort:ContainerPort → for accessing MongoDB from your machine
+    environment:
+      # These are environment variables required for MongoDB
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=qwerty
+    networks:
+      - mongo-network        # Connect this service to the mongo-network
+
+  mongo-express:
+	image:mongo-express //This is the image name
+	ports:
+		- 8081:8081 //This will bind the port of host and the container
+	environment:
+	 	ADMIN_NAME: admin
+		ROOT_PASSWORD: qwerty
+
+# Define the custom network (this is optional — Docker can also create it automatically)
+networks:
+  mongo-network:
+    driver: bridge           # Default network type (good for local setups)    
+
+-----------------------------ENDS--------------------------------------------------------------------
+-So basically this file will tell ki konse konse containers banana hain, kiss netwroks main banana hain, and konse ports se binding krni hain. 
+-So to create the conatienrs from this file, run this file using the docker compose commands in the terminal and uh will see the output, Open the file location and then only run the command.
+
+📌DOCKER COMPOSE COMMAND 
+-To run the file or to make the containers form the yaml file run the following commands.
+-Uh need to go in the directory where the .yaml file is presnt to run the compose command and to make the containers, Put this yaml file inside ur project directory
+
+1) docker compose -f FILE_NAME.yaml up //up matlb iss file ke andar jo bhi containers hain ham unhe create krna chate hain and unhe start krna chahate hain. 
+
+2) docker compose -f FILE_NAME.yaml down // down matblb jo bhi iss file se containers bane hain un sabko hame delete krna hain.
+
+👇 Code:
+TERMINAL : cd/desktop/testapp    ---> inside this directory the file is present now inside this directory run the  compose command.
+	   testapp/ docker compose -f mongodb.yaml up  ---> this will make the containers from the yaml file.
+
+
+
+
+✅[#2]DOCKER VOLUMNS
+
+-jab bhi ham containers ko stop krte hian unke andar ka data store nhi hota vo chala jata hian.
+-there is no data persistence in docker, if uh stop and run the container again.
+-For keeping the data even after the container is stop and restarted uh need to use the concept of docker volumns.
+  

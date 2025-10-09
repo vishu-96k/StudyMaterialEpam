@@ -1,0 +1,117 @@
+DOCKER-5---
+APANA COLLEGE NOTES
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+➡️ : for points
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+ 
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : DCOKERINZING OUR APP📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1]DOCKARINZING THE NODE JS APP
+ 
+📌TESTAPP (nodejs app)
+-So jo hamara node js app hian, ab ham uski docker image banayenge, and uss container ko ham deploy bhi kr sakte hian production main using Jenkins
+-DOCKER FILE : hamare kise bhi application ko dockarzing krne ka kaam jo  hian vo "docker file" krti hian.
+-ye docker file basically blue print hoti hian jo docker ko batata hian ki image kiss Tarah se create honi chahiye, and containers build hone chaiye.
+-Docker file has the instructions to make our application as a docker image.
+-Docker file jo hian vo hamare project ke directory main he bani honi chahiye with the name "Dockerfile" without any extension.
+
+LAYER : docker image jo ham banayenge vo pahale se he kise base image ke upper based banegi, so basically ek extra layer add hogi ek kise base image ke upper and then hamari application ki docker image banegi. 
+EG : agar hamari app node js main bani hian, tho base image jo hogi vo hain node. and iss node js ke image ke upper ek extra layer add hogi nd hamare application ki image banegi, as docker main layering ka concept hota hian.
+-DEBIAN : this is the base image for the node image, uh can see this in the docker file of the node image, which is present on the git hub
+
+📌DOCKER FILE CONTENTS :
+-Docker file has some instructions which are listed below
+
+🗂:testapp
+	-nodemodules
+	-public
+	-mongodb.yaml // this is the docker file for crating the containers
+	-server.js //the backedn of the project
+	-Dockerfile // this is the file where we will write the code for dockarinzing the test application.
+
+👇 Code EXPLANATION :
+	FROM //here we mention the base image, On the above of the base image, our app layer will be added, like if uh are using a node js app, then the base image will be node
+	WORKDIR //This is the path in the image from where the files will be copied and commands will be executed. Yaha pr ham hamari working directory define krte hain, matlb age ke jo sare commands hian unhe ham iss directory main execute krna chahte hian.
+	COPY // iss command se ham host ke files image main copy krne ke liye use krte hian. for eg hamare test app ki sare ki sari files hame copy krni padegi tabhi docker container main sara ka sara code image main ayega.
+	RUN //Run command basically docker image ke andar kuch instructions ko run krne ke liye hota hian, EG pip install "package".
+	-In a dokcer file, hamare pass multiple run commands ho sakti hain but sirf ek he cmd command hogi	
+	
+	CMD //isame ek barr hamarra sara ka sara docker container build ho gaya, tho uske badh konsi ek command hain jo ham run kr sakte hian vo yaha pr likhane hian  EG node server.js
+
+	EXPOSE //iss command se ham kise bhi image ke port ko expose krte hian
+	
+	ENV //uh can define environmental variables using this command
+ 
+	
+	
+EG  :Dockerfile CODE :
+👇 Code
+	FROM node
+	ENV MONGODB_USERNAME=admin
+	    MONGODB_PASS=qwerty	
+	
+	RUN mkdir -p testapp  //we are creating a new directory inside the container, jo bhi container image se build hoga us container ke andar ham ek directory banayenge testapp, and iss testapp directory ke andar main ham sare hamare application ke files ko copy kr denge.
+ 	-So basically abhi jo hamare liye container Banega , uske root folder ke andar ham honge, and vaha pr ham testapp krke ek directory banayenge, and iss directory main ham sare hamare files and folders ko copy kr denge, so iss directory main(container ke testapp directory main) bhi docker file bhi hogi nd vo sare files honge jo jo hamane copy ki hian, mtlb pura ka pura application code, even the mongodb.yaml file. Files copy krne ke liye ham copy command ka use krenge.
+ 	
+		🗂CONTAIENR ROOT FOLDER 
+				-TestApp
+					-nodemodules
+					-public
+					-mongodb.yaml // this is the docker file for crating the containers
+					-server.js //the backedn of the project
+					-Dockerfile // this is the file where we will write the code for dockarinzing the test application.
+
+
+	COPY . /testapp   // basically (.) means the parent folder, mtlb jaha pr bhi ye docker file presnt hain vaha se uska parent folder ko ham copy krenge, nd kaha pr karenge vo hian container ke (/testapp) folder main.
+
+
+	CMD ["node" , "/testapp/server.js"] // sari commands ko yaha pr ham array of strings likhate hian, this is the final command needed to run the node application at the end. Jab hamara docekr container ready hoga tho tab ham root folder main honge, nd vaha pr koi server.js file directly presnt nhi hogi, so hame pahale uss file tak pohavhana hoga uss container ke root folder se, so vaha pr hame proper relative path dena hoga.  
+
+
+-To build the docker image uh need to run the following command, Iss command ko hame vhi pr run krna hain jaha pr hamri docker file available hain.
+👇 Code
+	TERMINAL  : testapp/ docker build -t testapp:1.0  //mention the version also, nd automatically uss directory main jo docker file presnt hian use detect kr liya jayenga and image bana di jayegi, image ka naam vo hoga jo ham udhar mention krenge, like in this case "testapp".
+-So uh can see that ur image is been created, and even uh can share this image in the docker hub like the way we do in case of GitHub.   
+
+📌PUBLISHING OUR OWN IMAGE ON DOCKER HUB
+-Create docekr hub repo on the docker hub
+-And then login with the same account
+-And then do  "docker push" , to put ur docker image on docker hub like we do for the git repositories.  
+
+✅[#2]PROJECT 2
+
+📌DCKARIZE THE NODE JS APP
+-This node app doest have mongo db databasein he project, we will use mongo and mongo-epress images for storing data from the node app.
+-Fistly docarize the node js app, create its image and save it in the dockerdesktop
+-for this uh need the "Dockerfile" and the "docker build " command, run this command from the directory where this dockerfile is present.
+-Uh need to copy all of ur files nd folders of node app into the docker container, so the code is in the dockerfile for copying.
+-Now uh have the image of this node app, uh need to bind the server port with the host port, becoz now the server is running inside the Container, so the server is on container port, Do port binding so that the traffic can reach the container port through localhost port.
+
+📌CREATING TEH CONTAINERS 
+-Uh need to create 3 Containers, Mongo, Mongo-express, and Node-App
+-So t create this conainers we will make use of the "Dcoker compose " command.
+-Create a yaml file in which the code for cretaing the containers, and even environmental variables, port binding is done for the conainers, this yaml file will create all the containers in the same network by default, so they can communicate with ech other like conneted to wifi.
+-Once the containers are  createed and the ports are binded, uh can put the data using the mongo-compse, on the port localhoset:27017 , and even see the data at the port localhost:5050, on which the server is running
+
+📌📌NOTE📌📌
+-The server is running on the container port now, so here port binding is very importent, even all the containers should be in the same netwrok forn internal communication.
+-If uh dont do port binding then the req/res which is going from the browser using the localhosts port will not reach the containers port, and uh will see error.
+
+
+📌📌NOTE📌📌
+-There is no data persistent in docker
+-If uh stop and restart ur container, then the data in that container will get lost, so uh need to use the concept of Volumns for data persistence.

@@ -42,7 +42,7 @@ docker networking
 -So becoz of this change in the envrionment, The proect may not work on the other PC.
 -So here came the docker, which will repilicate the whole envrionment in form of docker images, and container, withthe specific enviriopnment.
 
-📌Why Docker:
+📌Why Docker:?>
 -It solves the problem of "It works on my PC"
 -Docker is needed for large Projects, Where there are many devlopers working.
 -It is needed to replicate your project environment into someones others machine. 	   
@@ -50,9 +50,10 @@ docker networking
 -If ur application requires a specific version of some library, then docker helps to install that specific version.
 -Docker is needed if uh want to replicate ur project which is developed on Linux, and uh want it on windows or mac OS.
 
-📌DOCKER CONTAINER:
--Docker hame "Docker containers" build karne main help krrta hian.
+📌DOCKER CONTAINER (instance/object):
+-Docker Container : Application code + application dependencies + Versions of dependencies , it is the single unit which contains all of these and uh can share this single usint into the other PC, and even this is the single unit which we are going to deploy as our application . 
 -DOCKER CONTAINER : ye basically ek single unit(bundle), Jisame hamane apani application along with its dependencies , ko pack kr diya hain ya combikne kr diya hain ek container main.
+-Docker hame "Docker containers" build karne main help krrta hian.
 -So uh have package ur application(code), its dependencies(libraries) along with their specific versions, everything ur application needs is packaged into a single unit called as DOCKER CONTAINER.
 -in this Docker container, every dependency will be there, even application code will  be there, Verisons of libraries install that are needed will be there, OS depnedencies will be there eveyrtihing  tehre in this container.
 -Imagine container as a object and the Image as its class.
@@ -88,37 +89,50 @@ DIAGRAM:
 |  +--------------------------------------------+  |
 +--------------------------------------------------+
 
-📌DOCKER IMAGE:
-Docker Image : is an executable file.
-Docker image yesi file hoti hain jiske andar instructrions hote hain dokcer Container ko build krne ke liye.
+📌DOCKER IMAGE (class):
+Docker Image : is an executable file. Ham container share nhi krte , ham image (class) share krte hain, and har koi iss image ki madad se local machin par ek container(instance) create krta hain jo ki ek alag environment deta hain application ko run krne ke liye .
+Docker image yesi (executable file) file hoti hain jiske andar instructrions hote hain dokcer Container ko build krne ke liye.
 Docker image ka kaam hota hain Containers ko build krna.
 -its similar to class and objects, class is a blue print which helps us to crate multiple objects similarly , Docker image is blue print form which uh can make Docker Container.
 -The way we can make multiple objects from a class, similarlry if uh have a single docker image(whihch is and executable file), ise ham multiple docker containers kar sakte hain.
 -genrally when we share the application , we share the image of the application not the conatienr.
 -Everyone in therir own local machine with this image will create a container.
--Class jo hain ahamre memory main koi space occupy nahi krti becoz vo ek blue print hain, objects jo hian vo memory main space occypy krte hian becoz vo data conatain krte hian, tho actual main resorse(like memory resouse) use krta hian object not class.
-similaryly hamare system ke jo resourses hian(like memory), vo containers use krte hain na ki images, becoz image is a blue print.
--So image ka size genrally bhohat chota hota hian, and image se jab ham container banate hian to container ka pura ka pura running environment set up hota hain jiske wajah se computer ke jo repsourses hian vo hamara container use krta hian .
--CONTAINER : is basically a actually running instance .
--IMAGE : is a static screen shot of what the local devlopement enverionment should look like . 
-IMAGE = CLASSS
-CONTAINER = OBJECT
+-Class jo hain ahamre memory main koi space occupy nahi krti becoz vo ek blue print hain, objects jo hian vo memory main space occypy krte hian becoz vo data conatain krte hian, tho actual main resorse(like memory resouse) use krta hian object not class. Similaryly hamare system ke jo resourses hian(like memory), vo containers(instance) use krte hain na ki images(class), becoz image is a blue print.
+-So image ka size genrally bhohat chota hota hian and this is the reason ki ham image share krte hain na ki container becoz image kam space leti hain nd that is the class and uss image se vo new PC main container (running instacne ) banate hain , and image se jab ham container banate hian to container ka pura ka pura running environment set up hota hain jiske wajah se computer ke jo repsourses hian vo hamara container use krta hian .
+
+
+📌📌NOTE📌📌
+📌CONTAINER (instance): is basically a actually running instance which includes the envirionment needed for ur application and is usally big in size (CONTAINER = OBJECT) and even the computer resorces are used by the container not by the image, becoz container is running instance or image .
+📌IMAGE (class): is a static screen shot of what the local devlopement enverionment should look like, and this is what we share to the other PC machnines becos its lightweith and class (IMAGE = CLASSS). 
+
+📌PRACTICAL EG OF DOCKER:
+-Uh have a mac OS, and uh want to run the ubuntu Os on mac system, uh can achive this by the help of docker
+-MAC : on the Mac os run the following command 
+	docker run -it ubuntu
+-Using the above cmd uh can run the ubuntu container in ur mac os 
+-And once it downloads the ubeuntu container, on the mac terminal, ubantu Termincal will be running becoz uh are using the ubuntu container on the mac 
+uh can run the "ls" cmd, and uh will get the files and folders of the ubuntu machine, not of the mac machine 
+-So even if uh make files and folders in the ubuntu os, (whcih is running on the mac os), these files and folders will be made in the ubuntu os not on the mac os, all these files and folders will be isolated form the mac os.
+-This ubuntu container is completely isolated(different) from mac os, even tho the ubuntu os is running on the mac os system using docker.
+-If uh delete the ubuntu container, all the files nd folders uh made in that ubuntu os will get deleted, becoz these are not present on the mac os memory, some of the  memory will get share by the ubuntu os (which is present/running on the mac os), and in that memory(whcih is separete form the mac os) these files and folders will be made.
+-This is very similar to virtual machine , but docker is not excatly same as virtual machine, docker is lighweigth then vm.     
+
 
 📌DOCKER VS GIT
 🔧 What Git and GitHub Do
 Git is a version control system. It tracks changes to source code over time.
 GitHub is a remote hosting platform for Git repositories. It helps developers:
-Share and collaborate on code
-Review changes (pull requests)
-Track issues and progress
-❗ Git and GitHub manage your code, not your runtime environment.
+-Share and collaborate on code
+-Review changes (pull requests)
+-Track issues and progress
+-❗Git and GitHub manage your code, not your runtime environment.
 
 🐳 What Docker Does
-Docker is a containerization platform. It packages your application with everything it needs to run:
-Operating system libraries
-Dependencies (like .NET, Python, Node.js, etc.)
-Configurations
-Think of Docker as a "mini virtual machine", but much more lightweight and faster.
+Docker is a containerization platform. It packages your application with everything it needs to run like:
+-Operating system libraries
+-Dependencies (like .NET, Python, Node.js, etc.)
+-Configurations
+-Think of Docker as a "mini virtual machine", but much more lightweight and faster.
 
 💡 Why Docker When We Have Git/GitHub?
 | Feature                                         | Git/GitHub | Docker |
@@ -279,8 +293,8 @@ Podman Desktop (For those preferring Podman over Docker)
 Using Docker CLI directly on Linux
 
 📌Docker HUB:
--Docker Hub is a cloud-based registry service provided by Docker that allows developers to store, share, and manage Docker container images. Think of it as GitHub for Docker images—a central repository where users can find pre-built images, publish their own, and collaborate with others.
+-Docker Hub is a cloud-based registry service provided by Docker that allows developers to store, share, and manage Docker container images remotly. Think of it as GitHub for Docker images—a central repository where users can find pre-built images, publish their own, and collaborate with others.
 -Users can push there won project images on the Docker hub website, basically its a remote service like Drive or Git hub where uh can store the Docker Images.
 
-
+ 
 

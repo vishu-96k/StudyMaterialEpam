@@ -1,0 +1,342 @@
+DOCKER-3---
+APANA COLLEGE NOTES
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+-➡️ : for points
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH :03 DOCKER IMAGE LAYERS📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1]DCOKER IMAGE LAYERS
+
+📌IMAGE LAYERS:
+-Any docker image is made up of different layers collections
+-The image which is downloaded and has different versions, these type of images have the same base image layer. 
+-The layers which are same will not get downloaded, it will only download the different layers which is needed.
+
++---------------------------------------------------+
+| Container Layer (Writable)                        |
+|  -> Created when you run a container               |
+|  -> You can make changes here (install, edit, etc.)|
++---------------------------------------------------+
+| Image Layer 3: App Files (e.g., your code)        |
++---------------------------------------------------+
+| Image Layer 2: Dependencies (e.g., Python libs)   | 
++---------------------------------------------------+
+| Image Layer 1: Base OS (e.g., Ubuntu)             |
++---------------------------------------------------+
+
+📌BASE LAYER :
+-base layer is genrally a small size Linux based image becoz docker was made for Linux first, and after that the added the the layer so that docker can be worked on windoes machine
+
+📌Container LAYER : 
+-this is at the top 
+-LAYERS Below the container layer are read only layers, these are immutable in nature(uh cannot change these layers) 
+-Uh can only change/edit the container layer using which uh can make the new container.
+
+✅[#2]PORT BINDING
+
+📌PORT :
+-A port is a number that identifies a network service on a machine (e.g., 80 for HTTP, 22 for SSH).
+-Think: IP address = house, port = room number where a particular service lives.
+-Port jo hian vo ek prakar se virtual end points hote hian, and like ip address ek pc ka physical address hota hian, tho uss IP(home) ke bhohat sare ports(rooms) par services chal rahi hoti hai, tho hame excatly konsi service chaiye vo hame port ke through pata chalta hain.
+-Like agar ham koi web page access kr rahe hain, tho vo kise bhi server ke 80 port pr available hoga becoz web page ek HTTP request hain, and http ka port hain 80.
+EG :
+-A port is like a door or entry gate on your computer/server through which applications communicate over the network.
+Your computer has an IP address (like a building’s address).
+Ports are numbered doors (1–65535) in that building.
+Each application that wants to send or receive network traffic listens on a specific port.
+-So, if you visit http://localhost:8080, you’re connecting to port 8080 on your machine.
+-So docker container jo port par run hota hian vo host ke port se alag hota hian becoz docker kudhmain he ek VM jaise behave krta hain.
+-All of docker containers have a separate virtual file system which is diffrent from the host machine. Matlb har container ke andar jo files hoti hain vo separate files hoti hain as compare to the host machine, Means container take some space from the host machine, and they have their own file system , similarly container ke jo ports hote hain vo bhi separate hote hain as compare to the host machine.
+-Matlb container kudhme he ek alag Mchine jaise hota hain , uh can say like a VM but not actual VM becoz vo host ke OS pr he run hota hain.  
+
+📌Container port vs Host port (short)
+1) CONTAINER PORT
+-Every Docker container has its own isolated network (like a small computer inside your system).
+-That means:
+	The container can have its own IP address.
+	Inside it, apps can listen on ports (just like on a real machine).
+
+Example:
+You run an NGINX container:
+	docker run nginx //This will start the nginx container
+
+-Inside that container: NGINX is listening on port 80.
+But from your host machine, you cannot access it yet. Why?
+Because the container’s port 80 is inside its own private network, isolated from your host.
+
+2) PORT BINDING (Connecting container ports to host ports)
+-To access the container’s app from your laptop or browser, you need to map or expose that port to your host system.
+-In simple words uh need to map the container port (as its a private machine inside ur host machine) with the host ports, so that the incomming/outgoing traffic can reach the hosts ports
+	CODE : docker run -p 8080:80 nginx //this will map the 8080 port of the host with the 80 port of the container.
+-So when uh(host) visit "http://localhost:8080" from ur host machine, docker will internally forword this request to to port 80 inside the container. This is called port binding or port mapping.
+
+-Container port = the port where a process inside the container is listening (e.g., an Nginx server listening on port 80 inside the container).
+-Host port = the port on your physical/VM machine (the host) that receives incoming traffic from outside.
+-Port binding (publish) connects a host port to a container port so outside clients can reach the container.
+
+📌DIAGRAM WITH PORT MAPPING :
+                  ┌──────────────────────────────┐
+                  │      Your Computer (Host)     │
+                  │                              │
+                  │  IP: 127.0.0.1 / localhost   │
+                  │                              │
+                  │  ┌────────────────────────┐  │
+Browser Request → │  │  Host Port: 8080       │  │
+(http://localhost:8080) │  (EXPOSED by Docker)    │  │
+                  │  └────────────┬───────────┘  │
+                  └───────────────│──────────────┘
+                                  │
+                                  ▼  //This will create a docker bridge network, using which the mapping of the host and the Container port will get map.
+                     ┌─────────────────────────────┐  				and the external browers request can reach the port of the docker. 
+                     │     Docker Bridge Network    │							Internally, even if uh don't do the mapping, the containers can req/response  
+                     │  (Virtual Internal Network)  │							each other, becoz they are in the same isolated docker network.
+                     └───────────────┬─────────────┘
+                                     │												-Like if uh have 2 containers, and they are not map with the host port, but
+                                     ▼					      Still they can communicate with each other becoz they are insdie same 	
+                    ┌────────────────────────────────┐				 Isolated network.
+                    │     Docker Container (Nginx)   │
+                    │                                │							-Host and the container ports are different, so they need mapping.
+                    │  Container IP: 172.17.0.2      │
+                    │  Container Port: 80            │
+                    │  (App listening inside)        │
+                    └────────────────────────────────┘
+
+Flow Summary:
+-------------
+Browser (Host:8080)
+   ↓
+Docker port binding (-p 8080:80)
+   ↓
+Docker network bridge
+   ↓
+Container IP:172.17.0.2:80
+   ↓
+App (e.g., Nginx / Flask) responds
+
+COMMAND : docker run -p 8080:80 nginx
+Meaning:
+Host port 8080 → exposed outside
+Container port 80 → app runs inside
+When you visit http://localhost:8080, traffic is routed to container’s port 80
+
+📌DIAGRAM WITHOUT PORT MAPPING 
+                  ┌──────────────────────────────┐
+                  │      Your Computer (Host)     │
+                  │                              │
+                  │  IP: 127.0.0.1 / localhost   │
+                  │                              │
+Browser Request → │  http://localhost:8080       │
+                  │                              │
+                  │  ❌  No port exposed by Docker│
+                  └───────────────┬──────────────┘
+                                  │
+                                  │   (No binding exists)
+                                  │
+                                  ▼
+                     ┌─────────────────────────────┐
+                     │     Docker Bridge Network    │
+                     │  (Virtual Internal Network)  │
+                     └───────────────┬─────────────┘
+                                     │
+                                     ▼
+                    ┌────────────────────────────────┐
+                    │     Docker Container (Nginx)   │
+                    │                                │
+                    │  Container IP: 172.17.0.2      │
+                    │  Container Port: 80            │
+                    │  (App running inside)          │
+                    └────────────────────────────────┘
+
+
+Flow Summary:
+-------------
+Browser (Host:8080)
+   ↓
+❌ No port mapping (-p missing)
+   ↓
+Docker does NOT forward traffic
+   ↓
+Container network isolated
+   ↓
+You CANNOT access the app from browser
+
+Only other containers on the same Docker network
+can access this app (via its internal IP/port)
+
+COMMAND :docker run nginx
+Meaning:
+NGINX still runs inside container on port 80
+But that port is not accessible from your host or browser
+You could access it only from inside the container or via another container in the same network
+
+📌PORT BINDING SYNTAX :
+👇 Code:
+	SYNTAX : docker run -pHOST_MACHINE_PORT:CONTAINER_PORT IMAGE_NAME 
+
+EG :
+	docker run -p8080:3306 ngiux //This means that the port 8080 of the host, is mapped with the 3306 port of the Container port
+-So incoming request on the 8080 port can be trasfered to the 3306 port of the container. 
+-When uh do "docker ps", then the port which is visible that is the port of the Container not of the host machine. 
+-Once uh bind a host machine port with the docker container port, then that port cannot be bind to anyothere container again.
+-Containers can have same port but the host port which they are binded to must be different for each container. 
+
+✅[#3]DCOKER NETWORK 
+
+📌DOCKER NETWEORK
+-If the Docker containres are in the same isolated network, then these containers can communicate with each other from their different ports.
+-But if the docker containers are in different isolated network then they cannot communicate with each other. By communicate i mean is the req and response on the port
+-Docker has the ability to create these isolated netwok (like wifi), jiske andar ham hamare containers run kr sakte hain, and un containers ko IP address nd port no uss network ke andar ka he milta hain.	 
+-So agar ham koi bhi 2 containers ko same docker network main rakhenge tho vo dono appas main ports ke through req/response kr sakte hain browser ke through. So uh can create a docker network and create containers under that docker network.
+
+👇 Code:
+	SYNTAX : docker network ls //This will list all the networks docker has made, there will be few default networks made by docker. 
+	SYNTAX : docker network create NETWORK_NAME //This will create a new network of the specified name.
+	SYNTAX :  
+
+-What is Docker Network?
+In simple words, a Docker network is like a private Wi-Fi for your containers.
+	It allows containers to talk to each other (send and receive data) just like computers connected to the same network.
+ 	If two containers are on the same network, they can communicate using their container name and port number.
+ 	If they are on different networks, they can’t talk directly unless you connect or expose them.
+
+📌How it Works (Concept)
+When you install Docker, it automatically creates some networks.
+You can also create your own.
+Each network acts like an isolated environment where:
+Containers get their own private IP address.
+Communication happens inside that network.
+It’s secure (other networks can’t access it by default).
+
+Think of it like:
+Network 1 = Office Wi-Fi
+Network 2 = Home Wi-Fi
+If your phone and laptop are on Office Wi-Fi, they can share files.
+If your phone is on Office Wi-Fi and laptop on Home Wi-Fi, they can’t share files unless you do some special setup (like port forwarding or VPN).
+
+📌 Example to Understand : 
+Let’s say you have 2 containers:
+Container A → running a backend app on port 5000
+Container B → running a frontend app on port 3000
+
+➡️ Case 1: Same Network
+1) You create a custom network:
+👇 Code:
+	 docker network create mynetwork
+2) Run both containers on the same network:
+👇 Code : 
+	docker run -d --name backend --network mynetwork my-backend-image
+	docker run -d --name frontend --network mynetwork my-frontend-image
+3) Now frontend can talk to backend like this:
+👇 Code
+	http://backend:5000
+-They can communicate because both are on the same network.
+
+➡️ Case 2: Different Networks
+1) Run backend on network1 and frontend on network2:
+👇 Code:
+	docker network create network1
+	docker network create network2
+
+	docker run -d --name backend --network network1 my-backend-image
+	docker run -d --name frontend --network network2 my-frontend-image
+2)Now frontend cannot access backend directly, because they are on different networks.
+To make them talk, you’d either:
+*Expose backend’s port to the host using -p 5000:5000 and call it via localhost:5000, or
+*Connect frontend to backend’s network:
+👇 Code:
+	docker network connect network1 frontend
+
+📌Types of Docker Networks (Built-in)
+| Network Type | Description                                    | Use Case                       |
+| ------------ | ---------------------------------------------- | ------------------------------ |
+| `bridge`     | Default network for standalone containers      | Running apps locally           |
+| `host`       | Shares the host machine’s network              | High performance, no isolation |
+| `none`       | No network                                     | Fully isolated                 |
+| `overlay`    | Used in multi-host setups (e.g., Docker Swarm) | Clustered apps                 |
+
+
+📌 Real-Life Use Case
+Imagine you’re building a website:
+Backend API → in one container
+Database → in another container
+Frontend → in another container
+
+➡️ If all three are on the same Docker network, they can talk easily without exposing ports to the outside world.
+
+For example:
+Frontend calls http://backend:5000
+Backend connects to db:3306
+All inside the Docker network, not visible from the internet — secure and fast.
+
+✅[#3]DOCKARIZING UR OWN APPLICATION 
+
+📌PROJECT STRUCTURE : 
+-NODE : we have a basic node js app with server.js and html and css file for frontend, in which there is no Mongo DB, so we will use the MONGO database from the docker container.
+
+MONGO : this is basically the DB for our application, we will use MONGO container for building the db and storing the data from our node application.
+MONGO-EXPRESS : this is basically the UI for our mongo DB database, jisee ham hamare db ko dekh payenge , browser ke andar, this image container will interact with the mongo container. 
+-In dono(mongo and mongo-express) image ko ham pull krenge and containers run krenge, and internally these Containers will interact with each other and DB data will visile on the mongo express images container in the browser. 
+
+📌 DIAGRAM :							|
+								|
+                    🧑 User (Browser)				|		In host Machine(node app)                    Docker containers 
+                           │											 |			+-----------------------------------+         			in same network
+                           │ (HTTP Request / Response)		|	 |     +----------+		     |
+                           ▼									|		 |     |server.js |					 |             +-------------------+
+                  ┌─────────────────────┐					 |   	   |	  +----------+					   |				|MONGO DB container |
+                  │   Node.js App       │							 |			|										   |				+-------------------+
+                  │ (server.js + HTML + │						 	 |			|										   |
+                  │   CSS frontend)     │							 |			| 		+---------------+			   |	
+                  └─────────┬───────────┘					 |			|		|FRONTENTEND	   |			   |				+------------------+		
+                            │			           					 |			|		|	HTML + CSS   |				|				|  MONGO EXPRESS   |
+                            │ (DB Query)			|	 |	+---------------+	      |		   |	container     |
+                            ▼									|		 |									  |		       +-------------------+
+                 ┌───────────────────────┐				 |			|											|
+                 │   MongoDB Container   │							 |			|											|
+                 │ (Database Service)    │							 |        +------------------------------------+
+                 └─────────┬─────────────┘				 |
+                           │											 |
+                           │ (Internal communication		|
+                           │  via Docker Network)		|
+                           ▼									|
+              ┌────────────────────────────┐			 |
+              │   Mongo-Express Container  │						 |
+              │ (Web UI to view Mongo DB)  │						 |
+              └────────────┬───────────────┘			 |
+                           │											 |
+                           │ (HTTP Request)			|
+                           ▼									|
+                    🌐 Browser (localhost:8081)			|
+                     ➝ Shows MongoDB data			|
+
+📌 How It Works:
+🟢 Node.js App (on your local machine or in a container):
+Runs on a specific port (e.g., 3000)
+Sends/receives data from MongoDB
+
+🟡 MongoDB Container:
+Runs the actual database
+Receives data from Node.js app
+
+🔵 Mongo-Express Container:
+Provides a browser UI to view and manage the database
+Talks to the MongoDB container using Docker network
+
+🌐 Browser (User):
+Accesses frontend of Node app (e.g., http://localhost:3000)
+Accesses Mongo Express (e.g., http://localhost:8081) to see DB visually.

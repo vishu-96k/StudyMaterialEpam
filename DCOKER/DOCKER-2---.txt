@@ -16,3 +16,242 @@ APANA COLLEGE NOTES
 ------------------------------------
 ========CH CLOSEING SYMBOL==========
 ------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH :02 HELLO WORLD IMAGE📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1]HELLO WORLD IMAGE
+
+📌HELLO WORLD IMAGE :
+-We will download "hello-world" image from the docker hub webiste.
+-TAG : koi bhi image ke associate "tags" hote hain, tags are basically the verisions of that image , uh can see that when uh run the "docker images" cmd. Jaise node ke different versions exists krte hain, vaise he hain docker images ke diffresnt different versions ayar kr sakte hain.
+by defalut koi bhi iamge ka latest version he pull hota hain nd run hota hain if uh dont specify the version/TAG of the image.
+-Uh can see all the downloaded images in ur docker-desktop, under the images tab.
+-These docker image has a unique ID.
+-Automactically ek image ke liye uski ek image id(unique id) hoti hain, which uh can see in the docker desktop image tab.
+👇 Code:
+	SYNTAX : docker pull image-name //This will help uh get any image, even if that image is not present in ur laptop, then it will download it from the website.
+   EG :
+	TERMINAL : docker pull hello-world //This will pull the hello world image.
+
+-Now uh need to make the container from this hello-world image, then only u can see the outputs. 
+
+📌BUILDING CONTAINERS :
+-ham kise bhi image se continer ko build kr sakte hain
+👇 Code:
+	SYNTAX : docker run IMAGE_NAME // By this uh can make a container, and automatically it will create a new container(instance) of that image(class)
+    EG :
+	TERMINAL : docekr run hello-world
+
+-Containers ko docker by defalut koi bhi ek random naam de deta hain, and it also has a unique ID, uh can also check from which image it has been created. 
+-This hello-world container will print some statments, these are koi bhi image se conainer bane ka jo process hain vo ye hello world wali container print karavayega.
+
+📌DOCKER DAEMON:
+-DOCKER DAEMON : docker daemon it is the most important part of our docker desktop, jo hamare liye sare ke sare kaam krke deta hain.
+-Docker daemon pulled the "hello-world" image from the docker hub website, So basically docker daemon is the controller unit of docker who does work for us. 
+-DOCKER DAEMON RESPONSIBLE FOR :
+	1)Pullig out the images from the docker hub website / downloading the images.
+	2)Creating the containers from the images.
+	3)Building the container, running the container, providng output for the container.
+
+📌DOCKER IMAGE TAG :
+-Basically uh can download any version/Tag of a image from the docker hub.
+-Id uh dont specify any tag/verssion, then the latest version will get downloaded and will get build
+-Uh can use the following command for downloading any version image from the docker hub.
+👇 Code:
+	SYNTAX : docker pull IMAGE_NAME:VERSION/TAG_NUMBER
+    EG :
+	TERMINAL: docker pull mysq:8.0 //This will download the specific version image of mysql, that is the tag/version 8
+
+✅[#2] DOCKER COMMANDS 
+
+📌BASIC COMMANDS :
+1)docker pull IMAGE_NAME //this will donwload the image from the docker hub website.
+
+2)docker images //this will show all the images in our Docker desktop.
+
+3)docker run IMAGE_NAME //This will make a new running container, If the image is not presnt then automatically that image will get pulled from the docker hub and container will also get build and the container will start running.
+-docker run will always create a new container, and will start running it. But docker start and stop will work on the exsisting container.
+4)docker run -it IMAGE_NAME // We can run our images in interactive mode, this mode allows us to access the terminal of the container (container terminal), which helps us to provide input and output for the container. We will go into the container terminal after running this command. We can run the multiple commands for the container, eg ubuntu container terminal main tum "ls" command run kr sakte ho.
+🔹 Meaning:
+docker run → means you want to start (run) a new container.
+-it → means “interactive terminal.” It lets you talk to the container directly using commands (like typing in a terminal).
+🔄EG : 
+	👇 Code:
+	docker run -it ubuntu
+What happens:
+Docker creates a new Ubuntu container.
+You are dropped inside the Ubuntu terminal (like sitting inside a new mini-computer).
+Now you can type commands like :
+ls
+mkdir test
+cd test 
+//and it behaves like a real Ubuntu machine.
+
+5)docker ps -a // this will show uh all the containers uh have created and their status like is it in running state or not. 
+     
+6)docker ps //This command will only show uh the running container.
+
+7)docker start CONATAINER_NAME //using this we can start the existing container which is not running, this command will not make a new conatienr and run it like the "docker run " command do.
+
+8)docker stop CONTAINER_NAME // This will stop the running container.
+
+9)docker rmi IMAGE_NAME //It is used to remove or destroy a image, This image will get deleted form the docker desktop aap if uh run this command. If the image has a container, then uh should destroy the container first no mater the container is running or not, then only uh can delete the image.
+
+10)docker rm CONTAINER_NAME // This will delete the exsisting container, After this uh need to make a new container and run it again.
+
+11) docker logout //This will log uh out from the account
+
+12) docker login // this will make uh log in again, either using web or a OTP
+
+13) docker push IMAGE_NAME_CREAETD_ON_DOCKER_HUB //this will push ur local image into the dokcer hub web app
+
+📌VERSIONING COMMANDS :
+1)docker pull IMAGE_NAME:version //using this uh can pull a specific version/Tag of a image.
+-uh can download diffrenet versions of a single image, and uh can also build 2 diff containers using the same image but with different versions.
+-If uh will do "docker images" then same images with diffrenet version will be also seen. and even uh can run the differwent versions containers of the same image.
+-If uh download the diff versions of a image, then only the diffrent layers will get download becoz the base image layer will be same for the diffrenet versions.
+-Jab bhi ham same image ke multiple images ko use kr rahe hote hain tho kuch layers uss image ki common hoti hian 
+
+2)docker run -d IMAGE_NAME // this "-d" means detach mode matlab kisi bhi container ko ham ek Tarah se background main run kr sakte hain, by default sare docker commands are in attach mode. 
+🔹 Meaning:
+docker run → start a new container
+-d → “detached mode” → means run it in the background
+
+🔹 What it does:
+When you use -d, Docker starts the container but doesn’t keep your screen busy.
+It runs the container in the background, and you just get the container ID as output.
+
+🔄EG DETTACH MODE: 
+	👇 Code:
+	docker run -d nginx //It runs quietly in the background — your terminal is free.
+
+This starts an nginx web server container.
+The server keeps running in the background.
+You can continue using your terminal for other commands.
+If you want to see what containers are running, you can type: 
+	docker ps //You’ll see nginx running there.
+-using this command uh can also make multiple containers run, beoz uh wont get stuck in the running container, it will run it in the backround
+
+🔄EG ATTACH MODE: 
+	👇 Code:
+	docker run nginx
+
+-You’ll see all the logs and outputs directly on your screen — you can’t type anything else until you stop it.
+
+⚙️ Difference between Attach mode and Detach mode in Docker
+--------------------------------------------------------------------------------------------------------------
+| Feature / Point                  | ATTACH MODE (Default)                                    | DETACH MODE (-d)                                   |
+|----------------------------------|----------------------------------------------------------|----------------------------------------------------|
+| Meaning                          | You are directly connected to the container terminal.    | Container runs in the background.                  |
+| Command Example                  | docker run -it ubuntu                                    | docker run -d nginx                                |
+| Terminal Behavior                | Terminal stays busy showing container output/logs.       | Terminal becomes free immediately after starting.  |
+| Interaction                      | You can type and interact inside the container.          | You cannot interact directly unless you attach later.|
+| When to Use                      | For testing, debugging, or learning (manual interaction).| For running long-running apps/services.            |
+| How to Exit                      | Type 'exit' or press Ctrl + C to stop/leave container.   | Use 'docker stop <container_id>' to stop it.       |
+| Checking Running Containers      | You only see current container activity on screen.       | Use 'docker ps' to see running containers.         |
+| Example Use Case                 | Testing commands inside Ubuntu or Python.                | Running Nginx or MySQL server in background.       |
+| Real-Life Comparison             | Watching a movie — you see everything live.              | Playing music in background — it runs silently.    |
+--------------------------------------------------------------------------------------------------------------
+
+1️⃣ How to attach later to a detached container
+When you run a container in detached mode (-d), it runs in the background.
+You can reconnect (attach) to it later using this command:
+	docker attach <container_id_or_name> //Now you’re inside the container terminal again, just like attach mode.
+
+🔹 To detach again safely (without stopping it):
+Press
+Ctrl + P + Ctrl + Q //This will leave the container running in background again. (If you press only Ctrl + C, it will stop the container.)
+
+🧩  Quick summary
+| Command                 | What happens                                                                             |
+| ----------------------- | ---------------------------------------------------------------------------------------- |
+| `docker run ubuntu`     | Container starts and stops immediately (no interaction).                                 |
+| `docker run -it ubuntu` | Starts and opens Ubuntu terminal interactively.                                          |
+| `docker run -d ubuntu`  | Starts Ubuntu in background (but likely stops right away because no command is running). |
+| `docker attach <id>`    | Reconnects to a running container’s terminal.                                            |
+| `Ctrl + P` + `Ctrl + Q` | Detach safely from a running container (keep it running).                                |
+
+
+🔄EG DETTACH MODE MYSQL :
+TERMINAL  : 👇 Code:
+		docker run -d MySQL // now to run the MySQL image/conainer , uh need to pass few environenatal variables with it
+-environmental variables : we need to define a root password which uh must define in the MySQL container, and this uh need to pass as environmental variable
+-Uh can always send envirionmental variables in the container while starting it or running it.
+-Uh need to use the "-e" option for sending the envrionental variables  
+👇 Code:
+	docker run -d -e MYSQL_ROOT_PASSWORD=secret mysql //we are sending the password as enviornmental variable.
+	
+
+
+12)dockere run --name CONYTAINER_NAME -d IMAGE_NAME // uh can give a custom name to the container using this command
+	👇 Code:
+	dockere run --name CONYTAINER_NAME IMAGE NAME //this will make a new container with the specified name, and run  it in the attach mode
+
+
+13)docker network ls //This will list all  the networks uh have created so far
+
+📌TROUBLE SHOOT COMMANDS :
+-These are the commands which are used if any isuue come , to check that uh can use these commands.
+1) docker logs CONT_NAME/ID //this will show uh all the logs of that container, which can help uh to fine the root cause of that containers problem.
+-Uh can also access the logs from the docker desktop app
+
+2)docker exec -it CONT_ID/bin/bash //this exec command allows us to run additional command on an already running container, ek container already run kr raha hain nd uske andar agar hame terminal ko access krke kuch commands ko run krna chahte hain tho we can use these command and iteractive mode main uss container ke terminal ko access kr sakte hain.
+-Basically by accessing the terminal of the container uh can check the envirionmental variables of the container, uh can check the files, and even different dependencies.
+
+
+✅[#2] DOCKER VS VM
+ 
+📌OS LAYERS :
+-For any os system like linux, windows or mac uh have the following structure of layers
+
+	APPLICATION LAYER : Application layer pr he jo hamare system main jo apps hain jaise ki browers vagere vo yahi pr hote hain and run krti hain 
+		|
+ 		|
+		|
+          HOST OS kernal
+		|
+		|
+		|
+	    Hardware
+
+-So the main fundamental diffrence between the docker and the VM is between the layers of OS that they virtulize 
+
+📌DOCKER 
+-Docker jis bhi machine pr hota hian usi ki HOST OS (kernal) ko use krta hian, vo host ka OS he use krta hain, and sirf application layer ko virtualize krta hain  
+-means Docker jo hain vo apnaa kudhka OS Virtualize nhi krta.  
+-Since docker only virtulize Application layer, isiliye docker ke pass less overhead hota hain and docker isi ke karan lightweight bhi hota hain and even faster. 
+-DISADANTAGE : Docker jo hain vo Host ka kernal (OS) use krta hain, And initially docker was only built for linux OS, So majority of the images are linux based images, So docker needs linux OS (kernal), But still we can use docker on windows and mac , HOW?
+-ANS: uh can use docker on windows and mac becoz, yaha pr hame docker desktop help krta hain. 
+	-Docker desktop basically adds a lightweiht hyperwiser layer to our system, which internally use a lihtweigth linux distribution , jiski madad se ham hamare containers ko apane non-linux OS par bhi run kr pate hain.
+	-In simple words docker desktop contains a small linux based VM, whcih helps us to run our conainers. and this is the reason we prefer to run docker on linux based systems.
+	-Genrally docker ki performace linux based machine pr jadha achi hoti hain as compare to mac nd windows 
+
+
+	APPLICATION LAYER : Docker sirf application layer ko he virtualize krta hain and host ka he OS use krta hain. 
+		|
+ 		|
+		|
+          HOST OS kernal
+		|
+		|
+		|
+	    Hardware
+
+
+📌VIRTUAL MACHINE (VM)
+-VM jo hain vo Host machine ke OS (kernal) and application layer, dono ko virtulize krta hain 
+-VM os kernal and application layer, dono kudh ka use krti hain, becoz of which it is heavy in size 
+-VM becoz they have their own os , they are compatible with all underlying OS becoz VM uses their own OS, they dont use the os of the HOST. 
+-So VM kudka kernal use kregi 
+
+	APPLICATION LAYER ------+ 
+		|   		|
+ 		|		|
+		|		|---------------VM  jo hian vo in dono layers (kernel and Appplication) layers ko virtualize krta hian, means apana kudhka		|		|		kernel and application use krta hain.	
+          HOST OS kernel	|    
+		|	--------+	
+		|		
+		|		
+	    Hardware 		
+
+ 

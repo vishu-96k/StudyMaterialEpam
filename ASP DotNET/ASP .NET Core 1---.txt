@@ -4,18 +4,45 @@ WHAT IS In PROCESS and Out PROCESS HOSTING
 WHAT IS IIS, IIS EXPRESS, KESTRAL WebSERVERS
 WHAT IS DIFF BETWEEN ALL, ASP, APS .NET, ASP .NET CORE, MVC, API, API MVC etc.
 
+
+
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+➡️ : for points
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+ 
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
 ----------------PART 1 ::-----PROJECT STRUCTURE ------------
 
-✅ASP .net CORE 
+📌✅✅✅✅✅✅✅✅✅📌CH : PROJECT STRUCTURE📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1]ASP .NET CORE
+
+📌ASP .NET CORE
 -ASP .net is not web forms, ASP.NET is a broader framework that includes different models like:
 Web Forms (older UI-based model),
 MVC (Model-View-Controller),
 Web API, and
 ASP.NET Core (modern, cross-platform version).
+
 -ASP.NET Core is not the same as Web Forms. ASP.NET Core is a modern, cross-platform web framework, while Web Forms is an older, Windows-only framework for building UI using drag-and-drop controls.
 
-📌PROJECT STRUCTURE 
+✅[#2]PROJECT STRUTURE :
 
+📌PROJECT STRUCTURE:
+FirstCoreWEbApplication //Solution name. Inside a solution there can be multiple projects
 FirstCoreWEbApplication  //This is the project name under the solution, We have created a empty templated web application in asp .net core
 	-Connected Services
 	-Dependencies
@@ -23,7 +50,7 @@ FirstCoreWEbApplication  //This is the project name under the solution, We have 
 	-appsettings.json
 	-Program.cs
 
-🔷1. Connected Services
+📌1. Connected Services
 -This is used for connecting to external services such as AZURE.
 -it helps to add the external functionality into our application, so that we can connect to the external services(like DB , AWS S3).
 -A Visual Studio feature that allows your app to easily connect to external services.
@@ -33,7 +60,7 @@ REST APIs
 gRPC
 WCF services
 Database connectors
-- Real-life Analogy:
+-Real-life Analogy:
 Imagine your app is like a smart home system. Connected Services are like adding external smart devices (e.g., Google Assistant, smart thermostat) to work with your system.
 
 -Example:
@@ -42,8 +69,8 @@ Visual Studio adds required NuGet packages
 Configures credentials in appsettings.json
 Adds a client class to connect with the Azure service.
 
-🔷 2. Dependencies
--This folder included and manages all the libraries your applucatoin is using.
+📌 2. Dependencies
+-This folder included and manages all the libraries your application is using.
 -All the libraries which uh install using the Nuget package manager is inlucded in this folder
 -That means it includes both built-in ASP.NET Core libraries and third-party libraries you might add later to enhance your application’s functionality.
 -Contains NuGet packages, SDKs, and .NET libraries your app needs to run or build.
@@ -53,7 +80,7 @@ Imagine building a house — dependencies are like cement, bricks, screws, windo
 a. Microsoft.NETCore.App : basic tools (hammer, drill, ruler)
 b. Microsoft.AspNetCore.App : specialized tools (tile cutter, electric saw) for web development.
 
-📌Microsoft.NETCore.App
+➡️ Microsoft.NETCore.App
 -it includes the BCL and .Net run time, which all .net aplications requires to run.
 -Core libraries that allow any .NET app to run. 
 - What it includes:
@@ -70,7 +97,7 @@ var upperNames = names.Select(name => name.ToUpper()).ToList();
 
 You're using LINQ and Collections from Microsoft.NETCore.App.
 
-📌Microsoft.AspNetCore.App
+➡️ Microsoft.AspNetCore.App
 -This includes the extra libraris wihch uh install using the nuget package manager.
 -This package provides the features like ORM , Entity framwrok, MVC , Razor Pages, API, Controllers, the packages(namespaces)/ Libraries which are required for these features to be used in our application are in this file.
 -Extra libraries for ASP.NET Core apps like:
@@ -109,7 +136,7 @@ This comes from Microsoft.AspNetCore.App.
 
 -Microsoft.NETCore.App provides the core functionality needed to run any .NET Core application. Microsoft.AspNetCore.App extends Microsoft.NETCore.App and add ASP.NET Core-specific libraries and functionality that are essential for building and running web applications.
 
-🔷3. Analyzers
+📌3. Analyzers
 -Means it is intregated with vs code so that when uh are writing the code, the code is analize and quality of code is maintained.
 -Real-time tools that analyze your code and warn you about:Bad practices
 Bugs
@@ -124,7 +151,7 @@ int unused = 5; // ⚠ Warning from analyzer
 
 
 
-🔷4. Properties / launchSettings.json
+📌4. Properties / launchSettings.json
 -it tells how the application is going to run/start  locally, on which server etc
 -Holds the launchSettings.json file, which configures how the app runs locally.
 - It defines the environment, URLs, and profiles (IIS Express, Kestrel, etc.) used to run the project locally using Visual Studio.
@@ -156,7 +183,7 @@ Set environment as "Development"
 🛠️ Real-life analogy:
 Like setting up environment profiles in your phone: home Wi-Fi vs office Wi-Fi. It sets up how your app behaves in different environments (dev, staging, production).
 
-🔷5 appsettings.json
+📌5 appsettings.json
 -This is a configuration file where we can define key-value pairs for settings used throughout our application. 
 -. It typically includes connection strings, logging configurations, API keys, or any other application-level configuration
 -Connection string means, Database connection string
@@ -192,7 +219,7 @@ var connStr = Configuration.GetConnectionString("DefaultConnection");
 
 
 
-🔷6. Program.cs
+📌6. Program.cs
 -this is the main file of your appljucation form where the application strats
 -The entry point of the app (contains the Main() method).
 -Creates and configures the web host.
@@ -220,7 +247,7 @@ app.Run();
 
 
 
-🔷 7. wwwroot/
+📌7. wwwroot/
 Default public folder for static files like:
 CSS
 JS

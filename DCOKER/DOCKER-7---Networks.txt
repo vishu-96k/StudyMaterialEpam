@@ -1,0 +1,95 @@
+DOCKER-7---Networks
+APANA COLLEGE NOTES
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+➡️ : for points
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+ 
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : DOCKER NETWROKS📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1]DOCKER NETWORKS
+
+📌CONTAINERS 
+-kise bhi container ko jab ham crete krte hian tho, Containers have there own network inside the docker.
+-DOcker networking is all about how the Containers are going the interact with each other nd even with the outside world.
+-The containers interact with the outside world using the browser, and uh need to bind the host ports with the containers ports so that the incoming and outgoing req/res can be possible with the containers.
+-By default docker creates 3 networks, and these 3 netwroks have 3 diff drivers attach with it, which are
+NAME 		DARIVE
+bridge		bridge
+host 		host
+none 		null
+
+-If uh create a new network then by default its of the "bridge" driver type.
+DRIVER :drivers are basically, these are the helpers, which define and tells the networks how they will receive and send msges with other networks
+
+📌TYPES OF DRIVER/NETWORKS
+1)BRIDGE DRIVER : 
+DIGRAM :
++--------------------------------------------------+
+|                  HOST                            |
+|                                                  |
+|   +-------------+       +-------------+          |	Container B is new container, jaise he hamane vo banaya, by default jo bhi bridge hota use  
+|   | Container A |       | Container B |          |  	vo jake attach ho gaya.
+|   +-------------+       +-------------+          |
+|         |                     |                  |
+|         v                     v                  |
+|      +---------------------------+               |
+|      |          Bridge           |               |
+|      +---------------------------+               |
+|                                                  |
++--------------------------------------------------+
+
+                Docker Network
+                     ↓
+                  BRIDGE
+
+
+-When ever we create a new container inside docker,  and by default jo bhi hamara bridge hota hian uske sath hamare containers aake attach ho jate hain jaise dramgram main dikhaya hain.
+-jo bhi container default bridge ke andar hote hian vo sare ek dusare ke sath without exposing their port bath kr sakte hain, even vo containers outside docker bhi using the bridge connect kr skate hain
+-If uh don't specify driver for ur network then this is the bydefalut network driver which will get create.
+-TYPES OF BRIDGE DIRVER
+	1)default : The name is also "Defalut" and the driver is also "bridge", this is called default bride
+	2)Custom  : uh can create the network and set its driver as the "bridge" this is called custom bride 
+
+ASCII diagram:
+[Host] --- NAT/bridge --- [ContainerA 172.18.0.2]
+                         [ContainerB 172.18.0.3]
+
+👇 Code: 
+	SYNTAX : docker network create "CUSTOM_NAME_OF NETWORK" //this will create a network of type bridge
+	EG : docker network create my-bridge-network  //Create a bridge network
+	     docker run -d --name myapp --network my-bridge-network -p 8080:80 nginx  //Run a container in bridge network
+
+
+2)host : host(network) bridge type of network main jo bhi container hamane create kiya hian, vo same network use krta hian as our host machine.
+	-The container uses host IP and ports directly (e.g., container listening on port 80 = host port 80).
+	-Iss type main, container ke pass koi bhi IP address nhi hota becoz vo same host ka he IP use krta hain.
+	-Container is created without its own IP address
+
+👇 Code: 
+	SYNTAX : docker run  --network host "IMAGE_NAME" //this will run the image inside the Host network type, so it will use the Host IP and the hosts port directly
+	EG :docker run -d --network host nginx //it will run the nginx Container in the host network mode
+
+3)null : In this type of network main jab bhi hame ek pura isolated container create krna hota hain, ek asa container jo dusare contaienrs se bhi isolated(not connected) hain and host machine se bhi isolated hian, tho tab ham vo container "Null" Driver (network) type main banate hain
+👇 Code: 
+	SYNTAX : docker run -it --network none "IMAGE_NAME" //this image will run inside the "null" network, this will not be connected with any of the containers, neither with the host machine.
+	EG : docker run -it --network none ubuntu // it will run the ubuntu container in null netwrok
+
+📌📌NOTE📌📌 
+-Inside the Dockerfile, when uh used it for the dockrizing of the node application.
+EXPOSE in Dockerfile — what it means :
+EXPOSE 80 in Dockerfile is metadata/documentation: it tells others the container intends to use port 80.
+EXPOSE does not publish the port to the host by itself. You still need -p or -P when running.

@@ -1,0 +1,156 @@
+DOCKER-6---
+APANA COLLEGE NOTES
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+➡️ : for points
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+ 
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : DOCKER VOLUMES📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1]DOCKER VOLUMES
+
+📌DOCKER VOLUMES :
+-Uh can see that while using the mongodb container for storing data for the node app, as soon as uh stop and restart the container, all the data which uh saved in the mongodb was getting lost, this is becoz data is not persistent in docker containers.
+-So by default jo virtual file system(jo ki host file system se alag hota hian) hota hian jiske andar sara data store hota hain container ka, agar container ko stop kre tho vo data lost ho jata hian.
+-But if uh want to store the data and make it persistent even after the stoping and restarting of yr container, then uh should make use of the DOCKER VOLUMES.
+
+📌VOLUMES CONCEPT WORKING
+ 
+
+	+-------------------------------------------------------+
+	|Containers, containers has there won file system.	|
+	|   +---------+						|
+	|   |MongoDB 1|						|	
+	|   +---------+-----------> +-------------+		|
+	|			    | DATA VOLUMN |		|
+	|		  |+------> +-------------+		|
+	|		  |					|
+	|		  |					|
+	|		  |					|
+	|   +---------+	  |					|
+	|   |MongoDB 2|---+					|	
+	|   +---------+-------+					|
+	|	|container FS |	this data will get vanish if uh |
+	|	|	      |	stop or restart the container	|
+	|	+-------------+					|
+	|   Data will get store in the containers file system   |
+	|   first and then it will also get replicated in the 	|
+	|   Volumn						|
+	|							|
+	|							|
+	|							|
+	+-------------------------------------------------------+
+
+-CONCEPT : volumns ka conpcet iss tarah se work krta hian, basically ham ek extra space(volums) hoti hain jo apane HOST system pr reserve kr sakte hain, and this reserve space is directly manage by docker.
+  	-Nd ye jo new space hain, jo ki host pr located hain, is space ko apane container ke sath mount kr dete hain.
+	-Now once uh mount the volume(reserve space) from host to container, then jo bhi data container ke file system main store hoga, vo sara data host wale volumes main bhi replicate hoga.
+	-So even if uh stopped the mongoDB container, and restart it again, then the data from the container file system will be gone, but the same data is replicated on the volumn, and this data will be fetched from the volume, and we can persist the data.
+	-Infact even if uh delete the whole container, then also the data will be there in the host volumn and uh can axis that data .
+	-Even if uh have multiple containers running(mongo1 and mongo2), then uh can mount both the containers to the same volume also, and both/multiple containers can store therir data in that volume.
+
+
+📌PRACTICAL ON DOCKER VOLUME
+-We will take eg of a ubuntu container
+-Assumn that data is geting store in some directory inside of the container like  : "/test/Data" ---> this is the directory in which data is getting store inside the container, therefore its the container FS(file system) data.
+-now uh need to copy the same data from the container to ur host file system.
+-"-v" using this flag uh are telling the docker that hamari host ki konsi volume hamare container ki kiss directory(directory matlb jaha data store ho raha hoga vo folder pr container ke andar ka) ke sath map/ATTACH ho rahi hain.
+
+DIAGRAM :
++------------------------------------------------------+
+|                       HOST                           |
+|                                                      |
+|   +-------------+          +-------------+           |
+|   |  ubuntu     |          |   data      |           |
+|   |  container  | <------> | volume      |           |
+|   |             |          |             |           |
+|   +-------------+          +-------------+           |
+|        |                          |                  |
+|   /test/data              /Desktop/data              |
+|                                                      |
++------------------------------------------------------+
+
+Explanation (Docker Volumes):
+/Desktop/data → folder on Host Machine.
+/test/data → folder inside the Container.
+They are linked using a Docker volume bind mount, so changes are synced both ways.
+-Any file you put in /Desktop/data will appear in /test/data inside the container, and vice versa.
+
+👇 Code:
+SYNTAX TO MOUNT THE VOLUME : docker -v host/path/for/volumn : Container/data/folder/path  --> this will mount the volumn with the data folder of the container, so that whaterver data is in any folder will get replicated in to the other folder.  
+
+1) Create a Volume :
+	 docker volume create mydata //This will create volume(folder) in the directory c/Docker/Volumn
+
+2) Attachting the vol:
+	dokcer run -it -v Users/desktop/mydata:test/data ubuntu  
+	Explanation:
+	docker volume create mydata → Creates a named volume mydata.
+	-v mydata:/test/data → Mounts the volume mydata to the container path /test/data.
+	ubuntu → The base image used to run the container.
+
+3)uh can create files and folders inside the containers test folders,(test/data) and uh can see the same data into the host volumn.
+-Run the container in the intercactive mode using "-it", and do the following commands
+
+	TERMINAL : dokcer run -it -v Users/desktop/mydata:test/data ubuntu  
+		   ls
+		   cd test
+		   cd data
+		   touch index.html  //make new files in the container "/test/data" folder
+		   touch server.html  //uh will see that same files are there in the host volumn which is presnt on the desktop 
+			
+		   docker stop //restart the container, nd files will not get vanish becoz of volumns 
+		   docker start ubuntu
+		   docker exec -it ubuntu
+		   cd test//data ls 
+		  -Uh can see that the files which uh made before restarting the container are still present	
+
+
+📌📌NOTE📌📌
+-Even if uh restart the container, the files and folders will not get vanish becoz uh have mapped the volumes.
+-Even if uh delete the container or the image, still the host volumn folder will be there, and even it will have the data in it. 
+-even uh can also attach the volume to the mongo container, even uh can use the compose file for this, and mount the volumns, the data is getting store in the data folder inside the mongo container, uh can see this in the official documentaions.
+-By default if uh create volums without mentioning the directory, it gets store inside the docker/volume folder inside C drive
+
+
+📌WAYS TO ATTACH VOLUMNS WITH RUNNING CONTAINERS :
+-U can attach the volumns wiht running Containers using the following ways, and 2 importent flags:
+1)Nameed Volumns 
+	SYNTAX : docker run -v VOLUME_NAME:CONTAINER_DIRECTORY  //This will mount the container diretory with the volum which uh have specified, if that volumn is not present then it will get creaetd in the c/docker/volumns folder
+	
+2)Anonymous Volumes
+	-In this any volumn will get attach to the Container path, in this we only give the container mount path where the data is storing.
+	👇 Code: 
+	docker run -v MOUNT_CONTAINER_PATH //This will mount any anonomous volum with teh container data	
+	-Incase of named volumns and anonymous volumns, docker is going to manage them, becoz vo C/DOCKER/VOLUMES Folder main store hone wale hain, so docekr will handel them	
+	
+3)Bind Mount
+	-in this, hamari kise local host directory ko directly ham hamare docker container ke sath bind kr dete hain, local host ka koi folder will get mounted.
+	👇 Code:
+	docker run -v HOST_DIRECTORY_PATH:CONTAIENR_DIRECTORY_DATA_PATH  
+	-In this case, hamare volume ko host machine ka OS jo hian vo manage kr raha hota hian, becoz hamare dirctly host machine ke folder ko volum bana diya hain isiliye.
+
+FLAS USING WIHCH UH CAN MOUNT THE VOLUM TO RUNNING CONTAINER:
+	1) --volume : shortcut is "-v"
+		      -Assum uh have create any volum using the "docker create" command
+		      -The uh can use the Name volume way to bount it 
+		      EG : docker run -v -VOL_NAME:CONTAINER_DIR  //This will mount the volume, and if the volume is not created then automactially the volumn will get created. 	
+	2) --mount : THE THINGS UH CAN DO WITH THE -V FLAG, SAME CAN BE DONE WITH TEH MOUNT FLAG
+
+
+📌📌NOTE📌📌
+👇 Code:
+docker volume prune //this is the command which is used to delete the unused local volumnes, this will delete all the anonomous volumes command
+

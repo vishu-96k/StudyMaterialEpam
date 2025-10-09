@@ -1,5 +1,5 @@
 DotNet---
--📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+-📌✅✅✅✅✅✅✅✅✅📌CH :MODULE 1📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
 - : FOR HASHTAG POINTS (HashTag)
 -📌: FOR POINTS (Black pens)
 -🔄: for eg
@@ -137,7 +137,7 @@ DIAGRAM :
 
 |-> CLR (for .NET Framework)         |-> C#             |-> System.IO
 |-> CoreCLR, Mono (modern .NET)      |-> F#             |-> System.Net
-                                    |-> Visual Basic    |-> System.Collections
+                                     |-> Visual Basic   |-> System.Collections
 
 Features:                          All compile to:       Provides:
  - Garbage Collection               -> CIL               - Data structures
@@ -230,7 +230,7 @@ BCL (Base Libraries)      |                          |
 📌how does .net achieve Type safety Exception handling Interoperability Security Thread management?
 1. Type Safety: Prevents you from using data in the wrong way, How .NET achieves it:
 Compile-time checking: Errors are caught before you run the program.
-Runtime checking: The Common Language Runtime (CLR) verifies types at runtime to prevent unsafe behavio
+Runtime checking: The Common Language Runtime (CLR) verifies types at runtime to prevent unsafe behaviour
 🧠 Example:
 int number = 10;
 string text = number; // ❌ Error - can't assign int to string
