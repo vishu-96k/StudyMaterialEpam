@@ -1,0 +1,904 @@
+ITIL GPT IMP---
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌INDEX FROM GPT📌✅✅✅✅✅✅✅✅✅📌
+
+🌐 What is ITIL?
+ITIL provides a structured approach to managing IT services.
+It defines best practices, processes, and terminologies for delivering quality IT services efficiently and effectively.
+
+It helps organizations:
+Improve customer satisfaction
+Reduce downtime and incidents
+Improve service delivery and change management
+
+Align IT with business goals
+⚙️ ITIL Versions (Context)
+ITIL v3 (2007) – focused on the Service Lifecycle (5 phases)
+ITIL 4 (2019–present) – focuses on Service Value System (SVS) and Guiding Principles, adapting to modern Agile, DevOps, and Cloud environments.
+
+📘 Detailed ITIL Course Index (for Interview Preparation)
+
+Here’s a complete ITIL 4 Foundation–level syllabus you can follow for interview prep, structured in a logical study order:
+
+1️⃣ Introduction to ITIL & ITSM
+
+What is IT Service Management (ITSM)?
+What is ITIL and its importance?
+Evolution of ITIL (V2 → V3 → ITIL 4)
+
+Key Concepts:
+Service
+Utility and Warranty
+Service Management
+Stakeholders in ITIL
+Service Provider Types
+
+Example:
+ITSM ensures users get reliable, value-driven IT services (like helpdesk, network uptime, etc.) in a structured way.
+
+2️⃣ ITIL 4 Framework Overview
+Service Value System (SVS)
+Service Value Chain (SVC)
+Guiding Principles
+Governance
+Continual Improvement
+Practices (instead of processes in ITIL v3)
+
+3️⃣ ITIL Guiding Principles (Core Values)
+Focus on Value
+Start Where You Are
+Progress Iteratively with Feedback
+Collaborate and Promote Visibility
+Think and Work Holistically
+Keep It Simple and Practical
+Optimize and Automate
+
+Example:
+“Start where you are” means: assess existing processes before reinventing new ones.
+
+4️⃣ The Service Value System (SVS)
+Components:
+Guiding Principles
+Governance
+Service Value Chain
+Practices
+Continual Improvement
+Purpose and Interaction between components
+
+5️⃣ The Service Value Chain (SVC)
+6 Core Activities:
+Plan
+Improve
+Engage
+Design & Transition
+Obtain/Build
+Deliver & Support
+
+Example:
+When a new application is rolled out, “Design & Transition” ensures smooth deployment, while “Deliver & Support” ensures ongoing service.
+
+6️⃣ Key ITIL Practices (Most Asked in Interviews)
+There are 34 ITIL Practices, but focus on the top 10–12 core ones for interviews:
+
+🔹 Service Desk
+Role of Service Desk (Single Point of Contact)
+Incident logging, categorization, and escalation
+
+🔹 Incident Management
+Purpose: Restore normal service quickly
+Major Incident handling
+Priority, Impact, and Urgency
+Example:
+
+A user unable to access email → logged as an incident → resolved by Level 1 team.
+🔹 Problem Management
+Purpose: Identify and eliminate root causes
+Reactive vs. Proactive Problem Management
+Known Error Database (KEDB)
+
+🔹 Change Enablement (Change Management)
+Standard, Normal, and Emergency Changes
+Change Advisory Board (CAB)
+Example:
+Deploying a new software version is a “Normal Change”.
+
+🔹 Service Request Management
+Handling user requests (access, password reset, etc.)
+Service Catalog
+
+🔹 Knowledge Management
+Creating and maintaining a knowledge base (KB)
+Knowledge-Centered Support (KCS)
+
+🔹 Configuration Management (CMDB)
+Maintaining a database of Configuration Items (CIs)
+Relationships between IT assets and services
+
+🔹 Service Level Management (SLM)
+SLAs, OLAs, UCs
+Monitoring and reporting service performance
+
+🔹 IT Asset Management
+Tracking and managing IT assets through their lifecycle
+
+🔹 Monitoring and Event Management
+Detecting and responding to events (alerts, warnings, exceptions)
+
+7️⃣ Continual Improvement
+The Continual Improvement Model (7 Steps):
+What is the vision?
+Where are we now?
+Where do we want to be?
+How do we get there?
+Take action
+Did we get there?
+Keep the momentum
+Example:
+After each release, review incidents to identify improvements for the next cycle.
+
+8️⃣ Relationship between ITIL and Modern Practices
+ITIL vs Agile
+ITIL vs DevOps
+ITIL in Cloud/Automation Environments
+Integration with Jira, ServiceNow, etc.
+
+🧩 Bonus: ITIL v3 Lifecycle Phases (for legacy knowledge)
+
+Some companies still use ITIL v3 terms — learn them briefly:
+
+Service Strategy
+Service Design
+Service Transition
+Service Operation
+Continual Service Improvement (CSI)
+
+🧠 Interview Tips:
+
+Focus on Incident, Problem, and Change Management (most asked).
+
+Be ready with examples from real or hypothetical support scenarios.
+
+Mention tools like ServiceNow, Jira Service Management, BMC Remedy, or Freshservice if you’ve used them.
+
+Know SLA management, ticket priorities, escalation process, and root cause analysis (RCA).
+
+
+📌✅✅✅✅✅✅✅✅✅📌GPT IMP NOTES📌✅✅✅✅✅✅✅✅✅📌
+
+👇
+
+🧭 1. What is ITIL?
+
+ITIL (Information Technology Infrastructure Library) is a set of best practices for IT Service Management (ITSM).
+
+It helps organizations deliver IT services efficiently and effectively.
+
+Used widely in managed services, application support, and production support environments.
+
+
+
+🧩 2. Main ITIL Modules / Topics (Index to Study)
+
+You should focus on these core ITIL areas:
+| Sr | Module                                  | Key Focus                                                        |
+| -- | --------------------------------------- | ---------------------------------------------------------------- |
+| 1  | **Service Strategy**                    | Understanding business goals and customer needs                  |
+| 2  | **Service Design**                      | Designing new or changed services                                |
+| 3  | **Service Transition**                  | Moving services into production (Change/Release Management)      |
+| 4  | **Service Operation**                   | Day-to-day service management (Incident, Problem, Event, Access) |
+| 5  | **Continual Service Improvement (CSI)** | Ongoing process improvement                                      |
+
+
+🧱 3. Important ITIL Topics for Managed Services Interviews
+A. Incident Management
+
+Purpose: Restore normal service as quickly as possible.
+
+Goal: Minimize business impact.
+
+Example: User unable to log in — restore access quickly.
+
+Interview Questions:
+
+What is an incident?
+
+Any unplanned interruption or reduction in service quality.
+
+What are the major steps in Incident Management?
+
+Detection → Logging → Categorization → Prioritization → Escalation → Resolution → Closure
+
+Difference between Incident and Service Request?
+
+Incident = unplanned issue; Request = predefined user request (e.g., password reset).
+
+B. Problem Management
+
+Purpose: Identify root cause of incidents and prevent recurrence.
+
+Example: Frequent application crashes due to memory leak — root cause fixed.
+
+Questions:
+
+What is a Problem?
+
+The underlying cause of one or more incidents.
+
+Difference between Incident and Problem?
+
+Incident = effect; Problem = cause.
+
+What tools/techniques are used?
+
+RCA (Root Cause Analysis), 5 Whys, Fishbone Diagram.
+
+C. Change Management
+
+Purpose: Control lifecycle of changes with minimum risk.
+
+Types: Standard, Normal, Emergency changes.
+
+CAB: Change Advisory Board (approves significant changes).
+
+Questions:
+
+What is a change in ITIL?
+
+Any addition, modification, or removal that could affect IT services.
+
+What is CAB?
+
+Group that assesses and approves changes.
+
+Example of emergency change?
+
+Hotfix for a critical outage.
+
+D. Release & Deployment Management
+
+Purpose: Plan, schedule, and control builds, test, and deployment.
+
+Goal: Ensure releases go smoothly to production.
+
+Questions:
+
+What are release components?
+
+Code, documentation, configuration files, etc.
+
+What is a release window?
+
+Predefined time for deployments.
+
+E. Service Request Management
+
+Purpose: Handle routine requests like password reset, software install, etc.
+
+Tools: Jira Service Desk, ServiceNow, Remedy.
+
+Questions:
+
+Difference between Request and Incident?
+
+Request = planned user need; Incident = unplanned issue.
+
+Example of Service Request?
+
+Access to a new tool.
+
+F. Service Level Management
+
+Purpose: Maintain and monitor SLAs (Service Level Agreements).
+
+Types:
+
+SLA (with customer),
+
+OLA (between internal teams),
+
+UC (with vendor).
+
+Questions:
+
+What is SLA, OLA, UC?
+
+SLA = with customer, OLA = internal, UC = external vendor.
+
+What happens if SLA is breached?
+
+Escalation and RCA to prevent recurrence.
+
+G. Event Management
+
+Purpose: Detect and respond to events from monitoring tools.
+
+Example: CPU threshold breach alert → ticket auto-created.
+
+Questions:
+
+What is an event?
+
+Any detectable change in system state.
+
+What tools are used?
+
+Nagios, Splunk, SolarWinds, Datadog, etc.
+
+H. Knowledge Management
+
+Purpose: Capture and share knowledge (e.g., KB articles).
+
+Example: "How to restart the service" stored for reuse.
+
+I. Continual Service Improvement (CSI)
+
+Purpose: Improve service quality using feedback and metrics.
+
+Model:
+
+What is the vision?
+
+Where are we now?
+
+Where do we want to be?
+
+How do we get there?
+
+🧠 4. Scenario-Based Questions
+
+These are often asked in Managed Services roles:
+
+Question	Sample Answer
+How will you prioritize incidents?	Based on impact and urgency → defines priority.
+What if multiple P1 incidents occur?	Handle based on business impact, engage L2/L3, inform stakeholders.
+What steps do you take after resolving an incident?	RCA, documentation, closure with user confirmation.
+If a change fails, what’s next?	Initiate rollback plan, inform CAB, log problem ticket.
+How do you ensure SLA compliance?	Regular monitoring, reports, escalation matrix.
+🧾 5. Example Quick Scenario
+
+Scenario: A website is down.
+Steps (ITIL View):
+
+Incident Management — Create ticket, restore service quickly.
+
+Problem Management — Identify root cause (e.g., DB connection failure).
+
+Change Management — Implement fix permanently.
+
+Knowledge Management — Document resolution steps.
+
+---------------------------------------------------------------------------------------------------
+1️⃣ What is ITIL?
+
+Full form: Information Technology Infrastructure Library
+
+Definition: Framework of best practices for delivering IT services efficiently to customers.
+
+Goal: Align IT services with business needs and improve service quality.
+
+Example: Using ITIL to handle incidents (like server down) with defined steps & escalation paths.
+
+2️⃣ What is ITSM?
+
+Full form: IT Service Management
+
+Definition: Process of managing, delivering, and supporting IT services to customers.
+
+ITIL = Framework, ITSM = Practical implementation of that framework.
+
+Example: ITSM tool – ServiceNow, BMC Remedy, Jira Service Management.
+
+3️⃣ Difference between ITIL v3 and ITIL v4
+Feature	ITIL v3	ITIL v4
+Focus	Processes	Practices + Value
+Structure	5 lifecycle stages (Service Strategy, Design, Transition, Operation, CSI)	4 Dimensions + Service Value System (SVS)
+Approach	Process-driven	Holistic, value-driven
+Framework Type	Linear (Step by step)	Flexible & integrated (Agile, DevOps, Lean)
+Practices	26 processes	34 practices
+Goal	Deliver IT services efficiently	Co-create value with business and customers
+
+Example:
+v3 says: “Follow Incident Process”
+v4 says: “Collaborate to restore service quickly while adding value to users.”
+
+4️⃣ Major ITIL V4 Practices (34 total – key ones below)
+
+Service Management Practices
+
+Incident Management
+
+Problem Management
+
+Change Enablement (Change Mgmt)
+
+Service Desk
+
+Service Level Management
+
+Service Request Management
+
+Event Management
+
+Technical Management Practices
+
+Deployment Management
+
+Infrastructure & Platform Management
+
+General Management Practices
+
+Continual Improvement
+
+Information Security Management
+
+Project Management
+
+5️⃣ What is Incident Management?
+
+Goal: Restore normal service as quickly as possible.
+
+Definition: Handles unplanned interruptions or reduction in service quality.
+
+Example: Email server down → User unable to send mail → Incident raised → Fixed.
+
+6️⃣ What is Problem Management?
+
+Goal: Identify and eliminate root cause of incidents.
+
+Incident = Symptom, Problem = Disease
+
+Example: Repeated network drops → Find root cause = faulty switch → Replace it.
+
+7️⃣ What is Service Desk?
+
+Definition: Single point of contact between users and IT team.
+
+Functions:
+
+Log incidents/requests
+
+Communicate updates
+
+Resolve basic issues
+
+Example: User emails “password reset” → handled by Service Desk.
+
+8️⃣ What is Event Management / Monitoring?
+
+Goal: Detect and respond to alerts or notifications from IT systems.
+
+Example: Disk space alert at 90% triggers automatic ticket → IT team checks before failure.
+
+9️⃣ What is Service Management?
+
+Definition: Managing end-to-end design, delivery, operation, and improvement of IT services.
+
+Objective: Ensure services meet business goals and customer expectations.
+
+🔟 Difference Between Incident and Service Request
+Aspect	Incident	Service Request
+Meaning	Unplanned interruption/failure	Request for new service/info/change
+Goal	Restore normal operation	Fulfill user need
+Example	“Email not working”	“Create new email account”
+1️⃣1️⃣ KPI (Key Performance Indicator)
+
+Definition: Measurable value showing how effectively a process meets goals.
+
+Example:
+
+Incident Resolution Time < 4 hours
+
+% of incidents resolved at first contact = 90%
+
+1️⃣2️⃣ SLA (Service Level Agreement)
+
+Definition: Agreement between service provider & customer about service standards.
+
+Includes: Response time, resolution time, uptime, etc.
+
+Example: SLA: All critical incidents must be resolved within 4 hours.
+
+✅ Quick Real-Life Example
+
+Scenario: A user’s laptop won’t boot.
+
+User calls Service Desk → Ticket logged → Incident Management restores laptop.
+
+Repeated issue → Problem Management investigates root cause.
+
+Metrics tracked via KPI and time limit ensured per SLA.
+
+
+
+🧩 What is KPI (Key Performance Indicator)?
+
+Definition:
+KPI = A measurable value that shows how effectively a process, team, or service is performing against its objectives.
+
+Purpose:
+To monitor, measure, and improve IT service performance.
+
+In ITIL / ITSM:
+KPIs are used to evaluate the efficiency, effectiveness, and quality of IT processes (like Incident, Problem, Change, etc.).
+
+🎯 Why KPIs are Important
+
+Help track performance against SLAs (Service Level Agreements).
+Identify bottlenecks or recurring issues.
+Support decision-making for improvement.
+Show transparency to customers and management.
+
+⚙️ Example: KPIs in Incident Management	
+| **KPI Name**                                    | **Description**                                             | **Why It Matters**                                    |
+| ----------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------- |
+| **Average Resolution Time**                     | Average time taken to resolve incidents.                    | Measures team efficiency.                             |
+| **First Contact Resolution (FCR)**              | % of incidents resolved by Service Desk without escalation. | Measures quality and training of first-level support. |
+| **Incident Volume**                             | Total number of incidents logged.                           | Helps track workload and trends.                      |
+| **Percentage of Incidents Resolved within SLA** | % of incidents resolved before the SLA deadline.            | Indicates service reliability and compliance.         |
+| **Reopened Incidents**                          | % of incidents reopened after being closed.                 | Measures accuracy and quality of resolution.          |
+
+
+📊 What is “Percentage of Incidents Resolved”?
+Definition:
+It’s a KPI that measures the proportion of incidents that have been successfully resolved (usually within the SLA time).
+
+Formula: % of Incidents Resolved = (Number of Incidents Resolved / Total Number of Incidents Reported) × 100
+
+
+
+-------------------------------------------------------------------------------------------
+
+ITIL 4---
+
+Interviewers may call it by names like:
+“ITIL Processes”
+“ITIL Practices Overview”
+“ITSM Process Summary”
+“ITIL Framework Topics”
+“ITIL Concepts for Managed Services”
+
+
+Q1 :  “ITIL Process Overview /“ITIL Core Practices / Processes Summary for Managed Services.”
+
+
+🧱 3. Important ITIL Topics for Managed Services Interviews
+🅐 Incident Management
+🔹 Purpose
+To restore normal service as quickly as possible.
+To reduce the impact on business when something breaks or stops working.
+
+🔹 Definition
+An incident is any unplanned interruption or reduction in service quality.
+
+🔹 Goal
+Bring systems back to normal quickly.
+Keep users and business running smoothly.
+
+🔹 Steps in Incident Management
+Detection – Identify the issue (alert, user call, monitoring tool).
+Logging – Record the details in the ticketing system (ServiceNow, Jira).
+Categorization – Tag it (Network, Server, App issue).
+Prioritization – Based on impact and urgency (High, Medium, Low).
+Escalation – Send to right team if needed.
+Resolution – Fix the issue.
+Closure – Confirm with user and close ticket.
+
+🔹 Example
+A user can’t log in to email.
+Service Desk logs ticket → checks credentials → resets password → issue fixed.
+
+🔹 Difference Between Incident and Service Request
+| **Incident**               | **Service Request**           |
+| -------------------------- | ----------------------------- |
+| Unplanned issue            | Planned user request          |
+| Needs immediate fix        | Routine or predefined task    |
+| Example: Email not working | Example: Request new email ID |
+
+
+
+🅑 Problem Management
+🔹 Purpose
+To find and remove the root cause of incidents.
+To prevent issues from happening again.
+
+🔹 Definition
+A Problem is the underlying cause of one or more incidents.
+
+🔹 Goal
+Reduce recurring incidents.
+Improve service reliability.
+
+🔹 Example
+Application crashes frequently → RCA shows memory leak → Fix code → Problem resolved.
+
+| **Incident**          | **Problem**                            |
+| --------------------- | -------------------------------------- |
+| Immediate issue       | Root cause of issue                    |
+| Temporary fix         | Permanent fix                          |
+| Example: Server crash | Example: Faulty hardware causing crash |
+
+🔹 Tools & Techniques
+
+RCA (Root Cause Analysis)
+5 Whys Technique (Asking 5 times why this happened, and so on for 5 times)
+Fishbone (Ishikawa) Diagram
+
+
+🅒 Change Management (Change Enablement in ITIL v4)
+🔹 Purpose
+To control the lifecycle of changes in IT systems.
+Ensure changes are done with minimal risk and no service disruption.
+
+🔹 Definition
+A Change is any addition, modification, or removal that might affect an IT service.
+
+🔹 Types of Changes
+Standard Change – Pre-approved, low-risk (e.g., patch update).
+Normal Change – Needs approval (e.g., server upgrade).
+Emergency Change – Needs immediate action (e.g., applying a hotfix for outage).
+
+🔹 CAB (Change Advisory Board)
+A group that reviews and approves significant changes.
+Includes managers, technical leads, and service owners.
+
+🔹 Example
+A firewall update scheduled on Sunday → Approved by CAB → Implemented during maintenance window.
+
+
+🅓 Release & Deployment Management
+🔹 Purpose
+To plan, build, test, and deploy new releases in a controlled manner.
+
+🔹 Goal
+Make sure new software or updates are deployed smoothly without impacting users.
+
+🔹 Components of a Release
+Application code
+Configuration files
+Database scripts
+Documentation
+
+🔹 Release Window
+A predefined time slot to perform deployment (e.g., Sunday 2 AM – 4 AM).
+
+🔹 Example
+Version 2.0 of a website tested → deployed during off-hours → monitored for stability.
+
+
+🅔 Service Request Management
+🔹 Purpose
+To handle routine user requests that are predefined and low risk.
+
+🔹 Examples
+Password reset
+Software installation
+Granting access to a shared drive
+
+🔹 Tools
+Jira Service Desk, ServiceNow, BMC Remedy
+
+🔹 Difference Between Request and Incident
+| **Request**                 | **Incident**                   |
+| --------------------------- | ------------------------------ |
+| Planned user need           | Unplanned issue                |
+| Doesn’t break service       | Service is disrupted           |
+| Example: Request new laptop | Example: Laptop not turning on |
+
+
+🅕 Service Level Management (SLM)
+🔹 Purpose
+To define, negotiate, monitor, and report on service levels.
+Ensure services meet agreed performance targets.
+
+🔹 Key Terms
+| **Term**                              | **Meaning**                              |
+| ------------------------------------- | ---------------------------------------- |
+| **SLA (Service Level Agreement)**     | Agreement between provider and customer. |
+| **OLA (Operational Level Agreement)** | Agreement between internal teams.        |
+| **UC (Underpinning Contract)**        | Agreement with third-party vendors.      |
+
+🔹 Example
+SLA: Critical incidents must be resolved within 4 hours.
+If missed, RCA (Root Cause Analysis) done to avoid future SLA breaches.
+
+
+🅖 Event Management
+🔹 Purpose
+
+To detect, analyze, and respond to events from monitoring tools.
+
+Helps prevent incidents before they happen.
+
+🔹 Definition
+
+An event is any detectable change in the state of a system or service.
+
+🔹 Types of Events
+
+Informational – Normal operation (e.g., backup completed).
+
+Warning – Needs attention (e.g., CPU usage 80%).
+
+Exception – Error or failure (e.g., Disk full, service stopped).
+
+🔹 Tools Used
+
+Nagios, SolarWinds, Splunk, Datadog, Zabbix, etc.
+
+🔹 Example
+
+Monitoring tool detects high CPU usage → Automatically creates incident → Assigned to Server Team.
+
+
+🅗 Knowledge Management
+🔹 Purpose
+
+To capture, store, and share information so incidents can be resolved faster.
+
+🔹 Example
+
+A “How to restart a service” guide is saved in the Knowledge Base (KB).
+Next time, the Service Desk can follow the article and fix it quickly.
+
+🔹 Benefits
+
+Faster issue resolution
+
+Reduced dependency on senior staff
+
+Better documentation and training
+
+🅘 Continual Service Improvement (CSI)
+🔹 Purpose
+
+To continuously improve the quality and performance of IT services using metrics and feedback.
+
+🔹 CSI Model Questions
+
+What is the vision? (Business goal)
+
+Where are we now? (Current performance)
+
+Where do we want to be? (Target performance)
+
+How do we get there? (Improvement plan)
+
+Did we get there? (Measure success)
+
+🔹 Example
+
+Ticket resolution time average = 6 hours
+Goal = 4 hours
+Improvement = Add automation + better training
+Result after 2 months = Average 3.5 hours ✅
+
+
+📘 Quick Summary Table
+| **Process**                   | **Purpose**               | **Example**                     |
+| ----------------------------- | ------------------------- | ------------------------------- |
+| Incident Management           | Fix issues quickly        | Server down → Restored          |
+| Problem Management            | Find root cause           | Repeated crash → Fix bug        |
+| Change Management             | Control changes safely    | Approve server upgrade          |
+| Release Management            | Deploy changes smoothly   | Deploy app v2.0                 |
+| Service Request Mgmt          | Handle routine requests   | Password reset                  |
+| Service Level Mgmt            | Monitor SLA performance   | Resolve critical issue in 4 hrs |
+| Event Management              | Detect issues early       | High CPU alert                  |
+| Knowledge Management          | Store and reuse knowledge | KB article for restarts         |
+| Continual Service Improvement | Improve over time         | Reduce average resolution time  |
+
+--------------------------------------------------------------------------------------------------------------
+
+🧩 1. Incident Management
+
+Definition:
+Incident Management is the process used to restore normal service operations as quickly as possible when something goes wrong, so business impact is minimized.
+
+Example:
+If users can’t access their email due to a server issue, the incident management team works to fix it fast and bring the system back online.
+
+Incident Management:
+Fix issues quickly to restore normal service.
+
+🧩 2. Problem Management
+
+Definition:
+Problem Management focuses on finding the root cause of one or more incidents and preventing them from happening again.
+
+Example:
+If the email server crashes frequently, problem management investigates and finds the real cause (e.g., memory leak) and fixes it permanently.
+
+Problem Management:
+Find and remove the root cause of repeated incidents.
+
+🧩 3. Change Management
+
+Definition:
+Change Management controls the lifecycle of all changes made to IT systems, ensuring changes are implemented smoothly with minimum risk or disruption.
+
+Example:
+When upgrading a database or applying a security patch, change management ensures it is tested, approved by CAB, and deployed properly.
+
+Change Management:
+Control and manage changes in IT systems with minimum risk.
+
+🧩 4. Release & Deployment Management
+
+Definition:
+This process is about planning, building, testing, and deploying new releases (software, updates, or configurations) into production safely.
+
+Example:
+A new version of an application is released — tested in staging, then deployed to production with minimal downtime.
+
+Release & Deployment Management:
+Plan, test, and move new updates or software into production safely.
+
+🧩 5. Service Request Management
+
+Definition:
+Handles routine user requests that are planned and don’t cause system failure — like access requests, password resets, or software installations.
+
+Example:
+A user requests installation of MS Teams — the service desk handles it through a predefined workflow.
+
+Service Request Management:
+Handle user requests like password resets or software installs.
+
+🧩 6. Service Level Management
+
+Definition:
+Service Level Management ensures that IT services meet the agreed targets between IT and the business — called SLAs (Service Level Agreements).
+
+Example:
+SLA may state: “All high-priority incidents must be resolved within 4 hours.” The team monitors and reports on SLA performance.
+
+Service Level Management:
+Track and ensure services meet agreed performance targets (SLAs).
+
+🧩 7. Event Management
+
+Definition:
+Event Management monitors and detects events in IT infrastructure (like alerts, warnings, or failures) and ensures appropriate actions are taken.
+
+Example:
+A monitoring tool detects high CPU usage on a server and automatically generates an alert or incident ticket.
+
+Event Management:
+Monitor systems and respond to alerts or changes automatically.
+
+🧩 8. Knowledge Management
+
+Definition:
+Knowledge Management creates, shares, and maintains information or solutions that help in faster issue resolution and learning.
+
+Example:
+A “How to restart the printer service” article is saved in the knowledge base, so others can use it later.
+
+Knowledge Management:
+Collect and share helpful information and solutions for future use.
+
+🧩 9. Continual Service Improvement (CSI)
+
+Definition:
+CSI focuses on ongoing improvement of IT services, processes, and performance based on feedback and analysis.
+
+Example:
+After reviewing monthly reports, the team finds response times are slow — they improve automation to fix this.
+
+Continual Service Improvement (CSI):
+Keep improving IT services using feedback and performance data.

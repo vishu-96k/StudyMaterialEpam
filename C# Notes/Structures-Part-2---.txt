@@ -1,0 +1,149 @@
+Structures-Part-2---
+
+✅[#1] STRUCT in C# – Key Points
+
+📌 1. Memory & Type
+-struct is a Value Type → memory is allocated on the stack.
+-Memory allocation for struct instances/variables happens on the stack, not on the heap.
+-Structs are often described as “lightweight classes”.
+-Best suited for smaller volumes of data.
+-All primitive value types (e.g., int, double, bool) are actually structs internally.
+
+
+📌 2. Instance Creation
+Using the new keyword is optional for creating struct instances.
+-If new is used → the implicit default constructor initializes all fields to their default values (0, null, etc.).
+-If new is not used, then you must initialize all fields manually before calling any methods.
+EG :
+struct Emp
+{
+    public int i;
+    public void Display() => Console.WriteLine("i = " + i);
+}
+Emp e1 = new Emp();   // ✅ new keyword used → default constructor called
+e1.i = 10;
+e1.Display();
+Emp e2;               // ❌ no new keyword
+e2.i = 20;            // ✅ manual initialization required
+e2.Display();
+
+
+📌 3. Field Initialization
+-❌ You cannot initialize fields directly at the point of declaration inside a struct.
+EG :
+struct Emp
+{
+    int i = 10;  // ❌ Not allowed
+}
+-Instead, assign values using:
+A parameterized constructor, or
+Directly through the instance after creation.
+
+
+📌 4. Constructors
+Parameterless (default) constructor:
+Always implicitly provided by the compiler.
+❌ Cannot be explicitly declared in a struct.
+
+Parameterized constructor:
+✅ Allowed explicitly.
+Used to initialize fields during object creation.
+
+Constructor behavior difference:
+ Class: If no constructor is defined → 1 default constructor is generated.
+If you define n constructors → total = n.
+ Struct: If no constructor is defined → 1 default constructor is always there (implicit).
+If you define n parameterized constructors → total = n + 1 (because default constructor always exists implicitly).
+EG :
+struct Emp
+{
+    public int i;
+    public Emp(int val)
+    {
+        i = val;
+    }
+}
+Emp e = new Emp(10);  // Calls parameterized constructor
+
+
+📌 5. Inheritance & Access Modifiers
+❌ Inheritance is not supported for structs (struct cannot inherit another struct or class).
+✅ However, struct can implement interfaces.
+❌ protected modifier is not allowed inside structs.
+
+Default access modifiers:
+private for fields, properties, methods, constructors, enums, delegates.
+✅ So, if you want to access them outside, explicitly make them public.
+
+
+📌 6. OOP Concept Support
+❌ Struct does not support full OOP because inheritance is not allowed.
+✅ But it can support:
+Abstraction → by implementing interfaces
+Encapsulation → by using private and public access modifiers
+Polymorphism → by overriding interface methods
+
+❌ No destructors in struct — because they are stored on the stack and cleaned up automatically.
+
+
+📌7. Practical Usage
+Structs are best used for:
+Lightweight objects
+Fixed-size data (e.g., Point, Color, Rectangle)
+Scenarios where value semantics are preferred over reference semantics
+
+Classes are better for:
+Complex objects
+Large data sets
+Inheritance and polymorphism-heavy scenarios
+
+
+📌8. Rules for Properties in Structs
+Structs can have properties just like classes.
+
+-Properties can be:
+Auto-implemented
+Custom with getters and setters
+
+-Properties can have any access modifier (public, private, etc.), but protected is not allowed.
+-You cannot initialize auto-properties at declaration in structs before C# 10. (From C# 10, you can have default values in structs.)
+-Structs cannot have parameterless constructors explicitly, so any property initialization relying on a constructor must use a parameterized constructor.
+
+EG :
+using System;
+
+struct EmployeeStruct
+{
+    // ✅ Auto-implemented properties
+    public int Id { get; set; }
+    public string Name { get; set; }
+
+    // ✅ Parameterized constructor to initialize properties
+    public EmployeeStruct(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
+    // ✅ Method using properties
+    public void Display()
+    {
+        Console.WriteLine($"Id: {Id}, Name: {Name}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Using parameterized constructor
+        EmployeeStruct emp1 = new EmployeeStruct(101, "Alice");
+        emp1.Display();
+
+        // Without 'new', must assign property values manually
+        EmployeeStruct emp2;
+        emp2.Id = 202;
+        emp2.Name = "Bob";
+        emp2.Display();
+    }
+}

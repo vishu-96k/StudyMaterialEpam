@@ -12,25 +12,115 @@ we dont have a struct template, so uh can choose and add a code file for definin
 
 calss or struct are genrallyv used for representing entities.
 
-Note : all predefined data types under the librarieds of our languages which comes under refrence type category eg string, objects are predefined class, where as all the predefined data types which comes under the value type category eg int, float , double, Enum , all are predefied structs
+Note : all predefined data types under the libraries of our languages which comes under refrence type category eg string, objects are predefined class, where as all the predefined data types which comes under the value type category eg int, float , double, Enum , all are predefied structs
 
 ----diff between a class and struct =>
 
+📌CLASS
 class :
 it is a refrence type, so memory is allocated at heap.
 memory allocation for instances  of a class is performed on managed heap
 we use class for large volumes of data members.
 all refrence types are classes
-in case of class new keyword is manadatory for creatuing instance
+in case of class new keyword is manadatory for creating instance
 feilds of a class can be initialize at the time of declaration
 
+CLASS Example: 
+using System;
 
-strut :
+// ✅ CLASS DEMONSTRATION
+class Employee
+{
+    // ✅ 1. Fields can be initialized at declaration (Allowed in class)
+    public int Id = 101;
+    public string Name = "John";
+
+    // ✅ 2. Explicit parameterless constructor allowed
+    public Employee()
+    {
+        Console.WriteLine("➡ Class: Parameterless constructor called");
+    }
+
+    // ✅ 3. Explicit parameterized constructor
+    public Employee(int id, string name)
+    {
+        Id = id;
+        Name = name;
+        Console.WriteLine("➡ Class: Parameterized constructor called");
+    }
+
+    // ✅ 4. Methods are public by default if specified
+    public void Display()
+    {
+        Console.WriteLine($"➡ Class Employee => Id: {Id}, Name: {Name}");
+    }
+
+    // ✅ 5. Class supports inheritance
+}
+
+class Manager : Employee // ✅ Inheriting from Employee
+{
+    public string Department;
+
+    public Manager(int id, string name, string dept) : base(id, name)
+    {
+        Department = dept;
+    }
+
+    public void ShowDept()
+    {
+        Console.WriteLine($"➡ Manager Department: {Department}");
+    }
+}
+
+// ✅ Interface to show abstraction & polymorphism
+interface IWorker
+{
+    void Work();
+}
+
+class Developer : IWorker
+{
+    public void Work()
+    {
+        Console.WriteLine("➡ Developer is coding... (Class implementing interface)");
+    }
+}
+
+class ProgramClass
+{
+    static void Main()
+    {
+        Console.WriteLine("🟡 CLASS EXAMPLE START");
+
+        // ✅ 6. 'new' keyword is MANDATORY to create an instance
+        Employee emp1 = new Employee();
+        emp1.Display();
+
+        Employee emp2 = new Employee(200, "Alice");
+        emp2.Display();
+
+        // ✅ 7. Inheritance works
+        Manager mgr = new Manager(300, "Bob", "IT");
+        mgr.Display();
+        mgr.ShowDept();
+
+        // ✅ 8. Class implementing interface
+        IWorker dev = new Developer();
+        dev.Work();
+
+        Console.WriteLine("🟡 CLASS EXAMPLE END\n");
+    }
+}
+
+
+
+📌STRUCT :
 struct is a value type, so memory is allocated in the stack memory.
-memory allocation for instance of struct is performed on the stack.
+memory allocation for instance/Variable of struct is performed on the stack.
 struct are nothing but light weight classes
 we use struct for smaller volumes of data members
-all  value types are struct types
+all  value types are struct types (int, double these all type is struct)
 incase of struct new keyword is  optional for creating instance of struct
 uh cannot initialize and assign value at the same time to the fields of variable in the strcture, uh must initialize the variables and assign value to variable using the contructore or using the instance directly.
 if uh dont use new keyword for making the instance, then uh must initazlie the data members first and then only call the methods or else uh will get thje error becoz uh are not calling the constructor to initialize the values , so uh need to initialize the feilds using the instance if uh haven't use new keyword for making the instance.
@@ -39,7 +129,7 @@ if the struct contains any feilds then we need to initialize those feilds explic
 
 strct emp 
 {
-	int i =10; // uh cant do this
+	int i =10; // uh cant do this, Uh need to assign value using conrtuctor or directly using instance
 	int i;
 	public void Displayu()
 	{
@@ -50,13 +140,13 @@ emp obj ;
 obj.i = 10;
 
 
-we can define any constriutor inside a class parameter of parameter less, and if no constructor is defined in there is implicit construictor, but in case of strct, paramterless or default constructor is always implicit and cant be re defiend explicitly again, we can only define parametrized constructor only explicitly.
+we can define any constriutor inside a class parameter of parameter less, and if no constructor is defined in there is implicit construictor, but in case of strct, paramterless or default constructor is always implicit(automatic created by compiler) and cant be redefiend explicitly again, we can only define parametrized constructor only explicitly.
 
 struct cannot contain paramterless explicit constructor , uh can only make paramterized constructor explicitly
 
 there is always a implicit paramterless conctritor in ur struct. and uh cant make one more paramerterless contructor explicitly
 
-if 0 constructore are defined in the calss then there will be a 1 constructor in class after compilation, and if uh define n constructior in the class then after complicaletion theire will be n constructor only. where as in case of struct if we define 0 constructor then after completion there will be 1 contsurctor (which is implicit(defalut) parameterless constructor), and if we define n constructor then there will be n + 1 constructore, one is alywas the defaluet constructor without parameter
+if 0 constructore are defined in the calss then there will be a 1 constructor in class after compilation, and if uh define n constructior in the class then after complicaletion theire will be n constructor only. where as in case of struct if we define 0 constructor then after completion there will be 1 contsurctor (which is implicit(defalut) parameterless constructor), and if we define n constructor then there will be n + 1 constructore, one is alywas the default constructor without parameter
 -so in case of struct, Even if uh define the paramerterized constructoers, The default Pramaterless constructor will always be there implicitly, and uh cannot have any Parametrless constructor explicitly created.
 class can be inhireted but the strcut doesn't support inherited
 strct doesnt support OOps concept
@@ -70,8 +160,105 @@ No, you cannot use the protected access modifier in a struct.
 -Struct can implement the 3 pillers of OOPS, Abstrction(Using interfaces), Encapsulation(private and public acess), and polyermphism(by overiding the interface implemented method). But inhiritane is not allowed
 No, structs cannot have destructors in C#, becoz they are value type and are stored on Stack.
 class can implement interface, same as well struct also can implements interface only.
+-the difference between struct and class in C# lies mainly in how they are stored in memory, their inheritance capabilities, and their usage scenarios.
 
-the difference between struct and class in C# lies mainly in how they are stored in memory, their inheritance capabilities, and their usage scenarios.
+EXAMPLE OF STRUCT :
+using System;
+//  STRUCT DEMONSTRATION
+struct EmployeeStruct
+{
+    // ❌ Cannot initialize fields at declaration
+    // public int Id = 10;  // ❌ NOT allowed
+
+    public int Id;
+    public string Name;
+
+    // ❌ Parameterless constructor cannot be explicitly created
+    // public EmployeeStruct() {}  // ❌ Compile error
+
+    // ✅ Parameterized constructor is allowed
+    public EmployeeStruct(int id, string name)
+    {
+        Id = id;
+        Name = name;
+        Console.WriteLine("➡ Struct: Parameterized constructor called");
+    }
+
+    // ✅ Method inside struct (access modifier default is private)
+    public void Display()
+    {
+        Console.WriteLine($"➡ Struct Employee => Id: {Id}, Name: {Name}");
+    }
+}
+
+// ✅ Interface to show abstraction & polymorphism
+interface IStudent
+{
+    void Show();
+}
+
+struct Student : IStudent
+{
+    public int RollNo;
+
+    // ✅ Only parameterized constructor allowed
+    public Student(int roll)
+    {
+        RollNo = roll;
+    }
+
+    // ✅ Interface method implemented
+    public void Show()
+    {
+        Console.WriteLine($"➡ Struct Student => RollNo: {RollNo}");
+    }
+}
+
+class ProgramStruct
+{
+    static void Main()
+    {
+        Console.WriteLine("🟢 STRUCT EXAMPLE START");
+
+        // ✅ 1. Using 'new' keyword calls implicit parameterless constructor
+        EmployeeStruct emp1 = new EmployeeStruct();
+        // Since struct fields are value types, default values are 0 or null
+        emp1.Id = 500;       // ✅ Fields must be assigned before use
+        emp1.Name = "Mike";
+        emp1.Display();
+
+        // ✅ 2. Using parameterized constructor
+        EmployeeStruct emp2 = new EmployeeStruct(600, "Tom");
+        emp2.Display();
+
+        // ✅ 3. Without 'new' keyword
+        EmployeeStruct emp3;
+        // Must assign values to all fields before calling methods
+        emp3.Id = 700;
+        emp3.Name = "Emma";
+        emp3.Display();
+
+        // ✅ 4. Structs cannot inherit another struct or class
+        // ❌ struct StudentStruct : EmployeeStruct { }  // Not allowed
+
+        // ✅ 5. Struct can implement interfaces (Abstraction & Polymorphism)
+        Student s1 = new Student(10);
+        s1.Show();
+
+        IStudent s2 = s1;  // ✅ Polymorphism via interface reference
+        s2.Show();
+
+        // ✅ 6. 'protected' modifier is not allowed inside struct
+        // protected int x; // ❌ Compile error
+
+        // ✅ 7. No destructors allowed in struct
+        // ~EmployeeStruct() {} // ❌ Not allowed
+
+        Console.WriteLine("🟢 STRUCT EXAMPLE END\n");
+    }
+}
+
+
 
 ✅ Difference Table
 Aspect				class					struct
@@ -237,8 +424,213 @@ Structs do not support inheritance from classes or other structs.
 However, interfaces are not considered part of the inheritance hierarchy. They only provide a contract that must be implemented by the struct.
 Implementing an interface is about providing functionality, not inheriting behavior or state.
 
+
 📌 Analogy
 Think of a struct as an independent worker (value type) that follows a contract (interface) but does not inherit properties or behaviors from anyone (no inheritance)
 -Means interface only provides methods for Implemenations, not for consumptions , so it is allowed in Strcut
 Structs can implement interfaces because they are only promising to provide the implementations for those methods and properties.
 No inheritance hierarchy is involved, and no memory allocation for inherited fields is required.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+Class vs Struct in C#
+
+| Feature                        | `class` (Reference Type)                                 | `struct` (Value Type)                                       |
+| ------------------------------ | -------------------------------------------------------- | ----------------------------------------------------------- |
+| **Type**                       | Reference type (stored on the **heap**)                  | Value type (stored on the **stack**)                        |
+| **Memory**                     | Variable holds a **reference** to the object in heap     | Variable **directly holds the data**                        |
+| **Default Constructor**        | Can have **explicit parameterless** constructor          | ❌ Cannot define explicit parameterless constructor          |
+| **Parameterized Constructor**  | ✅ Allowed                                                | ✅ Allowed                                                   |
+| **Destructor / Finalizer**     | ✅ Allowed                                                | ❌ Not allowed                                               |
+| **Inheritance**                | ✅ Supports **inheritance** between classes               | ❌ Structs **cannot inherit** another struct or class        |
+| **Interface Implementation**   | ✅ Yes                                                    | ✅ Yes                                                       |
+| **Polymorphism**               | ✅ Supports runtime polymorphism (virtual/override)       | ❌ No runtime polymorphism (cannot override methods)         |
+| **Encapsulation**              | ✅ Fully supported (private/public/protected/internal)    | ✅ Supported but limited compared to class                   |
+| **Abstraction**                | ✅ Fully supported (can use abstract classes, etc.)       | ❌ Cannot be abstract                                        |
+| **Constructors & Destructors** | Multiple constructors + destructors possible             | Only parameterized constructors, no destructors             |
+| **Data Members (Fields)**      | Can have fields, static fields, const, readonly          | Same as class, but can’t use `protected`                    |
+| **Properties**                 | ✅ Supported (auto or manual)                             | ✅ Supported                                                 |
+| **Methods (Functions)**        | ✅ Fully supported (virtual, override, static, etc.)      | ✅ Supported (but **no virtual/override**)                   |
+| **Access Modifiers**           | public, private, protected, internal, protected internal | public, private, internal (**no protected**)                |
+| **Object Creation**            | Created using `new` keyword or reference assignment      | `new` optional, because struct has default values           |
+| **Boxing / Unboxing**          | No boxing normally                                       | Boxing occurs if converted to `object` or interface         |
+| **Immutability**               | Mutable by default (but can be designed immutable)       | Usually small, immutable structures recommended             |
+| **Usage**                      | Best for complex data, behaviors, entities               | Best for small lightweight objects like `Point`, `DateTime` |
+| **Performance**                | Heap allocation (GC required)                            | Stack allocation (faster, no GC overhead)                   |
+
+1️⃣ STRUCT Example — (Value Type)
+using System;
+
+// ✅ STRUCT → Value Type
+struct Point
+{
+    // ✅ Fields (Data Members)
+    public int X;
+    public int Y;
+
+    // ❌ Parameterless constructor not allowed in struct
+    // ✅ Parameterized constructor is allowed
+    public Point(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+
+    // ✅ Regular method — struct can have methods
+    public void Display()
+    {
+        Console.WriteLine($"[STRUCT] Point: X = {X}, Y = {Y}");
+    }
+
+    // ❌ No destructor allowed in struct
+    // ❌ No inheritance allowed (can't extend another struct/class)
+    // ❌ No virtual or override methods allowed
+}
+
+// ✅ Interface implementation → allowed in struct
+interface IDisplayable
+{
+    void Show();
+}
+
+struct Pixel : IDisplayable
+{
+    public int Value;
+
+    public void Show()
+    {
+        Console.WriteLine($"[STRUCT] Pixel implementing interface. Value = {Value}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // ✅ Example 1: Creating a struct object
+        Point p1 = new Point(10, 20);
+        p1.Display(); // Output: X=10, Y=20
+
+        // ✅ Example 2: Copy behavior (struct = value type)
+        Point p2 = p1;  // Creates a COPY
+        p2.X = 99;      // Change only affects p2, not p1
+
+        p1.Display(); // X=10
+        p2.Display(); // X=99 (separate copy)
+
+        // ✅ Example 3: Interface implementation in struct
+        Pixel px = new Pixel { Value = 123 };
+        px.Show();
+
+        // ✅ Example 4: Boxing & Unboxing
+        object obj = p1;         // Boxing → struct stored in heap
+        Point p3 = (Point)obj;   // Unboxing → back to stack
+        p3.Display();
+
+        // ⚡ STRUCT KEY POINTS:
+        // - Stored on stack (faster, lightweight)
+        // - Value type → assigns copies
+        // - No inheritance, no virtual methods, no destructor
+        // - Can implement interfaces
+        // - Best for small, immutable data (like coordinates, color, etc.)
+    }
+}
+
+2️⃣ CLASS Example — (Reference Type)
+using System;
+
+// ✅ CLASS → Reference Type
+class Shape
+{
+    // ✅ Fields (Data Members)
+    public int Width;
+    public int Height;
+
+    // ✅ Parameterless constructor allowed
+    public Shape()
+    {
+        Width = 0;
+        Height = 0;
+    }
+
+    // ✅ Parameterized constructor
+    public Shape(int w, int h)
+    {
+        Width = w;
+        Height = h;
+    }
+
+    // ✅ Virtual method → allows polymorphism
+    public virtual void Display()
+    {
+        Console.WriteLine($"[CLASS] Shape: Width = {Width}, Height = {Height}");
+    }
+
+    // ✅ Destructor allowed (finalizer)
+    ~Shape()
+    {
+        // Runs when GC collects (non-deterministic)
+        Console.WriteLine("[CLASS] Shape Destructor Called");
+    }
+}
+
+// ✅ Inheritance (Only Class can inherit another class)
+class Rectangle : Shape
+{
+    public Rectangle(int w, int h) : base(w, h) { }
+
+    // ✅ Overriding virtual method (runtime polymorphism)
+    public override void Display()
+    {
+        Console.WriteLine($"[CLASS] Rectangle: W = {Width}, H = {Height}");
+    }
+}
+
+// ✅ Interface implementation (class also supports this)
+interface IDisplayable
+{
+    void Show();
+}
+
+class Circle : IDisplayable
+{
+    public int Radius;
+    public void Show()
+    {
+        Console.WriteLine($"[CLASS] Circle implementing interface. Radius = {Radius}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // ✅ Example 1: Creating a class object
+        Shape s1 = new Shape(5, 10);
+        s1.Display(); // Output: Width=5, Height=10
+
+        // ✅ Example 2: Reference behavior (class = reference type)
+        Shape s2 = s1;   // s2 references the SAME object
+        s2.Width = 99;   // Changing s2 affects s1 too
+
+        s1.Display(); // Width=99  ✅
+        s2.Display(); // Width=99  ✅
+
+        // ✅ Example 3: Inheritance & Polymorphism
+        Shape rect = new Rectangle(15, 30);
+        rect.Display();  // Calls Rectangle.Display() (override)
+
+        // ✅ Example 4: Interface implementation
+        Circle c = new Circle { Radius = 50 };
+        c.Show();
+
+        // ⚡ CLASS KEY POINTS:
+        // - Stored on heap
+        // - Reference type → assignments share reference
+        // - Supports inheritance, virtual/override
+        // - Destructor allowed
+        // - Full encapsulation and abstraction support
+        // - Ideal for complex objects with behavior
+    }
+}
+

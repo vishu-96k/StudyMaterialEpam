@@ -1,0 +1,250 @@
+Honey-Interview
+
+ITIL (Information Technology Infrastructure Library) is a globally recognized framework that provides best practices and guidelines for managing IT services effectively. It helps organizations deliver reliable, efficient, and customer-focused IT services by standardizing processes like incident management, change management, and problem management. ITIL focuses on aligning IT operations with business goals, ensuring quality service delivery and continuous improvement.
+
+ITSM (IT Service Management), on the other hand, is the actual practice of managing and delivering IT services to meet business and user needs. It includes all the processes, tools, and roles involved in designing, delivering, supporting, and improving IT services.
+
+✅ 1️⃣ What is ITIL?
+
+📦 Definition:
+ITIL (Information Technology Infrastructure Library) is a framework of best practices for managing IT services efficiently.
+
+📌 Simple meaning:
+It tells organizations how to deliver quality IT services to customers in a structured and standard way.
+
+📌 Purpose:
+
+To align IT services with business needs
+
+To reduce downtime and improve service delivery
+
+To ensure customer satisfaction and reliability
+
+🔄 Example:
+If an organization uses ITIL, when an application crashes (incident), there’s a defined process to log, prioritize, resolve, and document it — so service is restored quickly and efficiently.
+
+
+✅ 2️⃣ What is ITSM (IT Service Management)?
+
+📦 Definition:
+ITSM is the actual implementation and management of IT services based on frameworks like ITIL.
+
+📌 Simple meaning:
+ITSM = “How we manage and deliver IT services”
+ITIL = “The guidelines or framework for it”
+
+📌 Goal:
+To ensure IT delivers value and supports business objectives effectively.
+
+🔄 Example:
+Tools like ServiceNow, Jira Service Management, or BMC Remedy are used to manage ITSM processes such as incident handling, change management, and request fulfillment.
+
+
+✅ 3️⃣ Difference Between ITIL and ITSM
+| Aspect      | **ITIL**                                   | **ITSM**                             |
+| ----------- | ------------------------------------------ | ------------------------------------ |
+| **Type**    | Framework of best practices                | Implementation of those practices    |
+| **Focus**   | What to do                                 | How to do it                         |
+| **Goal**    | Provide structured guidelines              | Deliver IT services efficiently      |
+| **Example** | ITIL defines *Incident Management process* | ITSM uses *ServiceNow* to execute it |
+
+
+--------------------- JEERA -------------------------------
+
+✅ 1️⃣ What is Jira?
+
+📦 Definition:
+Jira is a software tool developed by Atlassian that helps teams track, manage, and organize their work — especially in IT, software development, and support projects.
+
+📌 Simple Meaning:
+Jira is used to create, assign, and track tasks, bugs, incidents, or change requests — all in one place.
+
+✅ 2️⃣ What is Jira Used For?
+
+Jira is widely used for:
+
+Issue Tracking: Logging and managing bugs or incidents.
+
+Project Management: Planning sprints, tasks, and releases (Agile & Scrum).
+
+Service Management (ITSM): Handling service requests, incidents, and changes.
+
+Workflow Automation: Automating ticket flow (e.g., auto-assigning to teams).
+
+✅ 3️⃣ What Do You Understand by Jira?
+
+📌 In simple words:
+Jira is a central platform where all IT tasks, incidents, and requests are tracked and managed — so that everyone in the team knows what’s pending, in progress, or resolved.
+
+It helps improve:
+
+Transparency (everyone sees progress)
+
+Accountability (who is working on what)
+
+Efficiency (faster resolution and better collaboration)
+
+🔄 Example:
+
+If a user reports that an application is not opening —
+
+A ticket is created in Jira.
+
+The support team assigns it to the right person.
+
+Once fixed, it’s marked as Resolved or Closed.
+All updates, comments, and attachments stay in that same Jira ticket.
+
+✅ 4️⃣ Common Jira Modules:
+| **Module**                        | **Purpose**                                      |
+| --------------------------------- | ------------------------------------------------ |
+| **Jira Software**                 | For developers – Agile, Scrum, Kanban boards     |
+| **Jira Service Management (JSM)** | For ITSM – managing incidents, problems, changes |
+| **Jira Work Management**          | For business teams – HR, marketing, etc.         |
+
+
+💬 Interview Answer: “What is Jira and what do you understand by it?”
+🗣️ Answer (Short & Professional):
+
+“Jira is a tool developed by Atlassian that we use for tracking and managing work items like incidents, service requests, and changes.
+In my project, we used Jira Service Management to log user issues, assign them to the right support team, and track progress until closure.
+It helps maintain transparency, monitor SLAs, and ensure timely resolution of tickets.”
+
+🔄 Example (If interviewer asks for real-life use):
+“For example, if a user reports that their email access isn’t working, a ticket is raised in Jira.
+The ticket gets assigned to the L2 support team, they resolve the issue, update the status, and close it — all actions are recorded in Jira for tracking and SLA reporting.”
+
+
+---------------------------------------------------
+Q: What is the difference between ITIL v3 and ITIL v4? Why was v4 introduced when we already had v3?
+📘 1️⃣ Focus / Approach
+
+ITIL v3: Focused mainly on processes — step-by-step methods to deliver IT services.
+🔄 Example: “Incident Management Process” → detect → log → categorize → resolve → close.
+
+ITIL v4: Focuses on practices and value co-creation — encourages flexibility, collaboration, and continuous improvement.
+🔄 Example: IT + Business teams work together to deliver value, not just follow rigid steps.
+
+📘 2️⃣ Structure
+
+ITIL v3: Based on 5 Lifecycle Stages
+
+Service Strategy
+
+Service Design
+
+Service Transition
+
+Service Operation
+
+Continual Service Improvement
+
+ITIL v4: Based on the Service Value System (SVS) and 4 Dimensions Model
+
+SVS components: Guiding Principles, Governance, Service Value Chain, Practices, Continual Improvement.
+
+📘 3️⃣ Main Concept
+
+ITIL v3: Service Lifecycle – step-by-step stages to manage services.
+
+ITIL v4: Service Value System (SVS) – shows how all parts (people, process, tools) work together to create value.
+
+
+📘 5️⃣ Modern Integration
+
+v3: Not compatible with Agile, DevOps, or Cloud – more traditional.
+
+v4: Fully supports Agile, DevOps, and Cloud environments.
+🔄 Example: CI/CD automation and continuous feedback are part of v4 practices.
+
+💡 Why ITIL v4 was Introduced
+
+👉 Because the IT world changed — more automation, cloud services, and agile ways of working.
+ITIL v3 was too rigid for fast-changing modern environments.
+ITIL v4 adds flexibility, collaboration, and focuses on co-creating value instead of just following steps.
+
+| Aspect        | ITIL v3                      | ITIL v4                       |
+| ------------- | ---------------------------- | ----------------------------- |
+| Focus         | Processes                    | Practices & Value             |
+| Model         | Service Lifecycle            | Service Value System (SVS)    |
+| Approach      | Rigid, sequential            | Flexible, integrated          |
+| Compatibility | Traditional IT               | Supports Agile, DevOps, Cloud |
+| Elements      | 26 Processes                 | 34 Practices                  |
+| Objective     | Deliver services efficiently | Co-create value with business |
+
+----------------------------------------------------------------------------------------------------------------
+real life questions
+
+💬 Q: There’s a heavy flow of incidents, and you’re under pressure — how will you handle it?
+✅ 1️⃣ Stay Calm and Prioritize
+✅ 2️⃣ Categorize and Assign Quickly
+✅ 3️⃣ Communicate and Acknowledge
+✅ 4️⃣ Focus on Major Incidents First
+✅ 5️⃣ Use Team Collaboration
+✅ 6️⃣ Use Automation and Knowledge Base
+
+“In case of a heavy inflow of incidents, my first step is to stay calm and prioritize based on impact and urgency.
+I categorize and assign tickets to the right teams, ensuring major incidents (P1/P2) are handled first.
+I keep communication clear with users and stakeholders while working with my team to balance workload.
+I also use our knowledge base or automation tools for quicker resolution.
+Once things stabilize, I analyze recurring incidents for root cause to avoid repetition.”
+
+💬 Q: If a teammate says — “I have other work” and throws all their work to you after working hours, how will you handle this situation?
+If a teammate hands over all their work to me after hours, I will first stay calm and assess the urgency.
+If it’s a critical or high-priority task, I’ll take ownership and resolve it — teamwork matters.
+But if it’s not urgent, I’ll communicate politely that we can handle it next day or with team support.
+I’ll also inform my lead to balance the workload fairly.
+My goal would be to support the team while maintaining clear communication and work discipline.”
+
+----------------------------------------------------------------------------
+
+🧩 Top Non-Technical Skills for IT / ITIL / Managed Services Interviews
+
+1️⃣ Team Collaboration : Example:
+During our MERN stack project, I worked closely with 3 teammates. We divided tasks like frontend, backend, and database.
+I coordinated daily updates and helped resolve blockers together.
+This showed strong team collaboration, as we communicated effectively and supported each other to meet deadlines.
+
+2️⃣ Communication Skills:
+Example:
+
+As the President of the CodeChef Club, I often had to explain technical concepts to juniors and coordinate with faculty for event approvals.
+I learned how to communicate ideas clearly to both technical and non-technical audiences, ensuring everyone stayed aligned.
+
+3️⃣ Time Management : 
+Example:
+
+During our MERN project, we had limited time before the final submission.
+I created a small schedule dividing the project into milestones — frontend completion, backend setup, testing, and final deployment.
+Sticking to this timeline helped us finish early and reduced last-minute pressure.
+
+4️⃣ Consistency : 
+Example:
+
+I was an active member of the CodeChef Club from my first year to final year.
+Because of my consistent participation in organizing coding events and mentoring juniors, I was later chosen as the President of the Club.
+This shows my long-term commitment and reliability.
+
+5️⃣ Adaptability / Flexibility : 
+Example:
+
+When we started our MERN stack project, I had no prior experience with React and MongoDB.
+But I quickly learned through online tutorials and applied that knowledge to build the project successfully.
+This showed my ability to adapt to new technologies and handle unfamiliar challenges.
+
+6️⃣ Continuous Learning
+Example:
+
+Even after completing the project, I kept exploring how to improve the app by adding authentication and deployment features.
+I also encouraged my club members to learn new coding topics every month.
+This habit of learning and sharing helped me stay updated with modern technologies.
+
+
+
+🎯 Example Answer (College + CodeChef Club + MERN Project) : 
+“During my college years, I was an active member of the CodeChef Club from my first year till my final year. My consistent participation, organizing coding events, and helping juniors with problem-solving led to my selection as the President of the Club.
+This experience taught me consistency, team collaboration, and leadership — since I had to coordinate with students, manage events, and ensure every activity ran smoothly.
+
+Along with that, I also worked on a MERN Stack project in my final year, where I led a small team to build a web application. During this project, I learned time management by setting milestones, communication skills through regular team sync-ups, and adaptability by learning and applying new technologies like React and MongoDB quickly.
+
+These experiences helped me develop a strong balance between technical and soft skills — especially teamwork, consistency, and continuous learning.”

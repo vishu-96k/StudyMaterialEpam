@@ -1,0 +1,134 @@
+----LECTURE 1:----
+From EPAM LECTURE NOTES
+
+1)HISTORY
+-Python is developed in 1990 , and its the most genral purpose programming language.
+-Highlevel syntax cannot be directly converted into Machine Code, So there is some intermediate language(Byte Code) code generated in between.    
+-Highlevel language is directly not understand by our machine, becoz tehre is some abstraction in our syntax  
+-Python is interpreted language, during the execution of each line itself the code is converted into machine code itself on the go itself.
+-EG : C++ : The code needs to be compiled into the executable(.exe) file first then the program will get execute.
+      PYTHON : in pyhton we simply skip the compilation process and directly run the program.
+
+
+📝 Difference vs .exe in C++
+-When you run a Python program, it does not generate a .exe file like C++.
+Instead, it generates a bytecode file — a .pyc file.
+| C++                             | Python                          |
+| ------------------------------- | ------------------------------- |
+| Generates `.exe` (machine code) | Generates `.pyc` (bytecode)     |
+| Runs directly on CPU            | Runs on Python Virtual Machine  |
+| Must be compiled manually       | Compiles automatically when run |
+
+
+
+2)PYTHON APPLICATIONS
+-uh can make all types of application using Python, web, AI, Desktop, Mobile, Cloud
+
+3)PYTHON VERSIONS : 
+-2.7 : this was a very long used version for a lot of period of time
+-3.7 Its the latest stable version of python now .
+
+4)DATA TYPES :
+-Python automatically assigns data types to the variables.
+| Data Type | Description                                 | Typical Size                      | Min / Max Value                               |
+| --------- | ------------------------------------------- | --------------------------------- | --------------------------------------------- |
+| `int`     | Integer numbers                             | Dynamic (no fixed size)           | No limit (depends on system memory)           |
+| `float`   | Decimal numbers (IEEE 754 double precision) | 24 bytes (approx)                 | ±1.8 × 10³⁰⁸ (approx)                         |
+| `complex` | Complex numbers (real + imaginary)          | 32 bytes (approx)                 | No strict min/max for real or imaginary parts |
+| `bool`    | Boolean values (`True` / `False`)           | 28 bytes (approx)                 | Only 2 values (True or False)                 |
+| `str`     | Sequence of characters (Unicode)            | Dynamic (per character 1–4 bytes) | No fixed limit (depends on system memory)     |
+| `bytes`   | Immutable byte sequence                     | 1 byte per element                | 0 to 255 per byte                             |
+
+EG : 
+SYNTAX :
+	complex(real, img)
+
+ a = complex(8,20)
+print(a) 
+OUTPUT :
+	(8 + 20j)	
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----LECTURE 2: ----PYTHON COLECTIONS DATA TYPES SESSION 
+
+----COLLECTIONS DATA TYPES ----
+Array : It is a collection of HOMOGENEOUS(same data type) elements
+1)List : List is a collections of heterogenous(diff) elemets, List can containe diff types of elements also, like int, string, dictionary, etc.
+	-List is mutable, means uh can change the elements, add, remove from the lists
+	-List element can be accessed using the indexing.
+	-Uh can use logical operators on the list also.(+,-,*,/,//)
+ 	
+eg : 
+	a =[13,34,55]
+	b =[33,66,]
+	c=a+b
+	print(c)	OUTPUT :13 34 55 33 66
+
+	print(type(c)) //<class list>
+	print(dir(c)) //In Python, the built-in function dir() is used to List all the valid attributes and methods of an object.
+	
+
+Example:
+	c = [10, 20, 30]
+	print(dir(c))
+What happens:
+dir(c) will return a list of:
+All built-in methods available for list objects
+
+
+2)PROPERTIES :
+
+1. Mutability
+List: You can add, remove, or update elements.
+Tuple: Fixed after creation. You can’t modify, but can contain mutable objects inside.
+Dict: Keys must be unique and hashable; values can be changed.
+Set: You can add/remove elements, but can’t store mutable elements like lists.
+
+
+2. Performance (Speed)
+| Operation Type          | Fastest Type      | Reason                                                    |
+| ----------------------- | ----------------- | --------------------------------------------------------- |
+| Iteration               | `tuple`           | Fixed size, less memory overhead                          |
+| Lookup by index         | `tuple` or `list` | Both O(1)                                                 |
+| Lookup by key           | `dict`            | Hash table O(1) average case                              |
+| Membership check (`in`) | `set` / `dict`    | Hash lookup is much faster than linear scan in list/tuple |
+
+Why tuple is faster than list:
+Tuple is immutable, so Python can optimize memory and iteration.
+List allows modifications, so it keeps extra memory (overhead) to allow dynamic resizing.
+
+
+3. Internal Working
+| Type    | Internal Implementation           | How it works                                                          |
+| ------- | --------------------------------- | --------------------------------------------------------------------- |
+| `list`  | Dynamic array (array of pointers) | Elements stored in contiguous memory; resizing happens automatically. |
+| `tuple` | Fixed array of pointers           | Immutable, so stored more compactly.                                  |
+| `dict`  | Hash table (key → value mapping)  | Keys hashed to index location; O(1) average access.                   |
+| `set`   | Hash table (only keys, no values) | Like dict without values; ensures uniqueness of elements.             |
+
+
+4. When to Use Which
+| Use Case                                | Best Data Type |
+| --------------------------------------- | -------------- |
+| Changeable sequence of items            | `list`         |
+| Fixed sequence (no modification)        | `tuple`        |
+| Key-value pairs, fast lookups           | `dict`         |
+| Unique elements, fast membership checks | `set`          |
+
+
+| Feature / Type              | `list`                            | `tuple`                                 | `dict` (Dictionary)                           | `set`                                               |
+| --------------------------- | --------------------------------- | --------------------------------------- | --------------------------------------------- | --------------------------------------------------- |
+| **Mutability**              | ✅ Mutable                         | ❌ Immutable                             | ✅ Mutable                                     | ✅ Mutable (but elements must be immutable)          |
+| **Syntax**                  | `[1, 2, 3]`                       | `(1, 2, 3)`                             | `{'a': 1, 'b': 2}`                            | `{1, 2, 3}`                                         |
+| **Ordered / Unordered**     | ✅ Ordered (since Python 3.7)      | ✅ Ordered                               | ✅ Ordered (since Python 3.7)                  | ❌ Unordered                                         |
+| **Allows Duplicates**       | ✅ Yes                             | ✅ Yes                                   | ✅ Keys unique, values can repeat              | ❌ No                                                |
+| **Indexing / Slicing**      | ✅ Supported                       | ✅ Supported                             | ❌ (But you can access by key)                 | ❌ Not supported                                     |
+| **Mutable Elements Inside** | Yes                               | Yes (but tuple itself can’t be changed) | Yes                                           | Yes (but set elements themselves must be immutable) |
+| **Performance**             | Slower for iteration / lookup     | ⚡ Faster for iteration / lookup         | ⚡ Very fast for key-based lookup (Hash table) | ⚡ Fast for membership check (Hash table)            |
+| **Memory Usage**            | Higher (stores extra capacity)    | Lower (fixed size)                      | Higher (hash overhead)                        | Higher (hash overhead)                              |
+| **Storage Internally**      | Dynamic array (array of pointers) | Array of pointers (fixed)               | Hash table (Key → Value mapping)              | Hash table (Unique elements)                        |
+| **Common Use Cases**        | When data changes frequently      | Fixed data, iteration speed             | Fast lookups, key-value mapping               | Unique element storage, fast search                 |
+| **Hashable (Can be Key)**   | ❌ No                              | ✅ Yes (if elements are hashable)        | ✅ Keys must be hashable                       | ❌ No                                                |
+| **Element Type**            | Any object                        | Any object                              | Keys: hashable; Values: any                   | Elements: hashable (immutable)                      |
+

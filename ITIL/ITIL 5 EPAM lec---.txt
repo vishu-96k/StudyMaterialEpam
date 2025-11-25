@@ -1,0 +1,85 @@
+ITIL 5 EPAM lec---
+lecture 4  & 5: notes epam videos theory, Narendra tyagi
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH LECTURE 4 :📌✅✅✅✅✅✅✅✅✅📌
+
+📌PROCESS OF ITSM (SERVICE OPERATIONS) :
+ITSM : IT service management are the activities that are performed by an organization to design, build, deliver, operate and control IT (information technology) services offered to customers. 
+
+📌INCIDENT MANAGEMENT: 
+-INCIDENT : Suddent distubarnce or inttruption which reduces the quality of the service is noth but an incident.
+-INCIDENT MANAGEENT : managing the incident based on the priorites.
+
+-Priority : its calculated on the basis of impact and urgency of the clinet.
+based on  the prority uh will decide the criticality of the incident/issue, and based on the criticality uh will trigger the incident management process.
+-P1 : impact high, urgency high --> these tickits should be resole immidialtly
+-p2 : impact less, urgency high
+-p3 : impact high, urgency less
+-p4 : impact less, urgency less
+SERVICE DESK : these people priorities the tickit and put it on the tickiting tool.
+
+
+📌PROBLEM MANAGEMENT :
+-this is resolving the root casue of the incident
+-5 why is a technique used here.
+
+
+📌CHANGE MANAGEMENT :
+-Any infra change, or update the clients wants in their service , then that will come under this.
+
+📌✅✅✅✅✅✅✅✅✅📌CH LECTURE 5 :📌✅✅✅✅✅✅✅✅✅📌
+
+📌EVENT MANAGEMENT :
+-Event management is under service operations, and incident is a type of event only.
+-EVENT : event is an any detectabke change or notification in an IT system
+	In simple words, anything happend in the system, like Eg, mouse hover, or a button prsss is an event.
+-Event is (any) some change in the exsisting state of the system
+	EG :A user logs in → Event
+	    CPU usage increases/decreasing → Event
+-EVENET MANAGAEMENT is done using monitoring tool 
+
+-ALRETS : Alert is a notification sent to a system or person when something needs attension, or when any important event has taken place, then that event is sent as an alret to the person so that that event can be given immediate actioin.
+-Alerts are created when an event crosses a threshold.
+-In simple words A warning that something might be going wrong
+-Alerts do not always need immediate action — they are just warnings.
+Examples:
+CPU usage above 80% → Alert
+Disk space less than 20% → Alert
+
+-ALARMS : An alarm is a critical alert that indicates a serious issue requiring immediate action. It usually represents a failure or severe breakdown.
+-In simple words its an emergency, something is already failing.
+
+Examples:
+Server is DOWN → Alarm
+Disk is 100% full → Alarm
+Network link FAILED → Alarm
+
+-Diff between event, alret, and alarm
+| Term      | Meaning                                          | Severity | Example                      |
+| --------- | ------------------------------------------------ | -------- | ---------------------------- |
+| **Event** | Any change noticed                               | Low      | User login, backup completed |
+| **Alert** | Warning that something needs attention           | Medium   | CPU 80%, memory 70%          |
+| **Alarm** | Critical condition — action required immediately | High     | Server down, disk 100% full  |
+
+One-line Summary
+Event → Something happened
+Alert → Warning
+Alarm → Emergency
+
+📌
+

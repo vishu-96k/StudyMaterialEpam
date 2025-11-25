@@ -1,0 +1,151 @@
+Abstract Class-Python---
+This is code for the notes made by : Vishwajeet Gaikwad in note book
+
+CODE :
+
+# ✅ Importing required modules for abstraction
+from abc import ABC, abstractmethod
+
+# 🧱 Abstract Base Class (inherits from ABC)
+class Payment(ABC):
+    # 1️⃣ Abstract method without implementation (must be overridden)
+    @abstractmethod
+    def pay(self, amount):
+        pass
+
+    # 2️⃣ Abstract method with default implementation (still must be overridden)
+    @abstractmethod
+    def refund(self, amount):
+        print("[Default Refund] Refunding amount:", amount)
+
+    # 3️⃣ Concrete method (no need to override, but can if needed)
+    def validate(self):
+        print("[Concrete Method] Validating payment details...")
+
+    # 4️⃣ Abstract Class Method
+    @classmethod
+    @abstractmethod
+    def payment_type(cls):
+        pass
+
+    # 5️⃣ Abstract Static Method
+    @staticmethod
+    @abstractmethod
+    def get_gateway_info():
+        pass
+
+    # 6️⃣ Abstract Property
+    @property
+    @abstractmethod
+    def transaction_limit(self):
+        pass
+
+
+# 🏦 Subclass inheriting abstract class
+class CreditCardPayment(Payment):
+    # ✅ Must override all abstract methods
+    def pay(self, amount):
+        print(f"[Override] Paying ₹{amount} using Credit Card")
+
+    # ✅ Overriding abstract method with default implementation
+    def refund(self, amount):
+        # calling default implementation using super()
+        super().refund(amount)
+        print("[Override] Credit Card refund completed ✅")
+
+    # ✅ Not overriding validate() — using concrete method directly
+
+    # ✅ Implementing abstract class method
+    @classmethod
+    def payment_type(cls):
+        print("[Class Method] Payment type: Credit Card")
+
+    # ✅ Implementing abstract static method
+    @staticmethod
+    def get_gateway_info():
+        print("[Static Method] Gateway: VISA / Mastercard")
+
+    # ✅ Implementing abstract property
+    @property
+    def transaction_limit(self):
+        return "₹1,00,000 per day"
+
+
+# 🏧 Another subclass — to show multiple implementations are possible
+class UpiPayment(Payment):
+    def pay(self, amount):
+        print(f"[Override] Paying ₹{amount} using UPI")
+
+    def refund(self, amount):
+        super().refund(amount)
+        print("[Override] UPI refund completed ✅")
+
+    @classmethod
+    def payment_type(cls):
+        print("[Class Method] Payment type: UPI")
+
+    @staticmethod
+    def get_gateway_info():
+        print("[Static Method] Gateway: UPI Provider")
+
+    @property
+    def transaction_limit(self):
+        return "₹2,00,000 per day"
+
+
+# 🚫 Trying to instantiate abstract class (WILL THROW ERROR)
+# p = Payment()  # ❌ TypeError: Can't instantiate abstract class
+
+# 🏁 Creating object of concrete subclasses
+cc = CreditCardPayment()
+upi = UpiPayment()
+
+# 📌 Demonstrating all functionalities
+
+# ✅ 1. Abstract method overridden
+cc.pay(5000)
+upi.pay(2500)
+
+# ✅ 2. Abstract method with default implementation overridden + super()
+cc.refund(500)
+upi.refund(250)
+
+# ✅ 3. Concrete method inherited from abstract class
+cc.validate()
+upi.validate()
+
+# ✅ 4. Abstract class method
+CreditCardPayment.payment_type()
+UpiPayment.payment_type()
+
+# ✅ 5. Abstract static method
+CreditCardPayment.get_gateway_info()
+UpiPayment.get_gateway_info()
+
+# ✅ 6. Abstract property
+print("[Property] Credit Card Limit:", cc.transaction_limit)
+print("[Property] UPI Limit:", upi.transaction_limit)
+
+
+🧠 What This Code Demonstrates| No. | Concept Shown                                        | Where in Code                            |
+| --- | ---------------------------------------------------- | ---------------------------------------- |
+| 1️⃣ | Abstract method declaration                      						    | `def pay(self, amount):` in `Payment`    |
+| 2️⃣ | Abstract method with default implementation       				   | `def refund(self, amount):` in `Payment` |
+| 3️⃣ | Concrete method in abstract class                  					  | `def validate(self):`                    |
+| 4️⃣ | Abstract class method                     						           | `@classmethod` in `Payment`              |
+| 5️⃣ | Abstract static method                             						  | `@staticmethod` in `Payment`             |
+| 6️⃣ | Abstract property                                   						 | `@property` in `Payment`                 |
+| 7️⃣ | Overriding abstract methods in child class           					| In `CreditCardPayment` and `UpiPayment`  |
+| 8️⃣ | Using `super()` to call default abstract method body 					| Inside `refund()` of child classes       |
+| 9️⃣ | Concrete methods are inherited without overriding    				| `validate()` called from object          |
+| 🔟  | Instantiating abstract class is not allowed          | Commented line with `p = Payment()`      |
+
+
+Summary of Key Takeaways:
+Abstract methods must be overridden.
+They can have default implementations, but subclasses still need to override them.
+Abstract classes can also have concrete methods.
+@abstractmethod can be combined with @classmethod, @staticmethod, and @property.
+You can’t instantiate an abstract class directly.
+This helps enforce structure and standardization across subclasses.
+ 

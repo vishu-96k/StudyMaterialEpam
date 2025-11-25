@@ -1,0 +1,184 @@
+ITIL 3 EPAM---
+lecture 2 : notes epam videos theory, Narendra tyagi
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH LECTURE 2:📌✅✅✅✅✅✅✅✅✅📌
+
+📌SERVICE DELIVARY LEVELS :
+1)saas :software as a service eg: Apllications 
+-> SAAS main hame pura ka pura software he as a service milta hian
+-> You use ready-made software over the internet — no need to install or maintain anything.
+The service provider manages everything — hardware, OS, application, updates, and security.
+In simple words:
+You just use the app, everything else is handled by the provider.
+-Examples:
+Gmail – you just log in and send emails.
+Microsoft 365 / Google Docs – you use apps online, no installation needed.
+
+2)paas :platfrom as a service Eg: os & middleweres
+-> PAAS : mian hame pura ka pura platform (computer with OS, RAM, and hardware) as a service milta hain, like OS, harddisk, RAM, and iss computer par hame hamare kudhke application build and deploy krne hain
+-Isame sirf vo platfrom jo hian (harddrive ,RAM, os), that are manage by the service provider, baki jo app build nd deploy krna hian that we need to manage on our own.
+
+✅ You manage: Your applications & data.
+✅ Provider manages: OS, runtime, middleware, and infrastructure.
+
+->You get a platform to build, test, and deploy your own applications.
+The provider manages hardware, operating system, and middleware — you just focus on developing the app.
+-In simple words:
+You build your app on someone else’s platform without worrying about servers or OS setup.
+
+Examples:
+Microsoft Azure App Service
+Google App Engine
+AWS Elastic Beanstalk
+
+
+3)Iaas :Infrastruture as a service EG : HW and Building infrastructure
+-IAAS : main ham sirf infrastructure lete hian, mtlb empty computer (sirf body), baki uss computer main konsa OS chalega, Kitana ram rahega, konse applications install krne hain, konsa app new build krna hian, kaha deploy krna hian, ye sab ham kudh handle krenge.
+-IAAS : main vender sirf infra manage krega, mtlb khali computer ke hardware 
+
+✅ You manage: OS, runtime, app, data.
+✅ Provider manages: Physical hardware, virtualization, and networking.
+
+You rent virtual hardware and network resources like servers, storage, and networking from a provider.
+You manage the OS, applications, and data yourself.
+-You rent the infrastructure and build everything else on top of it.
+Examples:
+Amazon EC2 (AWS)
+Microsoft Azure Virtual Machines
+
+
+| Level    | Who Manages What                                | What You Get               | Example           |
+| -------- | ----------------------------------------------- | -------------------------- | ----------------- |
+| **SaaS** | Provider manages everything                     | Ready-to-use software      | Gmail, Zoom       |
+| **PaaS** | Provider manages platform; you manage app       | Platform to build apps     | Google App Engine |
+| **IaaS** | Provider manages hardware; you manage OS & apps | Virtual machines & storage | AWS EC2           |
+
+
+📌5 SERVICE LIFECYCLE (v3):
+SERVICE STARTERGY : 
+-Its a master plan to achive the Service goals
+-Service Startergy is between the account  management, deliverary management, sales management, client and business consulting team.
+-This phase is all about getting the project, convensing the cost to customer, and basically planning, business deal is sign of between the client and the Company.
+-its a phase in which we will get to know wether we are craking the deal or not. 
+-Stratergy measns planning how , what , to whome, can we aford the service we are gonig to provide.
+-The people who are involved in this phase are, Clients , stake holders.  
+-4 Ps : 1)People ->wether we have the skiled peoples,We need people who are skilled, trained, and for communication
+	2)Process ->what kind of actions we need to perform, what activities, what goals we need to full fill
+	3)Products ->What are the tools are needed, whether we have them, what are monitoring tools, we have them?
+	4)partners ->if uh need cloud Suppliers, then wether we have the patners, like AWS patners, or we might be lacking few technologies , and thoese we need from some other patners/vendros. 
+
+-ACTIVITIES INVOLVED IN STARTERGY ARE :
+	1)Define the market, what are the market need?
+	2)Devlops the offering as per the market needs?
+	3)Devlop the startergies assects, like do uh have the technology to full fill the market needs?
+	4)prepare for execution plan.
+
+SERVICE DESIGN : 
+-This phase will take care of, Supplier management, service level management, Service catalogie managament, Avalablitly managemnt all these process.
+-The key attributes which we will work in this phase are : Capacity managemen, SLA, Service portfolio management, Catoalog managememt, availability management, Informantion security management.
+-When we design the service that time only we get to know what time for service we r providing, like 24/7 or 8/5 etc.
+-How are we going to provide the service, how are we goint to build, test, and deploy it?
+-So in service design we manage the following process :
+-1)SERVICE CATALOGUE : its a tire approach, 3 tier approach. 
+	There is technical service catalog and Bisiness service catalogue.
+	-A Service Catalogue is a detailed list of all live IT services offered to customers and users, including information like features, pricing, SLAs, and request procedures.
+-A Service Catalogue is a list or menu of all the IT services that a company offers to its users or customers.
+
+
+| **Tier / Type**                                 | **Meaning**                                                                                                     | **Example**                                                  |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| **1️⃣ Business Service Catalogue**              | Describes services **in business terms** — what the customer sees and uses.                                     | “Email Service,” “Payroll System,” “VPN Access.”             |
+| **2️⃣ Technical Service Catalogue**             | Describes the **technical components** needed to deliver each business service.                                 | Email service depends on mail servers, storage, and network. |
+| **3️⃣ Service Portfolio / Supporting Services** | Includes all **supporting or internal services** — not directly visible to customers but required for delivery. | Backup, monitoring tools, database services.                 |
+
+
+-2)SERVICE LEVEL MANAGEMENT : it includes, SLA management, KPIs management, OLA MANAGEMENT
+	OLA : operational level Agreement, is noth but a agreement which is between the internal teams who are providng servies, Like internal agreement between the L1, L2 and L3  support teams, as part of association between the spport tickits.
+	Whatever internal commitments the teams make with each other, like the L1 with L2 with L3, that comes under the OLA agreement.
+	SLA : This SAL includes the following things : Service description, Incident responce time, Customer responcibiliies, Resolution time, Houes of operation, user responce time, Availability and Continuity targtes, change response time, What penalty if response and Resolution time lines are not meet.
+	TYPES OF SLA : 
+	1) Service based SLA : in this all the customers gets same deal for same services
+	
+	2) Customer based SLA : In this different customers get different deals and different cost as per the requirements of service of that particular customer.
+	Like if the customer wants something on argent basis, then we will increase price.
+	 
+	3) Multilevel Based SLA : these involves corporate customer and service level and  avoid repetition, basically its like we have a sign between client and vendor and vendor again have a sign between the supplier or with some other vendor.
+
+-SLA also includes DR, that is disaster recovery service, which means that recouvery time options and recovery point option is there. In this what happens if there is some disaster is there, then within what time and what location the service will be recover is mentioned
+ 
+IT service Continuality Management : this is noth but what if the service netwroks goes down , then whts the second back up plan for providing the service, like if this network goes down then we will be providing uh with another network within  2 hrs, this is noth but the (ITSCM ) Continuality management.
+
+-3)SERVICE PORTFOLIO MANAGEMENMT :
+
+
+SERVICE TRASNTION :
+-This phase will take care of, change management, knowledge management, release and deploy managamen, servce and testing management, Configuraional  management system (CMS) all these process 
+
+
+SERVICE OPERATIONS :
+-this phase will take care of, probllem, incident, event management, request full fillment management, all these process will be taken care.
+
+CONTINUAL SERVICE IMPROVEMENT :
+-all 4 above phases are repeated.
+
+📌PROCESS AND FUNCTIONS :
+Process :  process is a strutured of set of activities designed so that we can achive a defined objective
+-Process is noth but some strutural stpes, by following which uh will achive some goals.
+EG : incident management, problem management, these all are process
+ 
+Functions :team or grp of pple and tools, and these people will carry out one or more proces or activities
+
+📌ITIL Roles :
+1)Process Owner : 
+What a process Owner will do?
+he will ensure that anything that uh implement or execute is fit for a purpose
+
+2)Process Manager :
+What he will do :
+he will make sure that he is monitoring the process and reports process again to the process owner
+
+3)Serivce Owner:
+he will be accountable for service delivary
+
+4)Service manager :
+he will be responsible for initaition, transition and maintence of complete process lifecycle.
+
+-Process will be defined by process team and services team will be following these process
+-process and service team are not same.
+-Process team : will defined the process
+-Service team:  this people will carry out the process defined by Proces team
+
+5)Busniess relationship Manager :
+-He is the customer care service manager, every customer care executive will have this manager
+-even in banking system, when we take loan then we have this manager.
+-BRM : they make sure that whatever bussniess has been developed between the end user and the provider is mainained
+-They dont devlop new bussniess. but make sure that already exsisting busnniess is maintained
+
+📌RACI MATRIX :
+-what is RECI :stands for-- RESPONSIBLE, ACCOUNTABLE, CONSILTED, INFORMED
+-This matrix will actually behaves as a prioritaizion matrix, it actually describes the participation of varios roles in making sure that the task and delivers are being comppleted for a project.
+R : responsible for getting the job done, so one peron is responcible.
+-Who is responsible at a very first point, when a new bussiness comes,then sales team and the service delivery management teams will be responsible , but sales team is not the technology team, so its only the account manager or a service delvary mamager will be responsible.  
+
+A : There will be multiple people in this, like one people will be accountible for one task, and these people will delegate the work to responsible persons.
+
+C : Consulted, WHose openions are sought
+I : Informed who keep a up to date on progress of the project or service 
+
+📌WHAT IS SERVICE POFTFOLIO MANAGEMENT

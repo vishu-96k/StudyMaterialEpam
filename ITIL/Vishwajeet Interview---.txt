@@ -1,0 +1,104 @@
+--------Vishwajeet Interview-----------
+
+I’m comfortable working in managed service environments, where teamwork, communication, and timely resolution are key.
+In short, I would describe myself as a quick learner, who enjoys solving problems and ensuring smooth service delivery.
+
+Q0)What is service now?
+Answer:
+“ServiceNow is a cloud-based IT Service Management (ITSM) tool that helps organizations manage their IT processes like incident management, change management, and problem management. It allows users to raise tickets, and IT teams can track, assign, and resolve them efficiently.
+
+I understand that ServiceNow helps automate workflows, maintain transparency, and improve service delivery. For example, if an employee faces an issue with their system, they can log a ticket in ServiceNow, and the support team will resolve it through the same platform — making the whole process faster and more organized.”
+
+-Even uh can apply filters
+
+Q1) What is Application Support?
+Application Support means maintaining, monitoring, and ensuring that software applications run smoothly after they are deployed to users.
+It focuses on keeping systems available, fixing issues, and supporting end-users when problems occur.
+👉 Simple meaning:
+Making sure the application works properly every day for users.
+
+
+Q2) Who is an Application Support Engineer?
+An Application Support Engineer is responsible for supporting, troubleshooting, and improving software applications used by the organization or its customers.
+They act as a bridge between end-users, developers, and infrastructure teams.
+
+Q3) What Does an Application Support Engineer Do?
+1️⃣ Monitor applications – Check system health, performance, and logs using tools (like Grafana, Splunk, or Kibana).
+2️⃣ Troubleshoot issues – Fix user problems, errors, or bugs in the application.
+3️⃣ Incident Management – Log, prioritize, and resolve incidents quickly to minimize downtime.
+4️⃣ Problem Management – Find and fix the root cause of recurring issues.
+5️⃣ Change & Release Support – Help deploy new versions or updates safely.
+6️⃣ User Communication – Keep users informed about issues and resolutions.
+7️⃣ Documentation & Knowledge Sharing – Record steps for common issues in knowledge base.
+
+🧠 In Short:
+Application Support = Keeping applications healthy, stable, and available.
+Application Support Engineer = The person who ensures users can use the application without problems.
+
+----------------------------------------------------------------
+Q1) Interview Answer: “What is Jira and what do you understand by it?”
+Answer (Short & Professional):
+Jira is a tool developed by Atlassian that we use for tracking and managing work items like incidents, service requests, and changes.
+So we used Jira Service Management to log user issues, assign them to the right support team, and track progress until closure.
+It helps maintain transparency, monitor SLAs, and ensure timely resolution of tickets
+
+Q2) If there is heavy flow of tickits what will uh do
+I’ll first stay calm and prioritize the tickets based on impact and urgency — handling critical (P1/P2) issues first. I’ll categorize and assign tickets properly to ensure no duplication and faster resolution. I’ll keep clear communication with the users and my team, updating them on progress to maintain transparency. I’ll also use the Knowledge Base (KB) — which is a collection of previously resolved issues and solutions — or automation tools for repetitive issues to save time. Once the situation is under control, I’ll analyze recurring incidents to identify the root cause and prevent them in the future.”
+
+Q3): If a teammate says “I have other work” and throws all their work to you after working hours, how will you handle it?
+
+-Mainly I will see the how much its going to affect the bussiness, like the client, and if its the P1 level tasks then no matter what I am doing I will finish it off, and after words I will discuss it with the teammate, like why he is not able to do his work nd all the stuff, but I wont let it affect the client
+
+-I’ll first stay calm and assess the urgency of the tasks. If the work is critical or time-sensitive, I’ll take ownership and complete it to ensure the team meets deadlines — teamwork and responsibility come first. However, if it’s not urgent, I’ll communicate politely that we can handle it the next day or divide the tasks fairly among the team. I’ll also inform my lead about the situation to maintain a balanced workload and avoid burnout. My goal would be to support the team while maintaining professionalism, time management, and clear communication.”
+
+1️⃣ Stay calm – Don’t react emotionally; understand the situation first.
+2️⃣ Check urgency – If the task is critical or affects SLA, I’ll complete it.
+3️⃣ Communicate politely – If it’s not urgent, I’ll explain that we can finish it the next day.
+4️⃣ Inform the lead – Update my lead or manager to balance the workload fairly.
+5️⃣ Support the team – Help when needed, but ensure work is shared properly.
+6️⃣ Maintain professionalism – Handle it respectfully and focus on teamwork.
+
+
+Q4) Non Technical Skills
+Team collaboration, communication, time management, Consistency, Adaptibility, Hunger.
+
+I’ve developed strong team collaboration and communication skills.
+During our MERN Stack project, I worked with 3 teammates — we divided tasks and coordinated daily progress. This helped us meet deadlines smoothly.
+
+Also, as the President of the CodeChef Club, I had to explain technical topics to juniors and communicate with faculty for event permissions. This improved my ability to communicate clearly with both technical and non-technical people.
+
+Finally, through these experiences, I learned time management — by creating project milestones and ensuring we stayed on track before deadlines.”
+
+1️⃣ Team Collaboration : Example:
+During our MERN stack project, I worked closely with 3 teammates. We divided tasks like frontend, backend, and database.
+I coordinated daily updates and helped resolve blockers together.
+This showed strong team collaboration, as we communicated effectively and supported each other to meet deadlines.
+
+2️⃣ Communication Skills:
+Example:
+As the President of the CodeChef Club, I often had to explain technical concepts to juniors and coordinate with faculty for event approvals.
+I learned how to communicate ideas clearly to both technical and non-technical audiences, ensuring everyone stayed aligned.
+
+3️⃣ Time Management : 
+Example:
+During our MERN project, we had limited time before the final submission.
+I created a small schedule dividing the project into milestones — frontend completion, backend setup, testing, and final deployment.
+Sticking to this timeline helped us finish early and reduced last-minute pressure.
+
+4️⃣ Consistency : 
+Example:
+I was an active member of the CodeChef Club from my first year to final year.
+Because of my consistent participation in organizing coding events and mentoring juniors, I was later chosen as the President of the Club.
+This shows my long-term commitment and reliability.
+
+5️⃣ Adaptability / Flexibility : 
+Example:
+When we started our MERN stack project, I had no prior experience with React and MongoDB.
+But I quickly learned through online tutorials and applied that knowledge to build the project successfully.
+This showed my ability to adapt to new technologies and handle unfamiliar challenges.
+
+6️⃣ Continuous Learning
+Example:
+Even after completing the project, I kept exploring how to improve the app by adding authentication and deployment features.
+I also encouraged my club members to learn new coding topics every month.
+This habit of learning and sharing helped me stay updated with modern technologies

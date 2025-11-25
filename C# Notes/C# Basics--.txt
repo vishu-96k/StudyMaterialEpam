@@ -1,0 +1,200 @@
+C# Basics--
+-📌✅✅✅✅✅✅✅✅✅📌CH :MODULE 1📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+📌✅✅✅✅✅✅✅✅✅📌CH 0 : C# BAISCS📌✅✅✅✅✅✅✅✅✅📌
+
+
+
+✅[#1] NAMING CONVECTION FOR C#
+| Element         | Naming Convention       | Example                             |
+| --------------- | ----------------------- | ----------------------------------- |
+| Namespace       | PascalCase              | `MyCompany.Project.Module`          |
+| Class           | PascalCase              | `CustomerOrder`                     |
+| Interface       | PascalCase + I prefix   | `IRepository`                       |
+| Method/Function | PascalCase              | `CalculateTotalAmount()`            |
+| Variable        | camelCase               | `totalAmount`                       |
+| Property        | PascalCase              | `CustomerName`                      |
+| Constant        | PascalCase / UPPER_CASE | `MaxRetryCount` / `MAX_RETRY_COUNT` |
+
+
+📌1. Class Naming Convention
+Notation: PascalCase
+EG :
+public class CustomerOrder
+{
+}
+
+
+📌2. Method / Function Naming Convention
+Notation: PascalCase
+EG:
+public void CalculateTotalAmount()
+{
+}
+
+
+📌3.Variable Naming Convention
+Notation: camelCase
+Rule: First letter small, then each new word starts with a capital.
+EG:
+using System;
+namespace Variable
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			int a =10;
+			int principalAmount = 1000;
+			Console.WriteLine("principalAmount is " + principalAmount);
+		}
+	}
+}
+
+
+
+📌4.Namespace Naming Convention
+Notation: PascalCase
+namespace MyCompany.ProjectName.ModuleName
+{
+}
+
+
+📌5.Constant Naming Convention
+Notation: PascalCase or UPPER_CASE_WITH_UNDERSCORES (both are used, PascalCase is more modern).
+EG :
+using System;
+namespace Constant
+{
+	class Program
+	{
+		public const int MaxRetryCount = 5;
+		public const int MAX_RETRY_COUNT = 5;
+
+		static void Main(string[] args)
+		{
+			Console.WriteLine(MAX_RETRY_COUNT);
+		}
+	}
+}
+
+✅[#2] is C# fully OOPs LANGUAGE 
+
+📌No — C# is not a fully Object-Oriented language, but it is primarily Object-Oriented.
+-C# is partially OOP language becoz it supports concept of oops (4 pilers)
+-But C# is not fully oop language, becoz :
+	1) It Supports primitive types like int, bool, char — these are not objects by default.
+	2) It Allows static methods that can exist without creating an object.
+	3) It Supports structs (value types), which are not fully object-oriented.
+
+NOTE : C#, Java, Python, js --> None of them is fully pure OOP language.
+       Smalltalk --> it is a fully pure OOP language, Becoz it doest have primitive data types.
+
+✅[#3] IMMUTABLE AND MUTABLE
+IMMUTABLE = Cannot be change
+MUTABLE = Can be Change
+
+📌Immutable:
+-Cannot change the value or state after creation.
+-Any modification results in a new object being created.
+| Type                          | Mutable / Immutable | Note                                           |
+| ----------------------------- | ------------------- | ---------------------------------------------- |
+| `string`                      | ❌ Immutable         | Every change creates a new string              |
+| `System.DateTime`             | ❌ Immutable         | Methods return new DateTime                    |
+| `System.Guid`                 | ❌ Immutable         |                                                |
+| `System.Decimal`              | ❌ Immutable         |                                                |
+| `System.Int32`, `double`, etc | ❌ Immutable         | Value types can’t be modified after assignment |
+| `System.TimeSpan`             | ❌ Immutable         |                                                |
+| `System.Tuple`                | ❌ Immutable         |                                                |
+
+
+📌Mutable
+-Can change the object’s state or content without creating a new object.
+-Mutable objects are not thread-safe by default.
+| Type                                    | Mutable / Immutable | Note                                    |
+| --------------------------------------- | ------------------- | --------------------------------------- |
+| `List<T>`                               | ✅ Mutable           | Can add/remove/update items             |
+| `Array`                                 | ✅ Mutable           | Elements can be changed                 |
+| `Dictionary<TKey,TValue>`               | ✅ Mutable           |                                         |
+| `StringBuilder`                         | ✅ Mutable           | Recommended for frequent string changes |
+| Custom classes (if fields are settable) | ✅ Mutable           | Depends on implementation               |
+| `HashSet<T>`                            | ✅ Mutable           |                                         |
+
+
+📌CLASS MUTTABLE OR IMMUTABLE 
+In C#, a class itself is not inherently mutable or immutable.
+Its behavior depends on how you define it.
+
+1. By default — Class is Mutable Because:
+-Properties usually have setters, so values can be changed.
+-Fields can be updated after object creation.
+
+Example (Mutable Class):
+
+public class Person
+{
+    public string Name { get; set; }  // can be changed
+}
+static void Main()
+{
+	var p = new Person { Name = "John" };
+	p.Name = "David";   // ✅ changed after creation
+}
+
+
+2. Making a Class Immutable
+To make it immutable:
+-Use readonly fields or get-only properties.
+-Set values only through the constructor.
+-Don’t provide any set methods.
+
+Example (Immutable Class):
+public class Person
+{
+    public string Name { get; }  // get-only property
+
+    public Person(string name)
+    {
+        Name = name;
+    }
+}
+static void Main()
+{
+	var p = new Person("John"); // p.Name = "David"; // ❌ Not allowed, no setter	
+}
+
+📌📌NOTE📌📌
+Structs in C# are value types, and can also be immutable or mutable depending on definition.
+Immutable classes are safer for multi-threaded code and are commonly used in DDD and record types
+
+
+
+✅[#4] Constructor
+📌Static COnstructor
+there is no “static implicit constructor” generated by the compiler in the same way as an implicit instance constructor/Defalut constructor.
+
+| Instance constructor                                                 | Static constructor                                                      |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| If not defined, compiler creates an implicit **default constructor** | If not defined, compiler **does not create** a static constructor       |
+| Runs when object is created                                          | Runs once automatically before first use of the class (only if defined) |
+| Developer can override it                                            | Static constructor is optional                                          |
+
+-Static constructor in C# is executed: Before the first use of the class (uh should either make the insatcene of that class or uh should access the static data memebr of that class)
+-Static constructors is not executed literally before Main() begins, Its always executed when uh access the class for the first time then only.
+So:
+If you do not use the class at all, the static constructor is never called.
+If you access a static member of the class inside Main(), the static constructor is executed just before that line — not at the very start of Main().

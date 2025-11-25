@@ -1,0 +1,168 @@
+ITIL 2---
+lecture 1 notes epam videos theory, Narendra tyagi
+-📌✅✅✅✅✅✅✅✅✅📌CH :05 MODLES📌✅✅✅✅✅✅✅✅✅📌: FOR CH NAME (Green Col Pen for ch Name)
+- : FOR HASHTAG POINTS (HashTag)
+-📌: FOR POINTS (Black pens)
+-🔄: for eg
+-🗂: for files and folders
+-👇 Code:
+-📦 : Keywords definition
+-📌📌NOTE📌📌 : for imp note
+
+-FOR NEW HASHTAG (✅[#1])
+--------✅[#2]. AddControllers() method----
+
+
+------------------------------------
+========CH CLOSEING SYMBOL==========
+------------------------------------
+
+📌✅✅✅✅✅✅✅✅✅📌CH : ITIL THEORY📌✅✅✅✅✅✅✅✅✅📌
+
+✅[#1] ITIL HISTORY
+
+📌AXELOS company
+-AXELOS is a company that manages and develops best practice frameworks like ITIL, PRINCE2, and others.
+-Current ongoing version of ITIL is v4. But we will study v3 version.
+
+📌What is ITIL :
+-ITIL is a set of best practices for providing IT services and managing IT services 
+-ITIL its basically a systematic approach for providing High quality of IT serices, by inculcating  the best practices for documention as part of service management which actually provides a common language towards undurstading of the service.  
+-ITIL is basically a set of process, which are optimize, sequential and available to make sure uh can accommodate your existing service needs. 
+-ITIL is a systematic approach which provides the high quality IT services delivary, So basically ITIL is noth but documentation/Documenting best practices for providing IT service 
+-ITIL (Information Technology Infrastructure Library) is a set of best practices to help organizations manage IT services better.
+-Curreently the version of ITIL framweok is v4
+
+-Why ITIL Was Created
+Problem in the 1980s: Many UK government IT projects were failing—over budget, poor quality, or completely abandoned.
+Need: A standardized way to manage IT services to improve efficiency, quality, and reduce failures.
+Purpose: Provide best practices for IT service management (ITSM)—from planning to delivery and support.
+
+-Who Started ITIL?
+Started by: The UK Government
+Organization: CCTA (Central Computer and Telecommunications Agency) — now part of the UK Cabinet Office
+Initial Goal: Help government departments improve the quality of IT services.
+
+📌ITIL :
+-What is TIL ?
+-ITIL is noth but a set of process which are optimized, seqtial, and available to make sure that uh can accomodate the esisting service needs  
+-SYSTEMATIC :ITIl is a systematic approcach for providing high quality of IT service delivary
+-DOCUMENTED : ITIL is basically docuenting the best practice for IT service management
+-ITIL is basiclly best practice of delivaring IT services to the end user by inclimenting the best practices for documentation as part of Service management.
+ITIL provides the common languge with well denied terms, and this was developed in 1980s, to be more specific in 1987 by the govt of UK.
+-Earliry ITIL was a LIBRARY with 30 books in UK.
+-Information technology infrastructure management library, is a set of best practices for managing IT services.
+
+📌HISTROY :
+-ITIL is a pre hitroric condition in UK.
+-there was one university which was having a huge library, and It was becoming very difficult to manage the services of that libray.
+-In that library there were many blocks, library was divide by rows to columns, and having many blocks in one row, there were many partitions also. For the libray and team it was becoming very difficult to make sure that there is sequential approach or pattern to be given for keeping the books, and keep a track of what is available and what is not .
+-So they derived this Practice called ITIL there for managing the libray in the Uk.
+-the library university was a LAW based university in UK, And very soon they converted it into govt controlled LAW based university.
+-all this happen in 1980s.
+-So in the end they wanted a systematic approach in order to meet the need of the end user, is fulfilled, and the services are maintained.
+-So it was made so that none of the single person is turned to be short of what he or she wants.
+-so the library was maintained, in form of sections, rows and columns , and copies were keept in the departments, and for eg, if it was a navy sections, then in that sections all the books related to the navy were keept, like this they maintained the library.
+
+-ITIL is derived form this, which is now used for providing the best IT servies, as a bussness offring to any client who needs to establish his bussneiss.
+-The end goal of ITIL is to meet the requrienments of the end user. 
+  
+-ITIL started in 1980s, 40 publications were there in ITIL.
+-v2 (2000 to 2002): in v2 version there were 8 books in this, and it came in 2002
+
+v3 (2007) : 
+-with consisting only of 5 books, and these 5 books were the 5 stages
+-In this version ITIL was much simplified .	
+-This version has many releases, like how do uh have peoduct relases like 2.2 , 2.3 relase like this. 
+-This version was meeting the ISO standards.
+
+
+📌DEFINATIONS :
+1)SERVICE : 
+-So service is noth but delivering the values to the customer by facilating the outcomes the customers wants to achive without the ownership of the specific costs and ricks.
+-for eg : "BackUp Service" it means that you dont have to care about how much tapes, disks or robots cost and you dont have to worry if one of the staff is off sick or levaes.
+-Service is a term, which the service provider will offer to the bussiness owners. Bussniess owners will come into establishment with the servie provider where the service provides, once the bussniess is actually given to the bussneiss provider , they will deliver value to the customers by facilitating  all the outcomes for their customers who wants to achive the goals without any ownership of costs and risks.
+-so customer will just have the deal with the provides, and providers will have to make sure that they deliver the best service to them without any risks.
+
+Simple Definition: A service is something that delivers value to a customer by helping them achieve their goals without them worrying about costs or risks.
+Example: Using Spotify – you enjoy music without buying CDs or maintaining storage servers. 
+
+2)SERVICE LEVEL :
+-Service level is actually measured and reported achievement against one or more service level targets 
+Its actually measuring a value of services uh deliver.
+EG : Red = 1 hour responce 24/7
+     Amber = 4 hour response 8/5(that is 8 hours, from mon to friday)
+     Green = Next business day
+Simple Definition: Service level is the measurable quality or performance of a service.
+Example: A pizza delivery promises delivery within 30 minutes. If it takes longer, service level is not met.
+
+3)KEY PERFORMANCE INDICATORS(KPIs) :
+-KPIs are the quantifiable measurements that reflect the critical success factors of an organisation.
+Simple Definition: KPIs are measurable values that show how well an organizations service is performing.
+Example: In a call center, one KPI could be average call wait time (e.g., less than 2 minutes).
+
+4)SERVICE LEVEL ARGREEMENT :
+-Its a sign agreement between the service provider and the customer.
+Simple Definition: An SLA is a written agreement between the service provider and the customer that defines the expected service levels.
+Example: Your internet provider promises 99.9% uptime per month in the SLA.
+
+5)CONFIGURATIONAL MANAGEMENT SYSTEM (CMS):
+-CMS is a kind of database, and this database includes all the pivertal points like hardware, software, software lisences , all thses is under the Configuration manageenet database
+-CMS contains tools and DataBases to manage IT service providers configuration data.
+Simple Definition: A CMS is a system (set of tools and databases) that stores and manages information about all the IT assets and their relationships—like hardware, software, licenses, and documentation—so services can run smoothly.
+Real-Life Example: Think of it like a library catalog system. The library catalog tells you which books exist, where they’re located, who borrowed them, and how they’re connected to different sections. Similarly, a CMS keeps track of all IT components (servers, apps, licenses) and how they work together.
+-CMS / CMSB is the heart of IT, like how the kernel is the heart of OS
+-Tools used for CMS are. IBM(tivoli), BMC(atrium), jeera etc 
+
+6)RELESE :
+-Its noth but a collection hardware, software and documention process require to implement one or more approved changes to IT services.
+Simple Definition: A release is a collection of hardware, software, and documents bundled together to deliver or update an IT service.
+Real-Life Example: When Apple launches a new iOS update, it includes the updated software, documentation, and installation process — that’s a release.
+
+7)INCIDENT : 
+-Incident is sudden inttruption to any service or unplanned interruption to an IT service or Unplanned reduction in its quality 
+Simple Definition: An unplanned interruption or reduction in the quality of an IT service.
+Real-Life Example: Your office Wi-Fi suddenly stops working during work hours — that’s an incident.
+
+8) PROBLEM :
+-Unknown underlying cause of one or more incidents 
+Simple Definition: The unknown root cause behind one or more incidents.
+Real-Life Example: If Wi-Fi keeps dropping often, the faulty router (unknown at first) is the problem causing repeated incidents.
+
+9) WORK AROUND :
+Reducing or elimiunating the impact of an incident without resolving it 
+Simple Definition: A temporary solution that reduces or removes the impact of an incident without fixing the root cause.
+
+
+📌SERVICE DELIVARY LEVELS :
+1)saas :software as a service eg: Apllications
+2)paas :platfrom as a service Eg: os & middleweres
+3)Iaas :Infrastruture as a service EG : HW and Building infrastructre
+
+📌SERVICE LIFECYCLE STATGES OF v3:
+1)service startergy
+2)service design
+3)service tansition
+4)service opretions
+5)continual service improvement
+-Primariayly therir are only 4 stages , the 5 th stage is just added by end user, this 5 th stage will make all the 4 stages go again and again
+
+
+📌ITIL v3 v/s V4
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Focus / Approach**                  | Focused on **processes** — how IT services are delivered through defined steps.                                                               | Focused on **practices and value co-creation** — encourages flexibility and collaboration.                                                                                 |
+| **2. Framework Type**                    | Process-oriented, **linear and siloed** approach.                                                                                             | **Holistic, flexible**, integrates Agile, DevOps, and Lean practices.                                                                                                      |
+| **3. Core Concept**                      | Service Lifecycle model (5 stages).                                                                                                           | **Service Value System (SVS)** and **4 Dimensions Model**.                                                                                                                 |
+| **4. Objective**                         | Deliver efficient IT services.                                                                                                                | Create **value for customers and business together**.                                                                                                                      |
+| **5. Structure**                         | 5 Service Lifecycle Stages: 1. Service Strategy 2. Service Design 3. Service Transition 4. Service Operation 5. Continual Service Improvement | 6 Key Components in SVS: 1. Guiding Principles 2. Governance 3. Service Value Chain 4. Practices 5. Continual Improvement 6. Inputs/Outputs (Opportunity & Demand → Value) |
+| **6. Key Elements**                      | - 26 Processes and 4 Functions.                                                                                                               | - 34 Management Practices (broader and integrated).                                                                                                                        |
+| **7. Guiding Principles**                | Limited focus in v3 (only in CSI).                                                                                                            | 7 Guiding Principles: Focus on value, start where you are, progress iteratively, collaborate, keep it simple, optimize and automate, etc.                                  |
+| **8. Integration with Modern Practices** | Not aligned with **Agile, DevOps, or Cloud**.                                                                                                 | Strongly integrated with **Agile, DevOps, and Cloud** concepts.                                                                                                            |
+| **9. Value Creation**                    | IT as a **service provider**.                                                                                                                 | IT and Business **co-create value** together.                                                                                                                              |
+| **10. Roles & Responsibilities**         | Roles defined per process (e.g., Incident Manager, Change Manager).                                                                           | Roles flexible; focuses on **cross-functional collaboration**.                                                                                                             |
+| **11. Tools & Automation**               | Limited automation focus.                                                                                                                     | Encourages **automation and continuous improvement**.                                                                                                                      |
+| **12. Documentation Style**              | Detailed, process-heavy documentation.                                                                                                        | Lightweight, adaptive documentation.                                                                                                                                       |
+| **13. Flexibility**                      | More rigid and prescriptive.                                                                                                                  | Highly flexible and adaptable to organization needs.                                                                                                                       |
+| **14. Terminology Example**              | “Process” and “Function.”                                                                                                                     | “Practice” (broader term covering people, process, tools).                                                                                                                 |
+| **15. Continual Improvement**            | Separate phase (CSI).                                                                                                                         | Built-in throughout the **Service Value Chain**.                                                                                                                           |
+

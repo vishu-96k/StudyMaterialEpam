@@ -1,0 +1,41 @@
+Python IMP ---
+
+CONSTRUTCIONS :
+-In python uh can only have one conrtructions and cannot do contructions overloading
+-uh can achive it using the *args and **kwargs, and even uh can create the methdos to achive it using elif.
+
+INTERFACSE :
+-Uh don't have default interfaces in python
+-Uh can achive it by creaeting a Abstract class which only has abstract function with no implementation.
+Final Summary:
+Python doesn’t have a native interface keyword.
+But interface behavior is implemented using ABC and @abstractmethod.
+Interface ensures subclasses follow a strict contract.
+Helps achieve abstraction by hiding implementation and showing only required method names.
+Makes code flexible, scalable, and clean.
+
+ATTRIBUTES :
+-Uh can create class and instance attribute from anywhere in oython cod for a class
+
+ACCESS SPECIFIERS:
+-Python doest have any access modifies, everything is public in the class
+
+DYNAMIC TYPPING AND DUCK TYPING USE CASES
+| Concept 🧠            | Description 📝                                                                        | How It Works ⚙️                                                                                           | Common Use Cases 🌍                                                                             | Example Code 🧪                                                                                                                                                                                                                                                                                       |
+| --------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Dynamic Typing** 🪄 | Variable type is determined at **runtime**, not at compile time.                      | Variable names are just references to objects. Type changes as value changes.                             | - Flexible variables<br>- API/user input handling<br>- Quick prototyping<br>- Generic functions | `python\nx = 10\nx = "Hello"\nprint(type(x))\n`                                                                                                                                                                                                                                                       |
+|                       |                                                                                       |                                                                                                           |                                                                                                 |                                                                                                                                                                                                                                                                                                       |
+| **Duck Typing** 🦆    | Focuses on **behavior, not type**. If an object has required methods, it can be used. | No inheritance required — functions call methods directly if they exist.                                  | - Polymorphism<br>- File-like/stream-like objects<br>- Plugin systems<br>- Mocking in tests     | `python\nclass Dog:\n    def speak(self): print(\"Woof\")\n\ndef talk(obj):\n    obj.speak()\ntalk(Dog())\n`                                                                                                                                                                                          |
+|                       |                                                                                       |                                                                                                           |                                                                                                 |                                                                                                                                                                                                                                                                                                       |
+| **Both Combined** 🚀  | Dynamic typing allows variable to change type; duck typing allows behavior reuse.     | Same variable can point to different objects that **implement the same method(s)** → no type check needed | - Payment gateways<br>- Logger systems<br>- Interchangeable components<br>- Extensible apps     | `python\nclass UPI:\n    def pay(self, amt): print(f\"Paid {amt} via UPI\")\nclass Card:\n    def pay(self, amt): print(f\"Paid {amt} via Card\")\n\ndef make_payment(method, amt):\n    method.pay(amt)\n\nmethod = Card()\nmake_payment(method, 1000)\nmethod = UPI()\nmake_payment(method, 500)\n` |
+
+
+Summary Table of Benefits DUCK AND DYNAMIC TYPING :
+| Feature          | Dynamic Typing 🪄                                  | Duck Typing 🦆                       | Both 🚀                                                |
+| ---------------- | -------------------------------------------------- | ------------------------------------ | ------------------------------------------------------ |
+| Type checking    | At runtime                                         | Not required (behavior-based)        | At runtime, behavior-based                             |
+| Code flexibility | High                                               | High                                 | Very High                                              |
+| Boilerplate code | Minimal                                            | Minimal                              | Very minimal                                           |
+| Polymorphism     | Implicit (via variable type switching)             | Behavior-based                       | Powerful, extensible                                   |
+| Real-world usage | APIs, automation, quick scripts                    | Logging, plugins, file handling      | Payment systems, modular apps, frameworks              |
+| Error handling   | Can lead to runtime errors if not handled properly | Fails at runtime if behavior missing | Combine with `hasattr()` or `try/except` for safe code |

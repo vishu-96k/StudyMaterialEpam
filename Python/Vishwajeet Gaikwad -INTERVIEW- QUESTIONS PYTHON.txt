@@ -1,0 +1,49 @@
+Honey -INTERVIEW- QUESTIONS PYTHON
+1)how often uh use python in day to day world give in points
+2)What system do uh support as support system
+Whats the goal 
+3)imagine , I am grp of devlopers , techinical lead , uh are attalisian administrator, to build a poject, how to start and ask questions and take requirenments
+4)diff scrum and kanburn diff
+5)ITSM what is it
+6)what is data migration, We have to migrate data from azure to jira how to do this
+7)pyhton write a script for transfaring data from azure , jira and transfar attachments
+
+
+-------------------------------------------------
+VISHWAJEET GAIKWAD : Edward jones interview questions in python
+
+1)how to loop through dictironary: 
+You can loop through a dictionary in multiple ways:
+ANS :
+1. Loop through keys:
+for key in student:
+    print(key, student[key])
+
+2. Loop through values:
+for value in student.values():
+    print(value)
+
+3. Loop through key–value pairs:
+for key, value in student.items():
+    print(key, value)
+
+
+2)what are comprehensions
+3)oops in detail, COnstrictions
+4) polymorphism explain with types
+5) how run time call is resolved
+6)constructors types in python, with syntax
+7)when to use sql when to use NoSQL
+8)what is unstructure data
+9)structure data: why keys are used, explain in relationship
+10)give example of foregin with respect of company employee and their tech stack
+11)employes names who have tech stack count more than 4 (SQL QUERY)
+12)self join
+13)views in sql
+14)indexes in mysql pointwise
+15)normalization
+16)is normalization always better
+17)oltp and olap what is it OLTP (Online Transaction Processing) and OLAP (Online Analytical Processing):
+18)list out etl tools ETL (Extract, Transform, Load) tools:
+19) what are support relates tools
+20) linux, commands ,permissions on new folder, file commands

@@ -640,5 +640,4 @@ A C# compiler (csc)
 A runtime (to execute C# programs)
 Project tooling
 
-
-
+ully pure oop language, beocz it doest have any primitive data types.	

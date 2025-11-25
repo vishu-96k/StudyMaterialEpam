@@ -1,0 +1,363 @@
+ITIL --GTP--INTERVIEW --QESTIONS
+
+--------------------------------------------------------------------------------------------------
+🔹 1. What is ITIL and why is it important in Application Support?
+Answer:
+ITIL (Information Technology Infrastructure Library) is a framework of best practices for IT Service Management.
+In Application Support, ITIL ensures that every incident, request, and change is handled in a standardized, measurable, and efficient way — leading to minimal downtime, better customer satisfaction, and predictable service delivery.
+
+🔹 2. Explain the difference between an Incident and a Service Request.
+Answer:
+Incident: An unplanned interruption or degradation in service (e.g., application not loading, job failure).
+Service Request: A user request for information or access (e.g., password reset, granting access).
+In CTCO-AMS context: You’ll log and resolve incidents in ServiceNow (or a similar ITSM tool), while routing service requests as per defined workflows.
+
+
+🔹 3. What are the key ITIL processes you handle in a 24x7 managed support project?
+
+Answer:
+
+Incident Management – restoring service ASAP.
+
+Problem Management – identifying root cause to reduce recurring incidents.
+
+Change Management – ensuring controlled implementation of fixes.
+
+Service Request Management – handling user requests systematically.
+
+Knowledge Management – maintaining SOPs and KB articles for faster resolution.
+
+🔹 4. What is the difference between Incident Management and Problem Management?
+Answer:
+Incident Management: Focuses on quick restoration of service.
+Problem Management: Focuses on identifying and eliminating root causes.
+Example:
+If “Login failure” happens repeatedly, Incident Mgmt resolves each occurrence, while Problem Mgmt analyzes logs, finds root cause (e.g., DB timeout), and implements a permanent fix.
+
+
+
+🔹 5. How do you prioritize incidents in a support environment?
+
+Answer:
+By Impact (how many users/business functions affected) and Urgency (how quickly it must be fixed).
+Typical matrix:
+| Priority | Description | Example                        |
+| -------- | ----------- | ------------------------------ |
+| P1       | Critical    | Application down for all users |
+| P2       | High        | Major feature not working      |
+| P3       | Medium      | Partial functionality issue    |
+| P4       | Low         | Minor UI issue or request      |
+
+
+🔹 6. What are SLAs and how do you ensure compliance?
+
+Answer:
+SLA (Service Level Agreement) defines time limits for resolution or response.
+In CTCO-AMS, you’ll monitor SLA breaches using dashboards in the ITSM tool and ensure quick escalation for high-priority tickets.
+Automation and proactive monitoring can help maintain SLA compliance.
+
+
+
+🔹 7. How would you reduce ticket inflow in a managed services engagement?
+
+Answer:
+
+Automate frequent tasks (e.g., password resets, health checks).
+
+Create self-help KB articles and FAQs.
+
+Perform root-cause analysis for repeated incidents.
+
+Coordinate with development for permanent fixes.
+
+Set up proactive monitoring and alerting.
+
+🔹 8. Explain the Incident Lifecycle.
+
+Answer:
+
+Incident Detection / Logging
+
+Categorization & Prioritization
+
+Investigation & Diagnosis
+
+Resolution & Recovery
+
+Closure
+
+Review (if required)
+
+Each step is tracked in ITSM tools like ServiceNow or Remedy to ensure accountability and traceability.
+
+🔹 9. How do you handle a major incident (P1)?
+
+Answer:
+
+Acknowledge and log immediately.
+
+Inform stakeholders and start bridge call.
+
+Work with L2/L3 teams for quick workaround.
+
+Provide regular updates (every 30 mins or as per policy).
+
+After resolution, perform a Post-Incident Review (PIR) to identify preventive actions.
+
+🔹 10. What is a Knowledge Base and why is it important?
+
+Answer:
+A Knowledge Base stores resolutions, known errors, and SOPs.
+It reduces MTTR (Mean Time to Resolve) and helps new team members solve issues faster — critical for 24x7 teams with shift rotations like CTCO-AMS.
+
+🔹 11. What is the difference between a Workaround and a Permanent Fix?
+
+Answer:
+
+Workaround: Temporary solution to restore service quickly.
+
+Permanent Fix: Final resolution to eliminate root cause, usually after analysis by L2/L3 teams.
+
+🔹 12. How do you manage Change Requests in ITIL?
+
+Answer:
+Changes (like code deployments or configuration updates) must follow a Change Management process — logging, assessing impact, approval (CAB), scheduling, and post-implementation review.
+This prevents unexpected outages in production systems.
+
+🔹 13. What metrics or KPIs do you monitor in Application Support?
+
+Answer:
+
+Incident volume trend
+
+SLA compliance %
+
+MTTR (Mean Time to Resolve)
+
+Reopened tickets count
+
+Ticket automation success rate
+
+Recurring incidents count
+
+These help identify areas for process improvement and automation opportunities.
+
+🔹 14. How do you ensure smooth shift handovers in a 24x7 environment?
+
+Answer:
+
+Maintain a handover log with open tickets, pending tasks, and key observations.
+
+Update ticket notes before EOD.
+
+Brief next shift on ongoing major issues or upcoming changes.
+This ensures zero information loss and continuous support coverage.
+
+🔹 15. How do you contribute to continuous improvement in ITIL-based support?
+
+Answer:
+
+Participate in Problem Management and RCA sessions.
+
+Suggest automation scripts for repetitive manual tasks.
+
+Update knowledge base with new findings.
+
+Review and improve monitoring alerts.
+
+Track recurring issues and propose preventive actions.
+
+--------------------------------------------------------------------------------------
+
+⚙️ Section 1: ITIL + Technical Blend
+🔹 1. What steps do you take when you receive a P1 incident during your shift?
+
+Answer:
+
+Acknowledge the incident immediately in the ITSM tool.
+
+Join or initiate a bridge call if the issue impacts production.
+
+Analyze application and system logs to identify the root cause.
+
+If possible, apply a temporary workaround (restart service, clear cache, etc.).
+
+Update the incident with details and inform stakeholders periodically.
+
+After resolution, document RCA and preventive measures in the Knowledge Base.
+
+🔹 2. You get a “Login failed for all users” issue in a web app. How will you proceed?
+
+Answer:
+
+Check application logs for authentication errors.
+
+Verify DB connectivity and service health (DB down or credentials expired?).
+
+Check recent deployments or configuration changes.
+
+Restart affected service if approved by the change window.
+
+If resolved — close with RCA; if recurring — raise a Problem ticket for L3 to fix root cause.
+
+ITIL Mapping: Incident → Escalation → Root Cause → Problem → Permanent Fix.
+
+🔹 3. How do you differentiate when to raise a Problem ticket from an Incident?
+
+Answer:
+If the same incident keeps repeating or affects multiple users repeatedly — that’s a Problem.
+Example: If “Job X fails every Monday,” instead of just fixing each failure, you raise a Problem Record to identify the underlying cause (like a missing dependency).
+
+🔹 4. A ticket has breached SLA. What actions will you take?
+
+Answer:
+
+Check the cause of the delay and update ticket notes with justification.
+
+Notify your Team Lead / Service Manager immediately.
+
+Work on a workaround or escalate to the next support level.
+
+Review in daily stand-up to ensure it doesn’t repeat.
+
+Suggest automation or monitoring to detect similar issues early.
+
+🔹 5. What will you do if a scheduled job fails in production?
+
+Answer:
+
+Review job logs to identify the error.
+
+Check dependencies (files, DB connections, external API calls).
+
+Restart the job manually if within scope.
+
+If failure affects business SLAs, raise a P2/P1 incident.
+
+Update ticket with details and RCA; create a Problem record if it’s a recurring job failure.
+
+💻 Section 2: Tool & Log-Based Questions
+🔹 6. What tools do you use for monitoring and ticketing?
+
+Answer:
+Typically tools include:
+
+Ticketing: ServiceNow, BMC Remedy, Jira Service Desk
+
+Monitoring: Dynatrace, AppDynamics, Splunk, Grafana, or CloudWatch
+
+Automation: PowerShell, Python scripts, or Ansible jobs
+
+In CTCO-AMS, you’d use an ITSM tool (like ServiceNow) integrated with monitoring for auto-ticket creation.
+
+🔹 7. How do you check application health proactively?
+
+Answer:
+
+Monitor dashboards (CPU, memory, response time).
+
+Review automated alerts.
+
+Perform scheduled health checks (log sizes, service uptime, DB connectivity).
+
+Validate critical job completion before business hours.
+
+🔹 8. What are common automation opportunities in Application Support?
+
+Answer:
+
+Auto-restart of failed services/jobs.
+
+Log monitoring scripts to detect recurring errors.
+
+Auto-close stale tickets.
+
+Auto notifications for SLA breach warnings.
+
+API-based health checks.
+
+Goal: Reduce inflow of manual tickets and repetitive fixes — a key CTCO-AMS expectation.
+
+🔹 9. What’s your process for analyzing logs during an incident?
+
+Answer:
+
+Identify log path (application, server, or DB logs).
+
+Search by timestamp, error ID, or user session.
+
+Use grep, tail -f, or Splunk queries to filter.
+
+Correlate logs with user activity and recent changes.
+
+Share analysis with L2/L3 for RCA if needed.
+
+🔹 10. How do you ensure configuration changes don’t break production?
+
+Answer:
+Through Change Management:
+
+Log a Change Request (CR) with details and rollback plan.
+
+Get CAB approval.
+
+Test changes in lower environments first.
+
+Deploy during a scheduled window.
+
+Verify after deployment and close CR with post-change validation.
+
+🧠 Section 3: Scenario & Behavioral (How You Think)
+🔹 11. You notice a pattern of recurring tickets for the same issue every day. What will you do?
+
+Answer:
+
+Document pattern (time, system, users affected).
+
+Raise a Problem ticket for permanent fix.
+
+Suggest an automation to detect or self-heal the issue.
+
+Share KB with team to reduce MTTR until fix is implemented.
+
+🔹 12. Describe how you ensure quality handovers between shifts.
+
+Answer:
+
+Maintain updated ticket notes.
+
+Document all open incidents, pending escalations, and major issues.
+
+Use a shared handover sheet or dashboard.
+
+Verbally brief next shift if there’s a critical ongoing P1/P2.
+
+🔹 13. How do you communicate with users during critical outages?
+
+Answer:
+
+Send initial acknowledgment immediately.
+
+Provide periodic updates (every 30 mins or as per policy).
+
+Share workarounds, ETAs, and final RCA after resolution.
+
+Keep communication clear and professional to maintain user trust.
+
+🔹 14. What would you do if multiple incidents are reported simultaneously?
+
+Answer:
+
+Prioritize based on impact and urgency (P1 > P2 > P3).
+
+Assign or escalate high-priority ones first.
+
+Inform shift lead for resource reallocation.
+
+Keep stakeholders informed on critical ones.
+
+🔹 15. What’s your contribution to reducing ticket volume in your previous projects?
+
+Answer (example format):
+
+“In my previous support project, I identified repeated password reset and file cleanup issues. I automated them using PowerShell scripts and scheduled CRON jobs — which reduced manual tickets by 30%. I also updated KB articles to guide users for self-resolution.”
