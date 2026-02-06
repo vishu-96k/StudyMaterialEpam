@@ -1,0 +1,39 @@
+SF Traning section --3
+
+WEB TO LEAD : 
+-UH can create a form within SF, and people can fill the form and they can be created as lead in the SF
+-So it automatically creates LEAD records in SD when someone submits a from on your website
+-Create a WEB TO LEAD from
+_once uh create a lead, html page will be generated and uh can see that leads under the lead tab
+
+STEPS :
+-Setting ---> setup --> WEB TO LEAD ---> enable web to lead from ---> Create web to lead ---> Create a lead
+
+
+LEAD ASSIGNMENT RULEs
+-This will help uh to assigne rules to the leads, which uh carete using the web to lead from
+-even uh need to create the rules
+
+-------------------------------------------------------
+
+WEB TO CASE : 
+-this will creare CASE records
+-UH can also assign priority to these cases
+
+STEPS : 
+Setting --> setups ---> web to case --->  enable web to case from ---> Create web to case ---> Create a cases
+
+-----------------------------------------------------------
+
+SCHEMA BUILDER 
+-uh can create view, modify objects, feilds, And relaationshuos using the Schema builder.
+-this is a graphical tool to make the Schemas (SQL tables).
+
+----------------------------------
+RECORD TYPES 
+
+--------------------
+PROFILES 
+They control what uh are able to access and what uh can do in the org, it actually holds what a user can do.
+-uh can resritct access of some users using this Profiels
+-System Administrator is the profile that has access to everything.

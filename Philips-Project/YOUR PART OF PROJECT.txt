@@ -1,0 +1,43 @@
+YOUR PART OF PROJECT---
+
+CMS project handling
+This is for handiling medical team, website are running on adobe, and contentfule and contetntstack.
+MindTree is handling , and from April, EPAM will be handling everything
+Contentful and adobe , we need to handle everything, Team B WILL take care of all the development.
+TEAM -A maintainence team : uh will work in this
+Contenful lead, and AEM lead, who will guid on the TASK, and this is 24/7 support team
+
+
+TEAM DYNAMICS : there will be support eng, and devlopers who will be working for this project 
+Onborading on project feburary
+traning : on platfroms and uh will be given KT, before Feb (lead will transform the KT whichever he gets from client, in March and APRIL )
+SHADOWING : in march 
+WORKING : starts from APRIL, mindtree and wipro will leave and EAPM will handle the website
+TEACSTAKE : adobe, and contentful(imp) CMS, React, JS
+CONTENTFUL and CONTENT management system
+CONTENTFUL : initially www, when we started building websites, we started with HTML, then we were not able to maintain this, then we got JS, Python, server side scripting, and we started using DB becoz of compliexity
+and this transisiton is called as 2D pages
+And the CMS systems helped to do this.
+
+CONTENTFUL 
+CMS - types: 1) monolist : frontend na backend resites in same application
+	     2) headless : means the CMS, is meant only for stroing the contenct
+
+contentful.com : and start learing contentful form the official website
+COURSES : EPAM learns path
+
+HW : resgister urself on contentful website.
+how cloudflare(AWS), nd Akamai works
+
+FOCUS on CONTENTFUL and NEXT JS , REACT JS
+
+-------------------------------------------------------------------------
+
+CONETENTFUL : accc banaya, see the platfrom, basics, yt par dekh le. 
+see the CONTENTFUL CDN APIs.
+how to expose APIs from contentful
+REACT, React JS, Graph QL, APIS using Graphql, and react. Do it
+Diff between GraphQL API and REST API something
+
+
+---------------------------------------------------------------------

@@ -351,4 +351,6 @@ Intro to Service Management with ITIL® 4 | Learn : https://learn.epam.com/catal
 
 IT Service Management Foundations: Tools | Learn : https://learn.epam.com/catalog/detailsPage?id=b39d3bec-bdae-4872-903c-98e7912427c5
 
+ITIL 4 HR : https://www.linkedin.com/learning/devops-institute-cert-prep-sre-foundation-sre/sre-foundation?dApp=53239054&leis=LAA&u=2113185
+
 ------------------------------------------------------------------------------------

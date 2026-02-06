@@ -1,0 +1,33 @@
+SF TRANING Section --5
+✅ 	
+📌 
+➡
+--------------------------------------------------------
+✅SF REPORTs
+📌 SF REPORTs : 
+-we do create a report to eventually create a repot and dashboard.
+-When uh want to track a data of events, and even uh can identify trends and problems using reports
+
+STEPS :
+Create leads records ---> then create a folder -->  then create the leads report ---> and start the report --> run report --> uh will be only seeing 50 reports records --> put that report into a folder ---> uh can also export a report in export format.
+
+FORMULA FEILD : 
+-its in the report , and uh can create a formula, and it is a read only field, and system will generate some sort of data using the formula.
+-Uh need to create a formula field form the Object manager for the Object of which uh want the report.
+-Formula field will have the formula wala data type.
+-EG : uh can create a field for formula, and using the report uh can create some sort of Sum vaegre.
+
+BUCKETING FEILD: 
+-uh can access this bucket only inside the Report sections
+
+
+TYPES OF REPORT : 
+1) Tabular report : it shows uh reports in a tabular format
+2) Sumary report : uh can group some particular rows, and do anything uh want
+
+3) matrix report :  uh can grp columns and rows
+
+4) joint report : it will add ur multiple reports, like if uh have multiple reports and wanaa add them it will be done using this.
+5) Custom reports :  uh can create ur own report type, in which uh can modify the UI.
+
+DASHBOARDS: uh don't have a chart, but uh can create a Dashboards, and only summary reports support chars, so whenever uh need chart in a report.

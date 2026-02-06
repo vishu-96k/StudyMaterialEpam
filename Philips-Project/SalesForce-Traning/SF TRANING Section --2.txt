@@ -1,0 +1,108 @@
+✅ 
+📌 
+➡
+SF TRANING Section --2
+
+
+✅ SALES FORCE APPLICATION 
+📌 SF APPLICATIONs:  
+-its just like a workspace where uh have ur objects tabs, lightning pages, reports and all of them are in a single application.
+-within the SF application uh have standard application which are already given by SF, uh have cutom application which uh can create by your own, and even we have Console applications which uh can create.
+-TYPES OF SF APPLICATION :
+	1)Standard application : by default present in SF, EG  : services, sales, etc
+	2)Custom application : Created by user
+	3)Console application : this is mostly used by service cloud people, basically its a UI where uh can access all those objects in a single interface. EG : Service Console application, uh can see the objects of these console application is in drop down menu. Ans these applications are single page.
+
+
+📌CREATING A CUSTOM APPLICATION : 
+STEPS : Setup--->lighting app manager--> new lighting app---> app name(HR MANAGEMENT SYSTEM)--> standard / console app :  select standrad app ---> setup---> next ---> utility iteam(the things which uh can see at the bottom of the applications page) ---> 	add objects(by selecting the objects from drop down) ---> Profiles supported : eg, if uh select system addministory, then only the users with that role and profile will be able to access ur app. uh can select multiple profiles also, so whichechver user holds the profile that user will be able to accesss the application. 
+
+OBJECT ID:
+-Its the unique representation of ur object, and any time when uh create a record  
+-if uh have 2 records of same object are there then their prefix is same.
+-EG : LEAD : 00Q
+	ACCOUNT : 001
+	Contact : 003
+	Opportunity : 006
+
+
+✅ STANDARD AND CUSTOM OBJECTS
+📌OBJECTs:
+-Anything which does not have __c is standard object
+-Custom object : The api name ends with __c is noth but a custom object.
+
+STEPS CREATEING OBJECT: 
+object manager ---->new custom object ---> new----> feilds and relationships ---> lable and all the feilds names--> creeat the object ---> add that object into tabs ---> then add the tab/object into ur HR management system application
+
+STEPS ADDING OBJECT INTO NAVBAR TAB:
+setups--> go to tabs --> create a tab from the object which uh have created.
+-Then only this 
+
+STEPS TO EDIT RECORD:
+-Create record for the object
+-edit the record from object manager from the setup 
+setups ---> object manager ---> select that object --> feilds and relationship ---> add that feild to the object.
+
+
+OBJECT MANAGER :
+-If uh wnat to access any object, and add some feilds and all thoese stiff, then go to this manager and do the stuff
+
+ 
+✅ TABs
+📌TABS :
+-Tabs are noth but when uh create a object, then taht object is added into ur UI and that is TAB.
+TYPES :
+STandard object tabs
+Custom object tabs
+WEB tabs :  uh can copy paste a URL and that page will be shown here as tab
+Visual force tab :  this is for coding
+Lightining Page tabs :  when uh want to create a web page using coding, and based on that uh want that page to be ur tab, then this is using lightning page tab.
+
+---------------MADAM CLASS----------------
+
+
+✅ DATA MODELING
+📌DATA MODELING : 
+-Data modeling is a process of designing how data is store, manage and is related to each other.
+-EG:SF admin data should be Diff from the app data of the HR syatem, becoz system admin data is diff and the APP data (users data) is diff, so for this reason we need data modeling.
+-OBJECT : Data is store under object.
+-RECORD : The whole instace, is noth but a Record.
+-FEIlDs and RELATIONSHIIPS :  this is not but a particular data feild
+
+DATA MODLING IS IMP BECOZ :
+-for Ensures data accuracy and consistency 
+-It also improves reporting and automation things
+-uh can support stability and performance if uh have managed data in a good way.
+
+DATA MODELING COMPONENTS :
+1) STANDARD OBJECTS : Account, contacts, lead, Opportiunity, Case.
+2) FIELDs : Store specific information on objects.
+3) Records: INstance of the objects, where uh store the data, is called a records, and the Feilds and relationship are the data feilds
+4) FEILDS and RELATIONSHIPs :  this is where the actual data of one feild is store.
+
+OBJECT/TABs -----------TABLE NAME
+RECORD -------- One entire Row form a database
+FEILD -------------- One Data feild from a row and a column
+
+
+📌RELATIONSHIPs 
+-Realationships are same as 1 to 1, many to 1, many to many.
+-SF Relationships define how objects are connected with each other. Like foreign key .
+MOST USED REALTIONSHIPS : 
+	1) LOOKUP REALTIONSHIPs
+	2) MASTER REALTIONSHIPs
+-SF doesn't support the Master relationships between the standard objects
+-SF only allows uh to create the relations between the Custom created objects.
+
+LOOKUP RELATIONSHIPs : it menas its a loosly coupled relationship, it means child records can be exixts without the parent records, and parent records will not delete the child
+
+MASTER RELATIONSHIP : Tightly coupled relationship, The child records depends on the Parent ones. Child Inhirits the security, ownerships and depends on the parent.
+-we use this when there is dependency of data, like one object records depends or is created only when the parent record is created , and even if the parent record is deleted then the child record will also get deleted.
+-Its kind of foreign key cascading.
+-EG: History data, without a user, what will uh do with his user history data, so here Uh will apply master realtionship
+
+
+STEPS : WHile creating a Object uh can set the realtionships form the data types.
+Setups ---> Object manager ---> Feild and Relationshi ---> data types choose the relationship which uh wanaa select.
+ 
+

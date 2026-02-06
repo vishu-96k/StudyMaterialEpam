@@ -1,0 +1,222 @@
+✅ 
+📌 
+➡
+SF TRANING Section --1
+
+------------------------ SUDIPTA MAAM SECTION ---------------------------
+
+1) SALESFORCE : 
+-SF is a saas based cloud CRM(Customer relational managemtn), CRM means salesforce will manage everythinhg and providng apps, peroviding security, apart from this we have diff commertial marketing, service  and these 3 are the main products of salesforce, its a cloud based, so no software needs to be installed here.
+-SF will handle everhting
+
+2) STEPS TO CREATE SF ACC: 
+-CREATE A SALESFORCE DEVLOPER ACCOUNT, AND START LEARING USING THE trailhead account, which is a Learing platfrom for SF, Create using trailhead account
+-sales force offers us : sales cloud, service , marketing, data, expirence etc
+-In DF everything is app, like sales app etc
+
+3) OBJECTS : 
+-lead tasks Acocunt these are the main objects of the SF
+
+4) SF ORG ID :
+-when uh create the acc and update the company info, uh will get a COMPANY ID, which will come in picture if uh got stuck, or when SF is not working then at that time, when uh raise a support to the SF team, they will ask uh this ID, which will be present in the company info inside the setting 
+  
+5) TRAILHEAD ACCOUNT : 
+-create a trailhead acoount and do practice, becoz its the acc used for taning and a learn path 
+
+6) USER LISENCE : 
+-it means that when we start using the SF, and there will be multiple peoples working with uh, so everyone will have a USER LISENSE which
+will give uh certain powers, or even ristrct the things which uh can do inside the SF account. Basically it is use to give access/ristrict some features of SF
+-EG : ADMIN : this lisence will have all the features and powers and even the admin can use all the apps etc. So admin is one of the USER LISENSE
+-PERMISIONS SET LISENCE : 
+-FEATURESS LISENS : 
+ 
+7) FISCAL YEAR : 
+-like the way we have bank fiscal year, which is in the month of MARCH, in genral 31st DEC is end of the FISCAL year, and JAN is the new start. 
+-So in this uh can decide what is the Start and end date of the FISCAL year for the client. Uh can also create a CUSTOM fiscal yeaer, and by default jan is set as the STANADARD Fiscal year.
+-once uh create the CUSTOM fiscal year, and set it for the client, it cannot be revsersed remember this
+
+8) CURRENCY : 
+-For the developer acc, currency is not there
+
+9) BUSSNESS HOURS : 
+-THis means the working hours of the Peoples working in the organization
+-uh can set the busssness hours of the peoples working in a ORG, like this will tell at what time people will be active in a org, and when other people can accect replies , which in between the bussness hours.
+
+10) HOLIDAYS :
+-Using this uh can set the holiday calender for the organization.
+-For sat and sun, uh can setup weekly holiday for an org
+
+11) SECURITY (PASSWORD POLICIES):
+-in this tab, uh can set the password policies for the users, in the organizations
+-lockout effectuve period : if eg for 15 mins uh dont do anything in ur account, then automitcally uh will be logout, and need to login again.
+
+12) SESSIONS SETTINGS :
+-Sessions timeout :  it means that,  that automaticcallyy after a time poeriod uh will be logout form ur acc, it can be days, mins , hrs , etc
+
+13) CURRENCY MANAGEMENT : 
+-go to company info, and set the currency using currency setting
+-ADVANCE MANAGEMENT : in this if ur org is located in dif or global locations, then uh need to map between the currencies of diff countries and put it in the currency.
+
+
+15) APPLICATIONS : everything is app in SF, like the sales app, etc
+-EG : Sales
+-TYPES: 1) Standard app eg : sales
+	2) CUSTOMS app eg : employee, uh can create a custom app for ur clients 
+	
+16) TABS/OBJECTS : 
+-all the tabs inside the application (app) is called object
+-Objects is noth but uh can map it with the SQL database
+-Uh can store data (entities) inside the objects, just like the Feild of a TABLE
+-MAPPING : object name ----- Table name
+	   Object feilds ----- Table Column
+	   Feild Data ------- Actual column data 
+
+17) RECORDS :
+-These is the data store inside the TAB/OBJECT
+-So this is the uh can say feilds, or attibutes of a table when compare to SQL
+-EG :   SALES ----APP
+	ACCOUNT ---OBJECT/TABS
+	RECORDS ---Uh can say a COMPLETE row of data feilds inside that OBJECT
+	FEILDS ----ATTRIBUTES, these are the data feilds, like customer name etc
+
+
+EG : Leads, Tasks, Accounts are the main objetcs (tabs) of the SALES app.
+-TYPES :  1) Standard Tabs (objects)
+	  2) Cuctoms TABS (objects) : uh can create ur own custom objects for custom applications
+
+-------------------------PRACTICAL---1---------------------------------
+
+STEPS :
+1) SALEs APP : uh will open the sales app, using the 9 dots apps (called app launcher).
+2) SETTING : setups---> COMPANY SETING-->EDIT the COMPANY information
+		setups--> fiscal Year --> based on the financial year of the company uh need to set up this fiscial year
+
+		setup -->search for (currency year) -> for developer edition it will not be there
+
+		bussness HOURS : it means when people will work, and why it is required, so who will work and reply to the peoples queries, so for tht uh need to set up the bussness hours
+		bussness hours-->new bussniesss hours--> active-->select ISI time
+
+		HOLIDAY : uh can set recuring holiday or one time holiday based on the holidays, and even for sat and sun, uh can set up weekly holidays 
+		holiday-->new-->set holidays for multiple times.
+
+		security changes: uh can set up strict password policies, like eveyr 90 days  people have to reset the password, or even uh can set how password should be set, even uh can do enable password history, and many more setting related to security, even min password length.
+		security changes--> password policies-->set the policies
+
+		session settings : timeout values, till how long uh want to use the session
+		session settings -->timwout value--> set it to 4 hrs
+		
+		Company information-->Currency setting : set it as INR
+		Advance currency management: if uh are working in a company whose product is in diff counties, then uh can set this advance company option. uh can set the currencies rate for multiple countries. like US and INR currency uh can set with involving the dollare rate and 1 rupee rate
+	
+3) SETTING--> SETUP -->OBJECT MANAGER : explore this tab	
+
+OBJECTS : 2 types : standard objects , and Customes Object	
+		
+--------------------ABHISHESK SIR SESSION-----------------------------------------------
+
+SF EDITION, SANDBOX, ARCHETECTURE
+
+1) SF EDITION : 
+-there are 5 edtions in totoal : 
+	essesntial: who has a small bussness
+	professional :this is bit advance, we have more CRM technologies
+	Enterprise : 
+	unlimited : 
+	Developer : we are working on, its the free edition of SF, for practicing
+-While working, we will be uing any of the top 4 editions
+	
+2) SANDBOX : sales force has 4 sandbox
+-Sandbox is a platform where we practice
+
+3) SF ARCHETECTURE : 
+-SF has a multi tenant archetecutre and here we will be having multiple customers who will be purchasing and they are doing there things , but these customers will be sharing the same platfrom, same database, and all of this is handle within the same platfrom.
+-even though these tenant share the same resouces of salesforce, but without begin impacted on each others tenant, it means, meta data of one company is not shared amoung the another company.
+-there will be multiple tenant, and each tenant will be sharing resourses within the archecturre, and these resource sharing will be done in a good way, and even the data is collected and keept and whatever data is of one client will not be shared with the other client. 
+uh don't have to write code to store the meta data in the backend, uh just have to click abd thts it
+
+---------------------------PRACTICE------------------------------------------
+
+TRAILHEAD ACCOUNT : go to question mark --> log in to trailhead .
+Check the release part, and other optuions
+also check switch to salesfoerce classic
+
+SalesForce Classic : it means , in 19999 when SF was lasunched, everyone was working on Classic version
+and latest version is the lightning version,  we will be working on lightining version
+2015 :they launch the lightning version which is a newer version, and its good, and we use it now
+
+------------------------------------------------------------------------------------
+
+APPS : the 9 dots is called app launcher, and it has many apps, and we will be working on sales app, and this will have many imp tabs, like Leads, Tasks , Accounts.
+
+-------------------------------------TASKS-------------------
+USERs:
+-users is same as IAM users
+-uh can also attach roles, and user licence which will ristrict the user form using the policies, and cotroling the persmissions of the users
+Create 10 users so that org people can use it like AWS IAM
+After createing user, people can use the Account like IAM user in AWS
+
+STEPS : setting --> setups--> serachfor --> users---> new users --> username, user-email etc --> create user
+
+-----------------------------------------------------------------
+
+PROFILE vs ROLES OF USERs
+-uh can attach roles, and profile for a user, which will limit the access of the users, by allowing specific services to it only
+PROFILES : This gives uh access to ur SF orgs (like the objects/TABS), which uh seen on the frontend, and if uh dont want to ristrict the user access from some of the tabs/objects, using profile uh can control that 
+ROLES : Role is a hiraricy here, like the way we have teams tree hiriracy, and we have our manager, then director above us and at the end CEO.
+-So uh can assign roles hirarcy tree structure to the users, like what role does the user have , and even uh can see how many people are there in particular role, like a developer, lead, and At the end CEO of the company.
+-Uh can also have ur own tree role structure, like a custom structure
+
+---------------------------------------------------------------------------
+OBJECT MANAGER 
+OBJECT 
+-is noth but a table in datasbe, uh have 2 types of object, custome or standard
+-if the object doest have __c it means it is a standard object, not a custom object
+-If object has a Api ending with __c it means its a custom object	
+
+LEAD
+-Lead is a object 
+-uh need to create a lead, and even Create a FEILD and relationships , and uh need to create a field for ur lead, from the Object manager
+-So when uh are working on lead, its like working on the frontend the UI and whenever uh r into setups uh are working in backend like this map it 
+-FRONTEND : uh can go to the LEAD tab, and create lead, add feilds, and data to it
+-BACKEND : uh can also go to the setups---> lead, and create lead and add some feilds and relationships into the lead object, and this is called a Reacord
+-RECORD : when uh add/ create a new lead data, it is called as a record, becoz uh will be creating and adding lead name, lead data into it.
+-Uh can create customs feild records from the relationship and feilds wala tab from the setup
+
+STANDARD FEILD 
+-in SF is noth but a automatically provided by the SF and if uh want to create something own custom as per needs, it is called Custom fields
+from the API name uh can tell the Feild is standard or custom, if it has a __c (API name) it means that its  a Custom feilds
+
+Q) eg: uh have 2 leads, and one of the lead uh want some customs feilds data, and for the other lead uh want some custom fields data, and both the lead wants diff data feilds for their records, so in this case what will uh do?
+ANS : here comes the PAGE LAYOUT into pictire.  
+
+----------------------------------------------------------------------------
+
+PAGE LAYOUT  
+-is a UI customazition tool which is used to add or remove the page record or layout edition tool for UI for fields
+-page layout and record types are for controlling the UI, for customizating the UI
+-So if some lead records doesn't want some of the feilds, then uh can customize the feilds of a particular recourds using page layout
+-For eg uh have 2 leads, with same record feilds, and for one lead uh dont want to show some specific data feilds then using record types uh can do so, like uh can create ur own record types, which is having the particular feilds for that object to store data and this record will be a custom record and will show whatever uh wanaa show
+-using page layout  uh can do this, and uh can add or remove feilds from the pages, by page I mean, records page.
+-When uh create a Record type, then while creating a new LEAD record, it will ask uh which record type(data and feilds) should the new reord be off, and based on that it will create a new record and thoese feilds only will be shown.
+-FRONTEND : from frontend also uh can edit the UI using the edit page option below the setups, which will open a lighniitng app builder, which shoes which feild to show and which not to show. 
+-CHATTER :using this chatter option from the app builder uh can add and filter some feilds and customize the records. 
+EG : uh can also set a feild, like if ur city is Hyderabad then only that city feild will be shown, something like this can be controlled using chatter which is present in the edit--> lighting app builder.
+
+-----------------------------------------------------------------------
+REPORTS :
+-just to understand how many leads were created and how many contact where their in a given day, basically uh want a report of a particular LEAD record, then uh can use this REPORT object and it will give uh the report of ur lead.
+-Uh can create ur own report types from both Frontend as well as backedn (from setup)
+-Backend : uh can create a repot type form the setup
+-frontend : uh can use that type and create a repot on a particular lead record.
+-standard reports : uh can see that there already a report type on the lead object. 
+-uh just have to ---> select that lead ---> start report
+-even uh can apply filters on  the reports using the filters options
+
+STEPS :
+Object manager -->CREATE LEAD--> CREATE RECOrd --> Create FEILDS --> Add/remove the FEILDS using PAGE LAYOUT--> record types
+
+
+----------------------------------------------------------------------------
+HW : Go to Trailhead acc and go through the "SF admin" beggner course
+
+
